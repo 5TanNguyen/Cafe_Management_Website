@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Danh Sách Phí Phát Sinh</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+</head>
+<body>
+    <%- include ('../z_layout/navigation.ejs') %>
+    <div class="container">
+
+        <h3 class="text-center">Thêm Phí Phát Sinh</h3>
+        <form action="/themphiphatsinh" method="post" style="padding-top: 10px;">
+
+            <div class="row g-3">
+                <div class="col-sm">
+                    <input name="" type="text" class="form-control" value="<%- pps[0].ci_id + 1 %>" placeholder="" aria-label="City">
+                </div>
+                <div class="col-sm">
+                    <input name="ci_name" type="text" class="form-control" placeholder="Tên phí" aria-label="City">
+                </div>
+                <div class="col-sm">
+                    <input name="ci_cost" type="text" class="form-control" placeholder="Phí" aria-label="State">
+                </div>
+                <div class="col-sm">
+                    <input name="u_name" type="text" value="<%- session.u_name %>" class="form-control" placeholder="" aria-label="Zip">
+                    <input hidden name="ci_u_id" type="text" value="<%- session.u_id %>" class="form-control" placeholder="" aria-label="Zip">
+                </div>
+
+                <div class="row-sm">
+                    <input name="s_name" type="text" value="<%- session.s_name %>" class="form-control" placeholder="" aria-label="Zip">
+                    <input hidden name="ci_s_id" type="text" value="<%- session.s_id %>" class="form-control" placeholder="" aria-label="Zip">
+                </div>
+            </div>
+            
+            <br>
+
+            <div class="d-grid gap-2">
+            <button class="btn btn btn-outline-danger" type="submit">Submit</button>
+            </div>
+
+            <!-- <input type="text" placeholder="Tên sản phẩm" name="pro_name">
+            <input type="text" placeholder="Giá" name="pro_price">
+            <input type="text" placeholder="Mô tả" name="pro_description">
+            <input type="submit" value="Submit" data-theme="b"> -->
+        </form>
+
+        <hr><br>
+        <h3 class="text-center">Danh Sách Phí Phát Sinh</h3>
+        <table class="table table-hover">
+            <thead class="table-light">
+                <td>ID</td>
+                <td>Tên Phí</td>
+                <td>Phí</td>
+                <td>Nhân Viên Lập</td>
+            </thead>
+
+            <% if(pps.length > 0){ %>
+                <% for(var i = 0; i < pps.length; i++){ %>
+                    <tr>
+                        <td>
+                            <%- pps[i].ci_id %>
+                        </td>
+
+                        <td>
+                            <%- pps[i].ci_name %>
+                        </td>
+
+                        <td>
+                            <%- pps[i].ci_cost %> VNĐ
+                        </td>
+
+                        <td>
+                            <%- pps[i].u_name %>
+                        </td>
+                    </tr>
+                <% } %>
+            <% } else { %>
+                <p>Không có phí phát sinh</p>
+            <% } %>
+        </table>
+    </div>
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cách Pha Chế</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+</head>
+<body>
+    <%- include('../z_layout/navigation.ejs') %>
+    <div class="container">
+        <h2 class="text-center">Pha Chế</h2>
+        <h3 class="text-center"><%- test[0].pro_name %></h3>
+
+        <!-- <div class="form-floating">
+            <textarea readonly style="height: 200px;" class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px"><%= test[0].b_description %></textarea>
+            <label for="floatingTextarea2">Hướng dẫn</label>
+        </div> -->
+
+        <form class="form-control bg-light" action="/trunguyenlieu" method="post">
+            <br>
+            <% for(var i=0; i < test.length; i++){  %>
+                <div class="row g-2">
+                    <div class="col-md">
+                        <div class="form-floating">
+                            <input hidden name="od_o_id" type="text" value="<%- od_o_id %>">
+                            <input hidden name="num" type="text" value="<%- test.length %>">
+                            <input hidden name="ing_id" type="text" value="<%- test[i].ing_id %>">
+                            <input readonly type="text" name="ing_name" class="form-control" id="floatingInputGrid" placeholder="" value="<%= test[i].ing_name %>">
+                            <label for="floatingInputGrid">Nguyên Liệu</label>
+                        </div>
+                    </div>
+
+                    <div class="col-md">
+                        <div class="form-floating">
+                            <input readonly type="text" name="minus_amount" class="form-control" id="floatingInputGrid" value="<%= test[i].bd_amount %> ">
+                            <input type="text" name="ing_amount"  value="<%- test[i].ing_amount %>">
+                            <label for="floatingInputGrid">Số lượng (<%= test[i].unit_name %>)</label>
+                        </div>
+                    </div>
+                </div>
+            <% } %>
+            
+            <input type="submit" value="XÁC NHẬN" class="btn btn-outline-danger" style="width: 100%;">
+        
+        </form>
+    </div>
+</body>
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Số người</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+
+    <!-- Jquery Mobile -->
+    <!-- <link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
+    <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script> -->
+
+</head>
+<body>
+    <!-- Homepage -->
+    <div data-role="page" id="page1">
+        <div data-role="header" data-theme="b">
+            <h1>_5Tan</h1>
+        </div>
+
+        <div data-role="content" class="ui-content">
+            <a href="#menu" class="ui-btn ui-btn-inline">...</a>
+
+            <h3 class="text-center">Mời nhập số người</h3>
+            <form action="/songuoi" method="post" data-inset="true" data-role="listview">
+                <input type="text" value="<%- t_id %>" name="t_id">
+                <input type="text" placeholder="Nhập số người" name="num">
+                <input type="submit" value="Submit" data-icon="check" data-theme="b">
+            </form>
+            <a href="/ban" data-transition="slidefade" class="ui-btn">Trở về</a>
+        </div>
+
+        <div data-role="footer" data-position="fixed" data-theme="b">
+            <h4>Uống là mê</h4>
+        </div>
+
+        <div data-role="panel" id="menu" data-display="overplay" data-position="left">
+            <ul data-role="listview" data-inset="true">
+                <li data-icon="home"><a href="/ban" data-transition="pop">Bàn</a></li>
+                <li data-icon="grid"><a href="/sanpham" data-transition="pop">Sản phẩm</a></li>
+                <li data-icon="video"><a href="#page2" data-transition="pop">Videos</a></li>
+                <li data-icon="audio"><a href="#page3" data-transition="flip">Audio</a></li>
+                <li data-icon="gear"><a href="#">Setting</a></li>
+            </ul>
+        </div>
+    </div>
+
+
+    
+</body>
+</html>

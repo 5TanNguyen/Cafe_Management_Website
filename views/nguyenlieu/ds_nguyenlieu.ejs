@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Danh sách nguyên liệu</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
+
+
+    <%- include ('../z_layout/header.ejs') %>
+</head>
+<body>
+    <%- include ('../z_layout/navigation.ejs') %>
+        
+    <style>
+        body{
+            font-family: montserrat;
+            background: #e7e7e7e7;
+            height: 100vh;
+        }
+
+        .box{
+            text-align: center;
+        }
+
+        .buttonn{
+            font-size: 1em;
+            padding: 15px 35px;
+            color: #fff;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease-out;
+            background: #403e3d;
+            border-radius: 50px;
+        }
+
+        .overplay{
+            position:fixed;
+            top: 0;
+            bottom: 0; 
+            left: 0;
+            right: 0;
+            background:  rgba(0, 0, 0, 0.8);
+            transition: opacity 500ms;
+            visibility: hidden;
+            opacity: 0;
+        }
+
+        .overplay:target{
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .UD_overplay{
+            position:fixed;
+            top: 0;
+            bottom: 0; 
+            left: 0;
+            right: 0;
+            background:  rgba(0, 0, 0, 0.8);
+            transition: opacity 500ms;
+            visibility: hidden;
+            opacity: 0;
+        }
+
+        .UD_overplay:target{
+            visibility: visible;
+            opacity: 1;
+        }
+
+
+        .wrapper{
+            margin: 70px auto;
+            padding: 20px;
+            background: #e7e7e7e7;
+            border-radius: 5px;
+            width: 30%;
+            position: relative;
+            transition: all 5s ease-in-out;
+        }
+
+        .wrapper h2{
+            margin-top: 0;
+            color: #333;
+        }
+
+        .wrapper .close{
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            transition: all 200ms;
+            font-weight: bold;
+            text-decoration: none;
+            color: #333;
+        }
+
+        .wrapper .content{
+            max-height: 30%;
+            overflow: auto;
+        }
+
+        .UD_wrapper{
+            margin: 70px auto;
+            padding: 20px;
+            background: #e7e7e7e7;
+            border-radius: 5px;
+            width: 50%;
+            position: relative;
+            transition: all 5s ease-in-out;
+        }
+
+        .UD_wrapper h2{
+            margin-top: 0;
+            color: #333;
+        }
+
+        .UD_wrapper .close{
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            transition: all 200ms;
+            font-weight: bold;
+            text-decoration: none;
+            color: #333;
+        }
+
+        .UD_wrapper .content{
+            max-height: 30%;
+            overflow: auto;
+        }
+
+
+        
+
+        .container{
+            border-radius: 5px;
+            background-color: #e7e7e7e7;
+            padding: 20px 0;
+        }
+
+        form label{
+            text-transform: uppercase;
+            font-weight: 500;
+            letter-spacing: 3px;
+        }
+
+        input[type=text], textarea{
+            width: 100%;
+            padding: 12px;
+            border:  1px solid #ccc;
+            border-radius:  5px;
+            box-sizing: border-box;
+            margin-top: 6px;
+            margin-bottom: 16px;
+            resize: vertical;
+        }
+
+        input[type="submit"]{
+            background-color: #413b3b;
+            color: #fff;
+            padding: 15px 50px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 15px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+
+    </style>
+
+    <div class="container" style="padding-top: 10px;">
+        <a href="/themnguyenlieu">
+            <button type="button" class="btn btn-outline-primary">Thêm nguyên liệu</button>
+        </a>
+        <button name="reload" onclick="window.location.reload()" class="btn btn-warning">Reload</button>
+      
+        <form action="/themnguyenlieu" method="post" style="padding-top: 10px;">
+
+            <div class="row g-3">
+                <div class="col-sm">
+                    <input name="ing_name" type="text" class="form-control" placeholder="Tên nguyên liệu" aria-label="City">
+                </div>
+                <div class="col-sm">
+                    <input name="ing_amount" type="text" class="form-control" placeholder="Số lượng" aria-label="Zip">
+                </div>
+
+                <div class="col-sm">
+                    <select style="margin-top: 6px; height: 50px;" class="form-control" name="ing_unit_id" id="" aria-label="Amount">
+                        <% if(u.length > 0){ %>
+                            <% for( var j = 0; j < u.length; j++){ %>
+                                <option class="form-control" value="<%- u[j].unit_id %>"><%- u[j].unit_name %></option>
+                            <% } %>
+                        <% } else { %>
+                            <p>Không có dữ liệu</p>
+                        <% } %>
+                    </select>
+                </div>
+
+                <div class="col-sm">
+                    <input name="ing_price" type="text" class="form-control" placeholder="Giá" aria-label="Zip">
+                   
+                    <% var currentdate = new Date(); %>
+                    <% var datetime = currentdate.getFullYear() + "-" + (currentdate.getMonth()+1) + "-" + currentdate.getDate()  + "  "  + currentdate.getHours() + ":"   + currentdate.getMinutes() + ":"  + currentdate.getSeconds(); %>
+    
+                    <input hidden name="datetime" type="text" value="<%- datetime %>">
+                </div>
+            </div>
+            
+            <br>
+
+            <div class="d-grid gap-2">
+            <button class="btn btn btn-outline-danger" type="submit">Submit</button>
+            </div>
+
+            <!-- <input type="text" placeholder="Tên sản phẩm" name="pro_name">
+            <input type="text" placeholder="Giá" name="pro_price">
+            <input type="text" placeholder="Mô tả" name="pro_description">
+            <input type="submit" value="Submit" data-theme="b"> -->
+        </form>
+
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                     <th data-priority="2">ID</th>
+                     <th>Name</th>
+                     <th data-priority="1">Quantity</th>
+                     <th>Unit</th>
+                     <th>Price</th>
+                     <th data-priority="1">Update</th>
+                     <th data-priority="4">Delete</th>
+                </tr>
+            </thead>
+
+            <% if(test.length > 0){  %>
+                <% for(var i=0; i <test.length; i++){  %>
+                    <tr>
+                        <td> <%- test[i].ing_id  %></td>
+                        <td> <%- test[i].ing_name %></td>
+                        <td> <%- test[i].ing_amount %> </td>
+                        <td> <%- test[i].unit_name %> </td>
+                        <td> <%- test[i].ip_price %></td>
+                        <td>                        
+                            <a href="#divUD<%- test[i].ing_id %>">UPDATE</a>
+                            <div class="UD_overplay" id="divUD<%- test[i].ing_id %>">
+                                <!-- <input name="pro_name" type="text" placeholder="" value="<%- test[i].pro_name %>"> -->
+
+                                <div class="UD_wrapper">
+                                    <h2>Update Ingredient's Informmation</h2>
+                                    <a href="#" class="close">&times;</a>
+                                    <div class="content">
+                                        <div class="container">
+                                            <form action="/suanguyenlieu" method="POST">
+                                                <input name="ing_id" type="text" hidden placeholder="" value="<%- test[i].ing_id %>">
+
+                                                <label for="">Ingredient's Name</label>
+                                                <input name="ing_name" type="text" placeholder="" value="<%- test[i].ing_name %>">
+                                                
+                                                <label for="">Ingredient's Amount</label>
+                                                <input name="ing_amount" type="text" placeholder="" value="<%- test[i].ing_amount %>">
+                        
+                                                <label for="">Unit</label>
+                                                <select style="margin-top: 6px; height: 50px;" class="form-control" name="ing_unit_id" id="" aria-label="Amount">
+                                                    <option value="<%- test[i].ing_unit_id %>"><%- test[i].unit_name %></option>
+                                                    <% if(u.length > 0){ %>
+                                                        <% for( var j = 0; j < u.length; j++){ %>
+                                                            <option class="form-control" value="<%- u[j].unit_id %>"><%- u[j].unit_name %></option>
+                                                        <% } %>
+                                                    <% } else { %>
+                                                        <p>Không có dữ liệu</p>
+                                                    <% } %>
+                                                </select>      
+                                                    
+                                                <label for="">Price</label>
+                                                <select style="margin-top: 6px; height: 50px;" class="form-control" name="ing_ip_id" id="" aria-label="Amount">
+                                                    <option value="<%- test[i].ing_ip_id %>"><%- test[i].ip_ing_name %></option>
+
+                                                    
+                                                    <% if(pri.length > 0){ %>
+                                                        <% for( var j = 0; j < pri.length; j++){ %>
+                                                            <option class="form-control" value="<%- pri[j].ip_id %>"><%- pri[j].ip_ing_name %></option>
+                                                        <% } %>
+                                                    <% } else { %>
+                                                        <p>Không có dữ liệu</p>
+                                                    <% } %>
+                                                </select>      
+                                                <input type="submit" value="Submit" style="width:100%">
+                                                <!-- <hr>
+                                                <% if(test[i].pro_b_id != 0){ %>
+                                                    <a class="btn btn-primary" style="width: 100%; border-radius: 15px;" href="/cachphache?pro_b_id=<%- test[i].pro_b_id %>">Cách Pha Chế</a> 
+                                                <% } else { %>
+                                                    <a class="btn btn-danger" style="width: 100%; border-radius: 15px;" href="/themcachphache?pro_b_id=<%- test[i].pro_b_id %>">Thêm Cách Pha Chế</a> 
+                                                <% } %> -->
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        
+                        </td>
+                        
+                        <td>
+                            <!-- <a href="/xoasanpham?pro_id=<%- test[i].pro_id %>">DELETE</a> -->
+                        
+                            <a href="#divDel<%- test[i].pro_id %>">DELETE</a>
+                            <div class="overplay" id="divDel<%- test[i].pro_id %>">
+                                <!-- <input name="pro_name" type="text" placeholder="" value="<%- test[i].pro_name %>"> -->
+
+                                <div class="wrapper">
+                                    <h2 class="text-center">Confirm Delete</h2>
+                                    <a href="#" class="close">&times;</a>
+                                    <div class="content">
+                                        <div class="container">
+                                            <form action="/xoasanpham" method="POST">
+                                                <input name="pro_id" type="text" hidden placeholder="" value="<%- test[i].pro_id %>">
+
+                                                <label for="">Product's Name</label>
+                                                <input name="pro_name" type="text" placeholder="" value="<%- test[i].pro_name %>">
+                                                
+                                                <button class="btn btn btn-outline-danger" style="width: 100%;" type="submit">Delete</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                <% } %>
+
+            <% }else { %>
+                <h1>Data Not Found !</h1>
+            <% } %>
+        </table>
+    </div>
+
+    <div class="box">
+        <a href="#divOne" class="buttonn">Contact Us</a>
+    </div>
+
+    <div class="overplay" id="divOne">
+        <div class="wrapper">
+            <h2>Please fill up the Form</h2>
+            <a href="#" class="close">&times;</a>
+            <div class="content">
+                <div class="container">
+                    <form action="">
+                        <label for="">First Name</label>
+                        <input name="pro_name" type="text" placeholder="" value="">
+                        
+                        <label for="">Email</label>
+                        <input name="pro_price" type="text" placeholder="" value="">
+
+                        <label for="">Phone number</label>
+                        <textarea name="pro_desciption" id="" cols="30" rows="5" value=""></textarea>
+
+                        <input type="submit" value="Submit">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <%- include ('../z_layout/footer.ejs') %>
+</body>
+</html> 

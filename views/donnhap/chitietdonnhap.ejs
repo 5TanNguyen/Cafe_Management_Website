@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chi tiết đơn nhập</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+</head>
+<body>
+    <%- include('../z_layout/navigation.ejs') %>
+    <div class="container">
+        <h2 class="text-center">Danh sách nguyên liệu</h2>
+        
+        <% if(test.length > 0){ %>
+        <h3 class="text-center"><%- test[0].ib_name %></h3>
+        <br>
+
+        <form class="form-control bg-light" action="/xachnhannhanhang" method="post">
+            <br>
+            <% for(var i=0; i < test.length; i++){  %>
+                <div class="row g-2">
+                    <div class="col-md">
+                        <div class="form-floating">
+                            <input hidden name="num" type="text" value="<%- test.length %>">
+                            <input hidden name="ing_id" type="text" value="<%- test[i].ing_id %>">
+                            <input readonly type="text" name="ing_name" class="form-control" id="floatingInputGrid" placeholder="" value="<%= test[i].ing_name %>">
+                            <label for="floatingInputGrid">Nguyên Liệu</label>
+                        </div>
+                    </div>
+
+                    <div class="col-md">
+                        <div class="form-floating">
+                            <input readonly type="text" name="plus_amount" class="form-control" id="floatingInputGrid" value="<%= test[i].ibd_amount %> ">
+                            <input type="text" name="ing_amount" hidden value="<%- test[i].ing_amount %>">
+                            <label for="floatingInputGrid">Số lượng (<%= test[i].unit_name %>)</label>
+                        </div>
+                    </div>
+
+                    <div class="col-md">
+                        <div class="form-floating">
+                            <input readonly type="text" name="" class="form-control" id="floatingInputGrid" placeholder="1" value="<%= test[i].ibd_cost %>">
+                            <label for="floatingInputGrid">Giá tiền ( VNĐ )</label>
+                        </div>
+                    </div>
+                </div>
+            <% } %>
+            
+            <label for="">Tổng giá</label>
+            <input readonly name="ib_cost" type="text" value="<%- test[0].ib_cost %>">
+                
+            <br>
+            <label for="">Thống Kê</label>
+            <select class="form-control" name="s_id" id="">
+                    <option value="<%- test[0].s_id %>"><%- test[0].s_name %></option>
+            </select>
+            <br>
+            <input type="submit" value="XÁC NHẬN NHẬN HÀNG" class="btn btn-outline-danger" style="width: 100%;">
+        
+        </form>
+
+        <%  } else { %>
+            <p>Không có nguyên liệu</p>
+        <% } %>
+
+        <a class="btn btn-outline-primary" style="width:100%" href="#divUD">THÊM NGUYÊN LIỆU</a>
+        
+
+        
+        <!-- POPUP THÊM NGUYÊN LIỆU -->
+        
+        <div class="UD_overplay" id="divUD">
+
+            <div class="UD_wrapper">
+                <h2 class="text-center">Chọn nguyên liệu nhập</h2>
+                <a href="#" class="close">&times;</a>
+                <div class="content">
+                    <div class="container">
+                        <form action="/themchitietdonnhap" method="POST">
+                            <input name="ibd_ib_id" hidden type="text" value="<%- ib_id %>">
+                            <label for="">Tên nguyên liệu</label>
+                            <select name="ing_id" id="" class="form-select">
+                                <% if(ing.length > 0){ %>
+                                    <% for( var j = 0; j < ing.length; j++){ %>
+                                        <option name="ing_id" value="<%- ing[j].ing_id %>"> <%- ing[j].ing_name %> ( <%= ing[j].unit_name %> )</option>
+                                    <% } %>
+                                <% } else { %>
+                                    <p>Data Not Found</p>
+                                <% } %>
+                            </select>
+
+                            <br>
+                            <label for="">Giá</label>
+                            <select name="ibd_cost" id="" class="form-select">
+                                <% if(ing.length > 0){ %>
+                                    <% for( var j = 0; j < ing.length; j++){ %>
+                                        <option name="ibd_cost" value="<%- ing[j].ip_price %>"> <%- ing[j].ing_name %> | <%= ing[j].ip_price %> VNĐ </option>
+                                    <% } %>
+                                <% } else { %>
+                                    <p>Data Not Found</p>
+                                <% } %>
+                            </select>
+                            
+                            <br>
+                            <label for="">Số lượng</label>
+                            <input name="ibd_amount" type="text" placeholder="" value="">
+                            
+                            <input hidden name="ib_costpu" type="text" value="<%- gia[0].ib_cost %>">
+                            <input type="submit" value="Submit">
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <% include('../z_layout/footer.ejs') %>
+</body>
+</html>

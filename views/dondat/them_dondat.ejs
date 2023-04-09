@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    
+    <title>Tạo đơn đặt</title>
+
+
+    <!-- Jquery Mobile
+    <link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
+    <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script> -->
+
+</head>
+<body>
+    <%- include('../z_layout/navigation.ejs') %>
+
+    <div class="container">
+        <br>
+        <h3 class="text-center">Thêm đơn đặt</h3>
+        <form class="form-control bg-light" action="/themdondat?t_id=<%= t_id %>" method="post">
+            <!-- <label for="">Đơn đặt</label>
+            <input type="text" class="form-control" value="<%- o_id[0].max_o_id %>" name="o_id">    
+             -->
+            <div class="input-group input-group-sm mb-3">
+                <span style="width: 100px;" class="input-group-text" id="inputGroup-sizing-sm">Đơn đặt</span>
+                <input type="text" class="form-control" value="<%- o_id[0].max_o_id %>" name="o_id">    
+            </div>
+
+            <!-- <br>
+            <label for="">Bàn</label>
+            <input type="text" class="form-control" value="<%- t_id%>" name="t_id"> -->
+            <div class="input-group input-group-sm mb-3">
+                <span style="width: 100px;" class="input-group-text" id="inputGroup-sizing-sm">Bàn</span>
+                <input type="text" class="form-control" value="<%- t_id%>" name="t_id">
+            </div>
+
+            <!-- <br>
+            <label for="">Số người</label>
+            <input type="text" class="form-control" value="<%- num%>" name="num"> -->
+            <div class="input-group input-group-sm mb-3">
+                <span style="width: 100px;" class="input-group-text" id="inputGroup-sizing-sm">Số người</span>
+                <input type="text" class="form-control" value="<%- num%>" name="num">
+            </div>
+
+            <br>
+            <% for(var j=0; j < num; j++){  %>
+                <div class="row g-2">
+                    <div class="col-md">
+                        <div class="form-floating">
+                            <select name="masp" class="form-select" id="floatingSelectGrid">
+                                <% for(var i=0; i <test.length; i++){  %>
+                                    <option name="masp" value="<%- test[i].pro_id %>">
+                                        <%- test[i].pro_name %>
+                                        
+                                        <%- test[i].pro_price %>
+                                    </option>
+                                    <!-- <input type="text"value="<%- test[i].pro_price %>"> -->
+                                <% } %>
+                            </select>
+                            <label for="floatingSelectGrid">Chọn thức uống</label>
+                        </div>
+                    </div>
+
+                    <div class="col-md">
+                        <div class="form-floating">
+                            <input type="text" name="gia" class="form-control" id="floatingInputGrid" placeholder="1" value="1">
+                            <label for="floatingInputGrid">Giá tiền</label>
+                        </div>
+                    </div>
+
+                    <div class="col-md">
+                        <div class="form-floating">
+                            <input type="text" name="soluong" class="form-control" id="floatingInputGrid" placeholder="1" value="1">
+                            <label for="floatingInputGrid">Số lượng</label>
+                        </div>
+                    </div>
+                </div>
+            <% } %>
+                
+            <br>
+            <input type="submit" value="Submit" class="btn btn-outline-danger" style="width: 100%;">
+        <hr>
+        </form>
+        <a href="/ban" class="btn btn-primary" style="width: 100%;">Trở về</a>
+    </div>
+    
+</body>
+</html>

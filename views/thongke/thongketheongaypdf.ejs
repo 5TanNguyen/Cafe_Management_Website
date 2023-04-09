@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Danh sách thống kê</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+</head>
+<body>
+
+    <style>
+        a {
+            text-decoration: none;
+        }
+    
+        .image {
+            position: relative;
+            height: 150px;
+            width: 150px;
+            left: 20px;
+            margin-top:  20px;
+            transition: 1s;
+            background-color: white;
+            border-radius: 20px;
+            border-width: 4px;
+            border-color: black;
+            z-index: 1;
+        }
+    
+        .image:hover {
+            transform: scale(1.05);
+            z-index: 2;
+        }     
+        
+        .soban{
+            margin: 10px 45%;
+            z-index: 5;
+            font-size: 50px;
+            color: #FFFF;
+        }
+    
+    
+    
+    
+    
+    
+        
+    
+    
+    
+    body{
+    font-family: montserrat;
+    background: #e7e7e7e7;
+    height: 100vh;
+    }
+    
+    .box{
+    text-align: center;
+    }
+    
+    .buttonn{
+    font-size: 1em;
+    padding: 15px 35px;
+    color: #fff;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.3s ease-out;
+    background: #403e3d;
+    border-radius: 50px;
+    }
+    
+    .overplay{
+    position:fixed;
+    top: 0;
+    bottom: 0; 
+    left: 0;
+    right: 0;
+    background:  rgba(0, 0, 0, 0.8);
+    transition: opacity 500ms;
+    visibility: hidden;
+    opacity: 0;
+    z-index: 5000;
+    }
+    
+    .overplay:target{
+    visibility: visible;
+    opacity: 1;
+    }
+    
+    .UD_overplay{
+    position:fixed;
+    top: 0;
+    bottom: 0; 
+    left: 0;
+    right: 0;
+    background:  rgba(0, 0, 0, 0.8);
+    transition: opacity 500ms;
+    visibility: hidden;
+    opacity: 0;
+    }
+    
+    .UD_overplay:target{
+    visibility: visible;
+    opacity: 1;
+    }
+    
+    
+    .wrapper{
+    margin: 70px auto;
+    padding: 20px;
+    background: #e7e7e7e7;
+    border-radius: 5px;
+    width: 30%;
+    position: relative;
+    transition: all 5s ease-in-out;
+    }
+    
+    .wrapper h2{
+    margin-top: 0;
+    color: #333;
+    }
+    
+    .wrapper .close{
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    transition: all 200ms;
+    font-weight: bold;
+    text-decoration: none;
+    color: #333;
+    }
+    
+    .wrapper .content{
+    max-height: 30%;
+    overflow: auto;
+    }
+    
+    .UD_wrapper{
+    margin: 70px auto;
+    padding: 20px;
+    background: #e7e7e7e7;
+    border-radius: 5px;
+    width: 50%;
+    position: relative;
+    transition: all 5s ease-in-out;
+    }
+    
+    .UD_wrapper h2{
+    margin-top: 0;
+    color: #333;
+    }
+    
+    .UD_wrapper .close{
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    transition: all 200ms;
+    font-weight: bold;
+    text-decoration: none;
+    color: #333;
+    }
+    
+    .UD_wrapper .content{
+    max-height: 30%;
+    overflow: auto;
+    }
+    
+    
+    
+    
+    .container{
+    border-radius: 5px;
+    background-color: #e7e7e7e7;
+    padding: 20px 0;
+    }
+    
+    form label{
+    text-transform: uppercase;
+    font-weight: 500;
+    letter-spacing: 3px;
+    }
+    
+    input[type=text], textarea{
+    width: 100%;
+    padding: 12px;
+    border:  1px solid #ccc;
+    border-radius:  5px;
+    box-sizing: border-box;
+    margin-top: 6px;
+    margin-bottom: 16px;
+    resize: vertical;
+    }
+    
+    input[type="submit"]{
+    background-color: #413b3b;
+    color: #fff;
+    padding: 15px 50px;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    font-size: 15px;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    }
+    </style>
+
+
+    <br>
+    <h4 class="text-center">Danh Sách Thống Kê </h4>
+    <h3 class="text-center"> <%- date_begin %> / <%- date_end %> </h3>
+    <div class="container">
+        <hr>
+        <br>
+        <table class="table table-hover">
+            <thead class="table-light">
+                <td>ID</td>
+                <td>Tên TK</td>
+                <td>Nhập</td>
+                <td>Xuất</td>
+                <td>Lợi nhuận</td>
+                <td>Ngày</td>
+                <td>Chi Tiết</td>
+            </thead>
+
+            <% var im = 0; %>
+            <% var ex = 0; %>
+            <% var pro = 0; %>
+            <% if(test.length > 0){ %>
+                <% for(var i = 0; i < test.length; i++){ %>
+                    <% im += test[i].s_import %>
+                    <% ex += test[i].s_export %>
+                    <% pro += test[i].s_profit %>
+                    <tr>
+                        <td>
+                            <%- test[i].s_id %>
+                        </td>
+
+                        <td>
+                            <%- test[i].s_name %>
+                        </td>
+
+                        <td>
+                            <%- test[i].s_import %>
+                        </td>
+
+                        <td>
+                            <%- test[i].s_export %>
+                        </td>
+
+                        <td>
+                            <%- test[i].s_profit %>
+                        </td>
+
+                        <td>
+                            <%- test[i].s_date %>
+                        </td>
+
+                        <td>
+                            <a class="btn btn-primary" href="/chitietthongke?s_id=<%- test[i].s_id %>">Chi Tiết</a>
+                        </td>
+                    </tr>
+                <% } %>
+            <% } else { %>
+                <p>Không có dữ liệu</p>
+            <% } %>
+        </table>
+
+        <br>
+        <table class="table table-hover">
+            <thead class="table-light">
+                <td>CHI PHÍ</td>
+                <td>DOANH THU</td>
+                <td>LỢI NHUẬN</td>
+            </thead>
+            <tr>
+                <td><%= im %> VNĐ</td>
+                <td><%= ex %> VNĐ</td>
+                <td><%= pro %> VNĐ</td>
+               
+            </tr>
+
+        </table>
+
+       
+        <hr>
+        <h3>Lương Nhân Viên</h3>
+        <table class="table table-hover">
+            <thead class="table-light">
+                <td>ID</td>
+                <td>Nhân Viên</td>
+                <td>Ngày</td>
+                <td>Ghi chú</td>
+            </thead>
+            <% var luongNV = 0; %>
+            <% if(cc.length > 0){ %>
+                <% for(var i = 0; i < cc.length; i++){ %>
+                    <% luongNV += 60000; %> 
+                    <tr>
+                        <td>
+                            <%- cc[i].tk_id %>
+                        </td>
+                        
+                        <td>
+                            <%- cc[i].u_name %>
+                        </td>
+
+                        <td>
+                            <%- cc[i].tk_date %>
+                        </td>
+
+                        <td>
+                            <%- cc[i].tk_note %>
+                        </td>                     
+                    </tr>
+                <% } %>
+            <% } else { %>
+                <p>Không có dữ liệu</p>
+            <% } %>
+        </table>
+        <label for="">Tổng lương</label>
+        <input readonly type="text" value="<%- luongNV %> VNĐ">
+
+        <hr>
+        <h3>Phí Phát Sinh</h3>
+        <table class="table table-hover">
+            <thead class="table-light">
+                <td>ID</td>
+                <td>Tên Phí</td>
+                <td>Giá</td>
+                <td>Nhân viên lập</td>
+            </thead>
+            <% var phips = 0; %>
+            <% if(pps.length > 0){ %>
+                <% for(var i = 0; i < pps.length; i++){ %>
+                    <% phips += pps[i].ci_cost; %> 
+                    <tr>
+                        <td><%- i + 1 %></td>
+                        <td>
+                            <%- pps[i].ci_name %>
+                        </td>
+                        
+                        <td>
+                            <%- pps[i].ci_cost %> VNĐ
+                        </td>
+
+                        <td>
+                            <%- pps[i].u_name %>
+                        </td>                     
+                    </tr>
+                <% } %>
+            <% } else { %>
+                <p>Không có dữ liệu</p>
+            <% } %>
+        </table>
+        <label for="">Tổng phí</label>
+        <input readonly type="text" value="<%- phips %> VNĐ">
+
+
+        <hr>
+        <h3>Phí Nhập</h3>
+        <table class="table table-hover">
+            <thead class="table-light">
+                <td>ID</td>
+                <td>Đơn Nhập</td>
+                <td>Ngày</td>
+                <td>Giá</td>
+            </thead>
+            <% var phiNhap = 0; %>
+            <% if(dn.length > 0){ %>
+                <% for(var i = 0; i < dn.length; i++){ %>
+                    <% phiNhap += dn[i].ib_cost; %> 
+                    <tr>
+                        <td>
+                            <%- dn[i].ib_id %>
+                        </td>
+                        
+                        <td>
+                            <%- dn[i].ib_name %>
+                        </td>
+
+                        <td>
+                            <%- dn[i].ib_date %>
+                        </td>
+
+                        <td>
+                            <%- dn[i].ib_cost %> VNĐ
+                        </td>                     
+                    </tr>
+                <% } %>
+            <% } else { %>
+                <p>Không có dữ liệu</p>
+            <% } %>
+        </table>
+        <label for="">Tổng phí</label>
+        <input readonly type="text" value="<%- phiNhap %> VNĐ">
+
+        <hr>
+        <h3 for="">Doanh Thu Thức Uống</h3>
+        <table class="table table-hover">
+            <thead class="table-light">
+                <td>ID</td>
+                <td>Bàn</td>
+                <td>Thành Tiền</td>
+                <td>Ngày</td>
+            </thead>
+            <% var dondat = 0; %>
+            <% if(dd.length > 0){ %>
+                <% for(var i = 0; i < dd.length; i++){ %>
+                    <% dondat += dd[i].o_cost; %>
+                    <tr>
+                        <td>
+                            <%- dd[i].o_id %>
+                        </td>
+
+                        <td>
+                            <%- dd[i].o_t_id %>
+                        </td>
+
+                        <td>
+                            <%- dd[i].o_cost %> VNĐ
+                        </td>
+
+                        <td>
+                            <%- dd[i].o_time %>
+                        </td>
+                    </tr>
+                <% } %>
+            <% } else { %>
+                <p>Không có dữ liệu</p>
+            <% } %>
+        </table>
+
+        <label for="">Tổng thu</label>
+        <input readonly type="text" value="<%- dondat %> VNĐ">
+        
+
+    </div>
+</body>
+</html>
