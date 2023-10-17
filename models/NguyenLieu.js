@@ -15,6 +15,21 @@ class NguyenLieuModel{
         })
     }
 
+    static async GetNguyenLieuByUnit(unit_id, ing_amount)
+    {
+        return new Promise(resolve =>{
+            db.query("SELECT ing.ing_id, ing.ing_name, ing.ing_amount, ing.ing_unit_id, ing.ing_ip_id, u.unit_name,ip.ip_ing_name, ip.ip_price"
+            + " FROM ingredient ing, unit u, ingredient_price ip"
+            + " WHERE ing.ing_unit_id = u.unit_id"
+            + " AND ing.ing_ip_id = ip.ip_id"
+            + " AND ing.ing_unit_id = ? AND ing.ing_amount <= ?"
+            + " ORDER BY ing.ing_id"
+            , [unit_id, ing_amount], (err, result)=>{
+                if(!err) resolve(result);
+            })
+        })
+    }
+
     static async GetDonVi(){
         return new Promise(resolve =>{
             db.query("SELECT * FROM unit", [], (err, result)=>{

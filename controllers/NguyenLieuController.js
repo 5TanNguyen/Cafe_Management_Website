@@ -6,25 +6,42 @@ const DonDatModel = require("../models/DonDat");
 const NguyenLieuModel = require("../models/NguyenLieu");
 const ThongKeModel = require("../models/ThongKe");
 const DonDatController = require("./DonDatController");
+const TruyCapTraiPhepModel = require("../models/TruyCapTraiPhep");
 
 class NguyenLieuController{
     static async getNguyenLieu(req, res)
     {
         res.locals.session = req.session;
 
-        if(!req.session.u_id)
+        if(!req.session.u_id || ((req.session.u_d_id != 2) && (req.session.u_d_id != 1)))
         {
-            res.redirect("/dangnhap")
+            var currentdate = new Date();
+            var datetime = currentdate.getFullYear() + "-" + (currentdate.getMonth()+1) + "-" + currentdate.getDate()  + "  "  + currentdate.getHours() + ":"   + currentdate.getMinutes() + ":"  + currentdate.getSeconds();
+            var tctp = await TruyCapTraiPhepModel.addTCTP(req.session.u_id, 'Danh sách nguyên liệu', datetime);
+
+            req.flash('message', 'Bạn không có quyền truy cập !');
+            res.render("dangnhap/dangnhap", { message : req.flash('message')});
         }
         else
         {
-
+            
             var ingredient = await NguyenLieuModel.GetNguyenLieu();
             
             var unit = await NguyenLieuModel.GetDonVi();
             var price = await NguyenLieuModel.GetGia();
 
-            if(ingredient) res.render("nguyenlieu/ds_nguyenlieu", { test: ingredient, u : unit, pri : price});
+            var ingI = await NguyenLieuModel.GetNguyenLieuByUnit(1, 5);
+
+            var ingII = await NguyenLieuModel.GetNguyenLieuByUnit(2, 1000);
+
+            var ingIV = await NguyenLieuModel.GetNguyenLieuByUnit(4, 50);
+
+            var ingV = await NguyenLieuModel.GetNguyenLieuByUnit(5, 100);
+            
+            var ingVII = await NguyenLieuModel.GetNguyenLieuByUnit(7, 1000);
+            
+
+            if(ingredient) res.render("nguyenlieu/ds_nguyenlieu", { test: ingredient, u : unit, pri : price, ingI, ingII, ingIV, ingV, ingVII});
         }
     }
 
@@ -32,9 +49,14 @@ class NguyenLieuController{
     {
         res.locals.session = req.session;
 
-        if(!req.session.u_id)
+        if(!req.session.u_id || ((req.session.u_d_id != 2) && (req.session.u_d_id != 1)))
         {
-            res.redirect("/dangnhap");
+            var currentdate = new Date();
+            var datetime = currentdate.getFullYear() + "-" + (currentdate.getMonth()+1) + "-" + currentdate.getDate()  + "  "  + currentdate.getHours() + ":"   + currentdate.getMinutes() + ":"  + currentdate.getSeconds();
+            var tctp = await TruyCapTraiPhepModel.addTCTP(req.session.u_id, 'Thêm nguyên liệu', datetime);
+
+            req.flash('message', 'Bạn không có quyền truy cập !');
+            res.render("dangnhap/dangnhap", { message : req.flash('message')});
         }
         else
         {
@@ -56,9 +78,14 @@ class NguyenLieuController{
     {
         res.locals.session = req.session;
 
-        if(!req.session.u_id)
+        if(!req.session.u_id || ((req.session.u_d_id != 2) && (req.session.u_d_id != 1)))
         {
-            res.redirect("/dangnhap");
+            var currentdate = new Date();
+            var datetime = currentdate.getFullYear() + "-" + (currentdate.getMonth()+1) + "-" + currentdate.getDate()  + "  "  + currentdate.getHours() + ":"   + currentdate.getMinutes() + ":"  + currentdate.getSeconds();
+            var tctp = await TruyCapTraiPhepModel.addTCTP(req.session.u_id, 'Chi chỉnh sửa nguyên liệu', datetime);
+
+            req.flash('message', 'Bạn không có quyền truy cập !');
+            res.render("dangnhap/dangnhap", { message : req.flash('message')});
         }
         else
         {
@@ -81,9 +108,14 @@ class NguyenLieuController{
     static async updateNguyenLieu(req, res){
         res.locals.session = req.session;
 
-        if(!req.session.u_id)
+        if(!req.session.u_id || ((req.session.u_d_id != 2) && (req.session.u_d_id != 1)))
         {
-            res.redirect("/dangnhap");
+            var currentdate = new Date();
+            var datetime = currentdate.getFullYear() + "-" + (currentdate.getMonth()+1) + "-" + currentdate.getDate()  + "  "  + currentdate.getHours() + ":"   + currentdate.getMinutes() + ":"  + currentdate.getSeconds();
+            var tctp = await TruyCapTraiPhepModel.addTCTP(req.session.u_id, 'C.Nhật nguyên liệu Đơn nhập', datetime);
+
+            req.flash('message', 'Bạn không có quyền truy cập !');
+            res.render("dangnhap/dangnhap", { message : req.flash('message')});
         }
         else
         {
@@ -116,9 +148,14 @@ class NguyenLieuController{
     {
         res.locals.session = req.session;
 
-        if(!req.session.u_id)
+        if(!req.session.u_id || ((req.session.u_d_id != 2) && (req.session.u_d_id != 1)))
         {
-            res.redirect("/dangnhap");
+            var currentdate = new Date();
+            var datetime = currentdate.getFullYear() + "-" + (currentdate.getMonth()+1) + "-" + currentdate.getDate()  + "  "  + currentdate.getHours() + ":"   + currentdate.getMinutes() + ":"  + currentdate.getSeconds();
+            var tctp = await TruyCapTraiPhepModel.addTCTP(req.session.u_id, 'Trừ nguyên liệu', datetime);
+
+            req.flash('message', 'Bạn không có quyền truy cập !');
+            res.render("dangnhap/dangnhap", { message : req.flash('message')});
         }
         else
         {

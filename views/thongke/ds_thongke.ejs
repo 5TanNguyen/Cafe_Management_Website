@@ -83,10 +83,28 @@
     opacity: 0;
     z-index: 5000;
     }
+
+    .overplayfl{
+    position:fixed;
+    top: 0;
+    bottom: 0; 
+    left: 0;
+    right: 0;
+    background:  rgba(0, 0, 0, 0.8);
+    transition: opacity 500ms;
+    visibility: visible;
+    opacity: 1;
+    z-index: 6000;
+    }
     
     .overplay:target{
     visibility: visible;
     opacity: 1;
+    }
+
+    .overplayfl:target{
+    visibility: hidden;
+    opacity: 0;
     }
     
     .UD_overplay{
@@ -116,6 +134,16 @@
     position: relative;
     transition: all 5s ease-in-out;
     }
+
+    .wrapperfl{
+    margin: 70px auto;
+    padding: 20px;
+    background: #e7e7e7e7;
+    border-radius: 5px;
+    width: 30%;
+    position: relative;
+    transition: all 5s ease-in-out;
+    }
     
     .wrapper h2{
     margin-top: 0;
@@ -123,6 +151,16 @@
     }
     
     .wrapper .close{
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    transition: all 200ms;
+    font-weight: bold;
+    text-decoration: none;
+    color: #333;
+    }
+
+    .wrapperfl .close{
     position: absolute;
     top: 20px;
     right: 30px;
@@ -174,6 +212,7 @@
     border-radius: 5px;
     background-color: #e7e7e7e7;
     padding: 20px 0;
+    z-index: 10000;
     }
     
     form label{
@@ -206,11 +245,46 @@
     }
     </style>
 
-    <%- include('../z_layout/navigation') %>
+    <% if(session.u_d_id == 1){ %>
+        <%- include('../z_layout/navigation') %>
+    <% }else if(session.u_d_id == 2 ){ %>
+        <%- include('../z_layout/nav_2') %>
+    <% }else if(session.u_d_id == 3 ){ %>
+        <%- include('../z_layout/nav_3') %>
+    <% } %>
 
     <br>
     <h4 class="text-center">Danh Sách Thống Kê</h4>
-    <div class="container">
+
+    <!-- <% if(message.length >0){ %>
+        <nav class="nav">
+            <div class="toggle_menu">
+                <ion-icon name="menu"></ion-icon>
+            </div>
+            <ul>
+                <li>
+                    <%= message %>
+                </li>
+            </ul>
+        </nav>
+    <% } %> -->
+
+    <script>
+        const nav = document.querySelector('.nav');
+        const toggle_menu = document.querySelector('.toggle_menu');
+        const content = document.querySelector('.content');
+    
+        toggle_menu.onclick = function () {
+            nav.classList.toggle('hide');
+            // nav.classList.toggle('expand');
+    
+    
+            //content.classList.toggle('expand');
+        }
+    </script>
+    
+
+    <div class="container" id="container">
 
         <form action="/thongketheongay" method="POST" class="form-control">
             
@@ -281,19 +355,19 @@
                         </td>
 
                         <td>
-                            <%- test[i].s_import %>
+                            <%- Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(test[i].s_import) %>
                         </td>
 
                         <td>
-                            <%- test[i].s_export %>
+                            <%- Intl.NumberFormat('vi-VN', {style: 'currency', currency: 'VND'}).format(test[i].s_export) %>
                         </td>
 
                         <td>
-                            <%- test[i].s_profit %>
+                            <%- Intl.NumberFormat('vi-VN', {style: 'currency', currency: 'VND'}).format(test[i].s_profit) %>
                         </td>
 
                         <td>
-                            <%- test[i].s_date %>
+                            <%- Intl.DateTimeFormat("vi-VN", {dateStyle: "short"}).format( test[i].s_date ) %>
                         </td>
 
                         <td>

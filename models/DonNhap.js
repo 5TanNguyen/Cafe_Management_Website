@@ -23,11 +23,11 @@ class DonNhapModel{
         })
     }
 
-    static async CreateDonNhap(ib_name, ib_date, ib_s_id)
+    static async CreateDonNhap(ib_name, ib_date, ib_s_id, ib_br_id)
     {
         return new Promise(resolve =>{
-            db.query("INSERT INTO import_bill(ib_id, ib_name, ib_date, ib_cost, ib_s_id)"
-            + " VALUES(null, ?, ?, 0, ?)", [ib_name, ib_date, ib_s_id], (err, result)=>{
+            db.query("INSERT INTO import_bill(ib_id, ib_name, ib_date, ib_cost, ib_s_id, ib_br_id)"
+            + " VALUES(null, ?, ?, 0, ?, ?)", [ib_name, ib_date, ib_s_id, ib_br_id], (err, result)=>{
                 if(!err) resolve(true);
             })
         })
@@ -84,6 +84,17 @@ class DonNhapModel{
         return new Promise(resolve => {
             db.query("SELECT * FROM import_bill"
             + " WHERE ib_s_id = ?", [s_id], (err, result)=>{
+                if(!err) resolve(result);
+            })
+        })
+    }
+
+    static async GetDonNhapByS_Id_and_br_id(s_id, br_id)
+    {
+        return new Promise(resolve => {
+            db.query("SELECT * FROM import_bill"
+            + " WHERE ib_s_id = ?"
+            + " AND ib_br_id = ?", [s_id, br_id], (err, result)=>{
                 if(!err) resolve(result);
             })
         })

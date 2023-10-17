@@ -95,8 +95,8 @@ opacity: 1;
 }
 
 
-.wrapper{
-margin: 70px auto;
+.wrapperTK{
+margin: 10px auto;
 padding: 20px;
 background: #e7e7e7e7;
 border-radius: 5px;
@@ -105,12 +105,12 @@ position: relative;
 transition: all 5s ease-in-out;
 }
 
-.wrapper h2{
+.wrapperTK h2{
 margin-top: 0;
 color: #333;
 }
 
-.wrapper .close{
+.wrapperTK .close{
 position: absolute;
 top: 20px;
 right: 30px;
@@ -120,7 +120,7 @@ text-decoration: none;
 color: #333;
 }
 
-.wrapper .content{
+.wrapperTK .content{
 max-height: 30%;
 overflow: auto;
 }
@@ -219,6 +219,9 @@ letter-spacing: 3px;
                     <a href="/ban" class="nav-link active" aria-current="page" >Bàn</a>
                 </li>
                 <li class="nav-item">
+                    <a href="/lich" class="nav-link active" aria-current="page" >Lịch</a>
+                </li>
+                <li class="nav-item">
                     <a href="/danh-sach-cho-pha-che" class="nav-link" >Pha Chế</a>
                 </li>
                 <li>
@@ -232,16 +235,22 @@ letter-spacing: 3px;
                     <a class="nav-link" href="/thongke">Thống Kê</a>
                 </li>
 
+                <li>
+                    <a class="nav-link" href="/messages">Tin Nhắn</a>
+                </li>
+
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                     Thêm
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                     <li><a class="dropdown-item" href="#divOne">Chấm công</a></li>
+                    <li><a class="dropdown-item" href="/vi?w_u_id=<%= session.u_id %>">Ví</a></li>
+                    <li><a class="dropdown-item" href="/ds_donrut">Đơn Rút</a></li>
                     <li><a class="dropdown-item" href="/sanpham">Sản Phẩm</a></li>
+                    <li><a class="dropdown-item" href="/truycaptraiphep">Truy Cập Trái Phép</a></li>
                     <li><a class="dropdown-item" href="/phiphatsinh">Phí Phát Sinh</a></li>
                     <li><a class="dropdown-item" href="/dangnhap">Đăng nhập</a></li>
-                    <li><a class="dropdown-item" href="/dangki">Đăng kí</a></li>
                     <li><a class="dropdown-item" href="/dangxuat">Đăng xuất</a></li>
                     <li><hr class="dropdown-divider"></li>
                     <li><a class="dropdown-item" href="#">Cài đặt</a></li>
@@ -259,7 +268,7 @@ letter-spacing: 3px;
 
 
 <div class="overplay" id="divOne">
-    <div class="wrapper">
+    <div class="wrapperTK">
         <h2 class="text-center">TimeKeeping</h2>
         <a href="#" class="close">&times;</a>
         <div class="content">
@@ -286,8 +295,28 @@ letter-spacing: 3px;
                             { s_id = 3; }
                     %>
 
-                    <label for="">Ca</label>
-                    <input type="text" value="<%- s_id %>" name="tk_s_id">
+                    <div class="row g-3">
+                        <div class="col-sm">
+                            <label for="">Ca</label>
+                            <input type="text" class="form-control" value="<%- s_id %>" name="tk_s_id">        
+                        </div>
+                    
+
+                        <div class="col-sm">
+                            <label for="">Chi Nhánh</label>
+                            <!-- <select class="form-control" name="br_id" id="">
+                                <option name="br_id" value="<%- session.br_id %>"> 
+                                    <%- session.br_name %>
+                                </option>
+                            </select>   -->
+                            <input type="text" name="br_id" value="1"/>
+                        </div>
+                    </div>
+
+                    <label for="">ID LỊCH</label>
+                    <input type="text" name="cd_id"  value="<%= session.cd_id %>"/>
+                    <input type="text" hidden name="cd_shift_id"  value="<%= session.cd_shift_id %>"/>
+                    <input type="text" hidden name="hours"  value="<%= session.hours %>"/>
 
                     <br>
                     <label for="">Thống Kê</label>
@@ -297,8 +326,13 @@ letter-spacing: 3px;
                         </option>
                     </select>                    
                     <br>
-
-                    <input type="submit" class="btn btn-outline-danger" value="Submit" style="width: 100%;">
+                    <% if(session.cd_id == 'KHÔNG CÓ LỊCH LÀM'){ %>
+                        <input type="submit" disabled class="btn btn-outline-danger" value="Submit" style="width: 100%;">
+                    <% } else if(session.cd_check == 1 ) { %>    
+                        <input type="submit" disabled class="btn btn-outline-danger" value="Submit" style="width: 100%;">
+                    <% } else { %>
+                        <input type="submit" class="btn btn-outline-danger" value="Submit" style="width: 100%;">
+                    <% } %>
                 </form>
             </div>
         </div>

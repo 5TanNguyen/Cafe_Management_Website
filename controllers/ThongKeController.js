@@ -8,6 +8,7 @@ const DonDatModel = require("../models/DonDat");
 const DonNhapModel = require("../models/DonNhap");
 const { off } = require("../config/db");
 const PhiPhatSinhModel = require("../models/PhiPhatSinh");
+const TruyCapTraiPhepModel = require("../models/TruyCapTraiPhep");
 
 class ThongKeController {
 
@@ -15,18 +16,25 @@ class ThongKeController {
 
         res.locals.session = req.session;
 
-        if(!req.session.u_id)
+
+        if(!req.session.u_id || (req.session.u_d_id != 1))
         {
-            res.redirect("/dangnhap")
+            var currentdate = new Date();
+            var datetime = currentdate.getFullYear() + "-" + (currentdate.getMonth()+1) + "-" + currentdate.getDate()  + "  "  + currentdate.getHours() + ":"   + currentdate.getMinutes() + ":"  + currentdate.getSeconds();
+            var tctp = await TruyCapTraiPhepModel.addTCTP(req.session.u_id, 'Danh sách thống kê', datetime);
+
+            req.flash('message', 'Bạn không có quyền truy cập !');
+            res.render("dangnhap/dangnhap", { message : req.flash('message')});
         }
         else
         {
-
+            console.log(req.session.u_d_id);
             var stt = await ThongKeModel.GetThongKe();
 
             if(stt)
             {
-                res.render("thongke/ds_thongke", { test : stt})
+                req.flash('message', 'Đăng nhập thành công !!');
+                res.render("thongke/ds_thongke", { test : stt, message : req.flash('messsage')})
                 //res.send(stt);
             }
             else
@@ -38,9 +46,14 @@ class ThongKeController {
     {
         res.locals.session = req.session;
 
-        if(!req.session.u_id)
+        if(!req.session.u_id || (req.session.u_d_id != 1))
         {
-            res.redirect("/dangnhap")
+            var currentdate = new Date();
+            var datetime = currentdate.getFullYear() + "-" + (currentdate.getMonth()+1) + "-" + currentdate.getDate()  + "  "  + currentdate.getHours() + ":"   + currentdate.getMinutes() + ":"  + currentdate.getSeconds();
+            var tctp = await TruyCapTraiPhepModel.addTCTP(req.session.u_id, 'Chi tiết thống kê', datetime);
+
+            req.flash('message', 'Bạn không có quyền truy cập !');
+            res.render("dangnhap/dangnhap", { message : req.flash('message')});
         }
         else
         {
@@ -65,9 +78,14 @@ class ThongKeController {
     {
         res.locals.session = req.session;
 
-        if(!req.session.u_id)
+        if(!req.session.u_id || (req.session.u_d_id != 1))
         {
-            res.redirect("/dangnhap");
+            var currentdate = new Date();
+            var datetime = currentdate.getFullYear() + "-" + (currentdate.getMonth()+1) + "-" + currentdate.getDate()  + "  "  + currentdate.getHours() + ":"   + currentdate.getMinutes() + ":"  + currentdate.getSeconds();
+            var tctp = await TruyCapTraiPhepModel.addTCTP(req.session.u_id, 'Tạo thống kê', datetime);
+
+            req.flash('message', 'Bạn không có quyền truy cập !');
+            res.render("dangnhap/dangnhap", { message : req.flash('message')});
         }
         else
         {
@@ -91,9 +109,14 @@ class ThongKeController {
     {
         res.locals.session = req.session;
 
-        if(!req.session.u_id)
+        if(!req.session.u_id || (req.session.u_d_id != 1))
         {
-            res.redirect("/dangnhap")
+            var currentdate = new Date();
+            var datetime = currentdate.getFullYear() + "-" + (currentdate.getMonth()+1) + "-" + currentdate.getDate()  + "  "  + currentdate.getHours() + ":"   + currentdate.getMinutes() + ":"  + currentdate.getSeconds();
+            var tctp = await TruyCapTraiPhepModel.addTCTP(req.session.u_id, 'Thống kê theo ngày', datetime);
+
+            req.flash('message', 'Bạn không có quyền truy cập !');
+            res.render("dangnhap/dangnhap", { message : req.flash('message')});
         }
         else
         {
@@ -101,10 +124,6 @@ class ThongKeController {
             var date_begin = req.body.date_begin;
 
             var date_end = req.body.date_end;
-
-            // res.send(date_begin);
-
-            // console.log(date_end)
 
             var result = await ThongKeModel.GetThongKeTheoNgay(date_begin, date_end);
 
@@ -117,7 +136,8 @@ class ThongKeController {
             var pps = await ThongKeModel.GetThongKeTheoNgayPhiPhatSinh(date_begin, date_end);
             if(result != null)
             {
-                res.render("thongke/thongketheongay", {test : result, dn, dd, cc, date_begin,date_end, pps});
+                res.render("thongke/thongketheongay", {test : result,
+                     dn, dd, cc, date_begin,date_end, pps});
             }
         }
     }

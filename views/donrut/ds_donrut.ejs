@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DS Lịch Làm Việc</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+</head>
+<body>
+
+    <% if(session.u_d_id == 1){ %>
+        <%- include('../z_layout/navigation') %>
+    <% }else if(session.u_d_id == 2 ){ %>
+        <%- include('../z_layout/nav_2') %>
+    <% }else if(session.u_d_id == 3 ){ %>
+        <%- include('../z_layout/nav_3') %>
+    <% } %>
+
+    <div class="container">
+        <h2 class="text-center">
+            Danh sách lịch làm việc
+        </h2>
+        <!-- <a href="#divUD" class="btn btn-outline-danger">Tạo lịch</a> -->
+        <table class="table table-hover">
+            <thead>
+                <td>ID</td>
+                <td>Người rút</td>
+                <td>Số tiền</td>
+                <td>Ngày tạo</td>
+                <td colspan="2">Action</td>
+            </thead>
+
+            <% if(test.length > 0){ %>
+                <% for(var i=0; i <test.length; i++){  %>
+                    <tr>
+                        <td><%= test[i].tran_id %></td>
+                        <td><%= test[i].u_id %> | <%= test[i].u_name %></td>
+                        <td><%= Intl.NumberFormat({style: "currency", curency:"VND"}).format( test[i].tran_money ) %> VNĐ </td>
+                        <td><%= Intl.DateTimeFormat("vi-VN", {dateStyle:"short", timeStyle:"short"}).format( test[i].tran_created ) %></td>
+                        <td>
+                            <a class="btn btn-primary" href="/duyetdonrut?tran_id=<%- test[i].tran_id %>&w_u_id=<%- test[i].u_id %>&money=<%- test[i].tran_money %>">Duyệt</a>
+                        </td>
+                    </tr>
+                <% } %>
+            <% } else { %>
+                <p>Data Not Found</p>
+            <% } %>
+        </table>
+    </div>
+
+
+
+
+   
+    <div class="UD_overplay" id="divUD">
+
+        <div class="UD_wrapper">
+            <h2>Tạo lịch mới</h2>
+            <a href="#" class="close">&times;</a>
+            <div class="content">
+                <div class="container">
+                    <form action="/taolich" method="POST">
+
+                        <label for="">Ngày bắt đầu</label>
+                        <input name="cld_begin" id="db" onchange="handledatechange()" type="date" class="form-control">
+                                
+                        <label for="">Ngày kết thúc</label>
+                        <input name="cld_end" id="de" onchange="handledatechange()" type="date" class="form-control">
+
+
+                        <br>
+                        <label for="">Chi Nhánh</label>
+                        <select class="form-control" name="ib_br_id" id="">
+                           
+                        </select>
+
+
+                        <br>
+                        <label for="">Thống Kê</label>
+                       
+                        <br>
+                        <input type="submit" value="Submit">
+                    </form>
+
+                    <script>
+                        function handledatechange(){
+                            var date_picker = document.getElementById("db").value;
+            
+                            // alert("Date" + date_picker);
+                        }
+                    </script>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

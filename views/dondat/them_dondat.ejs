@@ -17,8 +17,15 @@
 
 </head>
 <body>
-    <%- include('../z_layout/navigation.ejs') %>
+    <% if(session.u_d_id == 1){ %>
+        <%- include('../z_layout/navigation') %>
+    <% }else if(session.u_d_id == 2 ){ %>
+        <%- include('../z_layout/nav_2') %>
+    <% }else if(session.u_d_id == 3 ){ %>
+        <%- include('../z_layout/nav_3') %>
+    <% } %>
 
+    
     <div class="container">
         <br>
         <h3 class="text-center">Thêm đơn đặt</h3>

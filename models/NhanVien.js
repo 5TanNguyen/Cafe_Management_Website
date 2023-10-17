@@ -9,6 +9,21 @@ class NhanVienModel{
             + " AND u_password = ?", [usrn, pwd], (error, result)=>{
                 if(!error)
                     resolve(result)
+                else
+                    resolve(false)
+            })
+        })
+    }
+
+    static async getNhanVienById(u_id)
+    {
+        return new Promise(resolve => {
+            db.query("SELECT * FROM `users`"
+            + " WHERE u_id = ?", [u_id], (error, result)=>{
+                if(!error)
+                    resolve(result)
+                else
+                    resolve(false)
             })
         })
     }

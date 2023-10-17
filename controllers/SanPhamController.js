@@ -1,6 +1,7 @@
 const { response } = require("express");
 const sanphamModel=require("../models/SanPham")
 const {validationResult}=require("express-validator")
+const TruyCapTraiPhepModel = require("../models/TruyCapTraiPhep");
 
 class SanPhamController{
 
@@ -8,9 +9,14 @@ class SanPhamController{
     {
         res.locals.session = req.session;
 
-        if(!req.session.u_id)
+        if(!req.session.u_id || (req.session.u_d_id != 1))
         {
-            res.redirect("/dangnhap");
+            var currentdate = new Date();
+            var datetime = currentdate.getFullYear() + "-" + (currentdate.getMonth()+1) + "-" + currentdate.getDate()  + "  "  + currentdate.getHours() + ":"   + currentdate.getMinutes() + ":"  + currentdate.getSeconds();
+            var tctp = await TruyCapTraiPhepModel.addTCTP(req.session.u_id, 'Danh sách sản phẩm', datetime);
+
+            req.flash('message', 'Bạn không có quyền truy cập !');
+            res.render("dangnhap/dangnhap", { message : req.flash('message')});
         }
         else
         {
@@ -23,13 +29,18 @@ class SanPhamController{
         }
     }
 
-    static showAddSanPham(req, res)
+    static async showAddSanPham(req, res)
     {
         res.locals.session = req.session;
 
-        if(!req.session.u_id)
+        if(!req.session.u_id || (req.session.u_d_id != 1))
         {
-            res.redirect("/dangnhap");
+            var currentdate = new Date();
+            var datetime = currentdate.getFullYear() + "-" + (currentdate.getMonth()+1) + "-" + currentdate.getDate()  + "  "  + currentdate.getHours() + ":"   + currentdate.getMinutes() + ":"  + currentdate.getSeconds();
+            var tctp = await TruyCapTraiPhepModel.addTCTP(req.session.u_id, 'Form thêm sản phẩm', datetime);
+
+            req.flash('message', 'Bạn không có quyền truy cập !');
+            res.render("dangnhap/dangnhap", { message : req.flash('message')});
         }
         else
         {
@@ -41,9 +52,14 @@ class SanPhamController{
     {
         res.locals.session = req.session;
 
-        if(!req.session.u_id)
+        if(!req.session.u_id || (req.session.u_d_id != 1))
         {
-            res.redirect("/dangnhap");
+            var currentdate = new Date();
+            var datetime = currentdate.getFullYear() + "-" + (currentdate.getMonth()+1) + "-" + currentdate.getDate()  + "  "  + currentdate.getHours() + ":"   + currentdate.getMinutes() + ":"  + currentdate.getSeconds();
+            var tctp = await TruyCapTraiPhepModel.addTCTP(req.session.u_id, 'Thêm sản phẩm', datetime);
+            
+            req.flash('message', 'Bạn không có quyền truy cập !');
+            res.render("dangnhap/dangnhap", { message : req.flash('message')});
         }
         else
         {
@@ -71,9 +87,13 @@ class SanPhamController{
     {
         res.locals.session = req.session;
 
-        if(!req.session.u_id)
+        if(!req.session.u_id || (req.session.u_d_id != 1))
         {
-            res.redirect("/dangnhap");
+            var currentdate = new Date();
+            var datetime = currentdate.getFullYear() + "-" + (currentdate.getMonth()+1) + "-" + currentdate.getDate()  + "  "  + currentdate.getHours() + ":"   + currentdate.getMinutes() + ":"  + currentdate.getSeconds();
+            var tctp = await TruyCapTraiPhepModel.addTCTP(req.session.u_id, 'Form xóa sản phẩm', datetime);
+            req.flash('message', 'Bạn không có quyền truy cập !');
+            res.render("dangnhap/dangnhap", { message : req.flash('message')});
         }
         else
         {
@@ -93,9 +113,14 @@ class SanPhamController{
     {
         res.locals.session = req.session;
 
-        if(!req.session.u_id)
+        if(!req.session.u_id || (req.session.u_d_id != 1))
         {
-            res.redirect("/dangnhap");
+            var currentdate = new Date();
+            var datetime = currentdate.getFullYear() + "-" + (currentdate.getMonth()+1) + "-" + currentdate.getDate()  + "  "  + currentdate.getHours() + ":"   + currentdate.getMinutes() + ":"  + currentdate.getSeconds();
+            var tctp = await TruyCapTraiPhepModel.addTCTP(req.session.u_id, 'Xóa sản phẩm', datetime);
+
+            req.flash('message', 'Bạn không có quyền truy cập !');
+            res.render("dangnhap/dangnhap", { message : req.flash('message')});
         }
         else
         {
@@ -129,9 +154,14 @@ class SanPhamController{
     {
         res.locals.session = req.session;
 
-        if(!req.session.u_id)
+        if(!req.session.u_id || (req.session.u_d_id != 1))
         {
-            res.redirect("/dangnhap");
+            var currentdate = new Date();
+            var datetime = currentdate.getFullYear() + "-" + (currentdate.getMonth()+1) + "-" + currentdate.getDate()  + "  "  + currentdate.getHours() + ":"   + currentdate.getMinutes() + ":"  + currentdate.getSeconds();
+            var tctp = await TruyCapTraiPhepModel.addTCTP(req.session.u_id, 'Form thêm sản phẩm', datetime);
+
+            req.flash('message', 'Bạn không có quyền truy cập !');
+            res.render("dangnhap/dangnhap", { message : req.flash('message')});
         }
         else
         {
@@ -148,9 +178,14 @@ class SanPhamController{
     {
         res.locals.session = req.session;
 
-        if(!req.session.u_id)
+        if(!req.session.u_id || (req.session.u_d_id != 1))
         {
-            res.redirect("/dangnhap")
+            var currentdate = new Date();
+            var datetime = currentdate.getFullYear() + "-" + (currentdate.getMonth()+1) + "-" + currentdate.getDate()  + "  "  + currentdate.getHours() + ":"   + currentdate.getMinutes() + ":"  + currentdate.getSeconds();
+            var tctp = await TruyCapTraiPhepModel.addTCTP(req.session.u_id, 'Chỉnh sửa sản phẩm', datetime);
+
+            req.flash('message', 'Bạn không có quyền truy cập !');
+            res.render("dangnhap/dangnhap", { message : req.flash('message')});
         }
         else
         {

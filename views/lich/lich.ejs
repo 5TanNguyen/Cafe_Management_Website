@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DS Lịch Làm Việc</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+</head>
+<body>
+
+    <% if(session.u_d_id == 1){ %>
+        <%- include('../z_layout/navigation') %>
+    <% }else if(session.u_d_id == 2 ){ %>
+        <%- include('../z_layout/nav_2') %>
+    <% }else if(session.u_d_id == 3 ){ %>
+        <%- include('../z_layout/nav_3') %>
+    <% } %>
+
+    <div class="container">
+        <h2 class="text-center">
+            Danh sách lịch làm việc
+        </h2>
+        <% if(session.u_d_id == 1){ %>
+            <a href="#divUD" class="btn btn-outline-danger">Tạo lịch</a>
+        <% } %>
+        
+        <table class="table table-hover">
+            <thead>
+                <td>ID</td>
+                <td>Begin</td>
+                <td>End</td>
+                <td colspan="2">Action</td>
+            </thead>
+
+            <% if(cld.length > 0){ %>
+                <% for(var i=0; i <cld.length; i++){  %>
+                    <tr>
+                        <td><%= cld[i].cld_id %></td>
+                        <td><%= Intl.DateTimeFormat("vi-VN", {dateStyle: "short"}).format( cld[i].cld_begin ) %></td>
+                        <td><%= Intl.DateTimeFormat("vi-VN", {dateStyle: "short"}).format( cld[i].cld_end ) %></td>
+                        <td>
+                            <a class="btn btn-primary" href="/chitietlich?cld_id=<%- cld[i].cld_id %>">Detail</a>
+                        </td>
+                    </tr>
+                <% } %>
+            <% } else { %>
+                <p>Data Not Found</p>
+            <% } %>
+        </table>
+    </div>
+
+
+
+
+   
+    <div class="UD_overplay" id="divUD">
+
+        <div class="UD_wrapper">
+            <h2>Tạo lịch mới</h2>
+            <a href="#" class="close">&times;</a>
+            <div class="content">
+                <div class="container">
+                    <form action="/taolich" method="POST">
+
+                        <label for="">Ngày bắt đầu</label>
+                        <input name="cld_begin" id="db" onchange="handledatechange()" type="date" class="form-control">
+                                
+                        <label for="">Ngày kết thúc</label>
+                        <input name="cld_end" id="de" onchange="handledatechange()" type="date" class="form-control">
+
+
+                        <br>
+                        <label for="">Chi Nhánh</label>
+                        <select class="form-control" name="ib_br_id" id="">
+                            <% for(var t = 0; t < br.length; t++){ %>
+                                <option name="ib_s_id" value="<%- br[t].br_id %>"> <%- br[t].br_name %></option>
+                            <% } %>
+                        </select>
+
+
+                        <br>
+                        <label for="">Thống Kê</label>
+                        <select class="form-control" name="ib_s_id" id="">
+                            <% for(var t = 0; t < stt.length; t++){ %>
+                                <option name="ib_s_id" value="<%- stt[t].s_id %>"> <%- stt[t].s_name %></option>
+                            <% } %>
+                        </select>
+                        <br>
+                        <input type="submit" value="Submit">
+                    </form>
+
+                    <script>
+                        function handledatechange(){
+                            var date_picker = document.getElementById("db").value;
+            
+                            // alert("Date" + date_picker);
+                        }
+                    </script>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

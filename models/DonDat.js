@@ -81,7 +81,7 @@ class DonDatModel{
     static async chitietdondat(dd_id)
     {
         return new Promise(resolve =>{
-            db.query("Select od.od_id, od.od_o_id, od.od_pro_id, pro.pro_name, pro.pro_price, od.od_quantity, od.od_price, o.o_cost, o.o_time"
+            db.query("Select od.od_id, od.od_o_id, od.od_pro_id, pro.pro_name, pro.pro_price, od.od_quantity, od.od_price, o.o_cost, o.o_time, o.o_t_id, o.o_s_id"
             + " from orders o,  order_detail od, products pro" //, bartending b, bartending_detail bd, ingredient ing"
             + " where od.od_pro_id = pro.pro_id"
             + " and o.o_id = od.od_o_id"
@@ -123,10 +123,11 @@ class DonDatModel{
         })
     }
 
-    static async createdondat(o_u_id, o_c_id , o_t_id, o_number, o_status, o_post, o_tick, o_cost, o_time, s_id)
+    static async createdondat(o_u_id, o_c_id , o_t_id, o_number, o_status, o_post, o_tick, o_cost, o_time, s_id, o_br_id)
     {
         return new Promise(resolve =>{
-            db.query("INSERT INTO orders (o_id, o_u_id , o_c_id , o_t_id , o_number, o_status, o_post, o_tick, o_cost, o_time, o_s_id) VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);", [o_u_id, o_c_id , o_t_id, o_number, o_status, o_post, o_tick, o_cost, o_time, s_id], (error, result)=>{
+            db.query("INSERT INTO orders (o_id, o_u_id , o_c_id , o_t_id , o_number, o_status, o_post, o_tick, o_cost, o_time, o_s_id, o_br_id) VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?,"
+            + " (SELECT s_id FROM statistical ORDER BY s_id DESC LIMIT 1), ?);", [o_u_id, o_c_id , o_t_id, o_number, o_status, o_post, o_tick, o_cost, o_time, o_br_id], (error, result)=>{
                 if(!error)
                     resolve(result)
             })    
@@ -215,6 +216,122 @@ class DonDatModel{
             db.query("SELECT * FROM orders"
             + " WHERE o_s_id = ?", [s_id], (err, result)=>{
                 if(!err) resolve(result);
+            })
+        })
+    }
+
+    static async GetDonDatByS_ID_And_br_id(s_id, br_id)
+    {
+        return new Promise(resolve =>{
+            db.query("SELECT * FROM orders"
+            + " WHERE o_s_id = ?"
+            + " AND o_br_id = ?", [s_id, br_id], (err, result)=>{
+                if(!err) resolve(result);
+            })
+        })
+    }
+
+    static async GetDonDat()
+    {
+        return new Promise(resolve =>{
+            db.query("SELECT * FROM orders" 
+            + " ORDER BY o_id DESC", [], (err, result)=>{
+                if(!err) resolve(result);
+            })
+        })
+    }
+
+    static async UpdateDonDat(o_id, o_t_id, o_number)
+    {
+        return new Promise(resolve =>{
+            db.query("UPDATE orders"
+            + " SET o_t_id = ?,"
+            + " o_number = ?"
+            + " WHERE o_id = ?", [o_t_id, o_number, o_id], (err, result)=>{
+                if(!err) resolve(result);
+            })
+        })
+    }
+
+    static async DeleteOD(od_id)
+    {
+        return new Promise(resolve =>{
+            db.query("DELETE FROM order_detail"
+            + " WHERE od_id = ?", [od_id], (err, result)=>{
+                if(!err) resolve(result)
+            })
+        })
+    }
+
+    static async GetLastOrder(t_id)
+    {
+        return new Promise(resolve =>{
+            db.query("SELECT * from orders"
+            + " WHERE o_t_id = ?"
+            + " ORDER BY o_id DESC" 
+            + " LIMIT 1", [t_id], (err, result)=>{
+                if(!err) resolve(result);
+            })
+        })
+    }
+
+    static async GopBan(o_id_old, o_id_new)
+    {
+        return new Promise(resolve =>{
+            db.query("UPDATE order_detail"
+            + " SET od_o_id = ?"
+            + " WHERE od_o_id = ?", [o_id_new, o_id_old], (err, result)=>{
+                if(!err) resolve(result);
+            })
+        })
+    }
+
+    static async GopBan_Cost(o_cost, o_id)
+    {
+        return new Promise(resolve=>{
+            db.query("UPDATE orders"
+            + " SET o_cost = o_cost + ?"
+            + " WHERE o_id = ?", [o_cost, o_id], (err, result)=>{
+                if(!err) resolve(true);
+            })
+        })
+    }
+
+    static async SetOrder_MergingById(om_o_id_new)
+    {
+        return new Promise(resolve=>{
+            db.query("UPDATE orders"
+            + " SET o_status = 1"
+            + " WHERE o_id = ("
+            + " SELECT om_o_id_old FROM order_merging WHERE om_o_id_new = ?"
+            + ")", [om_o_id_new], (err, result)=>{
+                if(!err) resolve(result);
+            })
+        })
+    }
+
+    static async SetTable_MergingById(om_o_id_new)
+    {
+        return new Promise(resolve=>{
+            db.query("UPDATE tables"
+            + " SET t_pay = 1"
+            + " WHERE t_id = ("
+            + "  SELECT o.o_t_id"
+            + "  FROM order_merging om, orders o"
+            + "  WHERE om.om_o_id_old = o.o_id"
+            + "    AND om.om_o_id_new = ?"
+            + ")", [om_o_id_new], (err, result)=>{
+                if(!err) resolve(result);
+            })
+        })
+    }
+    
+    static async Order_Merging(om_o_id_new, om_o_id_old)
+    {
+        return new Promise(resolve=>{
+            db.query("INSERT INTO order_merging(om_id, om_o_id_new, om_o_id_old)"
+            + " VALUES ( NULL , ?, ?);", [om_o_id_new, om_o_id_old], (err, result)=>{
+                if(!err) resolve(true);
             })
         })
     }

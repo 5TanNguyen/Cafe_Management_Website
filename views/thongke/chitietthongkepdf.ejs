@@ -10,7 +10,14 @@
 </head>
 <body>
 
-    <%- include('../z_layout/navigation.ejs') %>
+    <% if(session.u_d_id == 1){ %>
+        <%- include('../z_layout/navigation') %>
+    <% }else if(session.u_d_id == 2 ){ %>
+        <%- include('../z_layout/nav_2') %>
+    <% }else if(session.u_d_id == 3 ){ %>
+        <%- include('../z_layout/nav_3') %>
+    <% } %>
+    
     <form action="/chitietthongke" method="POST">        
         <div class="container">
             <h3 class="text-center">Chi tiết thống kê</h3>
@@ -33,7 +40,7 @@
                             <td><%- i+1 %></td>
                             <td><%- tk[i].u_name %></td>
                             <td><%- tk[i].s_name %></td>
-                            <td><%- tk[i].tk_date %></td>
+                            <td><%-Intl.DateTimeFormat('vi-VN', {dateStyle: 'short', timeStyle:'short'}).format( tk[i].tk_date ) %></td>
                             <td><%- tk[i].tk_note %></td>
                         </tr>
                     <% } %>
@@ -42,7 +49,7 @@
                 <% } %>
             </table>
             <label for="">Tổng</label>
-            <input class="form-control" type="text" value="<%- luongNV %> VNĐ">
+            <input class="form-control" type="text" value="<%- Intl.NumberFormat({style: 'currency', currency:'VND'}).format( luongNV ) %> VNĐ">
 
             <label class="form-label" for="">Phí Phát Sinh</label>
             <table class=" table table-hover">
@@ -60,7 +67,7 @@
                         <tr>
                             <td><%- i+1 %></td>
                             <td><%- pps[i].ci_name %></td>
-                            <td><%- pps[i].ci_cost %> VNĐ</td>
+                            <td><%- Intl.NumberFormat({style: 'currency', currency:'VND'}).format( pps[i].ci_cost ) %> VNĐ</td>
                             <td><%- pps[i].u_name %></td>
                         </tr>
                     <% } %>
@@ -69,7 +76,7 @@
                 <% } %>
             </table>
             <label for="">Tổng</label>
-            <input class="form-control" type="text" value="<%- phips %> VNĐ">
+            <input class="form-control" type="text" value="<%- Intl.NumberFormat({style: 'currency', currency:'VND'}).format( phips ) %> VNĐ">
 
             <hr>
 
@@ -90,8 +97,8 @@
                         <tr>
                             <td><%- i+1 %></td>
                             <td><%- ib[i].ib_name %></td>
-                            <td><%- ib[i].ib_date %></td>
-                            <td><%- ib[i].ib_cost %> VNĐ</td>
+                            <td><%-Intl.DateTimeFormat('vi-VN', {dateStyle: 'short', timeStyle:'short'}).format( ib[i].ib_date ) %></td>
+                            <td><%- Intl.NumberFormat({style: 'currency', currency:'VND'}).format( ib[i].ib_cost ) %> VNĐ</td>
                             <td>
                                 <a class="btn btn-primary" href="/chitietdonnhap?ib_id=<%- ib[i].ib_id %>">Detail</a>
                             </td>
@@ -102,7 +109,7 @@
                 <% } %>
             </table>
             <label for="">Tổng</label>
-            <input class="form-control" type="text" value="<%- phinhapNL %> VNĐ">
+            <input class="form-control" type="text" value="<%- Intl.NumberFormat({style: 'currency', currency:'VND'}).format( phinhapNL ) %> VNĐ">
 
 
             <label class="form-label" for="">Doanh thu thức uống</label>
@@ -124,8 +131,8 @@
                             <td><%- i+1 %></td>
                             <td><%- o[i].o_id %></td>
                             <td><%- o[i].o_t_id %></td>
-                            <td><%- o[i].o_cost %> VNĐ</td>
-                            <td><%- o[i].o_time %></td>
+                            <td><%- Intl.NumberFormat({style: 'currency', currency:'VND'}).format( o[i].o_cost ) %> VNĐ</td>
+                            <td><%- Intl.DateTimeFormat('vi-VN', {dateStyle: 'short', timeStyle:'short'}).format( o[i].o_time ) %></td>
                             <td>
                                 <a href="/chitietdondat?o_id=<%= o[i].o_id %>" class="btn btn-primary">Chi tiết</a>
                             </td>
@@ -137,7 +144,7 @@
             </table>
 
             <label for="">Tổng</label>
-            <input class="form-control" type="text" value="<%- order_cost %> VNĐ">
+            <input class="form-control" type="text" value="<%- Intl.NumberFormat({style: 'currency', currency:'VND'}).format( order_cost ) %> VNĐ">
 
         </div>
 
@@ -146,13 +153,13 @@
                 <div class="col-md">
                     <div>
                         <label for="floatingInputGrid">Tổng Chi</label>
-                        <input type="text" class="form-control" id="floatingInputGrid" placeholder="name@example.com" value="<%- stt[0].s_import %> VNĐ">
+                        <input type="text" class="form-control" id="floatingInputGrid" placeholder="name@example.com" value="<%- Intl.NumberFormat({style: 'currency', currency:'VND'}).format( stt[0].s_import ) %> VNĐ">
                     </div>
                 </div>
                 <div class="col-md">
                     <div>
                         <label for="floatingInputGrid">Tổng Thu</label>
-                        <input type="text" class="form-control" id="floatingInputGrid" placeholder="name@example.com" value="<%- stt[0].s_export %> VNĐ">
+                        <input type="text" class="form-control" id="floatingInputGrid" placeholder="name@example.com" value="<%- Intl.NumberFormat({style: 'currency', currency:'VND'}).format( stt[0].s_export ) %> VNĐ">
                     </div>
                 </div>
 
@@ -165,7 +172,7 @@
                             <h4 class="text-center">DOANH THU CÓ LỢI NHUẬN</h4>
                             <div  style="width: 96%; margin-left: 2%;">
                                 <label for="floatingInputGrid">LỢI NHUẬN</label>
-                                <input name="profit" type="text" class="form-control" placeholder="name@example.com" value="<%- stt[0].s_profit %> VNĐ">
+                                <input name="profit" type="text" class="form-control" placeholder="name@example.com" value="<%- Intl.NumberFormat({style: 'currency', currency:'VND'}).format( stt[0].s_profit ) %> VNĐ">
                             </div>
                         </div>
                     
@@ -175,7 +182,7 @@
                             <h4 class="text-center">DOANH THU LỖ</h4>
                             <div style="width: 96%; margin-left: 2%;">
                                 <label for="floatingInputGrid">Hao Hụt</label>
-                                <input name="profit" type="text" class="form-control" placeholder="name@example.com" value="<%- stt[0].s_profit %> VNĐ">
+                                <input name="profit" type="text" class="form-control" placeholder="name@example.com" value="<%- Intl.NumberFormat({style: 'currency', currency:'VND'}).format( stt[0].s_profit ) %> VNĐ">
                             </div>
                         </div>
                     

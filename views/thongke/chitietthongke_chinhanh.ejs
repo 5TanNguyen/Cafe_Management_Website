@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chi tiết thống kê</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+</head>
+<body>
+
+    <% if(session.u_d_id == 1){ %>
+        <%- include('../z_layout/navigation') %>
+    <% }else if(session.u_d_id == 2 ){ %>
+        <%- include('../z_layout/nav_2') %>
+    <% }else if(session.u_d_id == 3 ){ %>
+        <%- include('../z_layout/nav_3') %>
+    <% } %>
+    
+    <form action="/thongketheongay_chinhanh" method="POST">        
+        <div class="container">
+            <h3 class="text-center">Chi tiết thống kê</h3>
+
+            <form action="/thongketheongay_chinhanh" method="POST" class="form-control">
+            
+                <h3 class="text-center">Liệt kê theo chi nhánh</h3>
+
+                <input type="text" name="s_id" value="<%- stt[0].s_id %>" readonly hidden>
+
+                <select name="br_id" class="form-control" style="border-radius: 10px;">
+                    <option name="br_id" value="0">Tổng</option>
+                    <% for(var t = 0; t < br.length; t++){ %>
+                        <option name="br_id" value="<%- br[t].br_id %>"><%- br[t].br_name %></option>
+                    <% } %>
+                </select>
+    
+                <input type="submit" style="width: 100%; border-radius: 10px; margin-top: 5px;" class="btn btn-danger">
+            </form>
+
+            <br>
+            <br>
+            <br>
+
+            <label class="form-label" for="">Lương Nhân Viên</label>
+            <table class=" table table-hover">
+                <thead class="table-light">
+                    <td>STT</td>
+                    <td>Nhân viên</td>
+                    <td>Ca</td>
+                    <td>Ngày</td>
+                    <td>Ghi chú</td>
+                </thead>
+
+                <% var luongNV  = 0; %>
+                <% if( tk.length > 0){ %>
+                    <% for(var i = 0; i < tk.length; i++){ %>
+                        <% luongNV += 60000; %>
+                        <tr>
+                            <td><%- i+1 %></td>
+                            <td><%- tk[i].u_name %></td>
+                            <td><%- tk[i].s_name %></td>
+                            <td><%- Intl.DateTimeFormat('vi-VN', {dateStyle: 'short', timeStyle: 'short'}).format( tk[i].tk_date ) %></td>
+                            <td><%- tk[i].tk_note %></td>
+                        </tr>
+                    <% } %>
+                <% } else { %>
+                    <p>Không có dữ liệu</p>
+                <% } %>
+            </table>
+            <label for="">Tổng</label>
+            <input class="form-control" type="text" value="<%- Intl.NumberFormat({style: 'currency', currency:'VND'}).format( luongNV ) %> VNĐ">
+
+            <label class="form-label" for="">Phí Phát Sinh</label>
+            <table class=" table table-hover">
+                <thead class="table-light">
+                    <td>STT</td>
+                    <td>Tên Phí</td>
+                    <td>Phí</td>
+                    <td>Nhân viên lập</td>
+                </thead>
+
+                <% var phips  = 0; %>
+                <% if( pps.length > 0){ %>
+                    <% for(var i = 0; i < pps.length; i++){ %>
+                        <% phips += pps[i].ci_cost; %>
+                        <tr>
+                            <td><%- i+1 %></td>
+                            <td><%- pps[i].ci_name %></td>
+                            <td><%- Intl.NumberFormat({style: 'currency', currency:'VND'}).format( pps[i].ci_cost ) %> VNĐ</td>
+                            <td><%- pps[i].u_name %></td>
+                        </tr>
+                    <% } %>
+                <% } else { %>
+                    <p>Không có dữ liệu</p>
+                <% } %>
+            </table>
+            <label for="">Tổng</label>
+            <input class="form-control" type="text" value="<%- Intl.NumberFormat({style: 'currency', currency:'VND'}).format( phips ) %> VNĐ">
+
+            <hr>
+
+            <label class="form-label" for="">Chi Phí Nhập</label>
+            <table class=" table table-hover">
+                <thead class="table-light">
+                    <td>STT</td>
+                    <td>Tên đơn</td>
+                    <td>Ngày</td>
+                    <td>Giá</td>
+                    <td>Chi tiết</td>
+                </thead>
+
+                <% var phinhapNL = 0; %>
+                <% if( ib.length > 0){ %>
+                    <% for(var i = 0; i < ib.length; i++){ %>
+                        <% phinhapNL += ib[i].ib_cost %>
+                        <tr>
+                            <td><%- i+1 %></td>
+                            <td><%- ib[i].ib_name %></td>
+                            <td><%-  Intl.DateTimeFormat('vi-VN', {dateStyle: 'short', timeStyle: 'short'}).format( ib[i].ib_date ) %></td>
+                            <td><%- Intl.NumberFormat({style: 'currency', currency:'VND'}).format( ib[i].ib_cost ) %> VNĐ</td>
+                            <td>
+                                <a class="btn btn-primary" href="/chitietdonnhap?ib_id=<%- ib[i].ib_id %>">Detail</a>
+                            </td>
+                        </tr>
+                    <% } %>
+                <% } else { %>
+                    <p>Không có dữ liệu</p>
+                <% } %>
+            </table>
+            <label for="">Tổng</label>
+            <input class="form-control" type="text" value="<%- Intl.NumberFormat({style: 'currency', currency:'VND'}).format( phinhapNL ) %> VNĐ">
+
+
+            <label class="form-label" for="">Doanh thu thức uống</label>
+            <table class=" table table-hover">
+                <thead class="table-light">
+                    <td>STT</td>
+                    <td>Mã Đơn</td>
+                    <td>Bàn</td>
+                    <td>Giá</td>
+                    <td>Ngày</td>
+                    <td>Chi tiết</td>
+                </thead>
+
+                <% var order_cost = 0; %>
+                <% if( o.length > 0){ %>
+                    <% for(var i = 0; i < o.length; i++){ %>
+                        <% order_cost += o[i].o_cost; %>
+                        <tr>
+                            <td><%- i+1 %></td>
+                            <td><%- o[i].o_id %></td>
+                            <td><%- o[i].o_t_id %></td>
+                            <td><%- Intl.NumberFormat({style: 'currency', currency:'VND'}).format( o[i].o_cost ) %> VNĐ</td>
+                            <td><%-  Intl.DateTimeFormat('vi-VN', {dateStyle: 'short', timeStyle: 'short'}).format( o[i].o_time ) %></td>
+                            <td>
+                                <a href="/chitietdondat?o_id=<%= o[i].o_id %>" class="btn btn-primary">Chi tiết</a>
+                            </td>
+                        </tr>
+                    <% } %>
+                <% } else { %>
+                    <p>Không có dữ liệu</p>
+                <% } %>
+            </table>
+
+            <label for="">Tổng</label>
+            <input class="form-control" type="text" value="<%- Intl.NumberFormat({style: 'currency', currency:'VND'}).format( order_cost ) %> VNĐ">
+
+        </div>
+
+        <div class="container">
+            <div class="row g-2">
+                <div class="col-md">
+                    <div class="form-floating">
+                        <% var TongChi = luongNV + phips + phinhapNL %>
+                        <input type="text" class="form-control" id="floatingInputGrid" placeholder="name@example.com" value="<%- Intl.NumberFormat({style: 'currency', currency:'VND'}).format( TongChi ) %> VNĐ">
+                        <label for="floatingInputGrid">Tổng Chi</label>
+                    </div>
+                </div>
+                <div class="col-md">
+                    <div class="form-floating">
+                        <% var TongThu = order_cost %>
+                        <input type="text" class="form-control" id="floatingInputGrid" placeholder="name@example.com" value="<%- Intl.NumberFormat({style: 'currency', currency:'VND'}).format( TongThu ) %> VNĐ">
+                        <label for="floatingInputGrid">Tổng Thu</label>
+                    </div>
+                </div>
+
+                <div>
+                    <% var s_profit = TongThu - TongChi %>
+                    <% if(s_profit > 0){ %>
+                        <div style="background-color: green;">
+                            <br>
+                            <h4 class="text-center">DOANH THU CÓ LỢI NHUẬN</h4>
+                            <div  style="width: 96%; margin-left: 2%;" class="form-floating">
+                                <input name="profit" type="text" class="form-control" id="floatingInputGrid" placeholder="name@example.com" value="<%- Intl.NumberFormat({style: 'currency', currency:'VND'}).format( s_profit ) %> VNĐ">
+                                <label for="floatingInputGrid">Tổng Thu</label>
+                            </div>
+                        </div>
+                    
+                    <% } else { %>
+                        <div style="background-color: red;">
+                            <br>
+                            <h4 class="text-center">DOANH THU LỖ</h4>
+                            <div style="width: 96%; margin-left: 2%;" class="form-floating">
+                                <input name="profit" type="text" class="form-control" id="floatingInputGrid" placeholder="name@example.com" value="<%- Intl.NumberFormat({style: 'currency', currency:'VND'}).format( s_profit ) %> VNĐ">
+                                <label for="floatingInputGrid">Hao Hụt</label>
+                            </div>
+                        </div>
+                    
+                    <% } %>
+                </div>
+            </div>
+        </div>
+        <!-- <input type="submit" class="btn btn-outline-danger"> -->
+    </form>
+    <!-- <a href="/chitietthongkepdf?s_id=<%- s_id %>" class="btn btn-danger" style="width: 100%">XUẤT PDF</a> -->
+</body>
+</html>

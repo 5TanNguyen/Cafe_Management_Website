@@ -216,7 +216,14 @@ input[type="submit"]{
 
 </head>
 <body>
-    <%- include('../z_layout/navigation.ejs') %>
+    <% if(session.u_d_id == 1){ %>
+        <%- include('../z_layout/navigation') %>
+    <% }else if(session.u_d_id == 2 ){ %>
+        <%- include('../z_layout/nav_2') %>
+    <% }else if(session.u_d_id == 3 ){ %>
+        <%- include('../z_layout/nav_3') %>
+    <% } %>
+    
     <br>
     <h1 class="text-center"> Danh sách bàn</h1>
     <div class="container">
@@ -248,6 +255,13 @@ input[type="submit"]{
                                                     
                                                     <label for="">Số Người</label>
                                                     <input type="text" placeholder="Nhập số người" name="num">
+
+                                                    <label for="">Chi Nhánh</label>
+                                                    <select class="form-control" name="br_id" id="">
+                                                        <% for(var t = 0; t < br.length; t++){ %> 
+                                                            <option value="<%- br[t].br_id %>"><%- br[t].br_name %></option>
+                                                        <% } %>
+                                                    </select>
                             
                                                     <% var currentdate = new Date(); %>
                                                     <% var datetime = currentdate.getFullYear() + "-" + (currentdate.getMonth()+1) + "-" + currentdate.getDate()  + "  "  + currentdate.getHours() + ":"   + currentdate.getMinutes() + ":"  + currentdate.getSeconds(); %>

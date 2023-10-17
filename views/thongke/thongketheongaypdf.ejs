@@ -242,19 +242,19 @@
                         </td>
 
                         <td>
-                            <%- test[i].s_import %>
+                            <%-  Intl.NumberFormat({style: 'currency', currency:'VND'}).format( test[i].s_import ) %> VNĐ
                         </td>
 
                         <td>
-                            <%- test[i].s_export %>
+                            <%- Intl.NumberFormat({style: 'currency', currency:'VND'}).format( test[i].s_export ) %> VNĐ
                         </td>
 
                         <td>
-                            <%- test[i].s_profit %>
+                            <%- Intl.NumberFormat({style: 'currency', currency:'VND'}).format( test[i].s_profit ) %> VNĐ
                         </td>
 
                         <td>
-                            <%- test[i].s_date %>
+                            <%-  Intl.DateTimeFormat('vi-VN', {dateStyle: 'short', timeStyle: 'short'}).format( test[i].s_date ) %>
                         </td>
 
                         <td>
@@ -275,9 +275,9 @@
                 <td>LỢI NHUẬN</td>
             </thead>
             <tr>
-                <td><%= im %> VNĐ</td>
-                <td><%= ex %> VNĐ</td>
-                <td><%= pro %> VNĐ</td>
+                <td><%= Intl.NumberFormat({style: 'currency', currency:'VND'}).format( im ) %> VNĐ</td>
+                <td><%= Intl.NumberFormat({style: 'currency', currency:'VND'}).format( ex ) %> VNĐ</td>
+                <td><%= Intl.NumberFormat({style: 'currency', currency:'VND'}).format( pro ) %> VNĐ</td>
                
             </tr>
 
@@ -307,7 +307,7 @@
                         </td>
 
                         <td>
-                            <%- cc[i].tk_date %>
+                            <%-  Intl.DateTimeFormat('vi-VN', {dateStyle: 'short', timeStyle: 'short'}).format( cc[i].tk_date ) %>
                         </td>
 
                         <td>
@@ -320,7 +320,7 @@
             <% } %>
         </table>
         <label for="">Tổng lương</label>
-        <input readonly type="text" value="<%- luongNV %> VNĐ">
+        <input readonly type="text" value="<%- Intl.NumberFormat({style: 'currency', currency:'VND'}).format( luongNV ) %> VNĐ">
 
         <hr>
         <h3>Phí Phát Sinh</h3>
@@ -342,7 +342,7 @@
                         </td>
                         
                         <td>
-                            <%- pps[i].ci_cost %> VNĐ
+                            <%- Intl.NumberFormat({style: 'currency', currency:'VND'}).format( pps[i].ci_cost ) %> VNĐ
                         </td>
 
                         <td>
@@ -355,7 +355,7 @@
             <% } %>
         </table>
         <label for="">Tổng phí</label>
-        <input readonly type="text" value="<%- phips %> VNĐ">
+        <input readonly type="text" value="<%- Intl.NumberFormat({style: 'currency', currency:'VND'}).format( phips ) %> VNĐ">
 
 
         <hr>
@@ -381,11 +381,11 @@
                         </td>
 
                         <td>
-                            <%- dn[i].ib_date %>
+                            <%-  Intl.DateTimeFormat('vi-VN', {dateStyle: 'short', timeStyle: 'short'}).format( dn[i].ib_date ) %>
                         </td>
 
                         <td>
-                            <%- dn[i].ib_cost %> VNĐ
+                            <%- Intl.NumberFormat({style: 'currency', currency:'VND'}).format( dn[i].ib_cost ) %> VNĐ
                         </td>                     
                     </tr>
                 <% } %>
@@ -394,7 +394,7 @@
             <% } %>
         </table>
         <label for="">Tổng phí</label>
-        <input readonly type="text" value="<%- phiNhap %> VNĐ">
+        <input readonly type="text" value="<%-Intl.NumberFormat({style: 'currency', currency:'VND'}).format( phiNhap ) %> VNĐ">
 
         <hr>
         <h3 for="">Doanh Thu Thức Uống</h3>
@@ -419,11 +419,11 @@
                         </td>
 
                         <td>
-                            <%- dd[i].o_cost %> VNĐ
+                            <%- Intl.NumberFormat({style: 'currency', currency:'VND'}).format( dd[i].o_cost ) %> VNĐ
                         </td>
 
                         <td>
-                            <%- dd[i].o_time %>
+                            <%- Intl.DateTimeFormat('vi-VN', {dateStyle: 'short', timeStyle: 'short'}).format( dd[i].o_time ) %>
                         </td>
                     </tr>
                 <% } %>
@@ -433,7 +433,7 @@
         </table>
 
         <label for="">Tổng thu</label>
-        <input readonly type="text" value="<%- dondat %> VNĐ">
+        <input readonly type="text" value="<%- Intl.NumberFormat({style: 'currency', currency:'VND'}).format( dondat ) %> VNĐ">
         
 
     </div>

@@ -14,8 +14,14 @@
     <%- include ('../z_layout/header.ejs') %>
 </head>
 <body>
-    <%- include ('../z_layout/navigation.ejs') %>
-        
+    <% if(session.u_d_id == 1){ %>
+        <%- include('../z_layout/navigation') %>
+    <% }else if(session.u_d_id == 2 ){ %>
+        <%- include('../z_layout/nav_2') %>
+    <% }else if(session.u_d_id == 3 ){ %>
+        <%- include('../z_layout/nav_3') %>
+    <% } %>
+    
     <style>
         body{
             font-family: montserrat;
@@ -233,7 +239,7 @@
                     <tr>
                         <td> <%- test[i].pro_id  %></td>
                         <td> <%- test[i].pro_name %></td>
-                        <td> <%- test[i].pro_price %> </td>
+                        <td> <%- Intl.NumberFormat({style:"currency", currency:"VND"}).format( test[i].pro_price ) %> VNĐ </td>
                         <!-- <td> <%- test[i].sp_mota %> </td> -->
                        
                         <td>                        

@@ -3,6 +3,7 @@ const sanphamModel=require("../models/SanPham")
 const {validationResult}=require("express-validator");
 const BanModel = require("../models/Ban");
 const NhanVienModel = require("../models/NhanVien");
+const { checkPermission } = require("../middlewares/checkPermission");
 
 class DangNhapController {
     static async GetDangNhapForm(req, res)
@@ -14,6 +15,8 @@ class DangNhapController {
     {
         var u_username = req.body.u_username;
         var u_password = req.body.u_password;
+
+        await checkPermission.checkPermission();
 
         var x = await NhanVienModel.getNhanVienByUsername(u_username, u_password);
         

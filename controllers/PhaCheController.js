@@ -6,15 +6,21 @@ const DonDatModel = require("../models/DonDat");
 const NguyenLieuModel = require("../models/NguyenLieu");
 const PhaCheModel = require("../models/PhaChe");
 const DonDatController = require("./DonDatController");
+const TruyCapTraiPhepModel = require("../models/TruyCapTraiPhep");
 
 class PhaCheController{
 
     static async getDSChoPhaChe(req, res)
     {
         res.locals.session = req.session;
-        if(!req.session.u_id)
+        if(!req.session.u_id || ((req.session.u_d_id != 2) && (req.session.u_d_id != 1)))
         {
-            res.redirect("/dangnhap");
+            var currentdate = new Date();
+            var datetime = currentdate.getFullYear() + "-" + (currentdate.getMonth()+1) + "-" + currentdate.getDate()  + "  "  + currentdate.getHours() + ":"   + currentdate.getMinutes() + ":"  + currentdate.getSeconds();
+            var tctp = await TruyCapTraiPhepModel.addTCTP(req.session.u_id, 'Danh sách chờ pha chế', datetime);
+
+            req.flash('message', 'Bạn không có quyền truy cập !');
+            res.render("dangnhap/dangnhap", { message : req.flash('message')});
         }
         else
         {
@@ -28,9 +34,14 @@ class PhaCheController{
     {
         res.locals.session = req.session;
 
-        if(!req.session.u_id)
+        if(!req.session.u_id || ((req.session.u_d_id != 2) && (req.session.u_d_id != 1)))
         {
-            res.redirect("/dangnhap");
+            var currentdate = new Date();
+            var datetime = currentdate.getFullYear() + "-" + (currentdate.getMonth()+1) + "-" + currentdate.getDate()  + "  "  + currentdate.getHours() + ":"   + currentdate.getMinutes() + ":"  + currentdate.getSeconds();
+            var tctp = await TruyCapTraiPhepModel.addTCTP(req.session.u_id, 'Pha chế xong', datetime);
+
+            req.flash('message', 'Bạn không có quyền truy cập !');
+            res.render("dangnhap/dangnhap", { message : req.flash('message')});
         }
         else
         {
@@ -48,9 +59,14 @@ class PhaCheController{
     {
         res.locals.session = req.session;
 
-        if(!req.session.u_id)
+        if(!req.session.u_id || ((req.session.u_d_id != 2) && (req.session.u_d_id != 1)))
         {
-            res.redirect("/dangnhap");
+            var currentdate = new Date();
+            var datetime = currentdate.getFullYear() + "-" + (currentdate.getMonth()+1) + "-" + currentdate.getDate()  + "  "  + currentdate.getHours() + ":"   + currentdate.getMinutes() + ":"  + currentdate.getSeconds();
+            var tctp = await TruyCapTraiPhepModel.addTCTP(req.session.u_id, 'Cách pha chế', datetime);
+
+            req.flash('message', 'Bạn không có quyền truy cập !');
+            res.render("dangnhap/dangnhap", { message : req.flash('message')});
         }
         else
         {
@@ -70,9 +86,14 @@ class PhaCheController{
     {
         res.locals.session = req.session;
 
-        if(!req.session.u_id)
+        if(!req.session.u_id || ((req.session.u_d_id != 2) && (req.session.u_d_id != 1)))
         {
-            res.redirect("/dangnhap");
+            var currentdate = new Date();
+            var datetime = currentdate.getFullYear() + "-" + (currentdate.getMonth()+1) + "-" + currentdate.getDate()  + "  "  + currentdate.getHours() + ":"   + currentdate.getMinutes() + ":"  + currentdate.getSeconds();
+            var tctp = await TruyCapTraiPhepModel.addTCTP(req.session.u_id, 'Form chỉnh sửa cách pha chế', datetime);
+
+            req.flash('message', 'Bạn không có quyền truy cập !');
+            res.render("dangnhap/dangnhap", { message : req.flash('message')});
         }
         else
         {
@@ -91,9 +112,14 @@ class PhaCheController{
     {
         res.locals.session = req.session;
 
-        if(!req.session.u_id)
+        if(!req.session.u_id || ((req.session.u_d_id != 2) && (req.session.u_d_id != 1)))
         {
-            res.redirect("/dangnhap");
+            var currentdate = new Date();
+            var datetime = currentdate.getFullYear() + "-" + (currentdate.getMonth()+1) + "-" + currentdate.getDate()  + "  "  + currentdate.getHours() + ":"   + currentdate.getMinutes() + ":"  + currentdate.getSeconds();
+            var tctp = await TruyCapTraiPhepModel.addTCTP(req.session.u_id, 'Thêm chi tiết pha chế', datetime);
+
+            req.flash('message', 'Bạn không có quyền truy cập !');
+            res.render("dangnhap/dangnhap", { message : req.flash('message')});
         }
         else
         {
@@ -111,9 +137,14 @@ class PhaCheController{
     static async deleteChiTietPhaChe(req, res){
         res.locals.session = req.session;
 
-        if(!req.session.u_id)
+        if(!req.session.u_id || ((req.session.u_d_id != 2) && (req.session.u_d_id != 1)))
         {
-            res.redirect("/dangnhap");
+            var currentdate = new Date();
+            var datetime = currentdate.getFullYear() + "-" + (currentdate.getMonth()+1) + "-" + currentdate.getDate()  + "  "  + currentdate.getHours() + ":"   + currentdate.getMinutes() + ":"  + currentdate.getSeconds();
+            var tctp = await TruyCapTraiPhepModel.addTCTP(req.session.u_id, 'Xóa chi tiết pha chế', datetime);
+
+            req.flash('message', 'Bạn không có quyền truy cập !');
+            res.render("dangnhap/dangnhap", { message : req.flash('message')});
         }
         else
         {
@@ -137,9 +168,14 @@ class PhaCheController{
     {
         res.locals.session = req.session;
 
-        if(!req.session.u_id)
+        if(!req.session.u_id || ((req.session.u_d_id != 2) && (req.session.u_d_id != 1)))
         {
-            res.redirect("/dangnhap")
+            var currentdate = new Date();
+            var datetime = currentdate.getFullYear() + "-" + (currentdate.getMonth()+1) + "-" + currentdate.getDate()  + "  "  + currentdate.getHours() + ":"   + currentdate.getMinutes() + ":"  + currentdate.getSeconds();
+            var tctp = await TruyCapTraiPhepModel.addTCTP(req.session.u_id, 'Post chi tiết pha chế', datetime);
+
+            req.flash('message', 'Bạn không có quyền truy cập !');
+            res.render("dangnhap/dangnhap", { message : req.flash('message')});
         }
         else
         {

@@ -16,8 +16,13 @@ const NguyenLieuModel = require('../models/NguyenLieu');
 const ThongKeController = require('../controllers/ThongKeController');
 const PhiPhatSinhController = require('../controllers/PhiPhatSinhController');
 const DonDatController = require('../controllers/DonDatController');
+const LichController = require('../controllers/LichController');
+const ViController = require('../controllers/ViController');
+const PhienGiaoDichController = require('../controllers/PhienGiaoDichController');
+const { checkPermission } = require('../middlewares/checkPermission');
+const TruyCapTraiPhepController = require('../controllers/TruyCapTraiPhepController');
 
-router.get("/", (req, res, next)=>
+router.get("/5tan", (req, res, next)=>
     {
         res.send("5tan");
     }
@@ -104,5 +109,23 @@ router.get("/danh-sach-cho-pha-che", PhaCheController.getDSChoPhaChe);
 router.get("/chitietdondatpc", DonDatController.getChiTietDonDatPC);
 
 router.get("/phachexong", PhaCheController.getPhaCheXong);
+
+router.get("/lich", LichController.getLich);
+router.post("/taolich", LichController.createLich);
+router.get("/chitietlich", LichController.getChiTietLich);
+router.post('/taochitietlich', LichController.createChiTietLich);
+router.post('/xoachitietlich', LichController.deleteChiTietLich);
+router.get('/dangkilichh', LichController.dangkiLich);
+
+router.get('/vi', ViController.getViByUserId);
+router.post('/taodonrut', PhienGiaoDichController.createDonRut);
+router.get('/ds_donrut', PhienGiaoDichController.getAllDonRutChuaDuyet);
+router.get('/duyetdonrut', PhienGiaoDichController.duyetDonRut);
+
+router.get('/truycaptraiphep', TruyCapTraiPhepController.getTCTP);
+router.post('/thongkesolanTCTP', TruyCapTraiPhepController.getThongKeTheoSoLanTCTP);
+router.post('/hinhthucphat', TruyCapTraiPhepController.postHinhThucPhat);
+
+router.get('/socket', banController.testSocket);
 
 module.exports=router

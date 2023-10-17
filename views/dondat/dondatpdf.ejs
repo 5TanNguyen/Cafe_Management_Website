@@ -15,7 +15,7 @@
         <h3 class="text-center">SĐT: 0328000000</h3>
         <h2 class="text-center">HÓA ĐƠN THANH TOÁN</h2>
         <br>
-        <h3>Ngày : <%- dd[0].o_time %></h3>
+        <h3>Ngày : <%- Intl.DateTimeFormat("vi-VN", {dateStyle: "short", timeStyle: "short"}).format( dd[0].o_time ) %></h3>
 
         <table class="table table-hover">
             <thead class="table-light">

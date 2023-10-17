@@ -9,7 +9,14 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </head>
 <body>
-    <%- include ('../z_layout/navigation.ejs') %>
+    <% if(session.u_d_id == 1){ %>
+        <%- include('../z_layout/navigation') %>
+    <% }else if(session.u_d_id == 2 ){ %>
+        <%- include('../z_layout/nav_2') %>
+    <% }else if(session.u_d_id == 3 ){ %>
+        <%- include('../z_layout/nav_3') %>
+    <% } %>
+    
     <div class="container">
 
         <h3 class="text-center">Thêm Phí Phát Sinh</h3>
@@ -28,6 +35,16 @@
                 <div class="col-sm">
                     <input name="u_name" type="text" value="<%- session.u_name %>" class="form-control" placeholder="" aria-label="Zip">
                     <input hidden name="ci_u_id" type="text" value="<%- session.u_id %>" class="form-control" placeholder="" aria-label="Zip">
+                </div>
+
+
+                <label for="">Chi Nhánh</label>
+                <div class="row-sm">
+                    <select class="form-control" name="ci_br_id" id="">
+                        <% for(var t = 0; t < br.length; t++){ %>
+                            <option name="ib_s_id" value="<%- br[t].br_id %>"> <%- br[t].br_name %></option>
+                        <% } %>
+                    </select>
                 </div>
 
                 <div class="row-sm">
@@ -70,7 +87,7 @@
                         </td>
 
                         <td>
-                            <%- pps[i].ci_cost %> VNĐ
+                            <%- Intl.NumberFormat({style:"currency", currency:"VND"}).format( pps[i].ci_cost ) %> VNĐ
                         </td>
 
                         <td>

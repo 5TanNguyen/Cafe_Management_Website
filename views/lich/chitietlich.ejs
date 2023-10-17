@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chi Tiết Lịch Làm Việc</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+</head>
+<body>
+    <% if(session.u_d_id == 1){ %>
+        <%- include('../z_layout/navigation') %>
+    <% }else if(session.u_d_id == 2 ){ %>
+        <%- include('../z_layout/nav_2') %>
+    <% }else if(session.u_d_id == 3 ){ %>
+        <%- include('../z_layout/nav_3') %>
+    <% } %>
+    
+    <div class="container">
+        <h2 class="text-center">
+            Danh sách lịch làm việc <%- cld_id %>
+        </h2>
+        <% if(session.u_d_id == 1){ %>
+            <a href="#divUD" class="btn btn-outline-danger">Tạo chi tiết lịch</a>
+        <% } %>
+
+        <table class="table table-hover">
+            <thead>
+                <td>ID</td>
+                <!-- <td>Lịch</td> -->
+                <td>Ngày</td>
+                <td>Người trực</td>
+                <td>Ca</td>
+                <td>Số giờ trực</td>
+                <td colspan="2">Đăng kí</td>
+            </thead>
+
+            <% if(cd.length > 0){ %>
+                <% for(var i=0; i <cd.length; i++){  %>
+                    <% var cld_id = cd[0].cd_cld_id %>
+                    <tr>
+                        <td><%= cd[i].cd_id %></td>
+                        <!-- <td><%= cd[i].cd_cld_id %></td> -->
+                        <td><%= Intl.DateTimeFormat("vi-VN", {dateStyle: "short", }).format( cd[i].cd_date ) %></td>
+                        <td><%= cd[i].u_name %></td>
+                        <td><%= cd[i].s_name %></td>
+                        <td><%= cd[i].hours %></td>
+                        <td>
+                            <% if(cd[i].u_id == 4){ %>
+                                <a id="register" class="btn btn-primary" href="/dangkilichh?cd_id=<%= cd[i].cd_id %>&cd_user_id=<%= session.u_id %>&cd_cld_id=<%= cd[i].cd_cld_id %>">Đ.kí</a>
+                                <form id="form" action="">
+                                    <input name="cd_id" id="cd_id" autocomplete="off" value="<%= cd[i].cd_id %>" />
+                                    <input name="cd_user_id" id="cd_user_id" autocomplete="off" value="<%= session.u_id %>" />
+                                    <input name="cd_cld_id" id="cd_cld_id" autocomplete="off" value="<%= cd[i].cd_cld_id %>" />
+                                    
+                                    <button>Send</button>
+                                </form>
+                            <% } else { %>
+                                <a class="btn btn-danger" href="#">Đ.kí</a>
+                            <% } %>
+
+                        </td>
+                        <td>
+                            <a class="btn btn-warning" href="#divDEL<%= i %>">XÓA</a> 
+                            <!-- href="/xoachitietlich?cd_cld_id=<%= cd[i].cd_cld_id %>&cd_id=<%= cd[i].cd_id %>" -->
+                        </td>
+
+                        <div class="UD_overplay" id="divDEL<%= i %>">
+
+                            <div class="UD_wrapper" style="width: 300px">
+                                <h2 class="text-center">Xác Nhận Xóa</h2>
+                                <a href="#" class="close">&times;</a>
+                                <div class="content">
+                                    <div class="container">
+                                        <form action="/xoachitietlich" method="POST">
+                                            <input name="cd_cld_id" class="form-control"  value="<%= cd[i].cd_cld_id %>">
+                                            
+                                            <input name="cd_id" class="form-control"  value="<%= cd[i].cd_id %>">
+                                            <input style="width:100%; background-color: red" type="submit" value="XÓA"/>    
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </tr>
+
+                <% } %>
+            <% } else { %>
+                <p>Data Not Found</p>
+            <% } %>
+        </table>
+    </div>
+
+   
+    <div class="UD_overplay" id="divUD">
+
+        <div class="UD_wrapper">
+            <h2>Tạo chi tiết lịch</h2>
+            <a href="#" class="close">&times;</a>
+            <div class="content">
+                <div class="container">
+                    <form action="/taochitietlich" method="POST">
+                        <input name="cd_cld_id" class="form-control"  value="<%= cld_id %>"> 
+                        <!-- -->
+                        
+                        <label for="">Ngày</label>
+                        <input name="cd_date" id="db" onchange="handledatechange()" type="date" class="form-control">
+                            
+                        <br>
+                        <label for="">Ca</label>
+                        <select class="form-control" name="cd_shift_id" id="">
+                            <% for(var i = 1; i <= 3; i++){ %>
+                                <option name="cd_shift_id" value="<%= i %>"><%= i %></option>
+                            <% } %>
+                        </select>
+                          
+                        <br>
+                        <label>Số giờ</label>
+                        <input name="hours" class="form-control">
+                        
+                        <br>
+                        <input type="submit" value="Submit">
+                    </form>
+
+                    <script>
+                        function handledatechange(){
+                            var date_picker = document.getElementById("db").value;
+            
+                            // alert("Date" + date_picker);
+                        }
+                    </script>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+      let counter = 0;
+
+      const socket = io({
+        // enable retries
+        ackTimeout: 10000,
+        retries: 3,
+        auth: {
+          serverOffset: 0
+        },
+      });
+
+      const form = document.getElementById('form');
+      const cd_id = document.getElementById('cd_id');
+      const cd_user_id = document.getElementById('cd_user_id');
+      const cd_cld_id = document.getElementById('cd_cld_id');
+      const messages = document.getElementById('messages');
+
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        if(cd_id.value){
+          socket.emit('register', cd_id.value, cd_user_id.value, cd_cld_id.value);
+        }
+      });
+      
+      socket.on('register', (cd_user_id, serverOffset) => {
+        const item = document.createElement('li');
+        item.textContent = cd_user_id;
+        messages.appendChild(item);
+        window.scrollTo(0, document.body.scrollHeight);
+        socket.auth.serverOffset = serverOffset;
+      });
+    </script>
+
+
+</body>
+</html>

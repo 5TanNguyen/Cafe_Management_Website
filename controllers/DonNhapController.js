@@ -10,25 +10,34 @@ const DonNhapModel = require('../models/DonNhap');
 const { INT24 } = require("mysql/lib/protocol/constants/types");
 const NguyenLieuModel = require("../models/NguyenLieu");
 const ThongKeModel = require("../models/ThongKe");
+const ChiNhanhModel = require("../models/ChiNhanh");
+const TruyCapTraiPhepModel = require("../models/TruyCapTraiPhep");
 
 class DonNhapController{
     static async getDonNhap(req, res)
     {
         res.locals.session = req.session;
 
-        if(!req.session.u_id)
+        if(!req.session.u_id || (req.session.u_d_id != 1))
         {
-            res.redirect("/dangnhap");
+            var currentdate = new Date();
+            var datetime = currentdate.getFullYear() + "-" + (currentdate.getMonth()+1) + "-" + currentdate.getDate()  + "  "  + currentdate.getHours() + ":"   + currentdate.getMinutes() + ":"  + currentdate.getSeconds();
+            var tctp = await TruyCapTraiPhepModel.addTCTP(req.session.u_id, 'Danh sách đơn nhập', datetime);
+
+            req.flash('message', 'Bạn không có quyền truy cập !');
+            res.render("dangnhap/dangnhap", { message : req.flash('message')});
         }
         else
         {
             var result = await DonNhapModel.GetDonNhap();
 
             var stt = await ThongKeModel.GetThongKe();
+
+            var br = await ChiNhanhModel.GetChiNhanh();
             //res.send(result);
             if(result)
             {
-                res.render("donnhap/ds_donnhap", {test : result, stt});
+                res.render("donnhap/ds_donnhap", {test : result, stt, br});
             }
         }
     }
@@ -37,9 +46,14 @@ class DonNhapController{
     {
         res.locals.session = req.session;
 
-        if(!req.session.u_id)
+        if(!req.session.u_id || (req.session.u_d_id != 1))
         {
-            res.redirect("/dangnhap");
+            var currentdate = new Date();
+            var datetime = currentdate.getFullYear() + "-" + (currentdate.getMonth()+1) + "-" + currentdate.getDate()  + "  "  + currentdate.getHours() + ":"   + currentdate.getMinutes() + ":"  + currentdate.getSeconds();
+            var tctp = await TruyCapTraiPhepModel.addTCTP(req.session.u_id, 'Chi tiết đơn nhập Id', datetime);
+
+            req.flash('message', 'Bạn không có quyền truy cập !');
+            res.render("dangnhap/dangnhap", { message : req.flash('message')});
         }
         else
         {
@@ -63,9 +77,14 @@ class DonNhapController{
     {
         res.locals.session = req.session;
 
-        if(!req.session.u_id)
+        if(!req.session.u_id || (req.session.u_d_id != 1))
         {
-            res.redirect("/dangnhap");
+            var currentdate = new Date();
+            var datetime = currentdate.getFullYear() + "-" + (currentdate.getMonth()+1) + "-" + currentdate.getDate()  + "  "  + currentdate.getHours() + ":"   + currentdate.getMinutes() + ":"  + currentdate.getSeconds();
+            var tctp = await TruyCapTraiPhepModel.addTCTP(req.session.u_id, 'Tạo đơn nhập', datetime);
+            
+            req.flash('message', 'Bạn không có quyền truy cập !');
+            res.render("dangnhap/dangnhap", { message : req.flash('message')});
         }
         else
         {
@@ -73,8 +92,9 @@ class DonNhapController{
             var ib_name = req.body.ib_name;
             var ib_date = req.body.ib_date;
             var ib_s_id = req.body.ib_s_id;
+            var ib_br_id = req.body.ib_br_id;
 
-            var result = await DonNhapModel.CreateDonNhap(ib_name, ib_date, ib_s_id);
+            var result = await DonNhapModel.CreateDonNhap(ib_name, ib_date, ib_s_id, ib_br_id);
 
             if(result == true)
             {
@@ -87,9 +107,14 @@ class DonNhapController{
     {
         res.locals.session = req.session;
 
-        if(!req.session.u_id)
+        if(!req.session.u_id || (req.session.u_d_id != 1))
         {
-            res.redirect("/dangnhap");
+            var currentdate = new Date();
+            var datetime = currentdate.getFullYear() + "-" + (currentdate.getMonth()+1) + "-" + currentdate.getDate()  + "  "  + currentdate.getHours() + ":"   + currentdate.getMinutes() + ":"  + currentdate.getSeconds();
+            var tctp = await TruyCapTraiPhepModel.addTCTP(req.session.u_id, 'Lấy chi tiết đơn nhập', datetime);
+
+            req.flash('message', 'Bạn không có quyền truy cập !');
+            res.render("dangnhap/dangnhap", { message : req.flash('message')});
         }
         else
         {
@@ -113,9 +138,14 @@ class DonNhapController{
     {
         res.locals.session = req.session;
 
-        if(!req.session.u_id)
+        if(!req.session.u_id || (req.session.u_d_id != 1))
         {
-            res.redirect("/dangnhap");
+            var currentdate = new Date();
+            var datetime = currentdate.getFullYear() + "-" + (currentdate.getMonth()+1) + "-" + currentdate.getDate()  + "  "  + currentdate.getHours() + ":"   + currentdate.getMinutes() + ":"  + currentdate.getSeconds();
+            var tctp = await TruyCapTraiPhepModel.addTCTP(req.session.u_id, 'Tạo chi tiết đơn nhập', datetime);
+            
+            req.flash('message', 'Bạn không có quyền truy cập !');
+            res.render("dangnhap/dangnhap", { message : req.flash('message')});
         }
         else
         {

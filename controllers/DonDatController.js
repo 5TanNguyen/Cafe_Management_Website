@@ -10,15 +10,21 @@ const { INT24 } = require("mysql/lib/protocol/constants/types");
 const PhaCheModel = require("../models/PhaChe");
 const NguyenLieuModel = require('../models/NguyenLieu');
 const ThongKeModel = require("../models/ThongKe");
+const TruyCapTraiPhepModel = require("../models/TruyCapTraiPhep");
 
 class DonDatController{
     static async getDonDat(req, res)
     {
         res.locals.session = req.session;
 
-        if(!req.session.u_id)
+        if(!req.session.u_id || ((req.session.u_d_id != 3) && (req.session.u_d_id != 1)))
         {
-            res.redirect("/dangnhap");
+            var currentdate = new Date();
+            var datetime = currentdate.getFullYear() + "-" + (currentdate.getMonth()+1) + "-" + currentdate.getDate()  + "  "  + currentdate.getHours() + ":"   + currentdate.getMinutes() + ":"  + currentdate.getSeconds();
+            var tctp = await TruyCapTraiPhepModel.addTCTP(req.session.u_id, 'Danh sách đơn đặt', datetime);
+
+            req.flash('message', 'Bạn không có quyền truy cập !');
+            res.render("dangnhap/dangnhap", { message : req.flash('message')});
         }
         else
         {
@@ -50,9 +56,14 @@ class DonDatController{
     {
         res.locals.session = req.session;
 
-        if(!req.session.u_id)
+        if(!req.session.u_id || ((req.session.u_d_id != 3) && (req.session.u_d_id != 1)))
         {
-            res.redirect("/dangnhap");
+            var currentdate = new Date();
+            var datetime = currentdate.getFullYear() + "-" + (currentdate.getMonth()+1) + "-" + currentdate.getDate()  + "  "  + currentdate.getHours() + ":"   + currentdate.getMinutes() + ":"  + currentdate.getSeconds();
+            var tctp = await TruyCapTraiPhepModel.addTCTP(req.session.u_id, 'Chi tiết đơn đặt', datetime);
+
+            req.flash('message', 'Bạn không có quyền truy cập !');
+            res.render("dangnhap/dangnhap", { message : req.flash('message')});
         }
         else
         {
@@ -72,9 +83,14 @@ class DonDatController{
     {
         res.locals.session = req.session;
 
-        if(!req.session.u_id)
+        if(!req.session.u_id || ((req.session.u_d_id != 3) && (req.session.u_d_id != 1) && (req.session.u_d_id != 2)))
         {
-            res.redirect("/dangnhap");
+            var currentdate = new Date();
+            var datetime = currentdate.getFullYear() + "-" + (currentdate.getMonth()+1) + "-" + currentdate.getDate()  + "  "  + currentdate.getHours() + ":"   + currentdate.getMinutes() + ":"  + currentdate.getSeconds();
+            var tctp = await TruyCapTraiPhepModel.addTCTP(req.session.u_id, 'Chi tiết đơn đặt pc', datetime);
+            
+            req.flash('message', 'Bạn không có quyền truy cập !');
+            res.render("dangnhap/dangnhap", { message : req.flash('message')});
         }
         else
         {
@@ -94,13 +110,16 @@ class DonDatController{
     {
         res.locals.session = req.session;
 
-        if(!req.session.u_id)
+        if(!req.session.u_id || ((req.session.u_d_id != 3) && (req.session.u_d_id != 1)))
         {
-            res.redirect("/dangnhap")
-        }
-        else
-        {
+            var currentdate = new Date();
+            var datetime = currentdate.getFullYear() + "-" + (currentdate.getMonth()+1) + "-" + currentdate.getDate()  + "  "  + currentdate.getHours() + ":"   + currentdate.getMinutes() + ":"  + currentdate.getSeconds();
+            var tctp = await TruyCapTraiPhepModel.addTCTP(req.session.u_id, 'Thêm chi tiết đơn đặt', datetime);
 
+            req.flash('message', 'Bạn không có quyền truy cập !');
+            res.render("dangnhap/dangnhap", { message : req.flash('message')});
+        }
+        else {
             var od_o_id = req.body.o_id;
             var od_pro_id = req.body.od_pro_id;
             var od_quantity = req.body.od_quantity;
@@ -112,9 +131,7 @@ class DonDatController{
             var o_cost_new = parseInt(o_cost) + (parseInt(od_price) * od_quantity);
             DonDatModel.setCost(o_cost_new, od_o_id);
 
-            //res.redirect("/chitietdondat?o_id=" + od_o_id);
 
-            // res.send(od_o_id)
             var bd = await PhaCheModel.GetPhaCheByProId(od_pro_id);
             var ingredient = await NguyenLieuModel.GetNguyenLieu();
             if(bd)
@@ -125,9 +142,14 @@ class DonDatController{
     static async confirmDon(req, res)
     {
         res.locals.session = req.session;
-        if(!req.session.u_id)
+        if(!req.session.u_id || ((req.session.u_d_id != 3) && (req.session.u_d_id != 1)))
         {
-            res.redirect("/dangnhap")
+            var currentdate = new Date();
+            var datetime = currentdate.getFullYear() + "-" + (currentdate.getMonth()+1) + "-" + currentdate.getDate()  + "  "  + currentdate.getHours() + ":"   + currentdate.getMinutes() + ":"  + currentdate.getSeconds();
+            var tctp = await TruyCapTraiPhepModel.addTCTP(req.session.u_id, 'Xác nhận đơn', datetime);
+
+            req.flash('message', 'Bạn không có quyền truy cập !');
+            res.render("dangnhap/dangnhap", { message : req.flash('message')});
         }
         else
         {
@@ -142,9 +164,14 @@ class DonDatController{
     {
         res.locals.session = req.session;
 
-        if(!req.session.u_id)
+        if(!req.session.u_id || ((req.session.u_d_id != 3) && (req.session.u_d_id != 1)))
         {
-            res.redirect("/dangnhap");
+            var currentdate = new Date();
+            var datetime = currentdate.getFullYear() + "-" + (currentdate.getMonth()+1) + "-" + currentdate.getDate()  + "  "  + currentdate.getHours() + ":"   + currentdate.getMinutes() + ":"  + currentdate.getSeconds();
+            var tctp = await TruyCapTraiPhepModel.addTCTP(req.session.u_id, 'Tạo đơn', datetime);
+            
+            req.flash('message', 'Bạn không có quyền truy cập !');
+            res.render("dangnhap/dangnhap", { message : req.flash('message')});
         }
         else
         {
@@ -198,9 +225,14 @@ class DonDatController{
     {
         res.locals.session = req.session;
         
-        if(!req.session.u_id)
+        if(!req.session.u_id || ((req.session.u_d_id != 3) && (req.session.u_d_id != 1)))
         {
-            res.redirect("/dangnhap");
+            var currentdate = new Date();
+            var datetime = currentdate.getFullYear() + "-" + (currentdate.getMonth()+1) + "-" + currentdate.getDate()  + "  "  + currentdate.getHours() + ":"   + currentdate.getMinutes() + ":"  + currentdate.getSeconds();
+            var tctp = await TruyCapTraiPhepModel.addTCTP(req.session.u_id, 'Lấy số người', datetime);
+            
+            req.flash('message', 'Bạn không có quyền truy cập !');
+            res.render("dangnhap/dangnhap", { message : req.flash('message')});
         }
         else
         {
@@ -235,9 +267,14 @@ class DonDatController{
     {
         res.locals.session = req.session;
 
-        if(!req.session.u_id)
+        if(!req.session.u_id || ((req.session.u_d_id != 3) && (req.session.u_d_id != 1)))
         {
-            res.redirect("/dangnhap")
+            var currentdate = new Date();
+            var datetime = currentdate.getFullYear() + "-" + (currentdate.getMonth()+1) + "-" + currentdate.getDate()  + "  "  + currentdate.getHours() + ":"   + currentdate.getMinutes() + ":"  + currentdate.getSeconds();
+            var tctp = await TruyCapTraiPhepModel.addTCTP(req.session.u_id, 'Xác nhận đơn', datetime);
+
+            req.flash('message', 'Bạn không có quyền truy cập !');
+            res.render("dangnhap/dangnhap", { message : req.flash('message')});
         }
         else
         {
@@ -245,11 +282,12 @@ class DonDatController{
             var num = req.body.num;
             var o_time = req.body.o_time;
             var s_id = req.body.s_id;
+            var br_id = req.body.br_id;
 
             BanModel.set_b_num(t_id, num);
             DonDatModel.setStatusDonDat(t_id);
 
-            DonDatModel.createdondat(1, 1, t_id, num, 0, 0, 0, 0, o_time, s_id);
+            DonDatModel.createdondat(1, 1, t_id, num, 0, 0, 0, 0, o_time, s_id, br_id);
 
             var order = await DonDatModel.getdondat(t_id);
             res.redirect("/chitietban?t_id=" + t_id);
@@ -260,9 +298,14 @@ class DonDatController{
     {
         res.locals.session = req.session;
 
-        if(!req.session.u_id)
+        if(!req.session.u_id || ((req.session.u_d_id != 3) && (req.session.u_d_id != 1)))
         {
-            res.redirect("/dangnhap");
+            var currentdate = new Date();
+            var datetime = currentdate.getFullYear() + "-" + (currentdate.getMonth()+1) + "-" + currentdate.getDate()  + "  "  + currentdate.getHours() + ":"   + currentdate.getMinutes() + ":"  + currentdate.getSeconds();
+            var tctp = await TruyCapTraiPhepModel.addTCTP(req.session.u_id, 'Đặt trạng thái đơn', datetime);
+            
+            req.flash('message', 'Bạn không có quyền truy cập !');
+            res.render("dangnhap/dangnhap", { message : req.flash('message')});
         }
         else
         {

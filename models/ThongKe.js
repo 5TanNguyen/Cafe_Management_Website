@@ -10,6 +10,15 @@ class ThongKeModel {
         })
     }
 
+    static async GetLastThongKe()
+    {
+        return new Promise(resolve =>{
+            db.query("SELECT s_id FROM statistical ORDER BY s_id DESC LIMIT 1", [], (err, result)=>{
+                if(!err) resolve(result);
+            })
+        })
+    }
+
     static async GetThongKeById(s_id)
     {
         return new Promise(resolve =>{
@@ -72,8 +81,8 @@ class ThongKeModel {
     static async CreateThongKe(s_name, s_import, s_export, s_profit, s_date)
     {
         return new Promise( resolve=>{
-            db.query("INSERT INTO statistical(s_id, s_name, s_import, s_export, s_profit, s_date)"
-            + " VALUES(NULL, ?, ?, ?, ?, ?)", [s_name, s_import, s_export, s_profit, s_date], (err, result)=>{
+            db.query("INSERT INTO statistical(s_id, s_name, s_import, s_export, s_profit, s_date, s_br_id)"
+            + " VALUES(NULL, ?, ?, ?, ?, ?, 1)", [s_name, s_import, s_export, s_profit, s_date], (err, result)=>{
                 if(!err) resolve(true);
             })
         })
