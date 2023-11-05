@@ -198,7 +198,7 @@ app.use(express.static('public'))
 
 app.use(session({
     secret: "5tan_app",
-    cookie: { maxAge: 60000},
+    cookie: { maxAge: 3600000},
     resave: false,
     saveUninitialized: false
 }));

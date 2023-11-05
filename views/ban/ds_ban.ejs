@@ -36,7 +36,7 @@
             border-color: black;
             z-index: 1;
         }
-    
+
         .image:hover {
             transform: scale(1.05);
             z-index: 2;
@@ -48,170 +48,231 @@
             color: #FFFF;
             word-wrap: normal;
         }
-    
 
+        body{
+            font-family: montserrat;
+            background: #e7e7e7e7;
+            height: 100vh;
+        }
 
+        .box{
+            text-align: center;
+        }
 
+        .buttonn{
+            font-size: 1em;
+            padding: 15px 35px;
+            color: #fff;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease-out;
+            background: #403e3d;
+            border-radius: 50px;
+        }
 
+        .overplay{
+            position:fixed;
+            top: 0;
+            bottom: 0; 
+            left: 0;
+            right: 0;
+            background:  rgba(0, 0, 0, 0.8);
+            transition: opacity 500ms;
+            visibility: hidden;
+            opacity: 0;
+            z-index: 5000;
+        }
 
-        
+        .overplay:target{
+            visibility: visible;
+            opacity: 1;
+        }
 
+        .UD_overplay{
+            position:fixed;
+            top: 0;
+            bottom: 0; 
+            left: 0;
+            right: 0;
+            background:  rgba(0, 0, 0, 0.8);
+            transition: opacity 500ms;
+            visibility: hidden;
+            opacity: 0;
+        }
 
+        .UD_overplay:target{
+            visibility: visible;
+            opacity: 1;
+        }
 
-body{
-    font-family: montserrat;
-    background: #e7e7e7e7;
-    height: 100vh;
-}
+        .wrapper{
+            margin: 70px auto;
+            padding: 20px;
+            background: #e7e7e7e7;
+            border-radius: 5px;
+            width: 30%;
+            position: relative;
+            transition: all 5s ease-in-out;
+        }
 
-.box{
-    text-align: center;
-}
+        .wrapper h2{
+            margin-top: 0;
+            color: #333;
+        }
 
-.buttonn{
-    font-size: 1em;
-    padding: 15px 35px;
-    color: #fff;
-    text-decoration: none;
-    cursor: pointer;
-    transition: all 0.3s ease-out;
-    background: #403e3d;
-    border-radius: 50px;
-}
+        .wrapper .close{
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            transition: all 200ms;
+            font-weight: bold;
+            text-decoration: none;
+            color: #333;
+        }
 
-.overplay{
-    position:fixed;
-    top: 0;
-    bottom: 0; 
-    left: 0;
-    right: 0;
-    background:  rgba(0, 0, 0, 0.8);
-    transition: opacity 500ms;
-    visibility: hidden;
-    opacity: 0;
-    z-index: 5000;
-}
+        .wrapper .content{
+            max-height: 30%;
+            overflow: auto;
+        }
 
-.overplay:target{
-    visibility: visible;
-    opacity: 1;
-}
+        .UD_wrapper{
+            margin: 70px auto;
+            padding: 20px;
+            background: #e7e7e7e7;
+            border-radius: 5px;
+            width: 50%;
+            position: relative;
+            transition: all 5s ease-in-out;
+        }
 
-.UD_overplay{
-    position:fixed;
-    top: 0;
-    bottom: 0; 
-    left: 0;
-    right: 0;
-    background:  rgba(0, 0, 0, 0.8);
-    transition: opacity 500ms;
-    visibility: hidden;
-    opacity: 0;
-}
+        .UD_wrapper h2{
+            margin-top: 0;
+            color: #333;
+        }
 
-.UD_overplay:target{
-    visibility: visible;
-    opacity: 1;
-}
+        .UD_wrapper .close{
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            transition: all 200ms;
+            font-weight: bold;
+            text-decoration: none;
+            color: #333;
+        }
 
+        .UD_wrapper .content{
+            max-height: 30%;
+            overflow: auto;
+        }
 
-.wrapper{
-    margin: 70px auto;
-    padding: 20px;
-    background: #e7e7e7e7;
-    border-radius: 5px;
-    width: 30%;
-    position: relative;
-    transition: all 5s ease-in-out;
-}
+        .container{
+            border-radius: 5px;
+            background-color: #e7e7e7e7;
+            padding: 20px 0;
+        }
 
-.wrapper h2{
-    margin-top: 0;
-    color: #333;
-}
+        form label{
+            text-transform: uppercase;
+            font-weight: 500;
+            letter-spacing: 3px;
+        }
 
-.wrapper .close{
-    position: absolute;
-    top: 20px;
-    right: 30px;
-    transition: all 200ms;
-    font-weight: bold;
-    text-decoration: none;
-    color: #333;
-}
+        input[type=text], textarea{
+            width: 100%;
+            padding: 12px;
+            border:  1px solid #ccc;
+            border-radius:  5px;
+            box-sizing: border-box;
+            margin-top: 6px;
+            margin-bottom: 16px;
+            resize: vertical;
+        }
 
-.wrapper .content{
-    max-height: 30%;
-    overflow: auto;
-}
+        input[type="submit"]{
+            background-color: #413b3b;
+            color: #fff;
+            padding: 15px 50px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 15px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
 
-.UD_wrapper{
-    margin: 70px auto;
-    padding: 20px;
-    background: #e7e7e7e7;
-    border-radius: 5px;
-    width: 50%;
-    position: relative;
-    transition: all 5s ease-in-out;
-}
+        .containerr{
+            width: 95%;
+            overflow: hidden;
+            background: skyblue;
+            margin: 20px auto;
+            padding: 20px 0px;
+        }
 
-.UD_wrapper h2{
-    margin-top: 0;
-    color: #333;
-}
+        .containerr ul{
+            padding: 0px;
+            margin: 0px;
+        }
 
-.UD_wrapper .close{
-    position: absolute;
-    top: 20px;
-    right: 30px;
-    transition: all 200ms;
-    font-weight: bold;
-    text-decoration: none;
-    color: #333;
-}
+        .containerr ul li{
+            list-style: none;
+            float: left;
+            width: 20%;
+            height: 300px;
+            background: red;
+            margin: 40px 30px 0px 20px;
+            box-sizing: border-box;
+            border: 2px solid white;
+        }
 
-.UD_wrapper .content{
-    max-height: 30%;
-    overflow: auto;
-}
+        .containerr ul li:hover{
+            opacity: 0.9;
+        }
 
+        .containerr ul li .title:hover{
+            background: blue;
+            color: white;
+        }
 
+        .containerr ul li .title{
+            width: 100%;
+            height: 50px;
+            line-height: 50px;
+            background: white;
+            text-align: center;
+        }
 
+        @media screen and (max-width: 1250px){
+            .containerr ul li{
+                width: 40%;
+                margin-left: 50px;
+            }
+        }
 
-.container{
-    border-radius: 5px;
-    background-color: #e7e7e7e7;
-    padding: 20px 0;
-}
+        @media screen and (max-width: 800px){
+            .containerr{
+                width: 100%;
+                padding: 0px;
+            }
+            
+            .containerr ul li{
+                float: none;
+                width: 90%;
+                margin: 40px auto;
+            }
+        }
 
-form label{
-    text-transform: uppercase;
-    font-weight: 500;
-    letter-spacing: 3px;
-}
-
-input[type=text], textarea{
-    width: 100%;
-    padding: 12px;
-    border:  1px solid #ccc;
-    border-radius:  5px;
-    box-sizing: border-box;
-    margin-top: 6px;
-    margin-bottom: 16px;
-    resize: vertical;
-}
-
-input[type="submit"]{
-    background-color: #413b3b;
-    color: #fff;
-    padding: 15px 50px;
-    border: none;
-    border-radius: 50px;
-    cursor: pointer;
-    font-size: 15px;
-    text-transform: uppercase;
-    letter-spacing: 3px;
-}
+        @media screen and (max-width: 900px){
+            .containerr{
+                width: 100%;
+                padding: 0px;
+            }
+            
+            .containerr ul li{
+                float: none;
+                width: 90%;
+                margin: 40px auto;
+            }
+        }
     </style>
 
 </head>
@@ -226,6 +287,18 @@ input[type="submit"]{
     
     <br>
     <h1 class="text-center"> Danh sách bàn</h1>
+    <div class="containerr">
+        <ul>
+            <li> <div class="title">Header</div> </li>
+            <li> <div class="title">Header</div> </li>
+            <li> <div class="title">Header</div> </li>
+            <li> <div class="title">Header</div> </li>
+            <li> <div class="title">Header</div> </li>
+            <li> <div class="title">Header</div> </li>
+            <li> <div class="title">Header</div> </li>
+            <li> <div class="title">Header</div> </li>
+        </ul>
+    </div>
     <div class="container">
         <div class="row">      
                 <% if(test.length > 0){  %>
