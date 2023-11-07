@@ -42,14 +42,6 @@
         }
     
     
-    
-    
-    
-    
-        
-    
-    
-    
     body{
     font-family: montserrat;
     background: #e7e7e7e7;
@@ -303,6 +295,23 @@
 
                 // alert("Date" + date_picker);
             }
+
+            function validate(){
+                var s_name = document.getElementById("s_name");
+                var lblsname = document.getElementById("lblsname");
+
+                if(s_name.value.trim() == "")
+                {
+                    //alert("Blank Statistical Name");
+                    s_name.style.border = "solid 3px red";
+                    lblsname.style.visibility="visible";
+                    return false;
+                }
+                else 
+                {
+                    return true;
+                }
+            }
         </script>
 
         <hr>
@@ -314,10 +323,11 @@
                 <a href="#" class="close">&times;</a>
                 <div class="content">
                     <div class="container">
-                        <form action="/taothongke" method="POST">
+                        <form action="/taothongke" method="POST" onsubmit="return validate();">
                             <label for="">Tên Thống Kê</label>
                             <input hidden type="text" value="<%- session.u_id %>" name="tk_u_id">
-                            <input type="text" value="" name="s_name">
+                            <input type="text" value="" name="s_name" id="s_name">
+                            <label id="lblsname" style="color: red; visibility: hidden;">Invalid</label>
                             
                             <% var currentdate = new Date(); %>
                             <% var datetime = currentdate.getFullYear() + "-" + (currentdate.getMonth()+1) + "-" + currentdate.getDate()  + "  "  + currentdate.getHours() + ":"   + currentdate.getMinutes() + ":"  + currentdate.getSeconds(); %>
