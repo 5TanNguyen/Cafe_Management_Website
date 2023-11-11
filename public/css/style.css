@@ -155,3 +155,11 @@ input[type="submit"]{
     text-transform: uppercase;
     letter-spacing: 3px;
 }
+
+/* Lịch */
+
+.lbl_validate {
+    color: red;
+    visibility: hidden;
+    font-style: italic;
+}

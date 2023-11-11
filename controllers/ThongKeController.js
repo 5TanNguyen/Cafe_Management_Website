@@ -28,7 +28,7 @@ class ThongKeController {
         }
         else
         {
-            console.log(req.session.u_d_id);
+            // console.log(req.session.u_d_id);
             var stt = await ThongKeModel.GetThongKe();
 
             if(stt)

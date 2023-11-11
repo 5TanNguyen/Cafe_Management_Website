@@ -74,7 +74,22 @@
         <a class="btn btn-outline-primary" style="width:100%" href="#divUD">THÊM NGUYÊN LIỆU</a>
         
 
-        
+        <script>
+            function validate(){
+                var ibd_amount = document.getElementById("ibd_amount");
+                var lblibd_amount = document.getElementById("lblibd_amount");
+
+                if(ibd_amount.value.trim() == "")
+                {
+                    ibd_amount.style.border = "solid 3px red";
+                    lblibd_amount.style.visibility = "visible";
+                    return false;
+                }
+
+                return true;
+            }
+        </script>
+
         <!-- POPUP THÊM NGUYÊN LIỆU -->
         
         <div class="UD_overplay" id="divUD">
@@ -84,7 +99,7 @@
                 <a href="#" class="close">&times;</a>
                 <div class="content">
                     <div class="container">
-                        <form action="/themchitietdonnhap" method="POST">
+                        <form action="/themchitietdonnhap" method="POST" onsubmit="return validate();">
                             <input name="ibd_ib_id" hidden type="text" value="<%- ib_id %>">
                             <label for="">Tên nguyên liệu</label>
                             <select name="ing_id" id="" class="form-select">
@@ -111,7 +126,9 @@
                             
                             <br>
                             <label for="">Số lượng</label>
-                            <input name="ibd_amount" type="text" placeholder="" value="">
+                            <input id="ibd_amount" name="ibd_amount" type="text" placeholder="" value="">
+                            <label id="lblibd_amount" style="color: red; visibility: hidden; font-style: italic;">KHÔNG ĐƯỢC BỎ TRỐNG !</label>
+                            <br>
                             
                             <input hidden name="ib_costpu" type="text" value="<%- gia[0].ib_cost %>">
                             <input type="submit" value="Submit">
