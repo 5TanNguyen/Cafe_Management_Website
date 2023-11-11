@@ -114,6 +114,38 @@
             }
         }
     </style>
+
+    <script>
+        function validate(){
+            var username = document.getElementById("u_username");
+            var lblu_username = document.getElementById("lblu_username");
+            
+            var password = document.getElementById("u_password");
+            var lblpassword = document.getElementById("lblu_password");
+
+            if(username.value.trim() == "")
+            {
+                username.style.border = "solid 3px red";
+                lblu_username.style.visibility = "visible";
+
+                if(password.value.trim() == "")
+                {
+                    password.style.border = "solid 3px red";
+                    lblpassword.style.visibility = "visible";
+                }
+                return false;
+            }
+
+            if(password.value.trim() == "")
+            {
+                password.style.border = "solid 3px red";
+                lblpassword.style.visibility = "visible";
+                return false;
+            }
+            
+            return true;
+        }
+    </script>
     
     <div class="container" style="margin-top: 5%;">
         <h1 class="text-center">Đăng nhập hệ thống</h1>  
@@ -135,12 +167,16 @@
             </div>
         <% } %>
 
-        <form action="/dangnhap" method="post" class="form-control" >
+        <form action="/dangnhap" method="post" class="form-control" onsubmit="return validate();">
             <label for="username">Username:</label>
-            <input type="text" name="u_username" class="form-control" value="admin">
-            
+            <input id="u_username" type="text" name="u_username" class="form-control" value="admin">
+            <label id="lblu_username" style="color: red; visibility: hidden; font-style: italic">Username is required !</label>
+            <br>
+
             <label for="password">Password:</label>
-            <input type="password" name="u_password" class="form-control"  value="12345">
+            <input id="u_password" type="password" name="u_password" class="form-control"  value="">
+            <label id="lblu_password" style="color: red; visibility: hidden; font-style: italic">Password is required !</label>
+
 
             <input type="submit" value="Đăng nhập" class="btn btn-outline-primary" style="width: 100%;">
         </form>

@@ -70,6 +70,38 @@
         
 
         
+        <script>
+            function validate(){
+                var od_quantity = document.getElementById("od_quantity");
+                var lblod_quantity = document.getElementById("lblod_quantity");
+
+                var od_price = document.getElementById("od_price");
+                var lblod_price = document.getElementById("lblod_price");
+
+                if(od_quantity.value.trim() == "")
+                {
+                    od_quantity.style.border = "solid 3px red";
+                    lblod_quantity.style.visibility = "visible";
+
+                    if(od_price.value.trim() == "")
+                    {
+                        od_price.style.border = "solid 3px red";
+                        lblod_price.style.visibility = "visible";
+                    }
+
+                    return false;
+                }
+
+                if(od_price.value.trim() == "")
+                    {
+                        od_price.style.border = "solid 3px red";
+                        lblod_price.style.visibility = "visibile";
+                        return false;
+                    }
+                return true;
+            }
+        </script>
+
         <!-- POPUP THÊM ĐỒ UỐNG -->
         
         <div class="UD_overplay" id="divUD">
@@ -79,7 +111,7 @@
                 <a href="#" class="close">&times;</a>
                 <div class="content">
                     <div class="container">
-                        <form action="/themchitietdondat" method="POST">
+                        <form action="/themchitietdondat" method="POST" onsubmit="return validate();">
                             <input name="o_id" hidden type="text" value="<%- dd_id %>">
                             <label for="">Tên nguyên liệu</label>
                             <select name="od_pro_id" id="" class="form-select">
@@ -94,11 +126,14 @@
 
                             <br>
                             <label for="">Giá</label>
-                            <input type="text" name="od_price">
+                            <input id="od_price" type="text" name="od_price">
+                            <label id="lblod_price" style="color: red; visibility: hidden; font-style: italic;">Không được để trống !</label>
                             
                             <br>
                             <label for="">Số lượng</label>
-                            <input name="od_quantity" type="text" placeholder="" value="">
+                            <input id="od_quantity" name="od_quantity" type="text" placeholder="" value="">
+                            <label id="lblod_quantity" style="color: red; visibility: hidden; font-style: italic;">Không được để trống !</label>
+
                             <input hidden name="o_cost" type="text" value="<%- gia[0].o_cost %>">
                             
                             <input type="submit" value="Submit">

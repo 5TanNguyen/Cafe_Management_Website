@@ -287,7 +287,7 @@
     
     <br>
     <h1 class="text-center"> Danh sách bàn</h1>
-    <div class="containerr">
+    <!-- <div class="containerr">
         <ul>
             <li> <div class="title">Header</div> </li>
             <li> <div class="title">Header</div> </li>
@@ -298,7 +298,26 @@
             <li> <div class="title">Header</div> </li>
             <li> <div class="title">Header</div> </li>
         </ul>
-    </div>
+    </div> -->
+
+    <script>
+        function validate(){
+            var num = document.getElementById("num");
+            var lblnum = document.getElementById("lblnum");
+
+            if(num.value.trim() == "")
+            {
+                num.style.border = "solid 3px red";
+                lblnum.style.visibility = "visible";
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+    </script>
+
     <div class="container">
         <div class="row">      
                 <% if(test.length > 0){  %>
@@ -322,12 +341,13 @@
                                         <a href="#" class="close">&times;</a>
                                         <div class="content">
                                             <div class="container">
-                                                <form action="/songuoi" method="POST">
+                                                <form action="/songuoi" method="POST" onsubmit="return validate();">
                                                     <label for="">Bàn</label>
                                                     <input type="text" value="<%- test[i].t_id %>" name="t_id">
                                                     
                                                     <label for="">Số Người</label>
-                                                    <input type="text" placeholder="Nhập số người" name="num">
+                                                    <input type="text" placeholder="Nhập số người" name="num" id="num">
+                                                    <label id="lblnum" style="color: red; visibility: hidden;">Invalid</label>
 
                                                     <label for="">Chi Nhánh</label>
                                                     <select class="form-control" name="br_id" id="">

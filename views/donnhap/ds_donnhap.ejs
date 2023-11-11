@@ -51,9 +51,21 @@
         </table>
     </div>
 
+    <script>
+        function validate(){
+            var ib_name = document.getElementById("ib_name");
+            var lblib_name = document.getElementById("lblib_name");
 
+            if(ib_name.value.trim() == "")
+            {
+                ib_name.style.border = "solid 3px red";
+                lblib_name.style.visibility = "visible";
+                return false;
+            }
 
-
+            return true;
+        }
+    </script>
    
     <div class="UD_overplay" id="divUD">
 
@@ -62,10 +74,11 @@
             <a href="#" class="close">&times;</a>
             <div class="content">
                 <div class="container">
-                    <form action="/taodonnhap" method="POST">
+                    <form action="/taodonnhap" method="POST" onsubmit="return validate();">
 
                         <label for="">Tên đơn nhập</label>
-                        <input name="ib_name" type="text" placeholder="Nhập tên đơn nhập..." value="">
+                        <input id="ib_name" name="ib_name" type="text" placeholder="Nhập tên đơn nhập..." value="">
+                        <label id="lblib_name" style="color: red; visibility: hidden; font-style: italic;">Không được để trống !</label>
                         
                         <% var currentdate = new Date(); %>
                         <% var datetime = currentdate.getFullYear() + "-" + (currentdate.getMonth()+1) + "-" + currentdate.getDate() + "  "  + currentdate.getHours() + ":"   + currentdate.getMinutes() + ":"  + currentdate.getSeconds(); %>
