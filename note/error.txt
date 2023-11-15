@@ -1,0 +1,13 @@
+thêm tên class cho các label
+khóa ngoại _price : ingredient
+khóa ngoại cd_id : timekeeping
+Chỉnh sửa thuộc tinh created và updated cho transaction
+kiểm tra giá khi  thêm nlieu mới
+confirm delete hiện tên product khi xóa nglieu
+thêm css từ file .ejs vào style.css
+thêm nguyên liệu : selected đv khối lượng
+css tin nhắn
+validate input date : - lịch 
+                      - chi tiết lịch
+                      - liệt kê theo ngày
+                    

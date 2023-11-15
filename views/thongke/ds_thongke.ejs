@@ -326,12 +326,12 @@
                         <form action="/taothongke" method="POST" onsubmit="return validate();">
                             <label for="">Tên Thống Kê</label>
                             <input hidden type="text" value="<%- session.u_id %>" name="tk_u_id">
-                            <input type="text" value="" name="s_name" id="s_name">
+                            <input type="text" value="" name="s_name" id="s_name" placeholder="Nhập tên thống kê">
                             <label id="lblsname" style="color: red; visibility: hidden;">Invalid</label>
                             
                             <% var currentdate = new Date(); %>
                             <% var datetime = currentdate.getFullYear() + "-" + (currentdate.getMonth()+1) + "-" + currentdate.getDate()  + "  "  + currentdate.getHours() + ":"   + currentdate.getMinutes() + ":"  + currentdate.getSeconds(); %>
-            
+                            <br>
                             <label for="">Ngày thống kê</label>
                             <input type="text" name="s_date" value="<%= datetime %>" readonly>
         
