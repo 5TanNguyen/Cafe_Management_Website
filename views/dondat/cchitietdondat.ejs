@@ -125,18 +125,23 @@
                             </select>
 
                             <br>
-                            <label for="">Giá</label>
-                            <input id="od_price" type="text" name="od_price">
-                            <label id="lblod_price" style="color: red; visibility: hidden; font-style: italic;">Không được để trống !</label>
-                            
-                            <br>
-                            <label for="">Số lượng</label>
-                            <input id="od_quantity" name="od_quantity" type="text" placeholder="" value="">
-                            <label id="lblod_quantity" style="color: red; visibility: hidden; font-style: italic;">Không được để trống !</label>
+                            <div class="row lg">
+                                <div class="col sm">                            
+                                    <label for="">Giá</label>
+                                    <input id="od_price" type="text" name="od_price">
+                                    <label id="lblod_price" style="color: red; visibility: hidden; font-style: italic;">Không được để trống !</label>
+                                </div>
+                                
+                                <div class="col sm">
+                                    <label for="">Số lượng</label>
+                                    <input id="od_quantity" name="od_quantity" type="text" placeholder="" value="">
+                                    <label id="lblod_quantity" style="color: red; visibility: hidden; font-style: italic;">Không được để trống !</label>
 
-                            <input hidden name="o_cost" type="text" value="<%- gia[0].o_cost %>">
+                                    <input hidden name="o_cost" type="text" value="<%- gia[0].o_cost %>">
+                                </div>
+                            </div>
                             
-                            <input type="submit" value="Submit">
+                            <input type="submit" value="Thêm" style="width: 100%;">
                         </form>
                     </div>
                 </div>
