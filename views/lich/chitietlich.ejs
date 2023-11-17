@@ -51,13 +51,13 @@
                         <td>
                             <% if(cd[i].u_id == 4){ %>
                                 <a id="register" class="btn btn-primary" href="/dangkilichh?cd_id=<%= cd[i].cd_id %>&cd_user_id=<%= session.u_id %>&cd_cld_id=<%= cd[i].cd_cld_id %>">Đ.kí</a>
-                                <form id="form" action="">
+                                <!-- <form id="form" action="">
                                     <input name="cd_id" id="cd_id" autocomplete="off" value="<%= cd[i].cd_id %>" />
                                     <input name="cd_user_id" id="cd_user_id" autocomplete="off" value="<%= session.u_id %>" />
                                     <input name="cd_cld_id" id="cd_cld_id" autocomplete="off" value="<%= cd[i].cd_cld_id %>" />
                                     
                                     <button>Send</button>
-                                </form>
+                                </form> -->
                             <% } else { %>
                                 <a class="btn btn-danger" href="#">Đ.kí</a>
                             <% } %>
@@ -90,7 +90,7 @@
 
                 <% } %>
             <% } else { %>
-                <p>Data Not Found</p>
+                <p>Chưa có lịch làm</p>
             <% } %>
         </table>
     </div>
@@ -105,7 +105,7 @@
             <div class="content">
                 <div class="container">
                     <form action="/taochitietlich" method="POST" onsubmit="return validate_chitietlich();">
-                        <input name="cd_cld_id" class="form-control"  value="<%= cld_id %>"> 
+                        <input hidden name="cd_cld_id" class="form-control"  value="<%= cld_id %>"> 
                         <!-- -->
                         
                         <label for="">Ngày</label>
@@ -126,7 +126,7 @@
                         <label id="lblhours" class="lbl_validate">HÃY ĐIỀN SỐ GIỜ !</label>
                         
                         <br>
-                        <input type="submit" value="Submit">
+                        <input type="submit" value="Tạo" style="width: 100%;">
                     </form>
 
                     <script>

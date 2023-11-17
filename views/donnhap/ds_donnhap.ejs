@@ -90,7 +90,7 @@
                         <label for="">Chi Nhánh</label>
                         <select class="form-control" name="ib_br_id" id="">
                             <% for(var t = 0; t < br.length; t++){ %>
-                                <option name="ib_s_id" value="<%- br[t].br_id %>"> <%- br[t].br_name %></option>
+                                <option name="ib_br_id" value="<%- br[t].br_id %>"> <%- br[t].br_name %></option>
                             <% } %>
                         </select>
 
@@ -103,7 +103,7 @@
                             <% } %>
                         </select>
                         <br>
-                        <input type="submit" value="Submit">
+                        <input type="submit" value="Tạo" style="width: 100%;">
                     </form>
                 </div>
             </div>
