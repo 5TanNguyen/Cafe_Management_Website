@@ -1,4 +1,6 @@
+nút tạo đơn nhập bên Nguyên liệu
 thêm tên class cho các label
+thêm số lượng cho ingredient
 khóa ngoại _price : ingredient
 khóa ngoại cd_id : timekeeping
 Chỉnh sửa thuộc tinh created và updated cho transaction

@@ -22,15 +22,17 @@
     <% }else if(session.u_d_id == 3 ){ %>
         <%- include('../z_layout/nav_3') %>
     <% } %>
-
+    
+    <br>
+    <h3 class="text-center">Danh Sách Nguyên Liệu</h3>
     <div class="container" style="padding-top: 10px;">
         <a href="#notification">
             <button type="button" class="btn btn-outline-danger">Thông Báo</button>
         </a>
 
         <div class="overplay" id="notification">
-            <div class="wrapper">
-                <h2 class="text-center">NL Cần Nhập Thêm</h2>
+            <div class="wrapper"  style="width: 600px;">
+                <h2 name="title" class="text-center">NL Cần Nhập Thêm</h2>
                 <a href="#" class="close">&times;</a>
                 <div class="content">
                     <div class="container">
@@ -48,7 +50,7 @@
                                         <td> <%- ingI[i].ing_name %></td>
                                         <td> <%- ingI[i].ing_amount %> </td>
                                         <td> <%- ingI[i].unit_name %> </td>
-                                        <td> <%- ingI[i].ip_price %></td>
+                                        <td> <%- Intl.NumberFormat({style:"currency", currency: "VND"}).format( ingI[i].ip_price) %> VNĐ</td>
                                     </tr>
                                 <% } %>
                 
@@ -62,7 +64,7 @@
                                         <td> <%- ingII[i].ing_name %></td>
                                         <td> <%- ingII[i].ing_amount %> </td>
                                         <td> <%- ingII[i].unit_name %> </td>
-                                        <td> <%- ingII[i].ip_price %></td>
+                                        <td> <%- Intl.NumberFormat({style:"currency", currency: "VND"}).format( ingII[i].ip_price) %> VNĐ</td>
                                     </tr>
                                 <% } %>
                 
@@ -77,8 +79,7 @@
                                         <td> <%- ingIV[i].ing_name %></td>
                                         <td> <%- ingIV[i].ing_amount %> </td>
                                         <td> <%- ingIV[i].unit_name %> </td>
-                                        <td> <%- ingIV[i].ip_price %></td>
-                                    </tr>
+                                        <td> <%- Intl.NumberFormat({style:"currency", currency: "VND"}).format( ingIV[i].ip_price) %> VNĐ</td>                                    </tr>
                                 <% } %>
                 
                             <% }else { %>
@@ -91,7 +92,7 @@
                                         <td> <%- ingV[i].ing_name %></td>
                                         <td> <%- ingV[i].ing_amount %> </td>
                                         <td> <%- ingV[i].unit_name %> </td>
-                                        <td> <%- ingV[i].ip_price %></td>
+                                        <td> <%- Intl.NumberFormat({style:"currency", currency: "VND"}).format( ingV[i].ip_price) %> VNĐ</td>
                                     </tr>
                                 <% } %>
                 
@@ -105,7 +106,7 @@
                                         <td> <%- ingVII[i].ing_name %></td>
                                         <td> <%- ingVII[i].ing_amount %> </td>
                                         <td> <%- ingVII[i].unit_name %> </td>
-                                        <td> <%- ingVII[i].ip_price %></td>
+                                        <td> <%- Intl.NumberFormat({style:"currency", currency: "VND"}).format( ingVII[i].ip_price) %> VNĐ</td>
                                     </tr>
                                 <% } %>
                 
@@ -113,14 +114,19 @@
                                 <h1>Data Not Found !</h1>
                             <% } %>
                         </table>
+
+                        <a name="createImportBill" href="#" style="display: flex; align-items: center; justify-content: center;">
+                            <button class="btn btn-danger">TẠO ĐƠN NHẬP</button>
+                        </a>
                     </div>
                 </div>
             </div>
         </div>
 
-        <button name="reload" onclick="window.location.reload()" class="btn btn-warning">Reload</button>
+        <button name="reload" onclick="window.location.reload()" class="btn btn-warning">Tải lại</button>
       
         <form action="/themnguyenlieu" method="post" style="padding-top: 10px;" onsubmit="return validate_nguyenlieu();">
+            <h4 class="text-center">Thêm mới nguyên liệu</h4>
             <div class="row g-3">
                 <h4 id="lbl_validate" class="text-center lbl_validate">(*) : không được để trống !</h4>
             </div>
@@ -160,7 +166,7 @@
             <br>
 
             <div class="d-grid gap-2">
-            <button class="btn btn btn-outline-danger" type="submit">Submit</button>
+            <button class="btn btn btn-outline-danger" type="submit">THÊM</button>
             </div>
 
             <!-- <input type="text" placeholder="Tên sản phẩm" name="pro_name">
@@ -173,12 +179,11 @@
             <thead>
                 <tr>
                      <th data-priority="2">ID</th>
-                     <th>Name</th>
-                     <th data-priority="1">Quantity</th>
-                     <th>Unit</th>
-                     <th>Price</th>
-                     <th data-priority="1">Update</th>
-                     <th data-priority="4">Delete</th>
+                     <th>Tên sản phẩm</th>
+                     <th data-priority="1">Số lượng</th>
+                     <th>Đơn vị</th>
+                     <th>Giá</th>
+                     <th colspan="2">Thao tác</th>
                 </tr>
             </thead>
 
@@ -191,36 +196,40 @@
                         <td> <%- test[i].unit_name %> </td>
                         <td> <%- Intl.NumberFormat({style:"currency", currency: "VND"}).format( test[i].ip_price ) %> VNĐ</td>
                         <td>                        
-                            <a href="#divUD<%- test[i].ing_id %>">UPDATE</a>
+                            <a href="#divUD<%- test[i].ing_id %>">SỬA</a>
                             <div class="UD_overplay" id="divUD<%- test[i].ing_id %>">
                                 <!-- <input name="pro_name" type="text" placeholder="" value="<%- test[i].pro_name %>"> -->
 
                                 <div class="UD_wrapper">
-                                    <h2>Update Ingredient's Informmation</h2>
+                                    <h2>Chỉnh sửa thông tin nguyên liệu</h2>
                                     <a href="#" class="close">&times;</a>
                                     <div class="content">
                                         <div class="container">
                                             <form action="/suanguyenlieu" method="POST">
                                                 <input name="ing_id" type="text" hidden placeholder="" value="<%- test[i].ing_id %>">
 
-                                                <label for="">Ingredient's Name</label>
+                                                <label for="">Tên nguyên liệu</label>
                                                 <input name="ing_name" type="text" placeholder="" value="<%- test[i].ing_name %>">
                                                 
-                                                <label for="">Ingredient's Amount</label>
-                                                <input name="ing_amount" type="text" placeholder="" value="<%- test[i].ing_amount %>">
-                        
-                                                <label for="">Unit</label>
-                                                <select style="margin-top: 6px; height: 50px;" class="form-control" name="ing_unit_id" id="" aria-label="Amount">
-                                                    <option value="<%- test[i].ing_unit_id %>"><%- test[i].unit_name %></option>
-                                                    <% if(u.length > 0){ %>
-                                                        <% for( var j = 0; j < u.length; j++){ %>
-                                                            <option class="form-control" value="<%- u[j].unit_id %>"><%- u[j].unit_name %></option>
-                                                        <% } %>
-                                                    <% } else { %>
-                                                        <p>Không có dữ liệu</p>
-                                                    <% } %>
-                                                </select>      
-                                                    
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <label for="">Số lượng</label>
+                                                        <input name="ing_amount" type="text" placeholder="" value="<%- test[i].ing_amount %>">
+                                                    </div>
+                                                    <div class="col">
+                                                        <label for="">Unit</label>
+                                                        <select style="margin-top: 6px; height: 50px;" class="form-control" name="ing_unit_id" id="" aria-label="Amount">
+                                                            <option value="<%- test[i].ing_unit_id %>"><%- test[i].unit_name %></option>
+                                                            <% if(u.length > 0){ %>
+                                                                <% for( var j = 0; j < u.length; j++){ %>
+                                                                    <option class="form-control" value="<%- u[j].unit_id %>"><%- u[j].unit_name %></option>
+                                                                <% } %>
+                                                            <% } else { %>
+                                                                <p>Không có dữ liệu</p>
+                                                            <% } %>
+                                                        </select>      
+                                                    </div>
+                                                </div>
                                                 <label for="">Price</label>
                                                 <select style="margin-top: 6px; height: 50px;" class="form-control" name="ing_ip_id" id="" aria-label="Amount">
                                                     <option value="<%- test[i].ing_ip_id %>"><%- test[i].ip_ing_name %></option>
@@ -233,8 +242,9 @@
                                                     <% } else { %>
                                                         <p>Không có dữ liệu</p>
                                                     <% } %>
-                                                </select>      
-                                                <input type="submit" value="Submit" style="width:100%">
+                                                </select>
+                                                <br>      
+                                                <input type="submit" value="XÁC NHẬN" style="width:100%">
                                                 <!-- <hr>
                                                 <% if(test[i].pro_b_id != 0){ %>
                                                     <a class="btn btn-primary" style="width: 100%; border-radius: 15px;" href="/cachphache?pro_b_id=<%- test[i].pro_b_id %>">Cách Pha Chế</a> 
@@ -252,7 +262,7 @@
                         <td>
                             <!-- <a href="/xoasanpham?pro_id=<%- test[i].pro_id %>">DELETE</a> -->
                         
-                            <a href="#divDel<%- test[i].pro_id %>">DELETE</a>
+                            <a href="#divDel<%- test[i].pro_id %>">XÓA</a>
                             <div class="overplay" id="divDel<%- test[i].pro_id %>">
                                 <!-- <input name="pro_name" type="text" placeholder="" value="<%- test[i].pro_name %>"> -->
 
