@@ -252,7 +252,7 @@
 
         <form action="/taodonrut" method="post" style="padding-top: 5px; background-color: darkgray; border-radius: 10px;" onsubmit="return validate();">
             <div class="row g-3" style="margin: 5px;">
-                <h3 class="text-center">Nhập số tiền cần rút</h3>
+                <label name="title" class="text-center">Nhập số tiền cần rút</label>
                 <div class="col-sm">
                     <input name="tran_u_id" hidden value="<%- session.u_id %>" type="text" class="form-control" aria-label="Zip">
                     <input id="tran_money" name="tran_money" placeholder="0" type="text" class="form-control" aria-label="Zip">
@@ -263,7 +263,7 @@
             <% if(w[0].w_surplus <= 0){ %>
                 <input disabled type="submit" value="Gửi" style="width: 100%; background-color: gray">
             <% } else { %>
-                <input type="submit" value="Gửi" style="width: 100%; background-color: #A52A2A">
+                <input name="buttonSubmit" type="submit" value="Gửi" style="width: 100%; background-color: #A52A2A">
             <% } %>
         </form>
         <hr>

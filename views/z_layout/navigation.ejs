@@ -269,14 +269,14 @@ letter-spacing: 3px;
 
 <div class="overplay" id="divOne">
     <div class="wrapperTK">
-        <h2 class="text-center">TimeKeeping</h2>
+        <h2 class="text-center">Chấm Công</h2>
         <a href="#" class="close">&times;</a>
         <div class="content">
             <div class="container">
                 <form action="/chamcong" method="POST">
                     <label for="">Nhân viên</label>
                     <input hidden type="text" value="<%- session.u_id %>" name="tk_u_id">
-                    <input readonly type="text" value="<%- session.u_name %>" name="">
+                    <input readonly type="text" value="<%- session.u_name %>" name="uName">
                     
                     <label for="">Ghi chú</label>
                     <input type="text" placeholder="Nhập ghi chú..." name="tk_note">
@@ -327,11 +327,11 @@ letter-spacing: 3px;
                     </select>                    
                     <br>
                     <% if(session.cd_id == 'KHÔNG CÓ LỊCH LÀM'){ %>
-                        <input type="submit" disabled class="btn btn-outline-danger" value="Submit" style="width: 100%;">
+                        <input type="submit" disabled class="btn btn-outline-danger" value="Chấm Công" style="width: 100%;">
                     <% } else if(session.cd_check == 1 ) { %>    
-                        <input type="submit" disabled class="btn btn-outline-danger" value="Submit" style="width: 100%;">
+                        <input type="submit" disabled class="btn btn-outline-danger" value="Chấm Công" style="width: 100%;">
                     <% } else { %>
-                        <input type="submit" class="btn btn-outline-danger" value="Submit" style="width: 100%;">
+                        <input type="submit" class="btn btn-outline-danger" value="Chấm Công" style="width: 100%;">
                     <% } %>
                 </form>
             </div>

@@ -17,7 +17,7 @@
         <br>
         <h3>Ngày : <%- Intl.DateTimeFormat("vi-VN", {dateStyle: "short", timeStyle: "short"}).format( pgd[0].tran_updated ) %></h3>
 
-        <table class="table table-hover">
+        <table name="trans" class="table table-hover">
             <thead class="table-light">
                 <td>#</td>
                 <td>Người rút</td>
@@ -39,7 +39,7 @@
             <% } %>
         </table>
 
-        <h3 class="text-center">Trân trọng cảm ơn sự cống hiến của bạn !!!</h3>
+        <h3 name="thanks" class="text-center">Trân trọng cảm ơn sự cống hiến của bạn !!!</h3>
         <h4 class="text-center">Wifi: xincamon</h4>
     </div>
 </body>

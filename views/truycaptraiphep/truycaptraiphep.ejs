@@ -275,7 +275,7 @@
 
         <form action="/thongkesolanTCTP" method="POST" class="form-control">
             
-            <h3 class="text-center">Liệt kê theo số lần vi phạm</h3>
+            <h3 name="title" class="text-center">Liệt kê theo số lần vi phạm</h3>
             
             <select class="form-control" name="numberTCTP" id="">
             <% for (var i = 1; i <= 10; i++){ %>
@@ -283,37 +283,11 @@
             <% } %>
             </select>
             <br>
-            <input type="submit" style="width: 100%" class="btn btn-danger">
+            <input name="buttonSubmit" type="submit" style="width: 100%" class="btn btn-danger" value="LIỆT KÊ">
         </form>
 
         <hr>
-        <a href="#divCreateThongKe" style="width: 100%" class="btn btn-danger">Tạo thống kê mới</a>
-
-        <div class="overplay" id="divCreateThongKe">
-            <div class="wrapper">
-                <h2 class="text-center">Tạo Thống Kê</h2>
-                <a href="#" class="close">&times;</a>
-                <div class="content">
-                    <div class="container">
-                        <form action="/taothongke" method="POST">
-                            <label for="">Tên Thống Kê</label>
-                            <input hidden type="text" value="<%- session.u_id %>" name="tk_u_id">
-                            <input type="text" value="" name="s_name">
-                            
-                            <% var currentdate = new Date(); %>
-                            <% var datetime = currentdate.getFullYear() + "-" + (currentdate.getMonth()+1) + "-" + currentdate.getDate()  + "  "  + currentdate.getHours() + ":"   + currentdate.getMinutes() + ":"  + currentdate.getSeconds(); %>
-            
-                            <label for="">Ngày thống kê</label>
-                            <input type="text" name="s_date" value="<%= datetime %>" readonly>
-        
-                            <input type="submit" class="btn btn-outline-danger" value="Submit" style="width: 100%;">
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <br>
-        <table class="table table-hover">
+        <table name="data" class="table table-hover">
             <thead class="table-light">
                 <td>ID</td>
                 <td>Người truy cập</td>

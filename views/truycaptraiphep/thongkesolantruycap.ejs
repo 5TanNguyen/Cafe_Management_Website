@@ -287,32 +287,6 @@
         </form>
 
         <hr>
-        <a href="#divCreateThongKe" style="width: 100%" class="btn btn-danger">Tạo thống kê mới</a>
-
-        <div class="overplay" id="divCreateThongKe">
-            <div class="wrapper">
-                <h2 class="text-center">Tạo Thống Kê</h2>
-                <a href="#" class="close">&times;</a>
-                <div class="content">
-                    <div class="container">
-                        <form action="/taothongke" method="POST">
-                            <label for="">Tên Thống Kê</label>
-                            <input hidden type="text" value="<%- session.u_id %>" name="tk_u_id">
-                            <input type="text" value="" name="s_name">
-                            
-                            <% var currentdate = new Date(); %>
-                            <% var datetime = currentdate.getFullYear() + "-" + (currentdate.getMonth()+1) + "-" + currentdate.getDate()  + "  "  + currentdate.getHours() + ":"   + currentdate.getMinutes() + ":"  + currentdate.getSeconds(); %>
-            
-                            <label for="">Ngày thống kê</label>
-                            <input type="text" name="s_date" value="<%= datetime %>" readonly>
-        
-                            <input type="submit" class="btn btn-outline-danger" value="Submit" style="width: 100%;">
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <br>
         <table class="table table-hover">
             <thead class="table-light">
                 <td>ID</td>
@@ -336,7 +310,7 @@
 
                             <div class="overplay" id="divPhat<%- ua[t].ua_u_id %>">
                                 <div class="wrapper">
-                                    <h2 class="text-center">Hình Thức Phạt</h2>
+                                    <h2 name="title" class="text-center">Hình Thức Phạt</h2>
                                     <a href="#" class="close">&times;</a>
                                     <div class="content">
                                         <div class="container">
@@ -350,10 +324,10 @@
                                             
                                                 <br>
                                                 
-                                                <label for="">User ID</label>
-                                                <input type="text" name="ua_u_id" value="<%= ua[t].ua_u_id %>" readonly>
+                                                <label hidden for="">User ID</label>
+                                                <input hidden type="text" name="ua_u_id" value="<%= ua[t].ua_u_id %>" readonly>
                             
-                                                <input type="submit" class="btn btn-outline-danger" value="Submit" style="width: 100%;">
+                                                <input name="buttonSubmit" type="submit" class="btn btn-outline-danger" value="XÁC NHẬN" style="width: 100%;">
                                             </form>
                                         </div>
                                     </div>

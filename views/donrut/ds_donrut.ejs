@@ -19,11 +19,11 @@
     <% } %>
 
     <div class="container">
-        <h2 class="text-center">
-            Danh sách lịch làm việc
+        <h2 name="title" class="text-center">
+            Danh sách đơn rút
         </h2>
         <!-- <a href="#divUD" class="btn btn-outline-danger">Tạo lịch</a> -->
-        <table class="table table-hover">
+        <table name="data" class="table table-hover">
             <thead>
                 <td>ID</td>
                 <td>Người rút</td>
@@ -40,7 +40,7 @@
                         <td><%= Intl.NumberFormat({style: "currency", curency:"VND"}).format( test[i].tran_money ) %> VNĐ </td>
                         <td><%= Intl.DateTimeFormat("vi-VN", {dateStyle:"short", timeStyle:"short"}).format( test[i].tran_created ) %></td>
                         <td>
-                            <a class="btn btn-primary" href="/duyetdonrut?tran_id=<%- test[i].tran_id %>&w_u_id=<%- test[i].u_id %>&money=<%- test[i].tran_money %>">Duyệt</a>
+                            <a name="buttonSubmit" class="btn btn-primary" href="/duyetdonrut?tran_id=<%- test[i].tran_id %>&w_u_id=<%- test[i].u_id %>&money=<%- test[i].tran_money %>">Duyệt</a>
                         </td>
                     </tr>
                 <% } %>

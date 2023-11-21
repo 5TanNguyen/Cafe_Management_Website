@@ -19,12 +19,12 @@
     
     <div class="container">
 
-        <h3 class="text-center">Thêm Phí Phát Sinh</h3>
+        <h3 name="title" class="text-center">Thêm Phí Phát Sinh</h3>
         <form action="/themphiphatsinh" method="post" style="padding-top: 10px;">
 
             <div class="row g-3">
                 <div class="col-sm">
-                    <input name="" type="text" class="form-control" value="<%- pps[0].ci_id + 1 %>" placeholder="" aria-label="City">
+                    <input name="stt" type="text" class="form-control" value="<%- pps[0].ci_id + 1 %>" placeholder="" aria-label="City">
                 </div>
                 <div class="col-sm">
                     <input name="ci_name" type="text" class="form-control" placeholder="Tên phí" aria-label="City">
@@ -37,26 +37,30 @@
                     <input hidden name="ci_u_id" type="text" value="<%- session.u_id %>" class="form-control" placeholder="" aria-label="Zip">
                 </div>
 
+                <div class="row">
+                    <div class="col-sm">
+                        <label for="">Chi Nhánh</label>
+                        <select class="form-control" name="ci_br_id" id="">
+                            <% for(var t = 0; t < br.length; t++){ %>
+                                <option name="ib_s_id" value="<%- br[t].br_id %>"> <%- br[t].br_name %></option>
+                            <% } %>
+                        </select>
+                    </div>
 
-                <label for="">Chi Nhánh</label>
-                <div class="row-sm">
-                    <select class="form-control" name="ci_br_id" id="">
-                        <% for(var t = 0; t < br.length; t++){ %>
-                            <option name="ib_s_id" value="<%- br[t].br_id %>"> <%- br[t].br_name %></option>
-                        <% } %>
-                    </select>
-                </div>
-
-                <div class="row-sm">
-                    <input name="s_name" type="text" value="<%- session.s_name %>" class="form-control" placeholder="" aria-label="Zip">
-                    <input hidden name="ci_s_id" type="text" value="<%- session.s_id %>" class="form-control" placeholder="" aria-label="Zip">
+                    <div class="col-sm">
+                        <label for="">Thống Kê</label>
+                        <input hidden name="ci_s_id" type="text" value="<%- session.s_id %>" class="form-control" placeholder="" aria-label="Zip">
+                        <select class="form-control" name="" id="">
+                                <option value=""> <%- session.s_name %></option>
+                        </select>
+                    </div>
                 </div>
             </div>
             
             <br>
 
             <div class="d-grid gap-2">
-            <button class="btn btn btn-outline-danger" type="submit">Submit</button>
+            <button class="btn btn btn-outline-danger" type="submit">TẠO</button>
             </div>
 
             <!-- <input type="text" placeholder="Tên sản phẩm" name="pro_name">

@@ -30,7 +30,7 @@
       
 
         <form class="form-control bg-light" action="/suacachphache" method="post">
-            <input name="b_id"  type="text" value="<%- test[0].pro_b_id %>">
+            <input hidden name="b_id"  type="text" value="<%- test[0].pro_b_id %>">
             
             <div class="form-floating">
                 <textarea name="b_description" style="height: 200px;" class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px"><%= test[0].b_description %></textarea>
@@ -44,7 +44,7 @@
                 <div class="row g-2">
                     <div class="col-md-1">
                         <div class="form-floating">
-                            <input readonly type="text" name="ing_name" class="form-control" id="floatingInputGrid" placeholder="" value="<%= (i+1) %>">
+                            <input readonly type="text" name="ing_number" class="form-control" id="floatingInputGrid" placeholder="" value="<%= (i+1) %>">
                             <label for="floatingInputGrid"></label>
                         </div>
                     </div>
@@ -68,7 +68,7 @@
                     <div class="col-md-1">
                         <div class="form-floating">
                             <input type="text" hidden value="<%- test[i].bd_id %>">
-                            <a style="height: 58px; margin-top: 6px;" class="btn btn-danger" href="/xoachitietphache?bd_id=<%- test[i].bd_id %>&pro_b_id=<%- test[0].pro_b_id %>">XÓA</a>
+                            <a name="buttonDelete" style="height: 58px; margin-top: 6px;" class="btn btn-danger" href="/xoachitietphache?bd_id=<%- test[i].bd_id %>&pro_b_id=<%- test[0].pro_b_id %>">XÓA</a>
                         </div>
                     </div>
 
@@ -77,7 +77,7 @@
             <% } %>
         
             <br>
-            <input type="submit" value="LƯU" class="btn btn-outline-danger" style="width: 100%;">
+            <input name="buttonSave" type="submit" value="LƯU" class="btn btn-outline-danger" style="width: 100%;">
         
         </form>
           
@@ -85,7 +85,7 @@
             <p>Không có nguyên liệu</p>
         <% } %>
 
-        <a class="btn btn-outline-primary" style="width:100%" href="#divUD">THÊM NGUYÊN LIỆU</a>
+        <a name="buttonAdd" class="btn btn-outline-primary" style="width:100%" href="#divUD">THÊM NGUYÊN LIỆU</a>
         
 
         
