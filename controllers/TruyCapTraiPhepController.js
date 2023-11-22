@@ -46,10 +46,15 @@ class TruyCapTraiPhepController {
         {
             console.log(number);
             var ua = await TruyCapTraiPhepModel.GetThongKeTheoSoLanTCTP(number);
-            var ua_by_u_id = await TruyCapTraiPhepModel.GetSoLanTCTPTheoUID(ua[0].ua_u_id);
-
-            if(ua)
+            console.log(ua);
+            if(ua == '')
             {
+                res.render("truycaptraiphep/thongkesolantruycap", { ua, test : ua });
+            }
+            else
+            {
+
+                var ua_by_u_id = await TruyCapTraiPhepModel.GetSoLanTCTPTheoUID(ua[0].ua_u_id);
                 res.render("truycaptraiphep/thongkesolantruycap", { ua, test : ua_by_u_id });
             }
                 

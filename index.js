@@ -505,6 +505,11 @@ app.post('/thongketheongay_chinhanh', async function(req, res)
         var s_id = req.body.s_id;
         var br_id = req.body.br_id;
 
+        if(br_id == 0)
+        {
+            res.redirect("chitietthongke?s_id=" + s_id);
+        }
+
         var tk = await ChamCongModel.GetChamCongByS_Id_And_br_id(s_id, br_id);
 
         var o = await DonDatModel.GetDonDatByS_ID_And_br_id(s_id, br_id);

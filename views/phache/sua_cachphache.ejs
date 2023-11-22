@@ -7,6 +7,8 @@
     <title>Chi tiết đơn nhập</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="/js/input_validate.js"></script>
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
 </head>
 <body>
 
@@ -98,7 +100,7 @@
                 <a href="#" class="close">&times;</a>
                 <div class="content">
                     <div class="container">
-                        <form action="/themchitietphache" method="POST">
+                        <form action="/themchitietphache" method="POST" onsubmit="return validate_sua_cachphache();">
                             <input name="bd_b_id" hidden type="text" value="<%- test[0].pro_b_id %>">
                             <label for="">Tên nguyên liệu</label>
                             <select name="bd_ing_id" id="" class="form-select">
@@ -113,7 +115,8 @@
                             
                             <br>
                             <label for="">Số lượng</label>
-                            <input name="bd_amount" type="text" placeholder="" value="">
+                            <input id="bd_amount" name="bd_amount" type="text" placeholder="" value="">
+                            <label id="lbl_bd_amount" class="lbl_validate" for="">XIN ĐƯỜNG BỎ TRỐNG !</label>
                             
                             <input hidden name="ib_costpu" type="text" value="">
                             <input type="submit" value="Submit">

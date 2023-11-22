@@ -149,3 +149,126 @@ function validate_ds_donnhap(){
 
     return true;
 }
+
+function validate_sua_cachphache(){
+    var bd_amount = document.getElementById("bd_amount");
+    var lbl_bd_amount = document.getElementById("lbl_bd_amount");
+
+    if(bd_amount.value.trim() == "")
+    {
+        bd_amount.style.border = "solid 3px red";
+        lbl_bd_amount.style.visibility = "visible";
+        return false;
+    }
+
+    return true;
+}
+
+function validate_ds_phiphatsinh(){
+    var ci_name = document.getElementById("ci_name");
+    var lbl_ci_name = document.getElementById("lbl_ci_name");
+
+    var ci_cost = document.getElementById("ci_cost");
+    var lbl_ci_cost = document.getElementById("lbl_ci_cost");
+
+    if(ci_name.value.trim() == "")
+    {
+        ci_name.style.border = "solid 3px red";
+        lbl_ci_name.style.visibility = "visible";
+
+        if(ci_cost.value.trim() == "")
+        {
+            ci_cost.style.border = "solid 3px red";
+            lbl_ci_cost.style.visibility = "visible";
+        }
+
+        return false;
+    }
+
+    if(ci_cost.value.trim() == "")
+        {
+            ci_cost.style.border = "solid 3px red";
+            lbl_ci_cost.style.visibility = "visibile";
+            return false;
+        }
+    return true; 
+}
+
+function validate_ds_sanpham(){
+    var pro_name = document.getElementById("pro_name");
+    var lbl_pro_name = document.getElementById("lbl_pro_name");
+
+    var pro_price = document.getElementById("pro_price");
+    var lbl_pro_price = document.getElementById("lbl_pro_price");
+
+    var pro_description = document.getElementById("pro_description");
+    var lbl_pro_description = document.getElementById("lbl_pro_description");
+
+    if(pro_name.value.trim() == ""){
+        pro_name.style.border = "solid 3px red";
+        lbl_pro_name.style.visibility = "visible";
+        
+        if(pro_price.value.trim() == ""){
+            pro_price.style.border = "solid 3px red";
+            lbl_pro_price.style.visibility = "visible";
+
+            if(pro_description.value.trim() == ""){
+                pro_description.style.border = "solid 3px red";
+                lbl_pro_description.style.visibility = "visible";
+            }
+        }
+        
+        return false;
+    }
+
+    if(pro_price.value.trim() == ""){
+        pro_price.style.border = "solid 3px red";
+        lbl_pro_price.style.visibility = "visible";
+
+        if(pro_description.value.trim() == ""){
+            pro_description.style.border = "solid 3px red";
+            lbl_pro_description.style.visibility = "visible";
+        }
+
+        return false;
+    }
+
+    if(pro_description.value.trim() == ""){
+        pro_description.style.border = "solid 3px red";
+        lbl_pro_description.style.visibility = "visible";
+        return false;
+    }
+
+    return true; 
+}
+
+function validate_ds_thongke(){
+    var s_name = document.getElementById("s_name");
+    var lblsname = document.getElementById("lblsname");
+
+    if(s_name.value.trim() == "")
+    {
+        //alert("Blank Statistical Name");
+        s_name.style.border = "solid 3px red";
+        lblsname.style.visibility="visible";
+        return false;
+    }
+    else 
+    {
+        return true;
+    }
+}
+
+function validate_vi(){
+    var tran_money = document.getElementById("tran_money");
+    var lbltran_money = document.getElementById("lbltran_money");
+
+    if(tran_money.value.trim() == "")
+    {
+        tran_money.style.border = "solid 3px red";
+        lbltran_money.style.visibility = "visible";
+        return false;
+    }
+
+    return true;
+}

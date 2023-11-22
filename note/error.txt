@@ -1,5 +1,4 @@
 nút tạo đơn nhập bên Nguyên liệu
-Xóa Nguyên liệu
 Thêm sản phẩm
 thêm js, css từ file .ejs vào style.css input_validate
 bq: bỏ qua
@@ -10,9 +9,17 @@ kc: không cần
     + donnhap
     + donrut (kc)
     + lich
-    +
+    + nguyenlieu
+    + pha che
+    + phiphatsinh
+    + sanpham
+    + thongke
+    + truycaptraiphep
+    + 
 
-Bấm nút x thanh toán trở về divPay
++++++ Bấm nút x thanh toán trở về divPay
+Thêm dữ liệu nguyên liệu cho sản phẩm
+Thêm cách pha chế cho sản phẩm
 thêm tên class cho các label
 thêm số lượng cho ingredient
 khóa ngoại _price : ingredient
@@ -21,6 +28,7 @@ kiểm tra giá khi  thêm nlieu mới
 +++++ Chỉnh sửa thuộc tinh created và updated cho transaction
 +++++ confirm delete hiện tên product khi xóa nglieu
 +++++ thêm nguyên liệu : selected đv khối lượng
+lỗi xảy ra khi tìm kiếm người truy cập tp trên 3 lần
 css tin nhắn
 validate input date : - lịch 
                       - chi tiết lịch
