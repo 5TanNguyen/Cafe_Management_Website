@@ -16,7 +16,8 @@ class PhienGiaoDichModel {
     {
         return new Promise( resolve=>{
             db.query("UPDATE transaction"
-            +        " SET tran_check = 1, tran_updated = CURDATE()"
+            // +        " SET tran_check = 1, tran_updated = CURDATE()"
+            +        " SET tran_check = 1, tran_updated = CURRENT_TIMESTAMP()"
             +        " WHERE tran_id = ?", [tran_id], (err, result)=>{
                 if(!err){ resolve(result); }
             })

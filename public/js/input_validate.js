@@ -75,3 +75,77 @@ function validate_nguyenlieu(){
 
     return true;
 }
+
+function validate_ban(){
+    var num = document.getElementById("num");
+    var lblnum = document.getElementById("lblnum");
+
+    if(num.value.trim() == "")
+    {
+        num.style.border = "solid 3px red";
+        lblnum.style.visibility = "visible";
+        return false;
+    }
+    else
+    {
+        return true;
+    }
+}
+
+function validate_cchitietdondat(){
+    var od_quantity = document.getElementById("od_quantity");
+    var lblod_quantity = document.getElementById("lblod_quantity");
+
+    var od_price = document.getElementById("od_price");
+    var lblod_price = document.getElementById("lblod_price");
+
+    if(od_quantity.value.trim() == "")
+    {
+        od_quantity.style.border = "solid 3px red";
+        lblod_quantity.style.visibility = "visible";
+
+        if(od_price.value.trim() == "")
+        {
+            od_price.style.border = "solid 3px red";
+            lblod_price.style.visibility = "visible";
+        }
+
+        return false;
+    }
+
+    if(od_price.value.trim() == "")
+        {
+            od_price.style.border = "solid 3px red";
+            lblod_price.style.visibility = "visibile";
+            return false;
+        }
+    return true;
+}
+
+function validate_chitietdonnhap(){
+    var ibd_amount = document.getElementById("ibd_amount");
+    var lblibd_amount = document.getElementById("lblibd_amount");
+
+    if(ibd_amount.value.trim() == "")
+    {
+        ibd_amount.style.border = "solid 3px red";
+        lblibd_amount.style.visibility = "visible";
+        return false;
+    }
+
+    return true;
+}
+
+function validate_ds_donnhap(){
+    var ib_name = document.getElementById("ib_name");
+    var lblib_name = document.getElementById("lblib_name");
+
+    if(ib_name.value.trim() == "")
+    {
+        ib_name.style.border = "solid 3px red";
+        lblib_name.style.visibility = "visible";
+        return false;
+    }
+
+    return true;
+}

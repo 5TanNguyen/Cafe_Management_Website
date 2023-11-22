@@ -1,15 +1,26 @@
 nút tạo đơn nhập bên Nguyên liệu
 Xóa Nguyên liệu
 Thêm sản phẩm
+thêm js, css từ file .ejs vào style.css input_validate
+bq: bỏ qua
+kc: không cần
+    + ban
+    + dangnhap (bq)
+    + dondat
+    + donnhap
+    + donrut (kc)
+    + lich
+    +
+
+Bấm nút x thanh toán trở về divPay
 thêm tên class cho các label
 thêm số lượng cho ingredient
 khóa ngoại _price : ingredient
-khóa ngoại cd_id : timekeeping
-Chỉnh sửa thuộc tinh created và updated cho transaction
 kiểm tra giá khi  thêm nlieu mới
-confirm delete hiện tên product khi xóa nglieu
-thêm css từ file .ejs vào style.css
-thêm nguyên liệu : selected đv khối lượng
++++++ khóa ngoại cd_id : timekeeping
++++++ Chỉnh sửa thuộc tinh created và updated cho transaction
++++++ confirm delete hiện tên product khi xóa nglieu
++++++ thêm nguyên liệu : selected đv khối lượng
 css tin nhắn
 validate input date : - lịch 
                       - chi tiết lịch

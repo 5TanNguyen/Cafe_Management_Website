@@ -142,6 +142,7 @@
 
                 <div class="col-sm">
                     <select style="margin-top: 6px; height: 50px;" class="form-control" name="ing_unit_id" id="" aria-label="Amount">
+                        <option selected class="form-control" value="<%- u[0].unit_id %>"><%- u[0].unit_name %></option>
                         <% if(u.length > 0){ %>
                             <% for( var j = 0; j < u.length; j++){ %>
                                 <option class="form-control" value="<%- u[j].unit_id %>"><%- u[j].unit_name %></option>
@@ -183,7 +184,7 @@
                      <th data-priority="1">Số lượng</th>
                      <th>Đơn vị</th>
                      <th>Giá</th>
-                     <th colspan="2">Thao tác</th>
+                     <th>Thao tác</th>
                 </tr>
             </thead>
 
@@ -196,7 +197,9 @@
                         <td> <%- test[i].unit_name %> </td>
                         <td> <%- Intl.NumberFormat({style:"currency", currency: "VND"}).format( test[i].ip_price ) %> VNĐ</td>
                         <td>                        
-                            <a href="#divUD<%- test[i].ing_id %>">SỬA</a>
+                            <a href="#divUD<%- test[i].ing_id %>">
+                                <button class="btn btn-warning">SỬA</button>
+                            </a>
                             <div class="UD_overplay" id="divUD<%- test[i].ing_id %>">
                                 <!-- <input name="pro_name" type="text" placeholder="" value="<%- test[i].pro_name %>"> -->
 
@@ -259,22 +262,19 @@
                         
                         </td>
                         
-                        <td>
-                            <!-- <a href="/xoasanpham?pro_id=<%- test[i].pro_id %>">DELETE</a> -->
-                        
-                            <a href="#divDel<%- test[i].pro_id %>">XÓA</a>
-                            <div class="overplay" id="divDel<%- test[i].pro_id %>">
-                                <!-- <input name="pro_name" type="text" placeholder="" value="<%- test[i].pro_name %>"> -->
-
+                        <!-- Chưa cần đến -->
+                        <!-- <td>
+                            <a href="#divDel<%- test[i].ing_id %>">XÓA</a>
+                            <div class="overplay" id="divDel<%- test[i].ing_id %>">
                                 <div class="wrapper">
-                                    <h2 class="text-center">Confirm Delete</h2>
+                                    <h2 class="text-center">Xác Nhận Xóa</h2>
                                     <a href="#" class="close">&times;</a>
                                     <div class="content">
                                         <div class="container">
-                                            <form action="/xoasanpham" method="POST">
+                                            <form action="/xoanguyenlieu" method="POST">
                                                 <input name="ing_id" type="text" hidden placeholder="" value="<%- test[i].ing_id %>">
 
-                                                <label for="">Product's Name</label>
+                                                <label for="">Tên nguyên liệu</label>
                                                 <input name="ing_name" type="text" placeholder="" value="<%- test[i].ing_name %>">
                                                 
                                                 <button class="btn btn btn-outline-danger" style="width: 100%;" type="submit">Delete</button>
@@ -283,7 +283,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </td>
+                        </td> -->
                     </tr>
                 <% } %>
 

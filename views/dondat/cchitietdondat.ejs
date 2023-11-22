@@ -7,6 +7,7 @@
     <title>Chi tiết đơn đặt</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="/js/input_validate.js"></script>
 </head>
 <body>
     <% if(session.u_d_id == 1){ %>
@@ -67,40 +68,6 @@
         <% } %>
         <hr>
         <a class="btn btn-outline-primary" style="width:100%" href="#divUD">THÊM ĐỒ UỐNG</a>
-        
-
-        
-        <script>
-            function validate(){
-                var od_quantity = document.getElementById("od_quantity");
-                var lblod_quantity = document.getElementById("lblod_quantity");
-
-                var od_price = document.getElementById("od_price");
-                var lblod_price = document.getElementById("lblod_price");
-
-                if(od_quantity.value.trim() == "")
-                {
-                    od_quantity.style.border = "solid 3px red";
-                    lblod_quantity.style.visibility = "visible";
-
-                    if(od_price.value.trim() == "")
-                    {
-                        od_price.style.border = "solid 3px red";
-                        lblod_price.style.visibility = "visible";
-                    }
-
-                    return false;
-                }
-
-                if(od_price.value.trim() == "")
-                    {
-                        od_price.style.border = "solid 3px red";
-                        lblod_price.style.visibility = "visibile";
-                        return false;
-                    }
-                return true;
-            }
-        </script>
 
         <!-- POPUP THÊM ĐỒ UỐNG -->
         
@@ -111,9 +78,9 @@
                 <a href="#" class="close">&times;</a>
                 <div class="content">
                     <div class="container">
-                        <form action="/themchitietdondat" method="POST" onsubmit="return validate();">
+                        <form action="/themchitietdondat" method="POST" onsubmit="return validate_cchitietdondat();">
                             <input name="o_id" hidden type="text" value="<%- dd_id %>">
-                            <label for="">Tên nguyên liệu</label>
+                            <label for="">Tên thức uống</label>
                             <select name="od_pro_id" id="" class="form-select">
                                 <% if(pro.length > 0){ %>
                                     <% for( var j = 0; j < pro.length; j++){ %>

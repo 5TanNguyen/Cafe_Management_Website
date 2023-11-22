@@ -7,6 +7,7 @@
     <title>Chi tiết đơn nhập</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="/js/input_validate.js"></script>
 </head>
 <body>
     <% if(session.u_d_id == 1){ %>
@@ -72,23 +73,6 @@
         <% } %>
 
         <a class="btn btn-outline-primary" style="width:100%" href="#divUD">THÊM NGUYÊN LIỆU</a>
-        
-
-        <script>
-            function validate(){
-                var ibd_amount = document.getElementById("ibd_amount");
-                var lblibd_amount = document.getElementById("lblibd_amount");
-
-                if(ibd_amount.value.trim() == "")
-                {
-                    ibd_amount.style.border = "solid 3px red";
-                    lblibd_amount.style.visibility = "visible";
-                    return false;
-                }
-
-                return true;
-            }
-        </script>
 
         <!-- POPUP THÊM NGUYÊN LIỆU -->
         
@@ -99,7 +83,7 @@
                 <a href="#" class="close">&times;</a>
                 <div class="content">
                     <div class="container">
-                        <form action="/themchitietdonnhap" method="POST" onsubmit="return validate();">
+                        <form action="/themchitietdonnhap" method="POST" onsubmit="return validate_chitietdonnhap();">
                             <input name="ibd_ib_id" hidden type="text" value="<%- ib_id %>">
                             <label for="">Tên nguyên liệu</label>
                             <select name="ing_id" id="" class="form-select">
