@@ -23,9 +23,11 @@ class SanPhamController{
 
             var results = await sanphamModel.getsanphams();
 
+            var pp = await sanphamModel.GetPro_Price();
+
             if(results)
             //res.send(results)
-            res.render("sanpham/ds_sanpham.ejs", {test: results});
+            res.render("sanpham/ds_sanpham.ejs", {test: results, pp});
         }
     }
 
@@ -208,6 +210,44 @@ class SanPhamController{
             else
             res.send("Edit Fail")
         }
+    }
+
+    static async chinhgiaSanPham(req, res){
+        res.locals.session = req.session;
+
+        if(!req.session.u_id || (req.session.u_d_id != 1))
+        {
+            var currentdate = new Date();
+            var datetime = currentdate.getFullYear() + "-" + (currentdate.getMonth()+1) + "-" + currentdate.getDate()  + "  "  + currentdate.getHours() + ":"   + currentdate.getMinutes() + ":"  + currentdate.getSeconds();
+            var tctp = await TruyCapTraiPhepModel.addTCTP(req.session.u_id, 'Chỉnh sửa sản phẩm', datetime);
+
+            req.flash('message', 'Bạn không có quyền truy cập !');
+            res.render("dangnhap/dangnhap", { message : req.flash('message')});
+        }
+        else
+        {
+            const pp_id = req.body.pp_id ;
+            const pp_pro_name = req.body.pp_pro_name;
+            const pp_date = req.body.pp_date;
+            const pp_price = req.body.pp_price;
+
+            // console.log(pp_id)
+            // console.log(pp_pro_name)
+            // console.log(pp_date)
+            // console.log(pp_price)
+            var x = await sanphamModel.ChinhGiaSanPham(pp_id, pp_pro_name, pp_date, pp_price)
+
+            if( x == true)
+            {
+                var results = await sanphamModel.getsanphams();
+
+                if(results)
+                res.redirect("/sanpham#quanlygia");
+                // res.render("sanpham/ds_sanpham.ejs", {test: results});
+            }
+            else
+            res.send("Edit Fail")
+        }  
     }
 
 }

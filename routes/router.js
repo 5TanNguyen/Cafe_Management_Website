@@ -42,6 +42,7 @@ router.post("/xoasanpham", [check("pro_id").exists().withMessage("ID is required
 
 router.get("/suasanpham", sanphamController.editSanPhamForm)
 router.post("/suasanpham", sanphamController.editSanPham)
+router.post("/chinhgiasanpham",sanphamController.chinhgiaSanPham);
 
 router.get("/ban", banController.getAllBan)
 

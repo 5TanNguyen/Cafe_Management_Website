@@ -1,28 +1,30 @@
 nút tạo đơn nhập bên Nguyên liệu
++++++ Quản lí giá sản phẩm
+Quản lí giá nguyên liệu
 Thêm sản phẩm
-thêm js, css từ file .ejs vào style.css input_validate
-bq: bỏ qua
-kc: không cần
-    + ban
-    + dangnhap (bq)
-    + dondat
-    + donnhap
-    + donrut (kc)
-    + lich
-    + nguyenlieu
-    + pha che
-    + phiphatsinh
-    + sanpham
-    + thongke
-    + truycaptraiphep
-    + 
++++++   thêm js, css từ file .ejs vào style.css input_validate
+        bq: bỏ qua
+        kc: không cần
+            + ban
+            + dangnhap (bq)
+            + dondat
+            + donnhap
+            + donrut (kc)
+            + lich
+            + nguyenlieu
+            + pha che
+            + phiphatsinh
+            + sanpham
+            + thongke
+            + truycaptraiphep
+            + vi
 
 +++++ Bấm nút x thanh toán trở về divPay
 Thêm dữ liệu nguyên liệu cho sản phẩm
 Thêm cách pha chế cho sản phẩm
 thêm tên class cho các label
 thêm số lượng cho ingredient
-khóa ngoại _price : ingredient
++++++ khóa ngoại _price : ingredient
 kiểm tra giá khi  thêm nlieu mới
 +++++ khóa ngoại cd_id : timekeeping
 +++++ Chỉnh sửa thuộc tinh created và updated cho transaction

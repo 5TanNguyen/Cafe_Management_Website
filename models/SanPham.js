@@ -17,7 +17,8 @@ static async getsanphams()
 static async add_SanPham(sp_ten, sp_gia, sp_mota)
 {
     return new Promise(resolve =>{
-        db.query("INSERT INTO `products`(`pro_id`, `pro_name`, `pro_price`, `pro_description`) VALUES (NULL, ?, ?, ?)", [sp_ten, sp_gia, sp_mota], (error, result)=>
+        db.query( "INSERT INTO `products`(`pro_id`, `pro_name`, `pro_price`, `pro_description`, `pro_pt_id`, `pro_pp_id`, `pro_b_id`)"
+                + " VALUES (NULL, ?, ?, ?, 1, 1, 1)", [sp_ten, sp_gia, sp_mota], (error, result)=>
         {
             if(!error)
                 resolve(true)
@@ -86,6 +87,34 @@ static async getPrice(ctdd_masp)
             else
                 res.send("Failed hụ hụ")
         })
+    })
+}
+
+static async GetPro_Price()
+{
+    return new Promise(resolve =>{
+        db.query("Select * FROM product_price"
+        , [], (error, result)=>{
+            if(!error) 
+                resolve(result)
+            else
+                res.send("Failed hụ hụ")
+        })
+    })
+}
+
+static async ChinhGiaSanPham(pp_id, pp_pro_name, pp_date, pp_price)
+{
+    return new Promise (resolve =>{
+        db.query( "Update product_price"
+                + " Set pp_pro_name = ?,"
+                + " pp_price = ?,"
+                + " pp_date = ?"
+                + " WHERE pp_id = ?",[pp_pro_name, pp_price, pp_date, pp_id], (error, result)=>{
+            if(!error)
+            resolve(true)  
+        })
+
     })
 }
 

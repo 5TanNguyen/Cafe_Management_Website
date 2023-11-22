@@ -77,6 +77,8 @@ class PhaCheController{
 
             var ingredient = await NguyenLieuModel.GetNguyenLieu();
 
+            // console.log(result)
+            // console.log(bd_b_id)
             if(result)
                 res.render("phache/cachphache", { test : result, ing : ingredient});
         }
