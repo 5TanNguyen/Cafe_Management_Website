@@ -2,6 +2,7 @@ const { response } = require("express");
 const sanphamModel=require("../models/SanPham")
 const {validationResult}=require("express-validator")
 const TruyCapTraiPhepModel = require("../models/TruyCapTraiPhep");
+const PhaCheModel = require("../models/PhaChe");
 
 class SanPhamController{
 
@@ -27,9 +28,11 @@ class SanPhamController{
             
             var pt = await sanphamModel.GetPro_Type();
 
+            var b = await PhaCheModel.GetPhaChe();
+
             if(results)
             //res.send(results)
-            res.render("sanpham/ds_sanpham.ejs", {test: results, pp, pt});
+            res.render("sanpham/ds_sanpham.ejs", {test: results, pp, pt, b});  
         }
     }
 
@@ -71,13 +74,14 @@ class SanPhamController{
             var sp_gia = req.body.pro_pp_id;
             var sp_loai = req.body.pro_pt_id;
             var sp_mota = req.body.pro_description;
+            var sp_phache = req.body.pro_b_id;
             
             // console.log(sp_ten)
             // console.log(sp_gia)
             // console.log(sp_loai)
             // console.log(sp_mota)
 
-            var x = await sanphamModel.add_SanPham(sp_ten, 0, sp_mota, sp_loai, sp_gia);
+            var x = await sanphamModel.add_SanPham(sp_ten, 0, sp_mota, sp_loai, sp_gia, sp_phache);
 
             if( x == true)
             {

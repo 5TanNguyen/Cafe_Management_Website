@@ -193,6 +193,32 @@ class PhaCheController{
             // console.log(b_id)
         }
     }
+
+    static async addCachPhaChe(req, res){
+        res.locals.session = req.session;
+
+        if(!req.session.u_id || ((req.session.u_d_id != 2) && (req.session.u_d_id != 1)))
+        {
+            var currentdate = new Date();
+            var datetime = currentdate.getFullYear() + "-" + (currentdate.getMonth()+1) + "-" + currentdate.getDate()  + "  "  + currentdate.getHours() + ":"   + currentdate.getMinutes() + ":"  + currentdate.getSeconds();
+            var tctp = await TruyCapTraiPhepModel.addTCTP(req.session.u_id, 'Thêm cách pha chế', datetime);
+
+            req.flash('message', 'Bạn không có quyền truy cập !');
+            res.render("dangnhap/dangnhap", { message : req.flash('message')});
+        }
+        else
+        {
+
+            var b_name = req.body.b_name;
+
+            var b_description = req.body.b_description;
+
+            //res.send(pro_b_id);
+            PhaCheModel.AddCachPhaChe(b_name, b_description);
+
+            res.redirect("/sanpham#quanlyphache");
+        }
+    }
 }
 
 module.exports = PhaCheController

@@ -82,6 +82,8 @@ router.get("/chichsuacachphache", PhaCheController.getEditPhaCheForm)
 
 router.post("/suacachphache", PhaCheController.PostEditPhaChe)
 
+router.post("/themcachphache", PhaCheController.addCachPhaChe);
+
 router.post("/themchitietphache", PhaCheController.addChiTietPhaChe);
 
 router.get("/xoachitietphache", PhaCheController.deleteChiTietPhaChe);

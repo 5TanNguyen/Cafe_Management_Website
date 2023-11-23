@@ -48,12 +48,12 @@
                     <form action="/themgiasanpham" method="post" class="form-controll" onsubmit="return validate_themgiaSP();" style="margin: 10px 10px;">
                         <div class="row">        
                             <div class="col">
-                                <input id="pp_pro_name" name="pp_pro_name" type="text" placeholder="">
+                                <input id="pp_pro_name" name="pp_pro_name" type="text" placeholder="Tên sản phẩm...">
                                 <label id="lbl_pp_pro_name" class="lbl_validate" for="">KHÔNG ĐƯỢC ĐỂ TRỐNG !</label>
                             </div>
 
                             <div class="col">
-                                <input id="pp_price" name="pp_price" type="text" placeholder="">
+                                <input id="pp_price" name="pp_price" type="text" placeholder="Giá...">
                                 <label id="lbl_pp_price" class="lbl_validate" for="">KHÔNG ĐƯỢC ĐỂ TRỐNG !</label>
                             </div>
                             
@@ -113,6 +113,66 @@
                 </div>
             </div>
         </div>
+
+        <a href="#quanlyphache">
+            <button type="button" class="btn btn-outline-primary">Cách pha chế</button>
+        </a>
+
+        <div class="overplay" id="quanlyphache">
+            <div class="wrapper"  style="width: 700px; height: 500px;">
+                <h2 name="title" class="text-center">Quản lí pha chế</h2>
+                <a href="#" class="close">&times;</a>
+                <div class="content" style="max-height: 90%;">
+                    <form action="/themcachphache" method="post" class="form-controll" onsubmit="return validate_qlphache();" style="margin: 10px 10px;">
+                        <div class="row">        
+                            <div class="col">
+                                <input id="b_name" name="b_name" type="text" placeholder="Tên pha chế...">
+                                <label id="lbl_b_name" class="lbl_validate" for="">KHÔNG ĐƯỢC ĐỂ TRỐNG !</label>
+
+                                <textarea id="b_description" name="b_description" style="height: 150px; margin-top: 0px;" class="form-control" placeholder="Cách pha chế..." style="height: 100px"><%= test[0].b_description %></textarea>
+                                <label id="lbl_b_description" class="lbl_validate" for="">KHÔNG ĐƯỢC ĐỂ TRỐNG !</label>
+                            </div>
+                        </div>
+
+                        <input type="submit" value="THÊM" style="width: 100%; margin-top: 0px;">
+                    </form>
+                    <div class="container">
+                        <table class="table table-striped table-hover">
+                            <tr>
+                                <th>Id</th>
+                                <th>Tên pha chế</th>
+                                <th>Thao tác</th>
+                            </tr>
+                
+                            <% if(b.length > 0){  %>
+                                <% for(var i=0; i < b.length; i++){  %>
+                                    <tr>
+                                        <form action="/chinhgiasanpham" method="post" class="form-control" onsubmit="return validate_suagiaSP();">
+                                            <td> 
+                                                <%- b[i].b_id %> 
+                                                <input hidden type="text" name="b_id" value="<%- b[i].b_id %>">
+                                            </td>
+                                            
+                                            <td> 
+                                                <%- b[i].b_name %> 
+                                                <input hidden type="text" name="b_name" value="<%- b[i].b_name %>">
+                                            </td>
+
+                                            <td>
+                                                <a class="btn btn-primary" href="/cachphache?pro_b_id=<%- b[i].b_id %>" >Chi tiết</a>
+                                            </td>
+                                        </form>
+                                    </tr>
+                                <% } %>                
+                            <% }else { %>
+                                <h1>Data Not Found !</h1>
+                            <% } %>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <form action="/themsanpham" method="post" style="padding-top: 10px;" onsubmit="return validate_ds_sanpham();">
 
             <div class="row g-3">
@@ -147,6 +207,19 @@
                 </div>
 
                 <div class="col-sm">
+                    <select style="margin-top: 6px; height: 50px;" class="form-control" name="pro_b_id" id="">
+                        <option selected class="form-control" value="<%- b[0].b_id %>"><%- b[0].b_name %></option>
+                        <% if(b.length > 0){ %>
+                            <% for( var j = 0; j < b.length; j++){ %>
+                                <option class="form-control" value="<%- b[j].b_id %>"><%- b[j].b_name %></option>
+                            <% } %>
+                        <% } else { %>
+                            <p>Không có dữ liệu</p>
+                        <% } %>
+                    </select>
+                </div>
+
+                <div class="col-sm">
                   <input id="pro_description" name="pro_description" type="text" class="form-control" placeholder="Mô tả" aria-label="Zip">
                   <label id="lbl_pro_description" class="lbl_validate">KHÔNG ĐƯỢC BỎ TRỐNG !</label>
                 </div>
@@ -157,11 +230,6 @@
             <div class="d-grid gap-2">
             <button class="btn btn btn-outline-danger" type="submit">Submit</button>
             </div>
-
-            <!-- <input type="text" placeholder="Tên sản phẩm" name="pro_name">
-            <input type="text" placeholder="Giá" name="pro_price">
-            <input type="text" placeholder="Mô tả" name="pro_description">
-            <input type="submit" value="Submit" data-theme="b"> -->
         </form>
         
         <br>

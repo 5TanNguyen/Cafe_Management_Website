@@ -328,3 +328,25 @@ function validate_themgiaNL(){
         return false; 
     }
 }
+
+function validate_qlphache(){
+    var b_name = document.getElementById("b_name");
+    var lbl_b_name = document.getElementById("lbl_b_name");
+
+    var b_description = document.getElementById("b_description");
+    var lbl_b_description = document.getElementById("lbl_b_description");
+
+    if(b_name.value.trim() == "")
+    {
+        b_name.style.border = "solid 3px red";
+        lbl_b_name.style.visibility = "visible";
+
+        if(b_description.value.trim() == "")
+        {
+            b_description.style.border = "solid 3px red";
+            lbl_b_description.style.visibility = "visible";
+        }
+
+        return false; 
+    }
+}

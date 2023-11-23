@@ -1,6 +1,15 @@
 const db = require('../config/db');
 
 class PhaCheModel{
+    static async GetPhaChe(){
+        return new Promise(resolve =>{
+            db.query("SELECT * "
+            + " FROM bartending", [], (err, result)=>{
+                if(!err) resolve(result);
+            })
+        })
+    }
+    
     static async GetPhaCheById(b_id){
         return new Promise(resolve =>{
             db.query("SELECT pro.pro_name, pro.pro_b_id, b.b_id, b.b_name, b.b_description, bd.bd_id, bd.bd_b_id, bd.bd_ing_id, bd.bd_amount, ing.ing_id, ing.ing_name, ing.ing_amount, u.unit_name"
@@ -54,6 +63,15 @@ class PhaCheModel{
         return new Promise(resolve =>{
             db.query("UPDATE bartending SET b_description = ?"
             + " WHERE b_id = ?", [b_description, b_id], (err, result)=>{
+                if(!err) resolve(true);
+            })
+        })
+    }
+
+    static async AddCachPhaChe(b_name, b_description){
+        return new Promise(resolve =>{
+            db.query("INSERT INTO bartending"
+            + " VALUES(NULL, ?, ?)", [b_name, b_description], (err, result)=>{
                 if(!err) resolve(true);
             })
         })
