@@ -14,11 +14,11 @@ static async getsanphams()
     })
 }
 
-static async add_SanPham(sp_ten, sp_gia, sp_mota)
+static async add_SanPham(sp_ten, sp_gia, sp_mota, pro_pt_id, pro_pp_id)
 {
     return new Promise(resolve =>{
-        db.query( "INSERT INTO `products`(`pro_id`, `pro_name`, `pro_price`, `pro_description`, `pro_pt_id`, `pro_pp_id`, `pro_b_id`)"
-                + " VALUES (NULL, ?, ?, ?, 1, 1, 1)", [sp_ten, sp_gia, sp_mota], (error, result)=>
+        db.query( "INSERT INTO `products`(`pro_id`, `pro_name`, `pro_price`, `pro_description`, `pro_pt_id`, `pro_pp_id`)"
+                + " VALUES (NULL, ?, ?, ?, ?, ?)", [sp_ten, sp_gia, sp_mota, pro_pt_id, pro_pp_id], (error, result)=>
         {
             if(!error)
                 resolve(true)
@@ -103,6 +103,19 @@ static async GetPro_Price()
     })
 }
 
+static async GetPro_Type()
+{
+    return new Promise(resolve =>{
+        db.query("Select * FROM product_type"
+        , [], (error, result)=>{
+            if(!error) 
+                resolve(result)
+            else
+                res.send("Failed")
+        })
+    })
+}
+
 static async ChinhGiaSanPham(pp_id, pp_pro_name, pp_date, pp_price)
 {
     return new Promise (resolve =>{
@@ -111,6 +124,18 @@ static async ChinhGiaSanPham(pp_id, pp_pro_name, pp_date, pp_price)
                 + " pp_price = ?,"
                 + " pp_date = ?"
                 + " WHERE pp_id = ?",[pp_pro_name, pp_price, pp_date, pp_id], (error, result)=>{
+            if(!error)
+            resolve(true)  
+        })
+
+    })
+}
+
+static async ThemGiaSanPham(pp_pro_name, pp_date, pp_price)
+{
+    return new Promise (resolve =>{
+        db.query( "Insert Into product_price"
+                + " VALUES(NULL, ?, ?, ?)",[pp_pro_name, pp_price, pp_date], (error, result)=>{
             if(!error)
             resolve(true)  
         })

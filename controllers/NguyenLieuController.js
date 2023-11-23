@@ -64,11 +64,11 @@ class NguyenLieuController{
             var ing_name = req.body.ing_name;
             var ing_amount = req.body.ing_amount;
             var ing_unit_id = req.body.ing_unit_id;
-            var datetime = req.body.datetime;
-            var ing_price = req.body.ing_price;
+            var ing_ip_id = req.body.ing_ip_id;
 
-            NguyenLieuModel.AddNguyenLieu(ing_name, ing_amount, ing_unit_id, 1);
-            NguyenLieuModel.AddGiaNguyenLieu(ing_name, ing_price, datetime)
+            //console.log(ing_ip_id);
+
+            NguyenLieuModel.AddNguyenLieu(ing_name, ing_amount, ing_unit_id, ing_ip_id);
 
             res.redirect("/nguyenlieu");
         }
@@ -180,6 +180,70 @@ class NguyenLieuController{
             }
             res.redirect("/chitietdondat?o_id=" + od_o_id);
         }
+    }
+
+    static async themgiaNguyenLieu(req, res){
+        res.locals.session = req.session;
+
+        if(!req.session.u_id || (req.session.u_d_id != 1))
+        {
+            var currentdate = new Date();
+            var datetime = currentdate.getFullYear() + "-" + (currentdate.getMonth()+1) + "-" + currentdate.getDate()  + "  "  + currentdate.getHours() + ":"   + currentdate.getMinutes() + ":"  + currentdate.getSeconds();
+            var tctp = await TruyCapTraiPhepModel.addTCTP(req.session.u_id, 'Thêm giá nguyên liệu', datetime);
+
+            req.flash('message', 'Bạn không có quyền truy cập !');
+            res.render("dangnhap/dangnhap", { message : req.flash('message')});
+        }
+        else
+        {
+            const ip_ing_name = req.body.ip_ing_name;
+            const ip_date = req.body.ip_date;
+            const ip_price = req.body.ip_price;
+
+            // console.log(ip_ing_name)
+            // console.log(ip_price)
+            // console.log(ip_date)
+            var x = await NguyenLieuModel.AddGiaNguyenLieu(ip_ing_name, ip_price, ip_date)
+
+            if( x == true)
+            {
+                res.redirect("/nguyenlieu#quanlygia");
+            }
+            else
+                res.send("Add Fail")
+        }  
+    }
+
+    static async chinhgiaNguyenLieu(req, res){
+        res.locals.session = req.session;
+
+        if(!req.session.u_id || (req.session.u_d_id != 1))
+        {
+            var currentdate = new Date();
+            var datetime = currentdate.getFullYear() + "-" + (currentdate.getMonth()+1) + "-" + currentdate.getDate()  + "  "  + currentdate.getHours() + ":"   + currentdate.getMinutes() + ":"  + currentdate.getSeconds();
+            var tctp = await TruyCapTraiPhepModel.addTCTP(req.session.u_id, 'Chỉnh sửa giá nguyên liệu', datetime);
+
+            req.flash('message', 'Bạn không có quyền truy cập !');
+            res.render("dangnhap/dangnhap", { message : req.flash('message')});
+        }
+        else
+        {
+            const ip_id = req.body.ip_id;
+            const ip_price = req.body.ip_price;
+            const ip_date = req.body.ip_date;
+
+            // console.log(pp_pro_name)
+            // console.log(pp_date)
+            // console.log(pp_price)
+            var x = await NguyenLieuModel.ChinhGiaNguyenLieu(ip_id, ip_price, ip_date)
+
+            if( x == true)
+            {
+                res.redirect("/nguyenlieu#quanlygia");
+            }
+            else
+                res.send("Add Fail")
+        }  
     }
 
 }

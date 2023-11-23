@@ -272,3 +272,59 @@ function validate_vi(){
 
     return true;
 }
+
+function validate_themgiaSP(){
+    var pp_pro_name = document.getElementById("pp_pro_name");
+    var lbl_pp_pro_name = document.getElementById("lbl_pp_pro_name");
+
+    var pp_price = document.getElementById("pp_price");
+    var lbl_pp_price = document.getElementById("lbl_pp_price");
+
+    if(pp_pro_name.value.trim() == "")
+    {
+        pp_pro_name.style.border = "solid 3px red";
+        lbl_pp_pro_name.style.visibility = "visible";
+
+        if(pp_price.value.trim() == "")
+        {
+            pp_price.style.border = "solid 3px red";
+            lbl_pp_price.style.visibility = "visible";
+        }
+
+        return false; 
+    }
+}
+
+function validate_suagiaSP(){
+    var pp_price = document.getElementById("ud_pp_price");
+    var lbl_pp_price = document.getElementById("lbl_ud_pp_price");
+
+    if(pp_price.value.trim() == "")
+    {
+        pp_price.style.border = "solid 3px red";
+        lbl_pp_price.style.visibility = "visible";
+        return false; 
+    }
+}
+
+function validate_themgiaNL(){
+    var ip_ing_name = document.getElementById("ip_ing_name");
+    var lbl_ip_ing_name = document.getElementById("lbl_ip_ing_name");
+
+    var ip_price = document.getElementById("ip_price");
+    var lbl_ip_price = document.getElementById("lbl_ip_price");
+
+    if(ip_ing_name.value.trim() == "")
+    {
+        ip_ing_name.style.border = "solid 3px red";
+        lbl_ip_ing_name.style.visibility = "visible";
+
+        if(ip_price.value.trim() == "")
+        {
+            ip_price.style.border = "solid 3px red";
+            lbl_ip_price.style.visibility = "visible";
+        }
+
+        return false; 
+    }
+}

@@ -1,7 +1,9 @@
 nút tạo đơn nhập bên Nguyên liệu
+Thêm cách pha chế
+Sửa giá sản phẩm, ngl
 +++++ Quản lí giá sản phẩm
-Quản lí giá nguyên liệu
-Thêm sản phẩm
++++++ Quản lí giá nguyên liệu
++++++Thêm sản phẩm
 +++++   thêm js, css từ file .ejs vào style.css input_validate
         bq: bỏ qua
         kc: không cần
@@ -21,7 +23,6 @@ Thêm sản phẩm
 
 +++++ Bấm nút x thanh toán trở về divPay
 Thêm dữ liệu nguyên liệu cho sản phẩm
-Thêm cách pha chế cho sản phẩm
 thêm tên class cho các label
 thêm số lượng cho ingredient
 +++++ khóa ngoại _price : ingredient

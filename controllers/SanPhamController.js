@@ -24,10 +24,12 @@ class SanPhamController{
             var results = await sanphamModel.getsanphams();
 
             var pp = await sanphamModel.GetPro_Price();
+            
+            var pt = await sanphamModel.GetPro_Type();
 
             if(results)
             //res.send(results)
-            res.render("sanpham/ds_sanpham.ejs", {test: results, pp});
+            res.render("sanpham/ds_sanpham.ejs", {test: results, pp, pt});
         }
     }
 
@@ -66,19 +68,23 @@ class SanPhamController{
         else
         {
             var sp_ten = req.body.pro_name;
-            var sp_gia = req.body.pro_price;
+            var sp_gia = req.body.pro_pp_id;
+            var sp_loai = req.body.pro_pt_id;
             var sp_mota = req.body.pro_description;
             
-            //res.send(sp_mota);
-            var x = await sanphamModel.add_SanPham(sp_ten, sp_gia, sp_mota)
+            // console.log(sp_ten)
+            // console.log(sp_gia)
+            // console.log(sp_loai)
+            // console.log(sp_mota)
+
+            var x = await sanphamModel.add_SanPham(sp_ten, 0, sp_mota, sp_loai, sp_gia);
 
             if( x == true)
             {
                 var results = await sanphamModel.getsanphams();
 
                 if(results)
-                //res.send(results)
-                res.render("sanpham/ds_sanpham.ejs", {test: results});
+                res.redirect("/sanpham");
             }
             else
                 res.send("Add failed")
@@ -219,7 +225,7 @@ class SanPhamController{
         {
             var currentdate = new Date();
             var datetime = currentdate.getFullYear() + "-" + (currentdate.getMonth()+1) + "-" + currentdate.getDate()  + "  "  + currentdate.getHours() + ":"   + currentdate.getMinutes() + ":"  + currentdate.getSeconds();
-            var tctp = await TruyCapTraiPhepModel.addTCTP(req.session.u_id, 'Chỉnh sửa sản phẩm', datetime);
+            var tctp = await TruyCapTraiPhepModel.addTCTP(req.session.u_id, 'Chỉnh sửa giá sản phẩm', datetime);
 
             req.flash('message', 'Bạn không có quyền truy cập !');
             res.render("dangnhap/dangnhap", { message : req.flash('message')});
@@ -247,6 +253,41 @@ class SanPhamController{
             }
             else
             res.send("Edit Fail")
+        }  
+    }
+
+    static async themgiaSanPham(req, res){
+        res.locals.session = req.session;
+
+        if(!req.session.u_id || (req.session.u_d_id != 1))
+        {
+            var currentdate = new Date();
+            var datetime = currentdate.getFullYear() + "-" + (currentdate.getMonth()+1) + "-" + currentdate.getDate()  + "  "  + currentdate.getHours() + ":"   + currentdate.getMinutes() + ":"  + currentdate.getSeconds();
+            var tctp = await TruyCapTraiPhepModel.addTCTP(req.session.u_id, 'Thêm giá sản phẩm', datetime);
+
+            req.flash('message', 'Bạn không có quyền truy cập !');
+            res.render("dangnhap/dangnhap", { message : req.flash('message')});
+        }
+        else
+        {
+            const pp_pro_name = req.body.pp_pro_name;
+            const pp_date = req.body.pp_date;
+            const pp_price = req.body.pp_price;
+
+            // console.log(pp_pro_name)
+            // console.log(pp_date)
+            // console.log(pp_price)
+            var x = await sanphamModel.ThemGiaSanPham(pp_pro_name, pp_date, pp_price)
+
+            if( x == true)
+            {
+                var results = await sanphamModel.getsanphams();
+
+                if(results)
+                res.redirect("/sanpham#quanlygia");
+            }
+            else
+                res.send("Add Fail")
         }  
     }
 

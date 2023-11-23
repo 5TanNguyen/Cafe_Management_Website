@@ -43,6 +43,7 @@ router.post("/xoasanpham", [check("pro_id").exists().withMessage("ID is required
 router.get("/suasanpham", sanphamController.editSanPhamForm)
 router.post("/suasanpham", sanphamController.editSanPham)
 router.post("/chinhgiasanpham",sanphamController.chinhgiaSanPham);
+router.post("/themgiasanpham", sanphamController.themgiaSanPham);
 
 router.get("/ban", banController.getAllBan)
 
@@ -92,6 +93,9 @@ router.post("/themnguyenlieu", NguyenLieuController.addNguyenLieu);
 router.post("/suanguyenlieu", NguyenLieuController.editNguyenLieu);
 
 router.post("/trunguyenlieu", NguyenLieuController.MinusNguyenLieu);
+
+router.post("/themgianguyenlieu", NguyenLieuController.themgiaNguyenLieu);
+router.post("/chinhgianguyenlieu", NguyenLieuController.chinhgiaNguyenLieu);
 
 router.get("/thongke", ThongKeController.getThongKe);
 

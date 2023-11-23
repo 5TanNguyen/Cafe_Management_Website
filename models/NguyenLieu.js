@@ -65,6 +65,18 @@ class NguyenLieuModel{
         })
     }
 
+    static async ChinhGiaNguyenLieu(ip_id, ip_price, ip_date)
+    {
+        return new Promise(resolve =>{
+            db.query("UPDATE ingredient_price"
+            + " SET ip_price = ?,"
+            + " ip_date = ?"
+            + " WHERE ip_id = ?", [ip_price, ip_date, ip_id], (err, result)=>{
+                if(!err) resolve(true);
+            })
+        })
+    }
+
     static async EditNguyenLieu(ing_name, ing_amount, ing_unit_id, ing_ip_id, ing_id)
     {
         return new Promise(resolve =>{
