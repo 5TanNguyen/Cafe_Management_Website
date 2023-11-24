@@ -14,11 +14,11 @@ static async getsanphams()
     })
 }
 
-static async add_SanPham(sp_ten, sp_gia, sp_mota, pro_pt_id, pro_pp_id, pro_b_id)
+static async add_SanPham(sp_ten, sp_gia, sp_mota, pro_img, pro_pt_id, pro_pp_id, pro_b_id)
 {
     return new Promise(resolve =>{
-        db.query( "INSERT INTO `products`(`pro_id`, `pro_name`, `pro_price`, `pro_description`, `pro_pt_id`, `pro_pp_id`, `pro_b_id`)"
-                + " VALUES (NULL, ?, ?, ?, ?, ?, ?)", [sp_ten, sp_gia, sp_mota, pro_pt_id, pro_pp_id, pro_b_id], (error, result)=>
+        db.query( "INSERT INTO `products`(`pro_id`, `pro_name`, `pro_price`, `pro_description`, `pro_img`, `pro_pt_id`, `pro_pp_id`, `pro_b_id`)"
+                + " VALUES (NULL, ?, ?, ?, ?, ?, ?, ?)", [sp_ten, sp_gia, sp_mota, pro_img, pro_pt_id, pro_pp_id, pro_b_id], (error, result)=>
         {
             if(!error)
                 resolve(true)

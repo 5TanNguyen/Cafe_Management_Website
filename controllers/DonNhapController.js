@@ -35,9 +35,20 @@ class DonNhapController{
 
             var br = await ChiNhanhModel.GetChiNhanh();
             //res.send(result);
+
+            var ingI = await NguyenLieuModel.GetNguyenLieuByUnit(1, 5);
+
+            var ingII = await NguyenLieuModel.GetNguyenLieuByUnit(2, 1000);
+
+            var ingIV = await NguyenLieuModel.GetNguyenLieuByUnit(4, 50);
+
+            var ingV = await NguyenLieuModel.GetNguyenLieuByUnit(5, 100);
+            
+            var ingVII = await NguyenLieuModel.GetNguyenLieuByUnit(7, 1000);
+
             if(result)
             {
-                res.render("donnhap/ds_donnhap", {test : result, stt, br});
+                res.render("donnhap/ds_donnhap", {test : result, stt, br, ingI, ingII, ingIV, ingV, ingVII});
             }
         }
     }

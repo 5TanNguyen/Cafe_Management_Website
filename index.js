@@ -23,6 +23,25 @@ const { availableParallelism } = require('node:os');
 const cluster = require('node:cluster');
 const { createAdapter, setupPrimary } = require('@socket.io/cluster-adapter');
 
+// THÊM ẢNH
+const path = require('path');
+
+const multer = require('multer');
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, 'public/assets/images/product')
+    },
+    filename: (req, file, cb) =>{
+        console.log(file)
+        // cb(null, Date.now() + path.extname(file.originalname))
+        cb(null, file.originalname)
+    }
+})
+
+const upload = multer({storage: storage});
+
+// END THÊM ẢNH
+
 //////////////// Step #9: Scaling horizontally
 
 // if (cluster.isPrimary) {
@@ -452,6 +471,42 @@ app.post("/thanhtoan", async function(req, res)
             });
         })
     }
+})
+
+app.post("/them-san-pham", upload.single("image"), async (req, res, next)=>{
+
+    res.locals.session = req.session;
+
+    if(!req.session.u_id || (req.session.u_d_id != 1))
+    {
+        var currentdate = new Date();
+        var datetime = currentdate.getFullYear() + "-" + (currentdate.getMonth()+1) + "-" + currentdate.getDate()  + "  "  + currentdate.getHours() + ":"   + currentdate.getMinutes() + ":"  + currentdate.getSeconds();
+        var tctp = await TruyCapTraiPhepModel.addTCTP(req.session.u_id, 'Thêm sản phẩm', datetime);
+        
+        req.flash('message', 'Bạn không có quyền truy cập !');
+        res.render("dangnhap/dangnhap", { message : req.flash('message')});
+    }
+    else
+    {
+        var sp_ten = req.body.pro_name;
+        var sp_gia = req.body.pro_pp_id;
+        var sp_loai = req.body.pro_pt_id;
+        var sp_mota = req.body.pro_description;
+        var sp_phache = req.body.pro_b_id;
+        var sp_img = req.file.originalname;
+
+        var x = await SanPhamModel.add_SanPham(sp_ten, 0, sp_mota, sp_img, sp_loai, sp_gia, sp_phache);
+
+        if( x == true)
+        {
+            var results = await SanPhamModel.getsanphams();
+
+            if(results)
+            res.redirect("/sanpham");
+        }
+        else
+            res.send("Add failed")
+    }  
 })
 
 app.post("/thanhtoanmobile", async function(req, res)
