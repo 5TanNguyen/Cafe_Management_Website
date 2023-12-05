@@ -23,26 +23,28 @@
     <div class="container">
         <h2 class="text-center">Công thức pha chế</h2>
         
-        <% if(test.length > 0){ %>
-        <h3 class="text-center"><%- test[0].b_name %></h3>
+        <% if(test1.length > 0){ %>
+        <h3 class="text-center"><%- test1[0].b_name %></h3>
         <br>
 
-        <!-- <input  name="b_description" type="text" value="<%- test[0].b_description %>"> -->
+        <!-- <input  name="b_description" type="text" value="<%- test1[0].b_description %>"> -->
 
       
 
         <form class="form-control bg-light" action="/suacachphache" method="post">
-            <input hidden name="b_id"  type="text" value="<%- test[0].pro_b_id %>">
+            <input hidden name="b_id"  type="text" value="<%- test1[0].pro_b_id %>">
             
             <div class="form-floating">
-                <textarea name="b_description" style="height: 200px;" class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px"><%= test[0].b_description %></textarea>
+                <textarea name="b_description" style="height: 200px;" class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px">
+                    <%= test1[0].b_description %>
+                </textarea>
                 <label for="floatingTextarea2">Hướng dẫn</label>
             </div>
             
-            
+             
 
             <br>
-            <% for(var i=0; i < test.length; i++){  %>
+            <% for(var i=0; i < test2.length; i++){  %>
                 <div class="row g-2">
                     <div class="col-md-1">
                         <div class="form-floating">
@@ -53,24 +55,24 @@
 
                     <div class="col-md">
                         <div class="form-floating">
-                            <input hidden name="ing_id" type="text" value="<%- test[i].ing_id %>">
-                            <input readonly type="text" name="ing_name" class="form-control" id="floatingInputGrid" placeholder="" value="<%= test[i].ing_name %>">
+                            <input hidden name="ing_id" type="text" value="<%- test2[i].ing_id %>">
+                            <input readonly type="text" name="ing_name" class="form-control" id="floatingInputGrid" placeholder="" value="<%= test2[i].ing_name %>">
                             <label for="floatingInputGrid">Nguyên Liệu</label>
                         </div>
                     </div>
 
                     <div class="col-md">
                         <div class="form-floating">
-                            <input readonly type="text" name="bd_amount" class="form-control" id="floatingInputGrid" value="<%= test[i].bd_amount %> ">
-                            <input type="text" name="ing_amount" hidden value="<%- test[i].ing_amount %>">
-                            <label for="floatingInputGrid">Số lượng ( <%- test[i].unit_name %> )</label>
+                            <input readonly type="text" name="bd_amount" class="form-control" id="floatingInputGrid" value="<%= test2[i].bd_amount %> ">
+                            <input type="text" name="ing_amount" hidden value="<%- test2[i].ing_amount %>">
+                            <label for="floatingInputGrid">Số lượng ( <%- test2[i].unit_name %> )</label>
                         </div>
                     </div>
 
                     <div class="col-md-1">
                         <div class="form-floating">
-                            <input type="text" hidden value="<%- test[i].bd_id %>">
-                            <a name="buttonDelete" style="height: 58px; margin-top: 6px;" class="btn btn-danger" href="/xoachitietphache?bd_id=<%- test[i].bd_id %>&pro_b_id=<%- test[0].pro_b_id %>">XÓA</a>
+                            <input type="text" hidden value="<%- test2[i].bd_id %>">
+                            <a name="buttonDelete" style="height: 58px; margin-top: 6px;" class="btn btn-danger" href="/xoachitietphache?bd_id=<%- test2[i].bd_id %>&pro_b_id=<%- test1[0].pro_b_id %>">XÓA</a>
                         </div>
                     </div>
 
@@ -101,7 +103,7 @@
                 <div class="content">
                     <div class="container">
                         <form action="/themchitietphache" method="POST" onsubmit="return validate_sua_cachphache();">
-                            <input name="bd_b_id" hidden type="text" value="<%- test[0].pro_b_id %>">
+                            <input name="bd_b_id" hidden type="text" value="<%- test1[0].pro_b_id %>">
                             <label for="">Tên nguyên liệu</label>
                             <select name="bd_ing_id" id="" class="form-select">
                                 <% if(ing.length > 0){ %>

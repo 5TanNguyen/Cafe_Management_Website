@@ -16,7 +16,7 @@ class LichController
 
         if(!req.session.u_id)
         {
-            req.flash('message', '');
+            req.flash('message', 'Bạn phải đăng nhập trước !');
             res.render("dangnhap/dangnhap", { message : req.flash('message')});
         }
 
@@ -37,23 +37,35 @@ class LichController
 
         if(!req.session.u_id)
         {
-            req.flash('message', '');
+            req.flash('message', 'Bạn phải đăng nhập trước');
             res.render("dangnhap/dangnhap", { message : req.flash('message')});
         }
 
-        var cld_begin = req.body.cld_begin;
-
-        var cld_end = req.body.cld_end;
-
-       var cldd = await LichModel.CreateLich(cld_begin, cld_end);
-
-        //console.log(cld_begin);
-
-        //console.log(cld_end);
-
-        if(cldd)
+        if((req.session.u_d_id != 1))
         {
-            res.redirect("/lich")
+            var currentdate = new Date();
+            var datetime = currentdate.getFullYear() + "-" + (currentdate.getMonth()+1) + "-" + currentdate.getDate()  + "  "  + currentdate.getHours() + ":"   + currentdate.getMinutes() + ":"  + currentdate.getSeconds();
+            var tctp = await TruyCapTraiPhepModel.addTCTP(req.session.u_id, 'Tạo lịch', datetime);
+            
+            req.flash('message', 'Bạn không có quyền truy cập !');
+            res.render("dangnhap/dangnhap", { message : req.flash('message')});
+        }
+        else
+        {
+            var cld_begin = req.body.cld_begin;
+
+            var cld_end = req.body.cld_end;
+
+            var cldd = await LichModel.CreateLich(cld_begin, cld_end);
+
+            //console.log(cld_begin);
+
+            //console.log(cld_end);
+
+            if(cldd)
+            {
+                res.redirect("/lich")
+            }
         }
     }
 
@@ -63,7 +75,7 @@ class LichController
 
         if(!req.session.u_id)
         {
-            req.flash('message', '');
+            req.flash('message', 'Bạn phải đăng nhập trước !');
             res.render("dangnhap/dangnhap", { message : req.flash('message')});
         }
 
@@ -83,28 +95,40 @@ class LichController
 
         if(!req.session.u_id)
         {
-            req.flash('message', '');
+            req.flash('message', 'Bạn phải đăng nhập trước !');
             res.render("dangnhap/dangnhap", { message : req.flash('message')});
         }
 
-        var cd_cld_id = req.body.cd_cld_id;
-
-        var cd_date = req.body.cd_date;
-
-        var cd_shift_id = req.body.cd_shift_id;
-
-        var hours = req.body.hours;
-
-        // console.log(cd_cld_id)
-        // console.log(cd_date)
-        // console.log(cd_shift_id)
-        // console.log(hours)
-
-        var cd = await LichModel.CreateChiTietLich(cd_cld_id, cd_date, cd_shift_id, hours);
-
-        if(cd)
+        if((req.session.u_d_id != 1))
         {
-            res.redirect('/chitietlich?cld_id=' + cd_cld_id);
+            var currentdate = new Date();
+            var datetime = currentdate.getFullYear() + "-" + (currentdate.getMonth()+1) + "-" + currentdate.getDate()  + "  "  + currentdate.getHours() + ":"   + currentdate.getMinutes() + ":"  + currentdate.getSeconds();
+            var tctp = await TruyCapTraiPhepModel.addTCTP(req.session.u_id, 'Tạo chi tiết lịch', datetime);
+            
+            req.flash('message', 'Bạn không có quyền truy cập !');
+            res.render("dangnhap/dangnhap", { message : req.flash('message')});
+        }
+        else
+        {
+            var cd_cld_id = req.body.cd_cld_id;
+
+            var cd_date = req.body.cd_date;
+
+            var cd_shift_id = req.body.cd_shift_id;
+
+            var hours = req.body.hours;
+
+            // console.log(cd_cld_id)
+            // console.log(cd_date)
+            // console.log(cd_shift_id)
+            // console.log(hours)
+
+            var cd = await LichModel.CreateChiTietLich(cd_cld_id, cd_date, cd_shift_id, hours);
+
+            if(cd)
+            {
+                res.redirect('/chitietlich?cld_id=' + cd_cld_id);
+            }
         }
     }
 
@@ -114,18 +138,31 @@ class LichController
         
         if(!req.session.u_id)
         {
-            req.flash('message', '');
+            req.flash('message', 'Bạn phải đăng nhập trước');
             res.render("dangnhap/dangnhap", { message : req.flash('message')});
         }
 
-        var cd_cld_id = req.body.cd_cld_id;
-        var cd_id = req.body.cd_id;
-
-        var del = await LichModel.DeleteChiTietLich(cd_id);
-
-        if(del == true)
+        if((req.session.u_d_id != 1))
         {
-            res.redirect('/chitietlich?cld_id=' + cd_cld_id);
+            var currentdate = new Date();
+            var datetime = currentdate.getFullYear() + "-" + (currentdate.getMonth()+1) + "-" + currentdate.getDate()  + "  "  + currentdate.getHours() + ":"   + currentdate.getMinutes() + ":"  + currentdate.getSeconds();
+            var tctp = await TruyCapTraiPhepModel.addTCTP(req.session.u_id, 'Xóa chi tiết lịch', datetime);
+            
+            req.flash('message', 'Bạn không có quyền truy cập !');
+            res.render("dangnhap/dangnhap", { message : req.flash('message')});
+        }
+        else
+        {
+
+            var cd_cld_id = req.body.cd_cld_id;
+            var cd_id = req.body.cd_id;
+
+            var del = await LichModel.DeleteChiTietLich(cd_id);
+
+            if(del == true)
+            {
+                res.redirect('/chitietlich?cld_id=' + cd_cld_id);
+            }
         }
     }
 
@@ -136,7 +173,7 @@ class LichController
 
         if(!req.session.u_id)
         {
-            req.flash('message', '');
+            req.flash('message', 'Bạn phải đăng nhập trước !');
             res.render("dangnhap/dangnhap", { message : req.flash('message')});
         }
         

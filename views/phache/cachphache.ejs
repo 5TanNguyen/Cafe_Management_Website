@@ -19,10 +19,10 @@
     
     <div class="container">
         <h2 class="text-center">Cách Pha Chế</h2>
-        <h3 class="text-center"><%- test[0].pro_name %></h3>
+        <h3 class="text-center"><%- test1[0].pro_name %></h3>
 
         <div class="form-floating">
-            <textarea readonly style="height: 200px;" class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px"><%= test[0].b_description %></textarea>
+            <textarea readonly style="height: 200px;" class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px"><%= test1[0].b_description %></textarea>
             <label for="floatingTextarea2">Hướng dẫn</label>
         </div>
 
@@ -33,14 +33,14 @@
                 <td>Lượng</td>
             </thead>
 
-            <% if(test.length > 0){ %>
-                <% for( var i = 0; i < test.length; i++){ %>
+            <% if(test2.length > 0){ %>
+                <% for( var i = 0; i < test2.length; i++){ %>
                     <tr>
                         <td><%= (i+1) %></td>
-                        <td><%= test[i].ing_name %></td>
+                        <td><%= test2[i].ing_name %></td>
                         <td>
-                            <%= test[i].bd_amount %>
-                            <%= test[i].unit_name %>
+                            <%= test2[i].bd_amount %>
+                            <%= test2[i].unit_name %>
                         </td>
                     </tr>
                 <% } %>
@@ -48,7 +48,7 @@
                 <p>Không có nguyên liệu</p>
             <% } %>
         </table>
-        <a class="btn btn-primary" style="width:100%" href="/chichsuacachphache?pro_b_id=<%- test[0].pro_b_id %>">CHỈNH SỬA</a>
+        <a class="btn btn-primary" style="width:100%" href="/chichsuacachphache?pro_b_id=<%- test1[0].pro_b_id %>">CHỈNH SỬA</a>
     </div>
 </body>
 </html>

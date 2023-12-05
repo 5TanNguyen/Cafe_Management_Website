@@ -22,7 +22,31 @@ class PhaCheModel{
                 if(!err) resolve(result);
             })
         })
-    }
+    } 
+
+    static async GetPhaCheByB_Id(b_id){
+        return new Promise(resolve =>{
+            db.query("SELECT pro.pro_name, pro.pro_b_id, b.b_id, b.b_name, b.b_description"
+            + " FROM products pro, bartending b"
+            + " WHERE pro.pro_b_id = b.b_id"
+            + " AND pro.pro_b_id = ?", [b_id], (err, result)=>{
+                if(!err) resolve(result);
+            })
+        })
+    } 
+
+    static async GetChiTietPhaCheByB_Id(b_id){
+        return new Promise(resolve =>{
+            db.query("SELECT b.b_id, b.b_name, b.b_description, bd.bd_id, bd.bd_b_id, bd.bd_ing_id, bd.bd_amount, ing.ing_id, ing.ing_name, ing.ing_amount, u.unit_name"
+            + " FROM bartending b, bartending_detail bd, ingredient ing, unit u"
+            + " WHERE bd.bd_b_id = b.b_id"
+            + " AND bd.bd_ing_id = ing.ing_id"
+            + " AND ing.ing_unit_id = u.unit_id"
+            + " AND b.b_id = ?", [b_id], (err, result)=>{
+                if(!err) resolve(result);
+            })
+        })
+    } 
     
     static async GetPhaCheByProId(pro_id){
         return new Promise(resolve =>{

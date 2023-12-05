@@ -1,7 +1,9 @@
 +++++ nút tạo đơn nhập bên Nguyên liệu
 +++++ Thêm cách pha chế
-Sửa giá sản phẩm, ngl, thêm ảnh sp
-Thêm dữ liệu nguyên liệu cho sản phẩm
++++++ Sửa giá sản phẩm, 
++++++ cách pha chế
++++++ thêm ảnh sp
++++++ Thêm dữ liệu nguyên liệu cho sản phẩm
 +++++ Quản lí giá sản phẩm
 +++++ Quản lí giá nguyên liệu
 +++++ Thêm sản phẩm
@@ -23,18 +25,20 @@ Thêm dữ liệu nguyên liệu cho sản phẩm
             + vi
 
 +++++ Bấm nút x thanh toán trở về divPay
-thêm tên class cho các label
-thêm số lượng cho ingredient
++++++ thêm số lượng cho ingredient
 +++++ khóa ngoại _price : ingredient
 +++++ kiểm tra giá khi  thêm nlieu mới
 +++++ khóa ngoại cd_id : timekeeping
 +++++ Chỉnh sửa thuộc tinh created và updated cho transaction
 +++++ confirm delete hiện tên product khi xóa nglieu
 +++++ thêm nguyên liệu : selected đv khối lượng
-lỗi xảy ra khi tìm kiếm người truy cập tp trên 3 lần
++++++ lỗi xảy ra khi tìm kiếm người truy cập tp trên 3 lần
++++++ xác định giá thật của nguyên liệu
 css tin nhắn
+css lịch
 validate input date : - lịch 
                       - chi tiết lịch
                       - liệt kê theo ngày
                       - số lần truy cập trái phép
+
                     

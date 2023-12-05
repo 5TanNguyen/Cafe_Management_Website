@@ -47,7 +47,7 @@ class PhaCheController{
         {
             var o_id = req.query.o_id;
 
-            // res.send(o_id);
+            // res.send(o_id); 
             DonDatModel.SetPhaCheXong(o_id);
 
             res.redirect("/danh-sach-cho-pha-che");
@@ -73,14 +73,17 @@ class PhaCheController{
 
             var bd_b_id = req.query.pro_b_id;
 
-            var result = await PhaCheModel.GetPhaCheById(bd_b_id);
+            //var result = await PhaCheModel.GetPhaCheById(bd_b_id);
+
+            var result1 = await PhaCheModel.GetPhaCheByB_Id(bd_b_id);
+            var result2= await PhaCheModel.GetChiTietPhaCheByB_Id(bd_b_id);
 
             var ingredient = await NguyenLieuModel.GetNguyenLieu();
 
             // console.log(result)
             // console.log(bd_b_id)
-            if(result)
-                res.render("phache/cachphache", { test : result, ing : ingredient});
+            if(result1)
+                res.render("phache/cachphache", { test1 : result1, test2 : result2, ing : ingredient});
         }
     }
 
@@ -102,11 +105,13 @@ class PhaCheController{
 
             var b_id = req.query.pro_b_id;
 
-            var bd = await PhaCheModel.GetPhaCheById(b_id);
+            var bd1 = await PhaCheModel.GetPhaCheByB_Id(b_id);
+
+            var bd2 = await PhaCheModel.GetChiTietPhaCheByB_Id(b_id);
 
             var ingredient = await NguyenLieuModel.GetNguyenLieu();
 
-            res.render("phache/sua_cachphache", { test: bd, ing : ingredient})
+            res.render("phache/sua_cachphache", { test1: bd1, test2: bd2, ing : ingredient})
         }
     }
 
@@ -153,16 +158,27 @@ class PhaCheController{
 
             var bd_id = req.query.bd_id;
 
-            var pro_b_id = req.query.pro_b_id;
+            // var pro_b_id = req.query.pro_b_id;
 
-            //res.send(pro_b_id);
             PhaCheModel.DeleteChiTietPhaChe(bd_id);
 
-            var bd = await PhaCheModel.GetPhaCheById(pro_b_id);
+            // var bd = await PhaCheModel.GetPhaCheById(pro_b_id);
+
+            // var ingredient = await NguyenLieuModel.GetNguyenLieu();
+
+            // res.render("phache/sua_cachphache", { test: bd, ing : ingredient})
+
+            // hehe
+
+            var b_id = req.query.pro_b_id;
+
+            var bd1 = await PhaCheModel.GetPhaCheByB_Id(b_id);
+
+            var bd2 = await PhaCheModel.GetChiTietPhaCheByB_Id(b_id);
 
             var ingredient = await NguyenLieuModel.GetNguyenLieu();
 
-            res.render("phache/sua_cachphache", { test: bd, ing : ingredient})
+            res.render("phache/sua_cachphache", { test1: bd1, test2: bd2, ing : ingredient})
         }
     }
 

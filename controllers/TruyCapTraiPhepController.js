@@ -44,9 +44,7 @@ class TruyCapTraiPhepController {
         }
         else
         {
-            console.log(number);
             var ua = await TruyCapTraiPhepModel.GetThongKeTheoSoLanTCTP(number);
-            console.log(ua);
             if(ua == '')
             {
                 res.render("truycaptraiphep/thongkesolantruycap", { ua, test : ua });

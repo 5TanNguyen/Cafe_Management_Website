@@ -50,7 +50,7 @@
                         <td><%= cd[i].hours %></td>
                         <td>
                             <% if(cd[i].u_id == 4){ %>
-                                <a id="register" class="btn btn-primary" href="/dangkilichh?cd_id=<%= cd[i].cd_id %>&cd_user_id=<%= session.u_id %>&cd_cld_id=<%= cd[i].cd_cld_id %>">Đ.kí</a>
+                                <a name="buttonRegister" id="register" class="btn btn-primary" href="/dangkilichh?cd_id=<%= cd[i].cd_id %>&cd_user_id=<%= session.u_id %>&cd_cld_id=<%= cd[i].cd_cld_id %>">Đ.kí</a>
                                 <!-- <form id="form" action="">
                                     <input name="cd_id" id="cd_id" autocomplete="off" value="<%= cd[i].cd_id %>" />
                                     <input name="cd_user_id" id="cd_user_id" autocomplete="off" value="<%= session.u_id %>" />
@@ -64,7 +64,7 @@
 
                         </td>
                         <td>
-                            <a class="btn btn-warning" href="#divDEL<%= i %>">XÓA</a> 
+                            <a name="deleteCD" class="btn btn-warning" href="#divDEL<%= i %>">XÓA</a> 
                             <!-- href="/xoachitietlich?cd_cld_id=<%= cd[i].cd_cld_id %>&cd_id=<%= cd[i].cd_id %>" -->
                         </td>
 

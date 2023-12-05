@@ -4,10 +4,10 @@ const db=require("../config/db")
 class SanPhamModel{
 static async getsanphams()
 {
-
     return new Promise(resolve =>{
-        db.query("SELECT * FROM products",[],(error , result)=>{
-
+        db.query("SELECT *"
+        +        " FROM products pro, product_price pp"
+        +        " WHERE pro.pro_pp_id = pp.pp_id",[],(error , result)=>{
             if(!error)
             resolve(result)
         })
@@ -66,10 +66,10 @@ static async edit_SanPhamForm(sp_id)
 }
 
 
-static async edit_SanPham(sp_id, new_sp_ten, new_sp_gia, new_sp_mota)
+static async edit_SanPham(sp_id, new_sp_ten, new_sp_mota)
 {
     return new Promise (resolve =>{
-        db.query("Update products set pro_name = ?, pro_price = ?, pro_description = ? WHERE pro_id = ?",[new_sp_ten, new_sp_gia, new_sp_mota, sp_id], (error, result)=>{
+        db.query("Update products set pro_name = ?, pro_description = ? WHERE pro_id = ?",[new_sp_ten, new_sp_mota, sp_id], (error, result)=>{
             if(!error)
             resolve(true)  
         })

@@ -17,7 +17,12 @@ class DonDatController{
     {
         res.locals.session = req.session;
 
-        if(!req.session.u_id || ((req.session.u_d_id != 3) && (req.session.u_d_id != 1)))
+        if(!req.session.u_id){
+            req.flash('message', 'Bạn phải đăng nhập trước !');
+            res.render("dangnhap/dangnhap", { message : req.flash('message')});
+        } 
+
+        if((req.session.u_d_id != 3) && (req.session.u_d_id != 1))
         {
             var currentdate = new Date();
             var datetime = currentdate.getFullYear() + "-" + (currentdate.getMonth()+1) + "-" + currentdate.getDate()  + "  "  + currentdate.getHours() + ":"   + currentdate.getMinutes() + ":"  + currentdate.getSeconds();
@@ -56,7 +61,12 @@ class DonDatController{
     {
         res.locals.session = req.session;
 
-        if(!req.session.u_id || ((req.session.u_d_id != 3) && (req.session.u_d_id != 1)))
+        if(!req.session.u_id){
+            req.flash('message', 'Bạn phải đăng nhập trước !');
+            res.render("dangnhap/dangnhap", { message : req.flash('message')});
+        } 
+        
+        if((req.session.u_d_id != 3) && (req.session.u_d_id != 1))
         {
             var currentdate = new Date();
             var datetime = currentdate.getFullYear() + "-" + (currentdate.getMonth()+1) + "-" + currentdate.getDate()  + "  "  + currentdate.getHours() + ":"   + currentdate.getMinutes() + ":"  + currentdate.getSeconds();
@@ -83,7 +93,13 @@ class DonDatController{
     {
         res.locals.session = req.session;
 
-        if(!req.session.u_id || ((req.session.u_d_id != 3) && (req.session.u_d_id != 1) && (req.session.u_d_id != 2)))
+        if(!req.session.u_id)
+        {
+            req.flash('message', 'Bạn phải đăng nhập trước !');
+            res.render("dangnhap/dangnhap", { message : req.flash('message')});
+        } 
+        
+        if((req.session.u_d_id != 3) && (req.session.u_d_id != 1) && (req.session.u_d_id != 2))
         {
             var currentdate = new Date();
             var datetime = currentdate.getFullYear() + "-" + (currentdate.getMonth()+1) + "-" + currentdate.getDate()  + "  "  + currentdate.getHours() + ":"   + currentdate.getMinutes() + ":"  + currentdate.getSeconds();
@@ -110,7 +126,12 @@ class DonDatController{
     {
         res.locals.session = req.session;
 
-        if(!req.session.u_id || ((req.session.u_d_id != 3) && (req.session.u_d_id != 1)))
+        if(!req.session.u_id){
+            req.flash('message', 'Bạn phải đăng nhập trước !');
+            res.render("dangnhap/dangnhap", { message : req.flash('message')});
+        }
+        
+        if((req.session.u_d_id != 3) && (req.session.u_d_id != 1))
         {
             var currentdate = new Date();
             var datetime = currentdate.getFullYear() + "-" + (currentdate.getMonth()+1) + "-" + currentdate.getDate()  + "  "  + currentdate.getHours() + ":"   + currentdate.getMinutes() + ":"  + currentdate.getSeconds();
@@ -142,7 +163,12 @@ class DonDatController{
     static async confirmDon(req, res)
     {
         res.locals.session = req.session;
-        if(!req.session.u_id || ((req.session.u_d_id != 3) && (req.session.u_d_id != 1)))
+        if(!req.session.u_id){
+            req.flash('message', 'Bạn phải đăng nhập trước !');
+            res.render("dangnhap/dangnhap", { message : req.flash('message')});
+        } 
+        
+        if((req.session.u_d_id != 3) && (req.session.u_d_id != 1))
         {
             var currentdate = new Date();
             var datetime = currentdate.getFullYear() + "-" + (currentdate.getMonth()+1) + "-" + currentdate.getDate()  + "  "  + currentdate.getHours() + ":"   + currentdate.getMinutes() + ":"  + currentdate.getSeconds();
@@ -164,7 +190,12 @@ class DonDatController{
     {
         res.locals.session = req.session;
 
-        if(!req.session.u_id || ((req.session.u_d_id != 3) && (req.session.u_d_id != 1)))
+        if(!req.session.u_id){
+            req.flash('message', 'Bạn phải đăng nhập trước !');
+            res.render("dangnhap/dangnhap", { message : req.flash('message')});
+        } 
+        
+        if((req.session.u_d_id != 3) && (req.session.u_d_id != 1))
         {
             var currentdate = new Date();
             var datetime = currentdate.getFullYear() + "-" + (currentdate.getMonth()+1) + "-" + currentdate.getDate()  + "  "  + currentdate.getHours() + ":"   + currentdate.getMinutes() + ":"  + currentdate.getSeconds();
@@ -225,7 +256,12 @@ class DonDatController{
     {
         res.locals.session = req.session;
         
-        if(!req.session.u_id || ((req.session.u_d_id != 3) && (req.session.u_d_id != 1)))
+        if(!req.session.u_id){
+            req.flash('message', 'Bạn phải đăng nhập trước !');
+            res.render("dangnhap/dangnhap", { message : req.flash('message')});
+        } 
+        
+        if((req.session.u_d_id != 3) && (req.session.u_d_id != 1))
         {
             var currentdate = new Date();
             var datetime = currentdate.getFullYear() + "-" + (currentdate.getMonth()+1) + "-" + currentdate.getDate()  + "  "  + currentdate.getHours() + ":"   + currentdate.getMinutes() + ":"  + currentdate.getSeconds();
@@ -267,7 +303,12 @@ class DonDatController{
     {
         res.locals.session = req.session;
 
-        if(!req.session.u_id || ((req.session.u_d_id != 3) && (req.session.u_d_id != 1)))
+        if(!req.session.u_id){
+            req.flash('message', 'Bạn phải đăng nhập trước !');
+            res.render("dangnhap/dangnhap", { message : req.flash('message')});
+        } 
+        
+        if((req.session.u_d_id != 3) && (req.session.u_d_id != 1))
         {
             var currentdate = new Date();
             var datetime = currentdate.getFullYear() + "-" + (currentdate.getMonth()+1) + "-" + currentdate.getDate()  + "  "  + currentdate.getHours() + ":"   + currentdate.getMinutes() + ":"  + currentdate.getSeconds();
@@ -298,7 +339,13 @@ class DonDatController{
     {
         res.locals.session = req.session;
 
-        if(!req.session.u_id || ((req.session.u_d_id != 3) && (req.session.u_d_id != 1)))
+        if(!req.session.u_id)
+        {
+            req.flash('message', 'Bạn phải đăng nhập trước !');
+            res.render("dangnhap/dangnhap", { message : req.flash('message')});
+        } 
+        
+        if((req.session.u_d_id != 3) && (req.session.u_d_id != 1))
         {
             var currentdate = new Date();
             var datetime = currentdate.getFullYear() + "-" + (currentdate.getMonth()+1) + "-" + currentdate.getDate()  + "  "  + currentdate.getHours() + ":"   + currentdate.getMinutes() + ":"  + currentdate.getSeconds();

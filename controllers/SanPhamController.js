@@ -151,8 +151,9 @@ class SanPhamController{
         
                     if(result)
                     {
-                        var list_product = await sanphamModel.getsanphams();
-                        res.render("sanpham/ds_sanpham", {test: list_product});
+                        // var list_product = await sanphamModel.getsanphams();
+                        // res.render("sanpham/ds_sanpham", {test: list_product});
+                        res.redirect("/sanpham");
                     }
                     else
                         res.send("Failed to delete sanpham")
@@ -204,18 +205,17 @@ class SanPhamController{
             const sp_id = req.body.pro_id ;
 
             const new_sp_ten = req.body.pro_name;
-            const new_sp_gia = req.body.pro_price;
             const new_sp_mota = req.body.pro_description;
 
-            var x = await sanphamModel.edit_SanPham(sp_id, new_sp_ten, new_sp_gia, new_sp_mota)
+            var x = await sanphamModel.edit_SanPham(sp_id, new_sp_ten, new_sp_mota)
 
             if( x == true)
             {
                 var results = await sanphamModel.getsanphams();
 
                 if(results)
-                //res.send(results)
-                res.render("sanpham/ds_sanpham.ejs", {test: results});
+                //res.se nd(results)
+                res.redirect("/sanpham");
             }
             else
             res.send("Edit Fail")
