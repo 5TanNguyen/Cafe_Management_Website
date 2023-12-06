@@ -33,7 +33,8 @@ class NhanVienModel{
         return new Promise(resolve=>{
             db.query("SELECT *"
             +        " FROM users u, duties d"
-            +        " WHERE u.u_d_id = d.d_id", [], (error, result)=>{
+            +        " WHERE u.u_d_id = d.d_id"
+            +        " AND u.u_state = 1", [], (error, result)=>{
                 if(!error)
                     resolve(result);
                 else
@@ -77,6 +78,20 @@ class NhanVienModel{
             +        " u_phone = ?,"
             +        " u_d_id = ?"
             +        " WHERE u_id = ?", [u_name, u_address, u_phone, u_d_id, u_id], (error, result)=>{
+                if(!error)
+                    resolve(true);
+                else
+                    resolve(false);
+            })
+        })
+    }
+
+    static async DeleteNhanVien(u_id)
+    {
+        return new Promise(resolve=>{
+            db.query("UPDATE users"
+            +        " SET u_state = 0"
+            +        " WHERE u_id = ?", [u_id], (error, result)=>{
                 if(!error)
                     resolve(true);
                 else

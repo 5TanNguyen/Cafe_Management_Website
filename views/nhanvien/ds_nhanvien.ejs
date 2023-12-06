@@ -65,7 +65,7 @@
             <br>
 
             <div class="d-grid gap-2">
-            <button class="btn btn btn-outline-danger" type="submit">TẠO</button>
+            <button class="btn btn btn-danger" type="submit">THÊM</button>
             </div>
         </form>
 
@@ -79,7 +79,7 @@
                 <td>Password</td>
                 <td>Số điện thoại</td>
                 <td>Chức vụ</td>
-                <td>Thao tác</td>
+                <td colspan="2">Thao tác</td>
             </thead>
 
             <% if(u.length > 0){ %>
@@ -149,12 +149,35 @@
                                                 </div>
                                                 
                                                 <br>      
-                                                <input type="submit" value="XÁC NHẬN" style="width:100%">
+                                                <input type="submit" value="XÁC NHẬN" style="width:100%; background-color: red;">
                                             </form>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                        </td>
+
+                        <td>
+                            <a class="btn btn-danger" href="#divDel<%- u[i].u_id %>">XÓA</a>
+                            <div class="overplay" id="divDel<%- u[i].u_id %>">
+                                <div class="wrapper">
+                                    <h2 class="text-center">Xác Nhận Xóa</h2>
+                                    <a href="#" class="close">&times;</a>
+                                    <div class="content">
+                                        <div class="container">
+                                            <form action="/xoanhanvien" method="POST">
+                                                <input name="u_id" type="text" hidden placeholder="" value="<%- u[i].u_id %>">
+
+                                                <label name="title">Tên Nhân Viên</label>
+                                                <input name="u_name" type="text" placeholder="" value="<%- u[i].u_name %>">
+                                                
+                                                <button class="btn btn-danger" style="width: 100%;" type="submit">Xóa</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
                         </td>
                     </tr>
                 <% } %>

@@ -1,3 +1,4 @@
+const NhanVienModel = require("../models/NhanVien");
 const PhienGiaoDichModel = require("../models/PhienGiaoDich");
 const TruyCapTraiPhepModel = require("../models/TruyCapTraiPhep");
 const ViModel = require("../models/Vi");
@@ -120,6 +121,12 @@ class TruyCapTraiPhepController {
             else if(phat_id == 3)
             {
                 // ĐUỔI VIỆC
+                var rs = await NhanVienModel.DeleteNhanVien(ua_u_id);
+
+                if(rs == true)
+                    res.redirect('/truycaptraiphep');
+                else
+                    res.redirect('/dangnhap');
             }
         }
     }

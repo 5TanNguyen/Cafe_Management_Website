@@ -67,6 +67,7 @@ router.get("/bantrong", banController.setEmptyTable)
 router.get("/nhanvien", nhanvienController.getAllNhanVien);
 router.post("/themnhanvien", nhanvienController.addNhanVien);
 router.post("/suanhanvien", nhanvienController.editNhanVien);
+router.post("/xoanhanvien", nhanvienController.deleteNhanVien);
 
 
 router.post("/chamcong", nhanvienController.postChamCong);
