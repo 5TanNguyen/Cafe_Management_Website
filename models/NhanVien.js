@@ -42,6 +42,49 @@ class NhanVienModel{
         })
     }
 
+    static async GetAllChucVu()
+    {
+        return new Promise(resolve=>{
+            db.query("SELECT *"
+            +        " FROM duties", [], (error, result)=>{
+                if(!error)
+                    resolve(result);
+                else
+                    resolve(false);
+            })
+        })
+    }
+
+    static async AddNhanVien(u_username, u_password, u_name, u_address, u_phone, u_d_id)
+    {
+        return new Promise(resolve=>{
+            db.query("INSERT INTO users"
+            +        " VALUES(NULL, ?, ?, ?, ?, ?, ?, 1)", [u_username, u_password, u_name, u_address, u_phone, u_d_id], (error, result)=>{
+                if(!error)
+                    resolve(true);
+                else
+                    resolve(false);
+            })
+        })
+    }
+
+    static async EditNhanVien(u_id, u_name, u_address, u_phone, u_d_id)
+    {
+        return new Promise(resolve=>{
+            db.query("UPDATE users"
+            +        " SET u_name = ?,"
+            +        " u_address = ?,"
+            +        " u_phone = ?,"
+            +        " u_d_id = ?"
+            +        " WHERE u_id = ?", [u_name, u_address, u_phone, u_d_id, u_id], (error, result)=>{
+                if(!error)
+                    resolve(true);
+                else
+                    resolve(false);
+            })
+        })
+    }
+
 
 }
 

@@ -293,6 +293,8 @@ function validate_themgiaSP(){
 
         return false; 
     }
+
+    return true;
 }
 
 function validate_suagiaSP(){
@@ -305,6 +307,8 @@ function validate_suagiaSP(){
         lbl_pp_price.style.visibility = "visible";
         return false; 
     }
+
+    return true;
 }
 
 function validate_themgiaNL(){
@@ -327,6 +331,8 @@ function validate_themgiaNL(){
 
         return false; 
     }
+
+    return true;
 }
 
 function validate_qlphache(){
@@ -349,4 +355,47 @@ function validate_qlphache(){
 
         return false; 
     }
+
+    return true;
+}
+
+function validate_ds_nhanvien(){
+    var u_username = document.getElementById("u_username");
+    var lbl_u_username = document.getElementById("lbl_u_username");
+
+    var u_password = document.getElementById("u_password");
+    var lbl_u_password = document.getElementById("lbl_u_password");
+
+    var u_name = document.getElementById("u_name");
+    var lbl_u_name = document.getElementById("lbl_u_name");
+
+    var u_phone = document.getElementById("u_phone");
+    var lbl_u_phone = document.getElementById("lbl_u_phone");
+
+    if(u_name.value.trim() == ""){
+        u_name.style.border = "solid 3px red";
+        lbl_u_name.style.visibility = "visible";
+
+        if(u_username.value.trim() == "")
+        {
+            u_username.style.border = "solid 3px red";
+            lbl_u_username.style.visibility = "visible";
+
+            if(u_password.value.trim() == "")
+            {
+                u_password.style.border = "solid 3px red";
+                lbl_u_password.style.visibility = "visible";
+                
+                if(u_phone.value.trim() == "")
+                {
+                    u_phone.style.border = "solid 3px red";
+                    lbl_u_phone.style.visibility = "visible";
+                }
+            }
+        }
+        
+        return false;
+    }
+
+    return true;
 }
