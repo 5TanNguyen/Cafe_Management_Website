@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Danh Sách Phí Phát Sinh</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="/js/input_validate.js"></script>
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+</head>
+<body>
+    <% if(session.u_d_id == 1){ %>
+        <%- include('../z_layout/navigation') %>
+    <% }else if(session.u_d_id == 2 ){ %>
+        <%- include('../z_layout/nav_2') %>
+    <% }else if(session.u_d_id == 3 ){ %>
+        <%- include('../z_layout/nav_3') %>
+    <% } %>
+    
+    <div class="container">
+
+        <h3 name="title" class="text-center">Thêm Nhân Viên</h3>
+        <form action="/themnhanvien" method="post" style="padding-top: 10px;" onsubmit="return validate_ds_nhanvien();">
+
+            <div class="row g-3">
+                <div class="col-sm">
+                    <input name="stt" type="text" class="form-control" value="" placeholder="" aria-label="City">
+                </div>
+                <div class="col-sm">
+                    <input id="ci_name" name="ci_name" type="text" class="form-control" placeholder="Tên phí" aria-label="City">
+                    <label id="lbl_ci_name" class="lbl_validate" name="lbl_ci_name" >KHÔNG ĐƯỢC BỎ TRỐNG !</label>
+                </div>
+                <div class="col-sm">
+                    <input id="ci_cost" name="ci_cost" type="text" class="form-control" placeholder="Phí" aria-label="State">
+                    <label id="lbl_ci_cost" class="lbl_validate" name="lbl_ci_name" >KHÔNG ĐƯỢC BỎ TRỐNG !</label>
+
+                </div>
+
+                <div class="row">
+                    <div class="col-sm">
+                        <label for="">Chi Nhánh</label>
+                        <select class="form-control" name="ci_br_id" id="">
+                            
+                        </select>
+                    </div>
+
+                    <div class="col-sm">
+                        <label for="">Thống Kê</label>
+                        <input hidden name="ci_s_id" type="text" value="<%- session.s_id %>" class="form-control" placeholder="" aria-label="Zip">
+                        <select class="form-control" name="" id="">
+                                <option value=""> <%- session.s_name %></option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            
+            <br>
+
+            <div class="d-grid gap-2">
+            <button class="btn btn btn-outline-danger" type="submit">TẠO</button>
+            </div>
+
+            <!-- <input type="text" placeholder="Tên sản phẩm" name="pro_name">
+            <input type="text" placeholder="Giá" name="pro_price">
+            <input type="text" placeholder="Mô tả" name="pro_description">
+            <input type="submit" value="Submit" data-theme="b"> -->
+        </form>
+
+        <hr><br>
+        <h3 class="text-center">Danh Sách Nhân Viên</h3>
+        <table class="table table-hover">
+            <thead class="table-light">
+                <td>ID</td>
+                <td>Tên Nhân Viên</td>
+                <td>Username</td>
+                <td>Password</td>
+                <td>Số điện thoại</td>
+                <td>Chức vụ</td>
+            </thead>
+
+            <% if(u.length > 0){ %>
+                <% for(var i = 0; i < u.length; i++){ %>
+                    <tr>
+                        <td>
+                            <%- u[i].u_id %>
+                        </td>
+
+                        <td>
+                            <%- u[i].u_name %>
+                        </td>
+
+                        <td>
+                            <%- u[i].u_username  %> 
+                        </td>
+
+                        <td>
+                            <%- u[i].u_password %>
+                        </td>
+
+                        <td>
+                            <%- u[i].u_phone %>
+                        </td>
+
+                        <td>
+                            <%- u[i].d_name %>
+                        </td>
+                    </tr>
+                <% } %>
+            <% } else { %>
+                <p>Không có nhân viên</p>
+            <% } %>
+        </table>
+    </div>
+</body>
+</html>

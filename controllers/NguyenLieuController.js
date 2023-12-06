@@ -13,7 +13,13 @@ class NguyenLieuController{
     {
         res.locals.session = req.session;
 
-        if(!req.session.u_id || ((req.session.u_d_id != 2) && (req.session.u_d_id != 1)))
+        if(!req.session.u_id)
+        {
+            req.flash('message', 'Bạn phải đăng nhập trước !');
+            res.render("dangnhap/dangnhap", { message : req.flash('message')});
+        } 
+        
+        if((req.session.u_d_id != 2) && (req.session.u_d_id != 1))
         {
             var currentdate = new Date();
             var datetime = currentdate.getFullYear() + "-" + (currentdate.getMonth()+1) + "-" + currentdate.getDate()  + "  "  + currentdate.getHours() + ":"   + currentdate.getMinutes() + ":"  + currentdate.getSeconds();
@@ -49,7 +55,13 @@ class NguyenLieuController{
     {
         res.locals.session = req.session;
 
-        if(!req.session.u_id || ((req.session.u_d_id != 2) && (req.session.u_d_id != 1)))
+        if(!req.session.u_id)
+        {
+            req.flash('message', 'Bạn phải đăng nhập trước !');
+            res.render("dangnhap/dangnhap", { message : req.flash('message')});
+        } 
+        
+        if((req.session.u_d_id != 2) && (req.session.u_d_id != 1))
         {
             var currentdate = new Date();
             var datetime = currentdate.getFullYear() + "-" + (currentdate.getMonth()+1) + "-" + currentdate.getDate()  + "  "  + currentdate.getHours() + ":"   + currentdate.getMinutes() + ":"  + currentdate.getSeconds();
@@ -78,7 +90,13 @@ class NguyenLieuController{
     {
         res.locals.session = req.session;
 
-        if(!req.session.u_id || ((req.session.u_d_id != 2) && (req.session.u_d_id != 1)))
+        if(!req.session.u_id)
+        {
+            req.flash('message', 'Bạn phải đăng nhập trước !');
+            res.render("dangnhap/dangnhap", { message : req.flash('message')});
+        } 
+        
+        if((req.session.u_d_id != 2) && (req.session.u_d_id != 1))
         {
             var currentdate = new Date();
             var datetime = currentdate.getFullYear() + "-" + (currentdate.getMonth()+1) + "-" + currentdate.getDate()  + "  "  + currentdate.getHours() + ":"   + currentdate.getMinutes() + ":"  + currentdate.getSeconds();
@@ -108,7 +126,13 @@ class NguyenLieuController{
     static async updateNguyenLieu(req, res){
         res.locals.session = req.session;
 
-        if(!req.session.u_id || ((req.session.u_d_id != 2) && (req.session.u_d_id != 1)))
+        if(!req.session.u_id)
+        {
+            req.flash('message', 'Bạn phải đăng nhập trước !');
+            res.render("dangnhap/dangnhap", { message : req.flash('message')});
+        }
+
+        if((req.session.u_d_id != 2) && (req.session.u_d_id != 1))
         {
             var currentdate = new Date();
             var datetime = currentdate.getFullYear() + "-" + (currentdate.getMonth()+1) + "-" + currentdate.getDate()  + "  "  + currentdate.getHours() + ":"   + currentdate.getMinutes() + ":"  + currentdate.getSeconds();
@@ -148,7 +172,13 @@ class NguyenLieuController{
     {
         res.locals.session = req.session;
 
-        if(!req.session.u_id || ((req.session.u_d_id != 2) && (req.session.u_d_id != 1)))
+        if(!req.session.u_id)
+        {
+            req.flash('message', 'Bạn phải đăng nhập trước !');
+            res.render("dangnhap/dangnhap", { message : req.flash('message')});
+        }
+        
+        if((req.session.u_d_id != 2) && (req.session.u_d_id != 1))
         {
             var currentdate = new Date();
             var datetime = currentdate.getFullYear() + "-" + (currentdate.getMonth()+1) + "-" + currentdate.getDate()  + "  "  + currentdate.getHours() + ":"   + currentdate.getMinutes() + ":"  + currentdate.getSeconds();
@@ -185,7 +215,13 @@ class NguyenLieuController{
     static async themgiaNguyenLieu(req, res){
         res.locals.session = req.session;
 
-        if(!req.session.u_id || (req.session.u_d_id != 1))
+        if(!req.session.u_id)
+        {
+            req.flash('message', 'Bạn phải đăng nhập trước !');
+            res.render("dangnhap/dangnhap", { message : req.flash('message')});
+        } 
+        
+        if(req.session.u_d_id != 1)
         {
             var currentdate = new Date();
             var datetime = currentdate.getFullYear() + "-" + (currentdate.getMonth()+1) + "-" + currentdate.getDate()  + "  "  + currentdate.getHours() + ":"   + currentdate.getMinutes() + ":"  + currentdate.getSeconds();
@@ -217,7 +253,13 @@ class NguyenLieuController{
     static async chinhgiaNguyenLieu(req, res){
         res.locals.session = req.session;
 
-        if(!req.session.u_id || (req.session.u_d_id != 1))
+        if(!req.session.u_id)
+        {
+            req.flash('message', 'Bạn phải đăng nhập trước !');
+            res.render("dangnhap/dangnhap", { message : req.flash('message')});
+        } 
+        
+        if(req.session.u_d_id != 1)
         {
             var currentdate = new Date();
             var datetime = currentdate.getFullYear() + "-" + (currentdate.getMonth()+1) + "-" + currentdate.getDate()  + "  "  + currentdate.getHours() + ":"   + currentdate.getMinutes() + ":"  + currentdate.getSeconds();

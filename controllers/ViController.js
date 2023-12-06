@@ -10,7 +10,7 @@ class ViController {
 
         if(!req.session.u_id)
         {
-            req.flash('message', 'Bạn không có quyền truy cập !');
+            req.flash('message', 'Bạn phải đăng nhập trước !');
             res.render("dangnhap/dangnhap", { message : req.flash('message')});
         }
         else{

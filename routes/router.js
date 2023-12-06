@@ -64,6 +64,7 @@ router.get("/chitietdondat", dondatController.getChiTietDonDat)
 
 router.get("/bantrong", banController.setEmptyTable)
 
+router.get("/nhanvien", nhanvienController.getAllNhanVien);
 router.post("/chamcong", nhanvienController.postChamCong);
 
 router.get("/donnhap", donnhapController.getDonNhap);

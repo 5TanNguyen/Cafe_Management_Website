@@ -16,7 +16,13 @@ class PhienGiaoDichController {
     {
         res.locals.session = req.session;
 
-        if(!req.session.u_id || req.session.u_d_id != 1)
+        if(!req.session.u_id)
+        {
+            req.flash('message', 'Bạn phải đăng nhập trước !');
+            res.render("dangnhap/dangnhap", {message: req.flash('message')});
+        }
+        
+        if(req.session.u_d_id != 1)
         { 
             var currentdate = new Date();
             var datetime = currentdate.getFullYear() + "-" + (currentdate.getMonth()+1) + "-" + currentdate.getDate()  + "  "  + currentdate.getHours() + ":"   + currentdate.getMinutes() + ":"  + currentdate.getSeconds();
@@ -40,11 +46,7 @@ class PhienGiaoDichController {
 
         if(!req.session.u_id)
         {   
-            var currentdate = new Date();
-            var datetime = currentdate.getFullYear() + "-" + (currentdate.getMonth()+1) + "-" + currentdate.getDate()  + "  "  + currentdate.getHours() + ":"   + currentdate.getMinutes() + ":"  + currentdate.getSeconds();
-            var tctp = await TruyCapTraiPhepModel.addTCTP(req.session.u_id, 'Tạo đơn rút', datetime);
-
-            req.flash('message', 'Bạn không có quyền truy cập !');
+            req.flash('message', 'Bạn phải đăng nhập trước !');
             res.render("dangnhap/dangnhap", {message: req.flash('message')});
         }
         else {
@@ -65,7 +67,13 @@ class PhienGiaoDichController {
     {
         res.locals.session = req.session;
 
-        if(!req.session.u_id || req.session.u_d_id != 1)
+        if(!req.session.u_id)
+        {
+            req.flash('message', 'Bạn phải đăng nhập trước !');
+            res.render("dangnhap/dangnhap", {message: req.flash('message')});
+        } 
+
+        if(req.session.u_d_id != 1)
         {   
             var currentdate = new Date();
             var datetime = currentdate.getFullYear() + "-" + (currentdate.getMonth()+1) + "-" + currentdate.getDate()  + "  "  + currentdate.getHours() + ":"   + currentdate.getMinutes() + ":"  + currentdate.getSeconds();

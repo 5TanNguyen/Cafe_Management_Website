@@ -7,7 +7,13 @@ class TruyCapTraiPhepController {
     {
         res.locals.session = req.session;
 
-        if(!req.session.u_id || (req.session.u_d_id != 1))
+        if(!req.session.u_id)
+        {
+            req.flash('message', 'Bạn phải đăng nhập trước !');
+            res.render("dangnhap/dangnhap", { message : req.flash('message')});
+        } 
+        
+        if(req.session.u_d_id != 1)
         {
             var currentdate = new Date();
             var datetime = currentdate.getFullYear() + "-" + (currentdate.getMonth()+1) + "-" + currentdate.getDate()  + "  "  + currentdate.getHours() + ":"   + currentdate.getMinutes() + ":"  + currentdate.getSeconds();
@@ -33,7 +39,13 @@ class TruyCapTraiPhepController {
 
         var number = req.body.numberTCTP;
 
-        if(!req.session.u_id || (req.session.u_d_id != 1))
+        if(!req.session.u_id)
+        {
+            req.flash('message', 'Bạn phải đăng nhập trước !');
+            res.render("dangnhap/dangnhap", { message : req.flash('message')});
+        } 
+        
+        if(req.session.u_d_id != 1)
         {
             var currentdate = new Date();
             var datetime = currentdate.getFullYear() + "-" + (currentdate.getMonth()+1) + "-" + currentdate.getDate()  + "  "  + currentdate.getHours() + ":"   + currentdate.getMinutes() + ":"  + currentdate.getSeconds();
@@ -67,32 +79,49 @@ class TruyCapTraiPhepController {
 
         var ua_u_id = req.body.ua_u_id;
 
-        console.log(phat_id);
-        console.log(ua_u_id);
-
-        if(phat_id == 1)
+        if(!req.session.u_id)
         {
-            var ua = await TruyCapTraiPhepModel.UpdateUA_Check(ua_u_id);
-            if(ua == true)
-            { res.redirect('/truycaptraiphep'); }
-        }
-        else if(phat_id == 2)
-        {
-            console.log('Phạt tiền')
-            var ua = await TruyCapTraiPhepModel.UpdateUA_Check(ua_u_id);
-
-            var pgd = await PhienGiaoDichModel.CreateDonPhat(ua_u_id, 50000);
-
-            var vi = await ViModel.DuyetDonRut(ua_u_id, 50000);
-
-            if((ua == true) && (pgd == true) && (vi == true))
-            {
-                res.redirect('/truycaptraiphep'); 
-            }
-            
-        }
+            req.flash('message', 'Bạn phải đăng nhập trước !');
+            res.render("dangnhap/dangnhap", { message : req.flash('message')});
+        } 
         
-        // ĐUỔI VIỆC
+        if(req.session.u_d_id != 1)
+        {
+            var currentdate = new Date();
+            var datetime = currentdate.getFullYear() + "-" + (currentdate.getMonth()+1) + "-" + currentdate.getDate()  + "  "  + currentdate.getHours() + ":"   + currentdate.getMinutes() + ":"  + currentdate.getSeconds();
+            var tctp = await TruyCapTraiPhepModel.addTCTP(req.session.u_id, 'Liệt kê cá nhân truy cập trái phép', datetime);
+
+            req.flash('message', 'Bạn không có quyền truy cập !');
+            res.render("dangnhap/dangnhap", { message : req.flash('message')});
+        }
+        else
+        {
+            if(phat_id == 1)
+            {
+                var ua = await TruyCapTraiPhepModel.UpdateUA_Check(ua_u_id);
+                if(ua == true)
+                { res.redirect('/truycaptraiphep'); }
+            }
+            else if(phat_id == 2)
+            {
+                console.log('Phạt tiền')
+                var ua = await TruyCapTraiPhepModel.UpdateUA_Check(ua_u_id);
+    
+                var pgd = await PhienGiaoDichModel.CreateDonPhat(ua_u_id, 50000);
+    
+                var vi = await ViModel.DuyetDonRut(ua_u_id, 50000);
+    
+                if((ua == true) && (pgd == true) && (vi == true))
+                {
+                    res.redirect('/truycaptraiphep'); 
+                }
+                
+            }
+            else if(phat_id == 3)
+            {
+                // ĐUỔI VIỆC
+            }
+        }
     }
 }
 

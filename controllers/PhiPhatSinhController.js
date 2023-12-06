@@ -13,7 +13,8 @@ class PhiPhatSinhController
 
         if(!req.session.u_id)
         {
-            res.redirect("/dangnhap");
+            req.flash('message', 'Bạn phải đăng nhập trước !');
+            res.render("dangnhap/dangnhap", {message: req.flash('message')});
         }
         else
         {
@@ -32,7 +33,8 @@ class PhiPhatSinhController
 
         if(!req.session.u_id)
         {
-            res.redirect("/dangnhap");
+            req.flash('message', 'Bạn phải đăng nhập trước !');
+            res.render("dangnhap/dangnhap", {message: req.flash('message')});
         }
         else
         {

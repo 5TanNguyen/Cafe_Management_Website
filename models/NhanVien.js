@@ -28,6 +28,20 @@ class NhanVienModel{
         })
     }
 
+    static async GetAllNhanVien()
+    {
+        return new Promise(resolve=>{
+            db.query("SELECT *"
+            +        " FROM users u, duties d"
+            +        " WHERE u.u_d_id = d.d_id", [], (error, result)=>{
+                if(!error)
+                    resolve(result);
+                else
+                    resolve(false);
+            })
+        })
+    }
+
 
 }
 

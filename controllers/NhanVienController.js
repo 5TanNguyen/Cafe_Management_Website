@@ -11,6 +11,7 @@ const { redirect } = require("express/lib/response");
 const ThongKeModel = require("../models/ThongKe");
 const ViModel = require('../models/Vi');
 const LichModel = require("../models/Lich");
+const res = require("express/lib/response");
 
 class NhanVienController{
     static async postChamCong(req, res)
@@ -56,6 +57,33 @@ class NhanVienController{
                 res.redirect('/lich');
             }
         }
+    }
+
+    static async getAllNhanVien(req, res)
+    {
+        res.locals.session = req.session;
+
+        if(!req.session.u_id)
+        {
+            req.flash('message', 'Bạn phải đăng nhập trước !');
+            res.render("dangnhap/dangnhap", { message : req.flash('message')});
+        } 
+        
+        if(req.session.u_d_id != 1)
+        {
+            var currentdate = new Date();
+            var datetime = currentdate.getFullYear() + "-" + (currentdate.getMonth()+1) + "-" + currentdate.getDate()  + "  "  + currentdate.getHours() + ":"   + currentdate.getMinutes() + ":"  + currentdate.getSeconds();
+            var tctp = await TruyCapTraiPhepModel.addTCTP(req.session.u_id, 'Danh sách nhân viên', datetime);
+
+            req.flash('message', 'Bạn không có quyền truy cập !');
+            res.render("dangnhap/dangnhap", { message : req.flash('message')});
+        }
+        else
+        {
+            var users = await NhanVienModel.GetAllNhanVien();
+
+            res.render("nhanvien/ds_nhanvien", { u : users});
+        } 
     }
 
   
