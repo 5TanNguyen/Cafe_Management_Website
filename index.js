@@ -332,6 +332,11 @@ app.post('/dangnhap',async function(req, res){
         res.render("dangnhap/error.ejs");
         console.log('Sai tt đăng nhập');
     }else{
+        if(x[0].u_state == 0)
+        {
+            req.flash('message', 'Tài khoản của bạn bị vô hiệu hóa !');
+            res.render("dangnhap/dangnhap", { message : req.flash('message')})
+        }
 
         req.session.u_name = x[0].u_name;
         req.session.u_id = x[0].u_id;
