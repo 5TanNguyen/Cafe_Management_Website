@@ -142,6 +142,7 @@
                                                 <div class="row">
                                                     <label for="">Chức vụ</label>
                                                     <select class="form-control" name="u_d_id" id="u_d_id" style="width: 100%;">
+                                                        <option value="<%- u[i].d_id %>"><%- u[i].d_name %></option>
                                                         <% for( var t = 0; t < d.length; t++){ %>
                                                             <option value="<%- d[t].d_id %>" style="width: 100%;"> <%- d[t].d_name %></option>
                                                         <% } %>

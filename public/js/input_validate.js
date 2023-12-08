@@ -193,49 +193,15 @@ function validate_ds_phiphatsinh(){
         }
     return true; 
 }
-
+ 
 function validate_ds_sanpham(){
     var pro_name = document.getElementById("pro_name");
     var lbl_pro_name = document.getElementById("lbl_pro_name");
-
-    var pro_price = document.getElementById("pro_price");
-    var lbl_pro_price = document.getElementById("lbl_pro_price");
-
-    var pro_description = document.getElementById("pro_description");
-    var lbl_pro_description = document.getElementById("lbl_pro_description");
 
     if(pro_name.value.trim() == ""){
         pro_name.style.border = "solid 3px red";
         lbl_pro_name.style.visibility = "visible";
         
-        if(pro_price.value.trim() == ""){
-            pro_price.style.border = "solid 3px red";
-            lbl_pro_price.style.visibility = "visible";
-
-            if(pro_description.value.trim() == ""){
-                pro_description.style.border = "solid 3px red";
-                lbl_pro_description.style.visibility = "visible";
-            }
-        }
-        
-        return false;
-    }
-
-    if(pro_price.value.trim() == ""){
-        pro_price.style.border = "solid 3px red";
-        lbl_pro_price.style.visibility = "visible";
-
-        if(pro_description.value.trim() == ""){
-            pro_description.style.border = "solid 3px red";
-            lbl_pro_description.style.visibility = "visible";
-        }
-
-        return false;
-    }
-
-    if(pro_description.value.trim() == ""){
-        pro_description.style.border = "solid 3px red";
-        lbl_pro_description.style.visibility = "visible";
         return false;
     }
 
