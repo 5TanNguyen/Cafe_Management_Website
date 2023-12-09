@@ -32,6 +32,7 @@
                 <td>ID</td>
                 <!-- <td>Lịch</td> -->
                 <td>Ngày</td>
+                <td>Vai trò</td>
                 <td>Người trực</td>
                 <td>Ca</td>
                 <td>Số giờ trực</td>
@@ -45,11 +46,12 @@
                         <td><%= cd[i].cd_id %></td>
                         <!-- <td><%= cd[i].cd_cld_id %></td> -->
                         <td><%= Intl.DateTimeFormat("vi-VN", {dateStyle: "short", }).format( cd[i].cd_date ) %></td>
+                        <td><%= cd[i].d_name %></td>
                         <td><%= cd[i].u_name %></td>
                         <td><%= cd[i].s_name %></td>
                         <td><%= cd[i].hours %></td>
                         <td>
-                            <% if(cd[i].u_id == 4){ %>
+                            <% if((cd[i].u_id == 4) && (cd[i].d_id == session.u_d_id)){ %>
                                 <a name="buttonRegister" id="register" class="btn btn-primary" href="/dangkilichh?cd_id=<%= cd[i].cd_id %>&cd_user_id=<%= session.u_id %>&cd_cld_id=<%= cd[i].cd_cld_id %>">Đ.kí</a>
                                 <!-- <form id="form" action="">
                                     <input name="cd_id" id="cd_id" autocomplete="off" value="<%= cd[i].cd_id %>" />
@@ -58,13 +60,15 @@
                                     
                                     <button>Send</button>
                                 </form> -->
-                            <% } else { %>
+                            <% } else if((cd[i].u_id != 4) && (cd[i].d_id == session.u_d_id)) { %>
                                 <a class="btn btn-danger" href="#">Đ.kí</a>
                             <% } %>
 
                         </td>
                         <td>
-                            <a name="deleteCD" class="btn btn-warning" href="#divDEL<%= i %>">XÓA</a> 
+                            <% if(session.u_d_id == 1){ %>
+                                <a name="deleteCD" class="btn btn-warning" href="#divDEL<%= i %>">XÓA</a>
+                            <% } %>
                             <!-- href="/xoachitietlich?cd_cld_id=<%= cd[i].cd_cld_id %>&cd_id=<%= cd[i].cd_id %>" -->
                         </td>
 
@@ -111,7 +115,19 @@
                         <label for="">Ngày</label>
                         <input name="cd_date" id="db" onchange="handledatechange()" type="date" class="form-control">
                         <label id="lbl_cd_date" class="lbl_validate">HÃY CHỌN NGÀY !</label>
-                            
+                          
+                        <br>
+                        <label for="">Vai trò</label>
+                        <select class="form-control" name="cd_d_id" id="">
+                            <% if(d.length > 0){ %>
+                                <% for(var i = 0; i < d.length; i++){ %>
+                                    <option value="<%- d[i].d_id %>"><%= d[i].d_name %></option>
+                                <% } %>
+                            <% }else { %>
+                                <option value="">Không có lựa chọn !</option>
+                            <% } %>
+                        </select>
+
                         <br>
                         <label for="">Ca</label>
                         <select class="form-control" name="cd_shift_id" id="">

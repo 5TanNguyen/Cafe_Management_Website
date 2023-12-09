@@ -147,7 +147,11 @@ class NguyenLieuController{
             var ing_id = req.body.ing_id;
             var ing_name = req.body.ing_name;
             var ing_amount = req.body.ing_amount;
+
+            console.log(ing_amount[0]);
             var plus_amount = req.body.plus_amount;
+            console.log(plus_amount[0]);
+
             var num = req.body.num;
             var ing_amountt = 0;
 
@@ -159,10 +163,9 @@ class NguyenLieuController{
             {
                 ing_amountt = parseInt(ing_amount[i]) + parseInt(plus_amount[i]);
                 NguyenLieuModel.UpdateNguyenLieu(ing_id[i], ing_amountt);
-                console.log(ing_amountt);
+                //console.log(ing_amount[i]);
             }
 
-        
             res.redirect('/donnhap');
         }
 
@@ -178,7 +181,7 @@ class NguyenLieuController{
             res.render("dangnhap/dangnhap", { message : req.flash('message')});
         }
         
-        if((req.session.u_d_id != 2) && (req.session.u_d_id != 1))
+        if((req.session.u_d_id != 3) && (req.session.u_d_id != 1))
         {
             var currentdate = new Date();
             var datetime = currentdate.getFullYear() + "-" + (currentdate.getMonth()+1) + "-" + currentdate.getDate()  + "  "  + currentdate.getHours() + ":"   + currentdate.getMinutes() + ":"  + currentdate.getSeconds();
@@ -221,7 +224,7 @@ class NguyenLieuController{
             res.render("dangnhap/dangnhap", { message : req.flash('message')});
         } 
         
-        if(req.session.u_d_id != 1)
+        if((req.session.u_d_id != 1) && (req.session.u_d_id != 2))
         {
             var currentdate = new Date();
             var datetime = currentdate.getFullYear() + "-" + (currentdate.getMonth()+1) + "-" + currentdate.getDate()  + "  "  + currentdate.getHours() + ":"   + currentdate.getMinutes() + ":"  + currentdate.getSeconds();
@@ -259,7 +262,7 @@ class NguyenLieuController{
             res.render("dangnhap/dangnhap", { message : req.flash('message')});
         } 
         
-        if(req.session.u_d_id != 1)
+        if((req.session.u_d_id != 1) && (req.session.u_d_id != 2))
         {
             var currentdate = new Date();
             var datetime = currentdate.getFullYear() + "-" + (currentdate.getMonth()+1) + "-" + currentdate.getDate()  + "  "  + currentdate.getHours() + ":"   + currentdate.getMinutes() + ":"  + currentdate.getSeconds();

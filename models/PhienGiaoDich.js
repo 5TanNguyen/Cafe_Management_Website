@@ -52,7 +52,8 @@ class PhienGiaoDichModel {
         return new Promise( resolve=>{
             db.query("SELECT * FROM transaction tran, users u"
             +        " WHERE tran.tran_u_id = u.u_id AND tran_u_id = ?"
-            +        " AND tran_check = 1", [u_id], (err, result)=>{
+            +        " AND tran_check = 1"
+            +        " ORDER BY tran_id DESC", [u_id], (err, result)=>{
                 if(!err){ resolve(result); }
             })
         })

@@ -12,7 +12,7 @@ static async getsanphams()
             resolve(result)
         })
     })
-}
+} 
 
 static async add_SanPham(sp_ten, sp_gia, sp_mota, pro_img, pro_pt_id, pro_pp_id, pro_b_id)
 {

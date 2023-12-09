@@ -5,6 +5,8 @@ const { send } = require("express/lib/response");
 const LichModel = require("../models/Lich");
 const ThongKeModel = require("../models/ThongKe");
 const ChiNhanhModel = require("../models/ChiNhanh");
+const TruyCapTraiPhepModel = require("../models/TruyCapTraiPhep");
+const NhanVienModel = require("../models/NhanVien");
 
 
 
@@ -82,10 +84,12 @@ class LichController
         var cld_id = req.query.cld_id;
 
         var cd = await LichModel.GetChiTietLich(cld_id);
+
+        var d = await NhanVienModel.GetAllChucVu();
         
         if(cd)
         {
-            res.render("lich/chitietlich", { cd, cld_id });
+            res.render("lich/chitietlich", { cd, cld_id, d });
         }
     }
 
@@ -114,6 +118,8 @@ class LichController
 
             var cd_date = req.body.cd_date;
 
+            var cd_d_id = req.body.cd_d_id;
+
             var cd_shift_id = req.body.cd_shift_id;
 
             var hours = req.body.hours;
@@ -123,7 +129,7 @@ class LichController
             // console.log(cd_shift_id)
             // console.log(hours)
 
-            var cd = await LichModel.CreateChiTietLich(cd_cld_id, cd_date, cd_shift_id, hours);
+            var cd = await LichModel.CreateChiTietLich(cd_cld_id, cd_date, cd_d_id, cd_shift_id, hours);
 
             if(cd)
             {

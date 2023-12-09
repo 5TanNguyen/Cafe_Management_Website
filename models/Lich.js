@@ -35,9 +35,10 @@ class LichModel {
     static async GetChiTietLich(cld_id)
     {
         return new Promise(resolve =>{
-            db.query("SELECT * FROM calendar_detail, users, shifts"
+            db.query("SELECT * FROM calendar_detail, users, shifts, duties"
             +      " WHERE calendar_detail.cd_user_id = users.u_id"
             +      " AND calendar_detail.cd_shift_id = s_id"
+            +      " AND calendar_detail.cd_d_id = duties.d_id"
             +      " AND cd_cld_id = ?"
             +      " ORDER BY cd_date, cd_shift_id", [cld_id], (err, result)=>{
                 if(!err) resolve(result);
@@ -45,11 +46,11 @@ class LichModel {
         })
     }
 
-    static async CreateChiTietLich(cd_cld_id, cd_date, cd_shift_id, hours)
+    static async CreateChiTietLich(cd_cld_id, cd_date, cd_d_id, cd_shift_id, hours)
     {
         return new Promise(resolve =>{
             db.query("INSERT INTO calendar_detail"
-            +        " VALUES(NULL, ?, ?, 4, ?, ?, 0)", [cd_cld_id, cd_date, cd_shift_id, hours], (err, result)=>{
+            +        " VALUES(NULL, ?, ?, ?, 4, ?, ?, 0)", [cd_cld_id, cd_date, cd_d_id, cd_shift_id, hours], (err, result)=>{
                 if(!err)
                 {
                     resolve(true);
