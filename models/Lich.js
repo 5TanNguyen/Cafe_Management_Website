@@ -4,7 +4,8 @@ class LichModel {
     static async GetLich()
     {
         return new Promise(resolve=> {
-            db.query("SELECT * FROM calendar", [], (err, result)=>{
+            db.query("SELECT * FROM calendar"
+            +        " ORDER BY cld_id DESC", [], (err, result)=>{
                 if(!err) resolve(result);
             })
         })

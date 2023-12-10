@@ -76,7 +76,7 @@
                 <td>ID</td>
                 <td>Tên Nhân Viên</td>
                 <td>Username</td>
-                <td>Password</td>
+                <!-- <td>Password</td> -->
                 <td>Số điện thoại</td>
                 <td>Chức vụ</td>
                 <td colspan="2">Thao tác</td>
@@ -97,9 +97,9 @@
                             <%- u[i].u_username  %> 
                         </td>
 
-                        <td>
+                        <!-- <td>
                             <%- u[i].u_password %>
-                        </td>
+                        </td> -->
 
                         <td>
                             <%- u[i].u_phone %>
@@ -110,9 +110,11 @@
                         </td>
 
                         <td>
-                            <a href="#divUD<%- u[i].u_id %>">
-                                <button class="btn btn-warning">SỬA</button>
-                            </a>
+                            <% if(u[i].u_d_id != 1){ %>
+                                <a href="#divUD<%- u[i].u_id %>">
+                                    <button class="btn btn-warning">SỬA</button>
+                                </a>
+                            <% } %>
                             <div class="UD_overplay" id="divUD<%- u[i].u_id %>">
                                 <div class="UD_wrapper">
                                     <h2 class="text-center">Chỉnh sửa thông tin nhân viên</h2>
@@ -159,7 +161,9 @@
                         </td>
 
                         <td>
-                            <a class="btn btn-danger" href="#divDel<%- u[i].u_id %>">XÓA</a>
+                            <% if(u[i].u_d_id != 1){ %>
+                                <a class="btn btn-danger" href="#divDel<%- u[i].u_id %>">XÓA</a>
+                            <% } %>
                             <div class="overplay" id="divDel<%- u[i].u_id %>">
                                 <div class="wrapper">
                                     <h2 class="text-center">Xác Nhận Xóa</h2>
