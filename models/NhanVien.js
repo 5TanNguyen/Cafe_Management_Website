@@ -28,13 +28,30 @@ class NhanVienModel{
         })
     }
 
+    // static async GetAllNhanVien()
+    // {
+    //     return new Promise(resolve=>{
+    //         db.query("SELECT *"
+    //         +        " FROM users u, duties d"
+    //         +        " WHERE u.u_d_id = d.d_id"
+    //         +        " AND u.u_state = 1", [], (error, result)=>{
+    //             if(!error)
+    //                 resolve(result);
+    //             else
+    //                 resolve(false);
+    //         })
+    //     })
+    // }
+
     static async GetAllNhanVien()
     {
         return new Promise(resolve=>{
-            db.query("SELECT *"
-            +        " FROM users u, duties d"
-            +        " WHERE u.u_d_id = d.d_id"
-            +        " AND u.u_state = 1", [], (error, result)=>{
+            db.query("SELECT * FROM duties d, "
+            +        "(SELECT * FROM users u "
+            +        "LEFT JOIN wallet w "
+            +        "ON u.u_id = w.w_u_id) usr "
+            +        "WHERE usr.u_d_id = d.d_id "
+            +        "AND usr.u_state = 1", [], (error, result)=>{
                 if(!error)
                     resolve(result);
                 else

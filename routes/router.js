@@ -127,10 +127,13 @@ router.get("/lich", LichController.getLich);
 router.post("/taolich", LichController.createLich);
 router.get("/chitietlich", LichController.getChiTietLich);
 router.post('/taochitietlich', LichController.createChiTietLich);
+router.post("/taochitietlichtudong", LichController.createChiTietLichTuDong);
 router.post('/xoachitietlich', LichController.deleteChiTietLich);
 router.get('/dangkilichh', LichController.dangkiLich);
 
 router.get('/vi', ViController.getViByUserId);
+router.post('/themvi', ViController.addVi);
+
 router.post('/taodonrut', PhienGiaoDichController.createDonRut);
 router.get('/ds_donrut', PhienGiaoDichController.getAllDonRutChuaDuyet);
 router.get('/duyetdonrut', PhienGiaoDichController.duyetDonRut);

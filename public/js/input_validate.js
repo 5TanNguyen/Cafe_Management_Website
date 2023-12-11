@@ -365,3 +365,27 @@ function validate_ds_nhanvien(){
 
     return true;
 }
+
+function validate_taolichtudong(){
+    var cld_begin = document.getElementById("cld_begin");
+    var lbl_cld_begin = document.getElementById("lbl_cld_begin");
+
+    var cld_end = document.getElementById("cld_end");
+    var lbl_cld_end = document.getElementById("lbl_cld_end");
+
+    if(cld_begin.value.trim() == "")
+    {
+        cld_begin.style.border = "solid 3px red";
+        lbl_cld_begin.style.visibility = "visible";
+
+        if(cld_end.value.trim() == "")
+        {
+            cld_end.style.border = "solid 3px red";
+            lbl_cld_end.style.visibility = "visible";
+        }
+
+        return false; 
+    }
+
+    return true;
+}

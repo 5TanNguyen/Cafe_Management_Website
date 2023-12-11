@@ -83,13 +83,26 @@ class LichController
 
         var cld_id = req.query.cld_id;
 
+        var cld = await LichModel.GetLichById(cld_id);
+
         var cd = await LichModel.GetChiTietLich(cld_id);
 
         var d = await NhanVienModel.GetAllChucVu();
+
+        var user = await NhanVienModel.GetAllNhanVien();
+
+        var user_id = req.session.u_id;
+
+        console.log(cld_id);
+        console.log(user_id);;
+
+        var cu = await LichModel.GetLichTheoUserId(cld_id, user_id);
+
+        console.log(cu)
         
         if(cd)
         {
-            res.render("lich/chitietlich", { cd, cld_id, d });
+            res.render("lich/chitietlich", { cd, cld_id, user, d, cld, cu });
         }
     }
 
@@ -130,6 +143,62 @@ class LichController
             // console.log(hours)
 
             var cd = await LichModel.CreateChiTietLich(cd_cld_id, cd_date, cd_d_id, cd_shift_id, hours);
+
+            if(cd)
+            {
+                res.redirect('/chitietlich?cld_id=' + cd_cld_id);
+            }
+        }
+    }
+
+    static async createChiTietLichTuDong(req, res)
+    {
+        res.locals.session = req.session;
+
+        if(!req.session.u_id)
+        {
+            req.flash('message', 'Bạn phải đăng nhập trước !');
+            res.render("dangnhap/dangnhap", { message : req.flash('message')});
+        }
+
+        if((req.session.u_d_id != 1))
+        {
+            var currentdate = new Date();
+            var datetime = currentdate.getFullYear() + "-" + (currentdate.getMonth()+1) + "-" + currentdate.getDate()  + "  "  + currentdate.getHours() + ":"   + currentdate.getMinutes() + ":"  + currentdate.getSeconds();
+            var tctp = await TruyCapTraiPhepModel.addTCTP(req.session.u_id, 'Tạo chi tiết lịch tự động', datetime);
+            
+            req.flash('message', 'Bạn không có quyền truy cập !');
+            res.render("dangnhap/dangnhap", { message : req.flash('message')});
+        }
+        else
+        {
+            var cd_cld_id = req.body.cd_cld_id;
+            console.log(cd_cld_id);
+
+            var cld_begin = req.body.cld_begin;
+            console.log("Ngày bắt đầu: " + cld_begin)
+
+            var cld_end = req.body.cld_end;
+            console.log("Ngày kết thúc: " + cld_end)
+
+            var month = req.body.month;
+
+            var year = req.body.year;
+
+            var cd_d_id = req.body.cd_d_id;
+
+            var cd_user_id = req.body.cd_user_id;
+
+            var cd_shift_id = req.body.cd_shift_id;
+
+            var hours = req.body.hours;
+
+            for(var t = cld_begin; t <= cld_end; t++)
+            {
+                var cd_date = year + '-' + month + '-' + t;
+                console.log(cd_date);
+                var cd = await LichModel.CreateChiTietLichTuDong(cd_cld_id, cd_date, cd_d_id, cd_user_id, cd_shift_id, hours);
+            }
 
             if(cd)
             {

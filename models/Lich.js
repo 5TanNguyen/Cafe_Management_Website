@@ -11,6 +11,16 @@ class LichModel {
         })
     }
 
+    static async GetLichById(cld_id)
+    {
+        return new Promise(resolve=> {
+            db.query("SELECT * FROM calendar"
+            +        " WHERE cld_id = ?", [cld_id], (err, result)=>{
+                if(!err) resolve(result);
+            })
+        })
+    }
+
     static async GetLichCURDATE()
     {
         return new Promise(resolve=> {
@@ -21,7 +31,7 @@ class LichModel {
             })
         })
     }
-
+ 
 
     static async CreateLich(cld_begin, cld_end)
     {
@@ -38,7 +48,7 @@ class LichModel {
         return new Promise(resolve =>{
             db.query("SELECT * FROM calendar_detail, users, shifts, duties"
             +      " WHERE calendar_detail.cd_user_id = users.u_id"
-            +      " AND calendar_detail.cd_shift_id = s_id"
+            +      " AND calendar_detail.cd_shift_id = shifts.s_id"
             +      " AND calendar_detail.cd_d_id = duties.d_id"
             +      " AND cd_cld_id = ?"
             +      " ORDER BY cd_date, cd_shift_id", [cld_id], (err, result)=>{
@@ -52,6 +62,19 @@ class LichModel {
         return new Promise(resolve =>{
             db.query("INSERT INTO calendar_detail"
             +        " VALUES(NULL, ?, ?, ?, 4, ?, ?, 0)", [cd_cld_id, cd_date, cd_d_id, cd_shift_id, hours], (err, result)=>{
+                if(!err)
+                {
+                    resolve(true);
+                }
+            })
+        })
+    }
+
+    static async CreateChiTietLichTuDong(cd_cld_id, cd_date, cd_d_id, cd_user_id, cd_shift_id, hours) //, month, year)
+    {
+        return new Promise(resolve =>{
+            db.query("INSERT INTO calendar_detail"
+            +        " VALUES(NULL, ?, ?, ?, ?, ?, ?, 1)", [cd_cld_id, cd_date, cd_d_id, cd_user_id, cd_shift_id, hours], (err, result)=>{ //, year, month, cd_date], (err, result)=>{
                 if(!err)
                 {
                     resolve(true);
@@ -129,6 +152,21 @@ class LichModel {
             +        " SET cd_check = 1"
             +        " WHERE cd_id = ?", [cd_id], (err, result)=>{
                 if(!err) { resolve(true); }
+            })
+        })
+    }
+
+    static async GetLichTheoUserId(cld_id, user_id)
+    {
+        return new Promise(resolve =>{
+            db.query("SELECT *"
+            +        " FROM calendar_detail, users, shifts, duties"
+            +        " WHERE calendar_detail.cd_user_id = users.u_id"
+            +        " AND calendar_detail.cd_shift_id = shifts.s_id"
+            +        " AND calendar_detail.cd_d_id = duties.d_id"
+            +        " AND cd_cld_id = ?"
+            +        " AND cd_user_id = ?", [cld_id, user_id], (err, result)=>{
+                if(!err) { resolve(result); }
             })
         })
     }

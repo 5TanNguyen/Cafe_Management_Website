@@ -21,11 +21,18 @@
     
     <div class="container">
         <h2 class="text-center">
-            Danh sách lịch làm việc <%- cld_id %>
+            Danh sách lịch làm việc
+        </h2>
+        <h2 class="text-center"> <%= Intl.DateTimeFormat("vi-VN", {dateStyle: "short", }).format( cld[0].cld_begin ) %> đến <%= Intl.DateTimeFormat("vi-VN", {dateStyle: "short", }).format( cld[0].cld_end ) %>
         </h2>
         <% if(session.u_d_id == 1){ %>
-            <a href="#divUD" class="btn btn-outline-danger">Tạo chi tiết lịch</a>
+            <a href="#divAUTO" class="btn btn-primary">Tạo bán tự động</a>
         <% } %>
+        <% if(session.u_d_id == 1){ %>
+            <a href="#divUD" class="btn btn-danger">Tạo thủ công</a>
+        <% } %>
+
+        <a href="#divCU" class="btn btn-success">Lịch cá nhân</a>
 
         <table class="table table-hover">
             <thead>
@@ -53,13 +60,6 @@
                         <td>
                             <% if((cd[i].u_id == 4) && (cd[i].d_id == session.u_d_id)){ %>
                                 <a name="buttonRegister" id="register" class="btn btn-primary" href="/dangkilichh?cd_id=<%= cd[i].cd_id %>&cd_user_id=<%= session.u_id %>&cd_cld_id=<%= cd[i].cd_cld_id %>">Đ.kí</a>
-                                <!-- <form id="form" action="">
-                                    <input name="cd_id" id="cd_id" autocomplete="off" value="<%= cd[i].cd_id %>" />
-                                    <input name="cd_user_id" id="cd_user_id" autocomplete="off" value="<%= session.u_id %>" />
-                                    <input name="cd_cld_id" id="cd_cld_id" autocomplete="off" value="<%= cd[i].cd_cld_id %>" />
-                                    
-                                    <button>Send</button>
-                                </form> -->
                             <% } else if((cd[i].u_id != 4) && (cd[i].d_id == session.u_d_id)) { %>
                                 <a class="btn btn-danger" href="#">Đ.kí</a>
                             <% } %>
@@ -69,7 +69,6 @@
                             <% if(session.u_d_id == 1){ %>
                                 <a name="deleteCD" class="btn btn-warning" href="#divDEL<%= i %>">XÓA</a>
                             <% } %>
-                            <!-- href="/xoachitietlich?cd_cld_id=<%= cd[i].cd_cld_id %>&cd_id=<%= cd[i].cd_id %>" -->
                         </td>
 
                         <div class="UD_overplay" id="divDEL<%= i %>">
@@ -101,10 +100,108 @@
 
    </script>
 
-    <div class="UD_overplay" id="divUD">
+   <div class="UD_overplay" id="divAUTO">
+
+    <div class="UD_wrapper">
+        <h2 class="text-center">Tạo bán tự động lịch</h2>
+        <h2 class="text-center"><%= Intl.DateTimeFormat("vi-VN", {dateStyle: "short", }).format( cld[0].cld_begin ) %>  đến  <%= Intl.DateTimeFormat("vi-VN", {dateStyle: "short", }).format( cld[0].cld_end ) %></h2>
+        <a href="#" class="close">&times;</a>
+        <div class="content">
+            <div class="container">
+                <form action="/taochitietlichtudong" method="POST" onsubmit="return validate_taolichtudong();">
+                    <input hidden name="cd_cld_id" class="form-control"  value="<%= cld_id %>"> 
+                    <% var currentdate = new Date(); %>
+                    <% var datetime = currentdate.getFullYear() + "-" + (currentdate.getMonth()+1) + "-" + currentdate.getDate()  + "  "  + currentdate.getHours() + ":"   + currentdate.getMinutes() + ":"  + currentdate.getSeconds(); %>
+                    <!-- -->
+                    <div class="row">
+                        <div class="col">
+                            <label for="">Ngày bắt đầu</label>
+                            <input name="cld_begin" id="cld_begin" class="form-control">
+                            <label id="lbl_cld_begin" class="lbl_validate">HÃY CHỌN NGÀY !</label>
+                        </div>
+                        <div class="col">
+                            <label for="">Ngày kết thúc</label>
+                            <input name="cld_end" id="cld_end" class="form-control">
+                            <label id="lbl_cld_end" class="lbl_validate">HÃY CHỌN NGÀY !</label>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col">
+                            <label for="">Chức vụ</label>
+                            <% if(d.length > 0){ %>
+                                <select class="form-control" name="cd_d_id" id="">
+                                    <% for(var i = 0; i < d.length; i++){ %>
+                                        <option name="cd_d_id" value="<%= d[i].d_id %>"><%= d[i].d_name %></option>
+                                    <% } %>
+                                </select>
+                            <% } %>
+                        </div>
+                        <div class="col">
+                            <label>Nhân viên</label>
+                            <% if(user.length > 0){ %>
+                                <select class="form-control" name="cd_user_id" id="">
+                                    <% for(var i = 0; i < user.length; i++){ %>
+                                        <option name="cd_user_id" value="<%= user[i].u_id %>"><%= user[i].u_name %> | <%= user[i].d_name %></option>
+                                    <% } %>
+                                </select>
+                            <% } %>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <input readonly hidden name="month" id="" value="<%- (currentdate.getMonth()+1) %>" class="form-control">
+                        <input readonly hidden name="year" id="" value="<%- (currentdate.getFullYear()) %>" class="form-control">
+
+                        <div class="col">
+                            <label for="">Ca</label>
+                            <select class="form-control" name="cd_shift_id" id="">
+                                <% for(var i = 1; i <= 3; i++){ %>
+                                    <option name="cd_shift_id" value="<%= i %>"><%= i %></option>
+                                <% } %>
+                            </select>
+                        </div>
+                        <div class="col">
+                            <label>Số giờ</label>
+                            <input id="hours" name="hours" class="form-control" value="5">
+                            <label id="lblhours" class="lbl_validate">HÃY ĐIỀN SỐ GIỜ !</label>
+                        </div>
+                    </div>
+
+                    <!-- <br>
+                    <label for="">Ca</label>
+                    <select class="form-control" name="cd_shift_id" id="">
+                        <% for(var i = 1; i <= 3; i++){ %>
+                            <option name="cd_shift_id" value="<%= i %>"><%= i %></option>
+                        <% } %>
+                    </select>
+                      
+                    <br>
+                    <label>Số giờ</label>
+                    <input id="hours" name="hours" class="form-control">
+                    <label id="lblhours" class="lbl_validate">HÃY ĐIỀN SỐ GIỜ !</label> -->
+                    
+                    <br>
+                    <input type="submit" value="Tạo" style="width: 100%;">
+                </form>
+
+                <script>
+                    function handledatechange(){
+                        var date_picker = document.getElementById("db").value;
+        
+                        // alert("Date" + date_picker);
+                    }
+                </script>
+            </div>
+        </div>
+    </div>
+</div> 
+   
+   <div class="UD_overplay" id="divUD">
 
         <div class="UD_wrapper">
-            <h2>Tạo chi tiết lịch</h2>
+            <h2 class="text-center">Tạo chi tiết lịch</h2>
+            <h2 class="text-center"><%= Intl.DateTimeFormat("vi-VN", {dateStyle: "short", }).format( cld[0].cld_begin ) %> đến <%= Intl.DateTimeFormat("vi-VN", {dateStyle: "short", }).format( cld[0].cld_end ) %></h2>
             <a href="#" class="close">&times;</a>
             <div class="content">
                 <div class="container">
@@ -144,6 +241,55 @@
                         <br>
                         <input type="submit" value="Tạo" style="width: 100%;">
                     </form>
+
+                    <script>
+                        function handledatechange(){
+                            var date_picker = document.getElementById("db").value;
+            
+                            // alert("Date" + date_picker);
+                        }
+                    </script>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="UD_overplay" id="divCU">
+
+        <div class="UD_wrapper">
+            <h2 class="text-center">Lịch cá nhân</h2>
+            <h2 class="text-center"><%= Intl.DateTimeFormat("vi-VN", {dateStyle: "short", }).format( cld[0].cld_begin ) %> đến <%= Intl.DateTimeFormat("vi-VN", {dateStyle: "short", }).format( cld[0].cld_end ) %></h2>
+            <a href="#" class="close">&times;</a>
+            <div class="content">
+                <div class="container">
+                    <table class="table table-hover">
+                        <thead>
+                            <td>ID</td>
+                            <!-- <td>Lịch</td> -->
+                            <td>Ngày</td>
+                            <td>Vai trò</td>
+                            <td>Người trực</td>
+                            <td>Ca</td>
+                            <td>Số giờ trực</td>
+                        </thead>
+            
+                        <% if(cu.length > 0){ %>
+                            <% for(var i=0; i <cu.length; i++){  %>
+                                <tr>
+                                    <td><%= cu[i].cd_id %></td>
+                                    <!-- <td><%= cd[i].cd_cld_id %></td> -->
+                                    <td><%= Intl.DateTimeFormat("vi-VN", {dateStyle: "short", }).format( cu[i].cd_date ) %></td>
+                                    <td><%= cu[i].d_name %></td>
+                                    <td><%= cu[i].u_name %></td>
+                                    <td><%= cu[i].s_name %></td>
+                                    <td><%= cu[i].hours %></td>
+                                </tr>
+            
+                            <% } %>
+                        <% } else { %>
+                            <p>Chưa có lịch làm</p>
+                        <% } %>
+                    </table>
 
                     <script>
                         function handledatechange(){

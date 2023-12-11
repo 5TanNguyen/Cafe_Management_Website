@@ -22,7 +22,11 @@ class ViController {
 
             var pgd = await PhienGiaoDichModel.getPGDByUserId(w_u_id);
 
-            if(w)
+            if(w == false)
+            {
+                res.redirect('/lich');
+            }
+            else
             {
                 res.render("vi/vi", { w, tran, pgd });
             }
@@ -32,6 +36,38 @@ class ViController {
     static async getPGDByUserIdd(req, res)
     {
         res.locals.session = req.session;   
+    }
+
+    static async addVi(req, res)
+    {
+        res.locals.session = req.session;
+
+        if(!req.session.u_id)
+        {
+            req.flash('message', 'Bạn phải đăng nhập trước !');
+            res.render("dangnhap/dangnhap", { message : req.flash('message')});
+        } 
+        
+        if(req.session.u_d_id != 1)
+        {
+            var currentdate = new Date();
+            var datetime = currentdate.getFullYear() + "-" + (currentdate.getMonth()+1) + "-" + currentdate.getDate()  + "  "  + currentdate.getHours() + ":"   + currentdate.getMinutes() + ":"  + currentdate.getSeconds();
+            var tctp = await TruyCapTraiPhepModel.addTCTP(req.session.u_id, 'Cấp ví nhân viên', datetime);
+
+            req.flash('message', 'Bạn không có quyền truy cập !');
+            res.render("dangnhap/dangnhap", { message : req.flash('message')});
+        }
+        else
+        {
+                var w_u_id = req.body.u_id;
+    
+                var vi = await ViModel.AddVi(w_u_id, 0);
+    
+                if(vi == true)
+                {
+                    res.redirect('/nhanvien'); 
+                }
+        }
     }
 }
 

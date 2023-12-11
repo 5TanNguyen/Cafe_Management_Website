@@ -7,6 +7,7 @@ class ViModel {
             db.query("SELECT * FROM wallet"
             +        " WHERE w_u_id = ?", [u_id], (err, result)=>{
                 if(!err){ resolve(result); }
+                else resolve(false);
             })
         })
     }
@@ -30,6 +31,16 @@ class ViModel {
             +        " SET w_money_withdraw = w_money_withdraw + ?, "
             +        " w_surplus = w_surplus - ?"
             +        " WHERE w_u_id = ?", [money, money, w_u_id], (err, result)=>{
+                if(!err){ resolve(true); }
+            })
+        })
+    }
+
+    static async AddVi(w_u_id, money)
+    {
+        return new Promise(resolve=>{
+            db.query("INSERT INTO wallet"
+            +        " VALUES(NULL, ?, ?, 0, 0)", [w_u_id, money], (err, result)=>{
                 if(!err){ resolve(true); }
             })
         })
