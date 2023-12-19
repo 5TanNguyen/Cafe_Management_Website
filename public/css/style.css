@@ -18,7 +18,7 @@ body{
     background: #403e3d;
     border-radius: 50px;
 }
-
+ 
 .overplay{
     position:fixed;
     top: 0;
@@ -321,6 +321,14 @@ input[type="submit"]{
         float: none;
         width: 90%;
         margin: 40px auto;
+    }
+
+    .overplay {
+        flex-direction: column;
+    }
+
+    .wrapper {
+        width: 80%;
     }
 }
 
