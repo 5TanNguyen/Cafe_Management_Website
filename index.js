@@ -12,6 +12,10 @@ const pdf = require('html-pdf');
 const fs = require('fs');
 const options = {format:'A4'};
 const optionA6 = {format:'A6'};
+const jwt = require('jsonwebtoken');
+const dotevn = require ('dotenv');
+
+dotevn.config();
 
 // SOCKET.IO
 const {createServer} = require('node:http');
@@ -316,6 +320,38 @@ app.get('/dangnhap', async function(req, res){
     else
         res.render('../views/dangnhap/dangnhap', {message : req.flash('message')});
 })
+
+// JWT
+
+// app.post('/login', (req, res) =>{
+    
+//     const data = req.body;
+//     console.log({data});
+//     const accessToken = jwt.sign(data, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '30s'});
+//     res.json({ accessToken});
+// })
+
+app.get('/emp', authenToken, async (req, res)=>{
+    const nv = await NhanVienModel.GetAllNhanVien();
+    res.json({nv});
+
+})
+
+function authenToken(req, res, next){
+    const authorizationHeader = req.headers['authorization'];
+    // 'Beaer [token]'
+    const token = authorizationHeader.split(' ')[1];
+    if(!token) res.sendStatus(401);
+
+    jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, data) =>{
+        console.log(err, data);
+        if(err) res.sendStatus(403);
+        next();
+    });
+}
+
+// END JWT
+
 app.post('/dangnhap',async function(req, res){
 
     var u_username = req.body.u_username;
