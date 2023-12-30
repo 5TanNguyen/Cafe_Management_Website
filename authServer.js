@@ -166,6 +166,12 @@ app.post('/login', (req, res) =>{
     res.json({ accessToken, refreshToken});
 })
 
+app.post('/logout', (req, res) =>{
+    const refreshToken = req.body.token;
+    refreshTokens =  refreshTokens.filter(refToken => refToken !== refreshToken);
+    res.sendStatus(200);
+})
+
 // END JWT
 
 app.post('/dangnhap',async function(req, res){
