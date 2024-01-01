@@ -100,6 +100,18 @@ body{
     transition: all 5s ease-in-out;
 }
 
+.wrapperPP{
+    width: 1000px;
+    height: 500px;
+    margin: 70px auto;
+    padding: 20px;
+    background: #e7e7e7e7;
+    border-radius: 5px;
+    width: 30%;
+    position: relative;
+    transition: all 5s ease-in-out;
+}
+
 .wrapperfl{
     margin: 70px auto;
     padding: 20px;
@@ -311,6 +323,8 @@ input[type="submit"]{
     }
 }
 
+
+/* DANH SÁCH BÀN */
 @media screen and (max-width: 800px){
     .containerr{
         width: 100%;
@@ -329,6 +343,22 @@ input[type="submit"]{
 
     .wrapper {
         width: 80%;
+    }
+
+    .wrapperrr {
+        width: 80%;
+    }
+
+    .wrapperVCB {
+        width: 80%;
+    }
+
+    .wrapperTK {
+        width: 45%;
+    }
+
+    .UD_wrapper {
+        width: 30%;
     }
 }
 

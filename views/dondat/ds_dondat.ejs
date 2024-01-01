@@ -37,9 +37,7 @@
             <thead>
                 <tr>
                 <th scope="col">#</th>
-                <th scope="col">Thanh toán</th>
-                <th scope="col">Xác nhận</th>
-                <td>Pha chế</td>
+                <th colspan="2">Pha chế</th>
                 <th scope="col">Tổng tiền</th>
                 <th> Thống Kê</th>
                 <th colspan="2">Thao tác</th>
@@ -51,48 +49,49 @@
                         <tr>
                             <th scope="row">
                                 <%- test[i].o_id %>
-                            </th>
-                            
-                            <td>
-                                <!-- <%- test[i].o_status %> -->
-
-                                <% if(test[i].o_status == 1){ %>
-                                    <p style="color: green;">Đã thanh toán</p>
-                                <% } else { %>
-                                    <p style="color:red;">Chưa</p>
-                                <% } %>
-                            </td>    
+                            </th>  
                             
                             <td>
                                 <!-- <%- test[i].o_status %> -->
 
                                 <% if(test[i].o_post == 1){ %>
-                                    <p style="color: green;">Đã xác nhận</p>
+                                    <p style="color: green;"><i style="font-size: 30px;" class="fa fa-check-circle" aria-hidden="true"></i>
+                                    </p>
                                 <% } else { %>
-                                    <p style="color:red;">Chưa xác nhận</p>
+                                    <p style="color:red;"><i style="font-size: 30px;" class="fa fa-times-circle" aria-hidden="true"></i>
+                                    </p>
                                 <% } %>
                             </td> 
                             
                             <td>
                                 <% if(test[i].o_tick == 1){ %>
-                                    <p style="color: green;">Xong</p>
+                                    <p style="color: green;"><i style="font-size: 30px;" class="fa fa-check" aria-hidden="true"></i>
+                                    </p>
                                 <% } else { %>
-                                    <p style="color:red;">Chưa</p>
+                                    <p style="color:red;"><i style="font-size: 30px;" class="fa fa-times" aria-hidden="true"></i>
+                                    </p>
                                 <% } %>
                             </td>
                             
                             <td>
-                                <%- test[i].o_cost %>
+                                <%- Intl.NumberFormat({style: 'currency', currency: 'VND'}).format( test[i].o_cost ) %> VNĐ
                             </td>
 
                             <td>
                                 <%- test[i].s_name %>
                             </td>
                             <td>
-                                <a href="/chitietdondat?o_id=<%= test[i].o_id %>" class="btn btn-primary">Chi tiết</a>
+                                <a href="/chitietdondat?o_id=<%= test[i].o_id %>" class="btn btn-primary"><i class="fa fa-info-circle" aria-hidden="true"></i>
+                                </a>
                             </td>
                             <td>
-                                <a href="#divDel<%- test[i].o_id %>" class="btn btn-success">PAY</a>
+                                <% if(test[i].o_status == 1){ %>
+                                    <a href="#divDel<%- test[i].o_id %>" class="btn btn-success"><i class="fa fa-credit-card-alt" aria-hidden="true"></i>
+                                    </a>
+                                <% } else { %>
+                                    <a href="#divDel<%- test[i].o_id %>" class="btn btn-danger"><i class="fa fa-credit-card-alt" aria-hidden="true"></i>
+                                    </a>
+                                <% } %>
                                 
                                 <div class="overplay" id="divDel<%- test[i].o_id %>">
                                     <!-- <input name="pro_name" type="text" placeholder="" value="<%- test[i].pro_name %>"> -->

@@ -1,8 +1,17 @@
 GET http://localhost:5555/emp
-Authorization: Beaer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IjV0YW4iLCJpYXQiOjE3MDM5MzUyOTQsImV4cCI6MTcwMzkzNTMyNH0.LOIXF82OKRU_K35XH0eECMS-n2snXwE-FJaNVwKf3Jc
+Authorization: Beaer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IjV0YW4iLCJwYXNzd29yZCI6IjEyMzQ1IiwiaWF0IjoxNzAzOTg4NjQ2LCJleHAiOjE3MDM5ODg2NzZ9.IWR1mEKYKxKhdnIAgJaokT2-aN1P29W9SR9xyZSQNgg
 
 ###
 POST http://localhost:5500/login
+Content-Type: application/json
+
+{
+    "username": "5tan",
+    "password": "12345"
+}
+
+###
+POST http://localhost:5555/login
 Content-Type: application/json
 
 {

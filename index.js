@@ -323,13 +323,33 @@ app.get('/dangnhap', async function(req, res){
 
 // JWT
 
-// app.post('/login', (req, res) =>{
+let refreshTokens = [];
+
+app.post('/login', async (req, res) =>{
+    // Authentication
+
+
+
+    // Authorization
+    const data = req.body;
+    console.log({data});
+    const accessToken = jwt.sign(data, process.env.ACCESS_TOKEN_SECRET, { 
+        expiresIn: '30s',
+    });
+
+    // Chưa sử dụng được
+    const refreshToken = jwt.sign(data, process.env.REFRESH_TOKEN_SECRET);
+    refreshTokens.push(refreshToken);
+    // Chưa sử dụng được
     
-//     const data = req.body;
-//     console.log({data});
-//     const accessToken = jwt.sign(data, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '30s'});
-//     res.json({ accessToken});
-// })
+    res.json({ accessToken, refreshToken});
+})
+
+app.post('/logout', (req, res) =>{
+    const refreshToken = req.body.token;
+    refreshTokens =  refreshTokens.filter(refToken => refToken !== refreshToken);
+    res.sendStatus(200);
+})
 
 app.get('/emp', authenToken, async (req, res)=>{
     const nv = await NhanVienModel.GetAllNhanVien();
@@ -418,6 +438,18 @@ app.post('/dangnhap',async function(req, res){
         
         if( x[0] != null) 
         {
+            const data = req.body;
+            console.log({data});
+            const accessToken = jwt.sign(data, process.env.ACCESS_TOKEN_SECRET, { 
+                expiresIn: '30s',
+            });
+
+            console.log('accessToken: ' + accessToken);
+
+            // Chưa sử dụng được
+            const refreshToken = jwt.sign(data, process.env.REFRESH_TOKEN_SECRET);
+            refreshTokens.push(refreshToken);
+
             if(x[0].u_d_id == 1)
             {
                 res.locals.session = req.session;
