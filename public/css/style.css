@@ -213,6 +213,17 @@ body{
     transition: all 5s ease-in-out;
 }
 
+.UD_Add_Product{
+    height: 500px;
+    margin: 70px auto;
+    padding: 20px;
+    background: #e7e7e7e7;
+    border-radius: 5px;
+    width: 50%;
+    position: relative;
+    transition: all 5s ease-in-out;
+}
+
 .UD_wrapper h2{
     margin-top: 0;
     color: #333;
@@ -229,6 +240,26 @@ body{
 }
 
 .UD_wrapper .content{
+    max-height: 30%;
+    overflow: auto;
+}
+
+.UD_Add_Product h2{
+    margin-top: 0;
+    color: #333;
+}
+
+.UD_Add_Product .close{
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    transition: all 200ms;
+    font-weight: bold;
+    text-decoration: none;
+    color: #333;
+}
+
+.UD_Add_Product .content{
     max-height: 30%;
     overflow: auto;
 }
@@ -324,7 +355,7 @@ input[type="submit"]{
 }
 
 
-/* DANH SÁCH BÀN */
+/* Responsive Mobile */
 @media screen and (max-width: 800px){
     .containerr{
         width: 100%;
@@ -360,6 +391,20 @@ input[type="submit"]{
     .UD_wrapper {
         width: 30%;
     }
+    
+    .UD_Add_Product{
+        width: 80%;
+    }
+
+    .column-layout{
+        display: flex;
+    }
+
+    .column-item{
+        width: 50%;
+    }
+
+
 }
 
 @media screen and (max-width: 900px){
@@ -388,4 +433,19 @@ input[type="submit"]{
     width: 100px;
     height: 100px;
     border-radius: 10px;
+}
+
+.column-layout {
+    margin-top: 0px;
+    padding: 12px 0;
+    background-color: #fff;
+}
+
+.column-item{
+    width: 100%;
+    padding: 10px 10px;
+}
+
+.btn-submit{
+    width: 100%;
 }

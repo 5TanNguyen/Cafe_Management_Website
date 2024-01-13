@@ -8,6 +8,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     <script src="/js/input_validate.js"></script>
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
 </head>
 <body>
     <% if(session.u_d_id == 1){ %>
@@ -62,54 +63,27 @@
             <input hidden type="submit" value="XÁC NHẬN ĐƠN" class="btn btn-outline-danger" style="width: 100%;">
         
         </form>
-        <a class="btn btn-danger" style="width: 100%" href="/xacnhandon?o_id=<%- test[0].od_o_id %>&o_cost=<%- test[0].o_cost %>">XÁC NHẬN ĐƠN</a>
-        <%  } else { %>
-            <p>Không có thức uống</p>
-        <% } %>
-        <hr>
-        <a class="btn btn-outline-primary" style="width:100%" href="#divUD">THÊM ĐỒ UỐNG</a>
 
+        <div class="column-layout">
+            <div class="column-item">
+            <a class="btn btn-danger btn-submit" href="/xacnhandon?o_id=<%- test[0].od_o_id %>&o_cost=<%- test[0].o_cost %>">XÁC NHẬN ĐƠN</a>
+            <%  } else { %>
+                <p>Không có thức uống</p>
+            <% } %>
+            </div>
+            <div class="column-item">
+                <a class="btn btn-outline-primary btn-submit" href="#divUD">THÊM ĐỒ UỐNG</a>
+            </div>
+        </div>
         <!-- POPUP THÊM ĐỒ UỐNG -->
         
         <div class="UD_overplay" id="divUD">
 
-            <div class="UD_wrapper" style="width: 1000px; height: 500px;">
+            <div class="UD_Add_Product" style="height: 500px;">
                 <h2 class="text-center">Chọn thức uống</h2>
                 <a href="#" class="close">&times;</a>
                 <div class="content" style="max-height: 90%;">
                     <div class="container">
-                        <!-- <form action="/themchitietdondat" method="POST" onsubmit="return validate_cchitietdondat();">
-                            <input name="o_id" hidden type="text" value="<%- dd_id %>">
-                            <label for="">Tên thức uống</label>
-                            <select name="od_pro_id" id="" class="form-select">
-                                <% if(pro.length > 0){ %>
-                                    <% for( var j = 0; j < pro.length; j++){ %>
-                                        <option name="od_pro_id" value="<%- pro[j].pro_id %>"> <%- pro[j].pro_name %> | <%- pro[j].pro_price %> VNĐ </option>
-                                    <% } %>
-                                <% } else { %>
-                                    <p>Data Not Found</p>
-                                <% } %>
-                            </select>
-
-                            <br>
-                            <div class="row lg">
-                                <div class="col sm">                            
-                                    <label for="">Giá</label>
-                                    <input id="od_price" type="text" name="od_price">
-                                    <label id="lblod_price" style="color: red; visibility: hidden; font-style: italic;">Không được để trống !</label>
-                                </div>
-                                
-                                <div class="col sm">
-                                    <label for="">Số lượng</label>
-                                    <input id="od_quantity" name="od_quantity" type="text" placeholder="" value="">
-                                    <label id="lblod_quantity" style="color: red; visibility: hidden; font-style: italic;">Không được để trống !</label>
-
-                                    <input hidden name="o_cost" type="text" value="<%- gia[0].o_cost %>">
-                                </div>
-                            </div>
-                            
-                            <input type="submit" value="Thêm" style="width: 100%;">
-                        </form> -->
                         <table class="table table-striped table-hover">
                             <tr>
                                 <th>Id</th>
@@ -140,10 +114,10 @@
                                                 <%- Intl.NumberFormat({style:"currency", currency:"VND"}).format( pro[i].pp_price ) %> VNĐ 
                                             </td>
                                             <td> 
-                                                <input type="number" name="od_quantity" value="1">                                                
+                                                <input class="form-control" type="number" name="od_quantity" value="1">                                                
                                             </td>
                                             <td>
-                                                <input type="submit" value="THÊM" class="btn btn-warning">
+                                                <button type="submit" value="THÊM" class="btn btn-warning"><i class="fa-regular fa-square-plus"></i></button>
                                             </td>
                                         </form>
                                     </tr>
