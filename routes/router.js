@@ -22,6 +22,12 @@ const PhienGiaoDichController = require('../controllers/PhienGiaoDichController'
 const { checkPermission } = require('../middlewares/checkPermission');
 const TruyCapTraiPhepController = require('../controllers/TruyCapTraiPhepController');
 
+require('./Sequelize/Customer/api');
+const middlewareController = require('../controllers/Sequelize/middlewareController');
+const customerController = require('../controllers/Sequelize/CustomerController');
+const authController = require('../controllers/Sequelize/AuthController');
+const productnController = require('../controllers/Sequelize/ProductnController');
+
 router.get("/5tan", (req, res, next)=>
     {
         res.send("5tan");
@@ -143,5 +149,13 @@ router.post('/thongkesolanTCTP', TruyCapTraiPhepController.getThongKeTheoSoLanTC
 router.post('/hinhthucphat', TruyCapTraiPhepController.postHinhThucPhat);
 
 router.get('/socket', banController.testSocket);
+
+
+// Sequelize
+router.get('/customer-list', customerController.getAllCustomer);
+router.post('/register', authController.register);
+router.post('/login', authController.login);
+
+router.get('/productn-list', middlewareController.verifyToken, productnController.getProducts);
 
 module.exports=router

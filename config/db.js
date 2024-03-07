@@ -5,7 +5,7 @@ const db = mysql.createConnection(
         host: 'localhost',
         user: 'root',
         password: 'Redtoso5',
-        database: 'tn408',
+        database: 'node_cafe',
         port: 3306,
         connectionLimit: 10
     }

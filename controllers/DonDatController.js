@@ -317,7 +317,7 @@ class DonDatController{
             req.flash('message', 'Bạn không có quyền truy cập !');
             res.render("dangnhap/dangnhap", { message : req.flash('message')});
         }
-        else
+        else 
         {
             var t_id = req.body.t_id;
             var num = req.body.num;

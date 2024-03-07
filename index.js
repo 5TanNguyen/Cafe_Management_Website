@@ -2,6 +2,7 @@ const express = require('express')
 const mydb = require('./config/db')
 const app = express();
 const rout = require("./routes/router")
+const cors = require('cors');
 
 const session = require('express-session')
 var flush = require('connect-flash');
@@ -45,6 +46,11 @@ const storage = multer.diskStorage({
 const upload = multer({storage: storage});
 
 // END THÊM ẢNH
+
+// Sequelize
+require('./src/config/connect-db');
+const db = require('./src/models');
+// END Sequelize
 
 //////////////// Step #9: Scaling horizontally
 
@@ -212,6 +218,7 @@ async function main(){
 main();
 // END SOCKET.IO
 
+app.use(cors());
 app.use(bodyparser.json())
 app.use(bodyparser.urlencoded({extended:true}))
 app.set('view engine', 'ejs');
@@ -323,27 +330,27 @@ app.get('/dangnhap', async function(req, res){
 
 // JWT
 
-let refreshTokens = [];
+// let refreshTokens = [];
 
-app.post('/login', async (req, res) =>{
-    // Authentication
+// app.post('/login', async (req, res) =>{
+//     // Authentication
 
 
 
-    // Authorization
-    const data = req.body;
-    console.log({data});
-    const accessToken = jwt.sign(data, process.env.ACCESS_TOKEN_SECRET, { 
-        expiresIn: '30s',
-    });
+//     // Authorization
+//     const data = req.body;
+//     console.log({data});
+//     const accessToken = jwt.sign(data, process.env.ACCESS_TOKEN_SECRET, { 
+//         expiresIn: '30s',
+//     });
 
-    // Chưa sử dụng được
-    const refreshToken = jwt.sign(data, process.env.REFRESH_TOKEN_SECRET);
-    refreshTokens.push(refreshToken);
-    // Chưa sử dụng được
+//     // Chưa sử dụng được
+//     const refreshToken = jwt.sign(data, process.env.REFRESH_TOKEN_SECRET);
+//     refreshTokens.push(refreshToken);
+//     // Chưa sử dụng được
     
-    res.json({ accessToken, refreshToken});
-})
+//     res.json({ accessToken, refreshToken});
+// })
 
 app.post('/logout', (req, res) =>{
     const refreshToken = req.body.token;
