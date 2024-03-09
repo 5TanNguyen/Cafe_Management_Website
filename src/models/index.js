@@ -45,8 +45,9 @@ db.customer = require('./customer')(sequelize, Sequelize.DataTypes);
 db.role = require('./role')(sequelize, Sequelize.DataTypes);
 db.category = require('./category')(sequelize, Sequelize.DataTypes);
 db.productn = require('./productn')(sequelize, Sequelize.DataTypes);
+db.cart = require('./cart')(sequelize, Sequelize.DataTypes);
 
-db.sequelize.sync({ force: false, alter: true })
+db.sequelize.sync({ force: false})//, alter: true })
 .then(()=>{
   console.log('yes re-sync done!');
 })
@@ -56,7 +57,6 @@ db.role.hasMany(db.customer, {
   foreignKey: 'role_id',
   as: 'customer'
 })
-
 db.customer.belongsTo(db.role, {
   foreignKey: 'role_id',
   as: 'role'
@@ -70,5 +70,24 @@ db.productn.belongsTo(db.category, {
   foreignKey: 'category_id',
   as: 'category'
 })
+
+db.customer.hasOne(db.cart, {
+  foreignKey: 'customer_id',
+  as: 'cart'
+})
+db.cart.belongsTo(db.customer, {
+  foreignKey: 'customer_id',
+  as: 'customer'
+})
+
+db.productn.hasMany(db.cart, {
+  foreignKey: 'productn_id',
+  as: 'cart'
+})
+db.cart.belongsTo(db.productn, {
+  foreignKey: 'productn_id',
+  as: 'productn'
+})
+
 
 module.exports = db;

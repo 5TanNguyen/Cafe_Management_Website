@@ -27,6 +27,7 @@ const middlewareController = require('../controllers/Sequelize/middlewareControl
 const customerController = require('../controllers/Sequelize/CustomerController');
 const authController = require('../controllers/Sequelize/AuthController');
 const productnController = require('../controllers/Sequelize/ProductnController');
+const cartController = require('../controllers/Sequelize/CartController');
 
 router.get("/5tan", (req, res, next)=>
     {
@@ -156,6 +157,8 @@ router.get('/customer-list', customerController.getAllCustomer);
 router.post('/register', authController.register);
 router.post('/login', authController.login);
 
-router.get('/productn-list', middlewareController.verifyToken, productnController.getProducts);
+router.get('/productn-list', productnController.getProducts);
+router.post('/cart-add', middlewareController.verifyToken ,cartController.createCart);
+router.get('/cart-list/:id', middlewareController.verifyToken ,cartController.getCarts);
 
 module.exports=router
