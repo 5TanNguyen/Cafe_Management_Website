@@ -18,16 +18,6 @@ const dotevn = require ('dotenv');
 
 dotevn.config();
 
-// SOCKET.IO
-const {createServer} = require('node:http');
-const { join } = require('node:path');
-const { Server } = require('socket.io');
-const sqlite3 = require('sqlite3');
-const { open } = require('sqlite');
-const { availableParallelism } = require('node:os');
-const cluster = require('node:cluster');
-const { createAdapter, setupPrimary } = require('@socket.io/cluster-adapter');
-
 // THÊM ẢNH
 const path = require('path');
 
@@ -52,171 +42,47 @@ require('./src/config/connect-db');
 const db = require('./src/models');
 // END Sequelize
 
-//////////////// Step #9: Scaling horizontally
+// adding socket.io configuration
+const http = require('http');
+const server = http.createServer(app);
+const {Server} = require('socket.io');
+const io = new Server(server, {
+    cors:{
+        origin: "http://localhost:3000",
+        methods: ["GET", "POST"],
+    },
+});
 
-// if (cluster.isPrimary) {
-//     const numCPUs = availableParallelism();
-//     for (let i = 0; i < numCPUs; i++) {
-//         cluster.fork({
-//         PORT: 4444 + i
-//     });
-//   }
-    
-//     // set up the adapter on the primary thread
-//     return setupPrimary();
-// }
-  
+io.on("connection", (socket)=>{
+    console.log(`USER CONNECTED: ${socket.id}`);
 
-async function main(){
-    // open the database file
-    const db = await open({
-        filename: 'chat.db',
-        driver: sqlite3.Database
+    socket.on("join_room", (data)=>{
+        socket.join(data);
+        console.log(`User with ID: ${socket.id} joined room: ${data}`)
+    })
+
+    socket.on("send_message", async (data)=>{
+        console.log("Server + ");
+        console.log(data);
+        socket.to(data.room).emit("receive_message", data);
+        // socket.to(data.room).emit("receive_message",
+        // await db.message.findAll({})
+        // );
     });
 
-    // create our 'messages' table (you can ignore the 'client_offset' column for now)
-    await db.exec(`
-        CREATE TABLE IF NOT EXISTS messages (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            client_offset TEXT UNIQUE,
-            content TEXT
-        );
-    `);
-
-    const server = createServer(app);
-    // const io = new Server(server, {
-        const io = new Server(httpServer, {
-        connectionStateRecovery: {},
-
-        ///////////// Step #9
-        // set up the adapter on each worker thread
-        // adapter: createAdapter()
+    socket.on("send_order", async (data)=>{
+        console.log("Server + ");
+        console.log(data);
+        socket.to(data.room).emit("receive_order", data);
+        // socket.to(data.room).emit("receive_message",
+        // await db.message.findAll({})
+        // );
     });
 
-    app.get('/messages', (req,res)=>{
-        res.locals.session = req.session;
-        // res.sendFile(join(__dirname, 'views/socket/socket.ejs'));
-        res.render('socket/socket');
-    });
-
-    // app.get('/lich', async (req, res)=>{
-    //     res.locals.session = req.session;
-        
-    //     if(!req.session.u_id)
-    //     {
-    //         req.flash('message', '');
-    //         res.render("dangnhap/dangnhap", { message : req.flash('message')});
-    //     }
-
-    //     var cld = await LichModel.GetLich();
-
-    //     var stt = await ThongKeModel.GetThongKe();
-
-    //     var br = await ChiNhanhModel.GetChiNhanh();
-
-    //     if(cld){
-    //         res.render('lich/lich', { cld, stt, br });
-    //     }
-    // })
-    
-    // app.get('/chitietlich', async (req, res)=>{
-    //     res.locals.session = req.session;
-
-    //     if(!req.session.u_id)
-    //     {
-    //         req.flash('message', '');
-    //         res.render("dangnhap/dangnhap", { message : req.flash('message')});
-    //     }
-
-    //     var cld_id = req.query.cld_id;
-
-    //     var cd = await LichModel.GetChiTietLich(cld_id);
-        
-    //     if(cd)
-    //     {
-    //         res.render("lich/chitietlich", { cd, cld_id });
-    //     }
-    // })
-
-    io.on('connection', async (socket)=>{
-        // socket.on('chat message', async (msg, clientOffset, callback) => {
-        socket.on('chat message', async (u_id, clientOffset, msg, callback) => {
-            let result;
-            try {
-              // store the message in the database
-            //   result = await db.run('INSERT INTO messages (content, client_offset) VALUES (?, ?)', msg, clientOffset);
-                result = await TinNhanModel.addMsg(u_id, clientOffset, msg);
-
-                var user = await NhanVienModel.getNhanVienById(u_id);
-            } catch (e) {
-                if (e.errno === 19 /* SQLITE_CONSTRAINT */ ) {
-                    // the message was already inserted, so we notify the client
-                    callback();
-                  } else {
-                    // nothing to do, just let the client retry
-                  }
-                  return;
-            }
-            // io.emit('chat message', msg, result.lastID);
-            io.emit('chat message', user[0].u_name, msg, result.lastID);
-            // acknowledge the event
-            callback();
-        });
-        
-        socket.on('register', async(cd_id, cd_user_id, cd_cld_Id, callback)=>{
-            let result;
-            try {
-              // store the registration in the database
-                result = await LichModel.DangKiLich(cd_user_id, cd_id);
-            } catch (e) {
-                if (e.errno === 19 /* SQLITE_CONSTRAINT */ ) {
-                    // the message was already inserted, so we notify the client
-                    callback();
-                  } else {
-                    // nothing to do, just let the client retry
-                  }
-                  return;
-            }
-            io.emit('register', cd_user_id, result.lastID);
-            // acknowledge the event
-            callback();
-        })
-
-        if (!socket.recovered) {
-            // if the connection state recovery was not successful
-            try {
-            //   await db.each('SELECT id, content FROM messages WHERE id > ?',
-            //     [socket.handshake.auth.serverOffset || 0],
-            //     (_err, row) => {
-            //       socket.emit('chat message', row.content, row.id);
-            //     }
-            //   )
-
-                var row = await TinNhanModel.getAllMsg();
-                for( var t = 0; t < row.length; t++)
-                {
-                    socket.emit('chat message',row[t].u_name, row[t].content, row[t].id);
-                }
-            } catch (e) {
-              // something went wrong
-            }
-        }
-    });
-
-    ////////// Step #9
-    // each worker will listen on a distinct port
-    // const port = process.env.PORT;
-
-    // server.listen(port, () => {
-    //     console.log(`server running at http://localhost:${port}`);
-    // });
-    
-    // server.listen(4444, () => {
-    //     console.log('server running at http://localhost:4444');
-    //   });
-}
-main();
-// END SOCKET.IO
+    socket.on("disconnect", ()=>{
+        console.log("USER DISCONNECTED", socket.id)
+    })
+})  
 
 app.use(cors());
 app.use(bodyparser.json())
@@ -451,11 +317,7 @@ app.post('/dangnhap',async function(req, res){
                 expiresIn: '30s',
             });
 
-            console.log('accessToken: ' + accessToken);
-
-            // Chưa sử dụng được
-            const refreshToken = jwt.sign(data, process.env.REFRESH_TOKEN_SECRET);
-            refreshTokens.push(refreshToken);
+            console.log('accessToken: ' + accessToken);        
 
             if(x[0].u_d_id == 1)
             {
@@ -916,7 +778,7 @@ app.get('/indonrut', async (req, res)=>{
 
 app.use(rout)
 
-const httpServer = app.listen(5555, ()=>
+server.listen(5555, ()=>
     {
         console.log('Server is running by 5tan');
     }
