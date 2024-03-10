@@ -113,7 +113,7 @@ router.post('/login', authController.login);
 
 router.get('/productn-list', productnController.getProducts);
 router.post('/cart-add', middlewareController.verifyToken ,cartController.createCart);
-router.get('/cart-list/:id', middlewareController.verifyToken ,cartController.getCarts);
+router.get('/cart-list/:id', cartController.getCarts);
 
 router.post('/order-add', orderController.createOrder);
 router.get('/order-list', orderController.getOrders);

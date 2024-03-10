@@ -36,6 +36,7 @@ class CartController {
             where: { id : req.params.id}
         })
 
+        // res.send(cart)
         res.status(200).json({
             message: 'Lấy giỏ hàng thành công!',
             customer,

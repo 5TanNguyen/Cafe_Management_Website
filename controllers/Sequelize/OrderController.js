@@ -22,23 +22,25 @@ class OrderController {
                 return;
             }
     
-            // console.log(order.id);
+            console.log(ordern.id);
     
-            // let inforr = {
-            //     quantity: req.body.quantity,
-            //     price: req.body.price,
-            //     order_id: order.id,
-            //     customer_id: req.body.customer_id,
-            //     product_id: req.body.product_id
-            // }
+            let inforr = {
+                quantity: req.body.quantity,
+                price: req.body.price,
+                ordern_id: ordern.id,
+                customer_id: req.body.customer_id,
+                productn_id: req.body.productn_id
+            }
+
+            console.log(inforr);
     
-            // var od = await db.orderDetail.create(inforr);
+            var od = await db.orderDetail.create(inforr);
     
-            // const body = {
-            //     totalPrice : od.price * od.quantity
-            // }
+            const body = {
+                totalPrice : od.price * od.quantity
+            }
     
-            // var updateOrder = await db.order.update(body, { where: {id : order.id}});
+            var updateOrder = await db.ordern.update(body, { where: {id : ordern.id}});
            
             
             // if(req.body.user_id){
@@ -52,14 +54,14 @@ class OrderController {
             //     await db.revenue.update(addRevenue, {where: {user_id: req.body.user_id}})
             // }
     
-            // var product = await db.product.findOne({where: {id: req.body.product_id}});
+            var product = await db.productn.findOne({where: {id: req.body.product_id}});
     
-            // var stockAfter = product.stock - 1;
-            // const bodyy = {
-            //     stock: stockAfter
-            // }
+            var stockAfter = product.stock - 1;
+            const bodyy = {
+                stock: stockAfter
+            }
     
-            // await db.product.update(bodyy, { where: {id: req.body.product_id}});
+            await db.productn.update(bodyy, { where: {id: req.body.productn_id}});
     
             res.status(200).json({
                 message: "Thêm đơn đặt thành công!",
