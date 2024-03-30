@@ -28,7 +28,15 @@ class CartController {
                 as: 'productn'
             }],
             where: {
-                customer_id: req.params.id
+                customer_id: req.params.id,
+                state: false
+            }
+        })
+
+        var count = await db.cart.count({
+            where: { 
+                customer_id: req.params.id,
+                state: false
             }
         })
 
@@ -40,7 +48,8 @@ class CartController {
         res.status(200).json({
             message: 'Lấy giỏ hàng thành công!',
             customer,
-            cart
+            cart,
+            count
         })
     }
 }

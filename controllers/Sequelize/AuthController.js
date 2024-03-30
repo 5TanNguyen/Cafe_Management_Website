@@ -3,13 +3,14 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const dotenv = require('dotenv');
 dotenv.config();
+const sendMail = require('./sendMail');
 
 class AuthController {
     static async register(req, res){
         try {
-            var { firstName, lastName, email, password, phone} = req.body;
+            var { firstName, lastName, address, email, password, phone} = req.body;
 
-            if(!(firstName && lastName && email && password && phone)){
+            if(!(firstName && lastName && address && email && password && phone)){
                 res.status(400).send('All field are compulsory');
             }            
 
@@ -27,6 +28,7 @@ class AuthController {
             const customer = await db.customer.create({
                 firstName,
                 lastName,
+                address,
                 email,
                 password: pwd,
                 phone,
@@ -47,6 +49,20 @@ class AuthController {
 
             customer.token = token
             customer.password = undefined
+
+            // MAIL
+            const mailOptions = {
+                from: {
+                    name: '5Tan',
+                    address: process.env.USER
+                }, // sender address
+                to: [email], // list of receivers
+                subject: "Hello ✔", // Subject line
+                text: "Hello world?", // plain text body
+                html: "<b>Hello world?</b>", // html body
+            }
+
+            sendMail.sendMail(mailOptions);
 
             res.status(201).json({
                 message: 'Register successfully!',

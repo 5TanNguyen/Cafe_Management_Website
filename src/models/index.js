@@ -48,6 +48,7 @@ db.productn = require('./productn')(sequelize, Sequelize.DataTypes);
 db.cart = require('./cart')(sequelize, Sequelize.DataTypes);
 db.ordern = require('./ordern')(sequelize, Sequelize.DataTypes);
 db.orderDetail = require('./orderDetail')(sequelize, Sequelize.DataTypes);
+db.productPrice = require('./productPrice')(sequelize, Sequelize.DataTypes);
 
 db.sequelize.sync({ force: false, alter: true })
 .then(()=>{
@@ -114,6 +115,15 @@ db.productn.hasMany(db.orderDetail, {
   as: 'orderDetail'
 })
 db.orderDetail.belongsTo(db.productn,{
+  foreignKey: 'productn_id',
+  as: 'productn'
+})
+
+db.productn.hasMany(db.productPrice, {
+  foreignKey: 'productn_id',
+  as: 'productPrice'
+})
+db.productPrice.belongsTo(db.productn, {
   foreignKey: 'productn_id',
   as: 'productn'
 })

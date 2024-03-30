@@ -21,6 +21,15 @@ class OrderController {
                 res.send("Lỗi");
                 return;
             }
+
+            var stateCart = {
+                state: true
+            }
+            var cartUD = await db.cart.update(stateCart, {
+                where: {
+                    id: req.body.cart_id
+                }
+            })
     
             console.log(ordern.id);
     
