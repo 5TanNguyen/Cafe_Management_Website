@@ -70,7 +70,7 @@ class CustomerController {
         res.status(200).json({
             dl_customer,
             success: true,
-            message: 'Xóa người dùng thành công'
+            message: 'Xóa người dùng thành công!'
         })
     }
 }
