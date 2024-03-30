@@ -22,6 +22,9 @@ module.exports = (sequelize, DataTypes) => {
     lastName: {
       type: DataTypes.STRING(50)
     },
+    address: {
+      type: DataTypes.STRING(100)
+    },
     email: {
       type: DataTypes.STRING(40)
     },
@@ -30,6 +33,10 @@ module.exports = (sequelize, DataTypes) => {
     },
     phone: {
       type: DataTypes.STRING(10)
+    },
+    status: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: true,
     }
   }, {
     sequelize,

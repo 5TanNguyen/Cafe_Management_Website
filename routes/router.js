@@ -108,10 +108,16 @@ router.get('/socket', banController.testSocket);
 
 // Sequelize
 router.get('/customer-list', customerController.getAllCustomer);
+router.get('/customer/:id', customerController.getCustomerById);
+router.put('/customer-update/:id', customerController.updateCustomer);
+router.put('/customer-delete/:id', customerController.deleteCustomer);
+
 router.post('/register', authController.register);
 router.post('/login', authController.login);
 
 router.get('/productn-list', productnController.getProducts);
+router.get('/product-detail/:id', productnController.getProductDetail);
+
 router.post('/cart-add', middlewareController.verifyToken ,cartController.createCart);
 router.get('/cart-list/:id', cartController.getCarts);
 

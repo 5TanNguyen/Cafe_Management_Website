@@ -20,7 +20,8 @@ module.exports = (sequelize, DataTypes) => {
     quantity: {
       type: DataTypes.INTEGER,
       allowNull: false
-    }
+    },
+    state: DataTypes.BOOLEAN
   }, {
     sequelize,
     modelName: 'Cart',
