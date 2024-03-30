@@ -33,6 +33,10 @@ module.exports = (sequelize, DataTypes) => {
     },
     phone: {
       type: DataTypes.STRING(10)
+    },
+    status: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: true,
     }
   }, {
     sequelize,
