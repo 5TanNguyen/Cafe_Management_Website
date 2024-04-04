@@ -48,7 +48,7 @@ class ProductnController {
         if(!product){
             res.status(404).json({
                 success: false,
-                message: 'Không tìm thấy sản phẩm!'
+                message: 'Không tìm thấy sản phẩm !'
             })
         }
 
