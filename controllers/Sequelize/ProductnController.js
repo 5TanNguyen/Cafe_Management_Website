@@ -1,6 +1,7 @@
 const { response } = require("express");
 const {validationResult}=require("express-validator");
 const db = require('../../src/models');
+const { Op } = require('sequelize');
 
 class ProductnController {
     static async getProducts(req, res)
@@ -30,6 +31,28 @@ class ProductnController {
 
         res.status(200).json({
             message: 'Lấy chi tiết sản phẩm thành công',
+            success: true,
+            product
+        })
+    }
+
+    static async getProductsByName(req, res){
+        var product = await db.productn.findAll({
+            where: {
+                name: {
+                    [Op.like]: '%' + req.body.key + '%'
+                }
+            }
+        })
+
+        if(!product){
+            res.status(404).json({
+                success: false,
+                message: 'Không tìm thấy sản phẩm !'
+            })
+        }
+
+        res.status(200).json({
             success: true,
             product
         })
