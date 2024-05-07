@@ -22,26 +22,22 @@ class OrderController {
                 return;
             }
 
-            var stateCart = {
-                state: true
-            }
-            var cartUD = await db.cart.update(stateCart, {
-                where: {
-                    id: req.body.cart_id
-                }
-            })
-    
-            console.log(ordern.id);
+            // var stateCart = {
+            //     state: true
+            // }
+            // var cartUD = await db.cart.update(stateCart, {
+            //     where: {
+            //         id: req.body.cart_id
+            //     }
+            // })
     
             let inforr = {
                 quantity: req.body.quantity,
                 price: req.body.price,
                 ordern_id: ordern.id,
                 customer_id: req.body.customer_id,
-                productn_id: req.body.productn_id
+                productn_id: req.body.product_id
             }
-
-            console.log(inforr);
     
             var od = await db.orderDetail.create(inforr);
     
@@ -57,7 +53,7 @@ class OrderController {
     
             //     const addRevenue = {
             //         total: rev.total + (req.body.price * req.body.quantity)
-            //     }
+            //     } 
     
             //     console.log("Total: " +addRevenue.total);
             //     await db.revenue.update(addRevenue, {where: {user_id: req.body.user_id}})
@@ -65,12 +61,12 @@ class OrderController {
     
             var product = await db.productn.findOne({where: {id: req.body.product_id}});
     
-            var stockAfter = product.stock - 1;
+            var stockAfter = product.stock - req.body.quantity;
             const bodyy = {
                 stock: stockAfter
             }
     
-            await db.productn.update(bodyy, { where: {id: req.body.productn_id}});
+            await db.productn.update(bodyy, { where: {id: req.body.product_id}});
     
             res.status(200).json({
                 message: "Thêm đơn đặt thành công!",
@@ -79,6 +75,8 @@ class OrderController {
         } catch (error) {
             console.log(error);
         }
+
+        console.log('Tạo đơn thành công!');
     }
 
     static async getOrders(req, res){

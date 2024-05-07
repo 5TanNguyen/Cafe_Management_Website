@@ -117,6 +117,7 @@ router.post('/login', authController.login);
 
 router.get('/productn-list', productnController.getProducts);
 router.get('/product-detail/:id', productnController.getProductDetail);
+router.post('/product-findByName', productnController.getProductsByName);
 
 router.post('/cart-add', middlewareController.verifyToken ,cartController.createCart);
 router.get('/cart-list/:id', cartController.getCarts);
