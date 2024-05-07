@@ -55,7 +55,7 @@ db.sequelize.sync({ force: false, alter: true })
   console.log('yes re-sync done!');
 })
 
-// Relation
+// Relation 
 db.role.hasMany(db.customer, {
   foreignKey: 'role_id',
   as: 'customer'
