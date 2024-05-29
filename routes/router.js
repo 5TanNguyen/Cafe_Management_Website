@@ -117,6 +117,8 @@ router.post('/login', authController.login);
 
 router.get('/product-list', productnController.getProducts);
 router.get('/product-detail/:id', productnController.getProductDetail);
+router.post('/product-findByName', productnController.getProductsByName);
+
 router.post('/product-add', productnController.addProdcut);
 router.put('/product-update/:id', productnController.updateProdcut);
 router.put('/product-hide/:id', productnController.hideProduct);

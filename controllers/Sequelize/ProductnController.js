@@ -21,6 +21,10 @@ class ProductnController {
 
     static async getProductDetail(req, res){
         var product = await db.productn.findOne({
+            include: [{
+                model: db.productPrice,
+                as: 'productPrice'
+            }],
             where: {
                 id: req.params.id
             }
@@ -52,7 +56,7 @@ class ProductnController {
         if(!product){
             res.status(404).json({
                 success: false,
-                message: 'Không tìm thấy sản phẩm!'
+                message: 'Không tìm thấy sản phẩm !'
             })
         }
 
