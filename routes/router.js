@@ -115,8 +115,11 @@ router.put('/customer-delete/:id', customerController.deleteCustomer);
 router.post('/register', authController.register);
 router.post('/login', authController.login);
 
-router.get('/productn-list', productnController.getProducts);
+router.get('/product-list', productnController.getProducts);
 router.get('/product-detail/:id', productnController.getProductDetail);
+router.post('/product-add', productnController.addProdcut);
+router.put('/product-update/:id', productnController.updateProdcut);
+router.put('/product-hide/:id', productnController.hideProduct);
 
 router.post('/cart-add', middlewareController.verifyToken ,cartController.createCart);
 router.get('/cart-list/:id', cartController.getCarts);
