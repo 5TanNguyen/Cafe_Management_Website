@@ -19,6 +19,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING(90),
       allowNull: false
     },
+    code: {
+      type: DataTypes.STRING(90),
+      allowNull: false
+    },
     description: {
       type: DataTypes.STRING(350)
     },
@@ -26,6 +30,12 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER
     },
     state: {
+      type: DataTypes.BOOLEAN
+    },
+    birthday: {
+      type: DataTypes.DATE
+    },
+    deleted: {
       type: DataTypes.BOOLEAN
     }
   }, {
