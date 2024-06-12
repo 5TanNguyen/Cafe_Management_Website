@@ -115,14 +115,15 @@ router.put('/customer-delete/:id', customerController.deleteCustomer);
 router.post('/register', authController.register);
 router.post('/login', authController.login);
 
-router.get('/product-list', productnController.getProducts);
-router.get('/product-detail/:id', productnController.getProductDetail);
-router.post('/product-add', productnController.addProdcut);
-router.put('/product-update/:id', productnController.updateProdcut);
-router.put('/product-hide/:id', productnController.hideProduct);
+router.get('/api/Pets/list', middlewareController.verifyToken, productnController.getProducts);
+router.get('/api/Pets/GetById/:id', productnController.getProductDetail);
+router.post('/api/Pets/Add', productnController.addProdcut);
+router.put('/api/Pets/Update/:id', productnController.updateProdcut);
+router.put('/api/Pets/Delete/:id', productnController.deleteProdcut);
+router.put('/api/Pets/Hide/:id', productnController.hideProduct);
 
 router.post('/cart-add', middlewareController.verifyToken ,cartController.createCart);
-router.get('/cart-list/:id', cartController.getCarts);
+router.get('/cart-list/:id', middlewareController.verifyToken, cartController.getCarts);
 
 router.post('/order-add', orderController.createOrder);
 router.get('/order-list', orderController.getOrders);
