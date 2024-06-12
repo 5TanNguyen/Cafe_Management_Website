@@ -49,6 +49,8 @@ db.cart = require('./cart')(sequelize, Sequelize.DataTypes);
 db.ordern = require('./ordern')(sequelize, Sequelize.DataTypes);
 db.orderDetail = require('./orderDetail')(sequelize, Sequelize.DataTypes);
 db.productPrice = require('./productPrice')(sequelize, Sequelize.DataTypes);
+db.usern = require('./usern')(sequelize, Sequelize.DataTypes);
+db.customerType = require('./customerType')(sequelize, Sequelize.DataTypes);
 
 db.sequelize.sync({ force: false, alter: true })
 .then(()=>{
@@ -56,13 +58,13 @@ db.sequelize.sync({ force: false, alter: true })
 })
 
 // Relation
-db.role.hasMany(db.customer, {
-  foreignKey: 'role_id',
+db.customerType.hasMany(db.customer, {
+  foreignKey: 'type_id',
   as: 'customer'
 })
-db.customer.belongsTo(db.role, {
-  foreignKey: 'role_id',
-  as: 'role'
+db.customer.belongsTo(db.customerType, {
+  foreignKey: 'type_id',
+  as: 'customerType'
 })
 
 db.category.hasMany(db.productn, {
@@ -81,6 +83,16 @@ db.customer.hasOne(db.cart, {
 db.cart.belongsTo(db.customer, {
   foreignKey: 'customer_id',
   as: 'customer'
+})
+
+db.role.hasMany(db.usern, {
+  foreignKey: 'role_id',
+  as: 'usern'
+})
+
+db.usern.belongsTo(db.role, {
+  foreignKey: 'role_id',
+  as: 'role'
 })
 
 db.productn.hasMany(db.cart, {
