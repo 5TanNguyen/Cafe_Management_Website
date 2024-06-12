@@ -22,6 +22,10 @@ class ProductnController {
 
     static async getProductDetail(req, res){
         var product = await db.productn.findOne({
+            include: [{
+                model: db.productPrice,
+                as: 'productPrice'
+            }],
             where: {
                 id: req.params.id
             }

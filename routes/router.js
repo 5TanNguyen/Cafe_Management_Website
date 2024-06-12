@@ -122,7 +122,6 @@ router.put('/api/Pets/Update/:id', productnController.updateProdcut);
 router.put('/api/Pets/Delete/:id', productnController.deleteProdcut);
 router.put('/api/Pets/Hide/:id', productnController.hideProduct);
 
-
 router.post('/cart-add', middlewareController.verifyToken ,cartController.createCart);
 router.get('/cart-list/:id', middlewareController.verifyToken, cartController.getCarts);
 
