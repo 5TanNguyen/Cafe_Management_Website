@@ -10,7 +10,8 @@ class ProductnController {
 
         var products = await db.productn.findAll({
             where: {
-                state : true
+                state : true,
+                deleted : false
             }
         });
 
@@ -33,13 +34,13 @@ class ProductnController {
         if(!product){
             res.status(404).json({
                 message: 'Không tìm thấy sản phẩm',
-                success: false
+                isSuccess: false
             })
         }
 
         res.status(200).json({
             message: 'Lấy chi tiết sản phẩm thành công',
-            success: true,
+            isSuccess: true,
             product
         })
     }
@@ -55,13 +56,13 @@ class ProductnController {
 
         if(!product){
             res.status(404).json({
-                success: false,
-                message: 'Không tìm thấy sản phẩm !'
+                isSuccess: false,
+                message: 'Không tìm thấy sản phẩm!'
             })
         }
 
         res.status(200).json({
-            success: true,
+            isSuccess: true,
             product
         })
     }
@@ -69,18 +70,20 @@ class ProductnController {
     static async addProdcut(req, res)
     {
         let product = {
-            name: req.body.name,
+            name: req.body.code,
             description: req.body.description,
             stock: req.body.stock,
             state: true,
-            category_id: req.body.category_id
+            category_id: req.body.category_id,
+            code: req.body.code,
+            birthday : Date.now()
         }
 
         var new_product = await db.productn.create(product);
 
         res.status(200).json({
             message: `Thêm thành công sản phẩm ${req.body.name}`,
-            success: true,
+            isSuccess: true,
             new_product
         })
     }
@@ -91,7 +94,7 @@ class ProductnController {
             name: req.body.name,
             description: req.body.description,
             stock: req.body.stock,
-            category_id: req.body.category_id
+            state: req.body.state
         }
 
         var updated_product = await db.productn.update(product, {where: {id : req.params.id }});
@@ -100,39 +103,82 @@ class ProductnController {
         {
             res.status(500).json({
                 message: `Không cập nhật được sản phẩm`,
-                success: false
+                isSuccess: false
             })
         }
 
         res.status(200).json({
             message: `Cập nhật thành công sản phẩm`,
-            success: true,
+            isSuccess: true,
             updated_product
         })
     }
 
     static async hideProduct(req, res)
     {
-        let state_product = {
-            state : false
+        var _product = await db.productn.findOne({
+            where: {
+                id: req.params.id
+            }
+        })
+
+        if(!_product)
+        {
+            res.status(500).json({
+                message: "Không tìm thấy sản phẩm",
+                isSuccess: false
+            });
+        }
+
+        if(_product.state == true){
+            let hide_product = {
+                state : false
+            }
+    
+            var product = await db.productn.update(
+                hide_product, 
+                {where: { id: req.params.id}}
+            );
+        } else {
+            let state_product = {
+                state : true
+            }
+
+            var product = await db.productn.update(
+                state_product, 
+                {where: { id: req.params.id}}
+            );
+        }
+
+        res.status(200).json({
+            message: "Ẩn thành công sản phẩm",
+            isSuccess: true,
+            product
+        })
+    }
+
+    static async deleteProdcut(req, res)
+    {
+        let deleted_product = {
+            deleted : true
         }
 
         var product = await db.productn.update(
-            state_product, 
+            deleted_product, 
             {where: { id: req.params.id}}
         );
 
         if(!product)
         {
             res.status(500).json({
-                message: "Không ẩn được sản phẩm",
-                success: false
+                message: "Không xóa được sản phẩm",
+                isSuccess: false
             });
         }
 
         res.status(200).json({
-            message: "Ẩn thành công sản phẩm",
-            success: true,
+            message: "Xóa thành công sản phẩm",
+            isSuccess: true,
             product
         })
     }

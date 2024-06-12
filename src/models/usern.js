@@ -3,7 +3,7 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class Productn extends Model {
+  class Usern extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -14,33 +14,33 @@ module.exports = (sequelize, DataTypes) => {
       //Userr.belongsTo(models.Role, { foreignKey: 'role_code', targetKey: 'code', as: 'roleData'})
     }
   }
-  Productn.init({
-    name: {
-      type: DataTypes.STRING(90),
+  Usern.init({
+    firstName: {
+      type: DataTypes.STRING(50),
       allowNull: false
     },
-    code: {
-      type: DataTypes.STRING(90),
-      allowNull: false
+    lastName: {
+      type: DataTypes.STRING(50)
     },
-    description: {
-      type: DataTypes.STRING(350)
+    address: {
+      type: DataTypes.STRING(100)
     },
-    stock: {
-      type: DataTypes.INTEGER
+    email: {
+      type: DataTypes.STRING(40)
     },
-    state: {
-      type: DataTypes.BOOLEAN
+    password: {
+      type: DataTypes.STRING(100)
     },
-    birthday: {
-      type: DataTypes.DATE
+    phone: {
+      type: DataTypes.STRING(10)
     },
-    deleted: {
-      type: DataTypes.BOOLEAN
+    status: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: true,
     }
   }, {
     sequelize,
-    modelName: 'Productn',
+    modelName: 'Usern',
   });
-  return Productn;
+  return Usern;
 };
