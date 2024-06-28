@@ -124,6 +124,7 @@ router.put('/api/Pets/Hide/:id', middlewareController.verifyToken, productnContr
 router.post('/api/Pets/GetByName', middlewareController.verifyToken, productnController.getProductsByName);
 router.get('/api/Pets/GetPrice/:id', middlewareController.verifyToken, productnController.getProductPrice);
 
+//Cart
 router.post('/cart-add', middlewareController.verifyToken ,cartController.createCart);
 router.get('/cart-list/:id', middlewareController.verifyToken, cartController.getCarts);
 
