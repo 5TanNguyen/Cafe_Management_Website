@@ -116,11 +116,13 @@ router.post('/register', authController.register);
 router.post('/login', authController.login);
 
 router.get('/api/Pets/list', middlewareController.verifyToken, productnController.getProducts);
-router.get('/api/Pets/GetById/:id', productnController.getProductDetail);
-router.post('/api/Pets/Add', productnController.addProdcut);
-router.put('/api/Pets/Update/:id', productnController.updateProdcut);
-router.put('/api/Pets/Delete/:id', productnController.deleteProdcut);
-router.put('/api/Pets/Hide/:id', productnController.hideProduct);
+router.get('/api/Pets/GetById/:id', middlewareController.verifyToken, productnController.getProductDetail);
+router.post('/api/Pets/Add', middlewareController.verifyToken, productnController.addProdcut);
+router.put('/api/Pets/Update/:id', middlewareController.verifyToken, productnController.updateProdcut);
+router.put('/api/Pets/Delete/:id', middlewareController.verifyToken,productnController.deleteProdcut);
+router.put('/api/Pets/Hide/:id', middlewareController.verifyToken, productnController.hideProduct);
+router.post('/api/Pets/GetByName', middlewareController.verifyToken, productnController.getProductsByName);
+router.get('/api/Pets/GetPrice/:id', middlewareController.verifyToken, productnController.getProductPrice);
 
 router.post('/cart-add', middlewareController.verifyToken ,cartController.createCart);
 router.get('/cart-list/:id', middlewareController.verifyToken, cartController.getCarts);
