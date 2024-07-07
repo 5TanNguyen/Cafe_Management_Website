@@ -136,6 +136,10 @@ let initWebRoutes = (app) => {
 
     router.get('/', homeController.getHomePage);
     router.get('/about', homeController.getAboutPage);
+  
+    //Cart
+    router.post('/cart-add', middlewareController.verifyToken ,cartController.createCart);
+    router.get('/cart-list/:id', middlewareController.verifyToken, cartController.getCarts);
 
     return app.use("/", router);
 }
