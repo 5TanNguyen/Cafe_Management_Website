@@ -1,5 +1,5 @@
 const res = require("express/lib/response")
-const db=require("../config/db")
+const db=require("../config/mydb")
 
 class SanPhamModel{
 static async getsanphams()

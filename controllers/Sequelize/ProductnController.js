@@ -46,7 +46,7 @@ class ProductnController {
     }
 
     static async getProductsByName(req, res){
-        var product = await db.productn.findAll({
+        var products = await db.productn.findAll({
             where: {
                 name: {
                     [Op.like]: '%' + req.body.key + '%'
@@ -54,7 +54,7 @@ class ProductnController {
             }
         })
 
-        if(!product){
+        if(!products){
             res.status(404).json({
                 isSuccess: false,
                 message: 'Không tìm thấy sản phẩm!'
@@ -63,7 +63,7 @@ class ProductnController {
 
         res.status(200).json({
             isSuccess: true,
-            product
+            products
         })
     }
 
@@ -181,6 +181,24 @@ class ProductnController {
             isSuccess: true,
             product
         })
+    }
+
+    static async getProductPrice(req, res){
+        var product_price = await db.productPrice.findOne(
+            {
+            where: {
+                productn_id: req.params.id
+            }
+        })
+
+        if(!product_price){
+            res.status(404).json({
+                message: 'Không tìm thấy giá sản phẩm',
+                isSuccess: false
+            })
+        }
+
+        res.send(product_price);
     }
 }
 

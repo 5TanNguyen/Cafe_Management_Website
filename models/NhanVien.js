@@ -1,4 +1,4 @@
-const db = require('../config/db')
+const db = require('../config/mydb')
 
 class NhanVienModel{
     static async getNhanVienByUsername(usrn, pwd)

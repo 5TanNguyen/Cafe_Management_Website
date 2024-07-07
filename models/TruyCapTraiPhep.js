@@ -1,4 +1,4 @@
-const db = require('../config/db');
+const db = require('../config/mydb');
 
 class TruyCapTraiPhepModel {
     static async addTCTP(ua_u_id, ua_access, ua_date)

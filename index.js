@@ -1,22 +1,47 @@
-const express = require('express')
-const mydb = require('./config/db')
+import express from "express";
+const bodyparser = require("body-parser")
+const viewEngine = require("./config/viewEngine");
+import initWebRoutes from "./routes/router";
+require ('dotenv').config();
+
 const app = express();
-const rout = require("./routes/router")
+
+// config app
+
+app.use(bodyparser.json())
+app.use(bodyparser.urlencoded({extended:true}))
+
+viewEngine(app);
+
+// initWebRoutes(app);
+
+// Sequelize
+require('./src/config/connect-db');
+const db = require('./src/models');
+// END Sequelize
+
+// server.listen(5555, ()=>
+//     {
+//         console.log('Server is running by 5tan');
+//     }
+// )
+
+
+
+const mydb = require('./config/mydb')
 const cors = require('cors');
+const {incr, expire, ttl} = require('./helpers/limiter');
 
 const session = require('express-session')
 var flush = require('connect-flash');
 // var path = require('path');
+require('./babel.config');
 
-const bodyparser = require("body-parser")
 const pdf = require('html-pdf');
 const fs = require('fs');
 const options = {format:'A4'};
 const optionA6 = {format:'A6'};
 const jwt = require('jsonwebtoken');
-const dotevn = require ('dotenv');
-
-dotevn.config();
 
 // THÊM ẢNH
 const path = require('path');
@@ -37,10 +62,7 @@ const upload = multer({storage: storage});
 
 // END THÊM ẢNH
 
-// Sequelize
-require('./src/config/connect-db');
-const db = require('./src/models');
-// END Sequelize
+
 
 // adding socket.io configuration
 const http = require('http');
@@ -79,16 +101,21 @@ io.on("connection", (socket)=>{
         // );
     });
 
+    socket.on("send_cart", async (data)=>{
+        console.log("Server Cart + ");
+        console.log(data);
+        socket.to(data.room).emit("receive_cart", data);
+        // socket.to(data.room).emit("receive_message",
+        // await db.message.findAll({})
+        // );
+    });
+
     socket.on("disconnect", ()=>{
         console.log("USER DISCONNECTED", socket.id)
     })
 })  
 
 app.use(cors());
-app.use(bodyparser.json())
-app.use(bodyparser.urlencoded({extended:true}))
-app.set('view engine', 'ejs');
-app.use(express.static('public'))
 
 // app.set('views', path.join(__dirname, 'views'));
 
@@ -128,12 +155,171 @@ const LichModel = require('./models/Lich');
 const ViModel = require('./models/Vi');
 const PhienGiaoDichModel = require('./models/PhienGiaoDich');
 const TinNhanModel = require('./models/TinNhan');
+const checkNumberAccess = require('./middlewares/checkNumberAccess');
+
+// ZALOPAY //
+
+const axios = require('axios').default; // npm install axios
+const CryptoJS = require('crypto-js'); // npm install crypto-js
+const moment = require('moment'); // npm install moment
+const qs = require('qs')
+
+// APP INFO
+const config = {
+    app_id: "2553",
+    key1: "PcY4iZIKFCIdgZvA6ueMcMHHUbRLYjPL",
+    key2: "kLtgPl8HHhfvMuDHPwKfgfsY4Ydm9eIz",
+    endpoint: "https://sb-openapi.zalopay.vn/v2/create"
+};
+
+app.post("/payment", async (req, res)=>{
+    const embed_data = {
+        redirecturl: "http://localhost:3000/products/"
+    };
+
+    const items = [{}];
+    const transID = Math.floor(Math.random() * 1000000);
+    const order = {
+        app_id: config.app_id,
+        app_trans_id: `${moment().format('YYMMDD')}_${transID}`, // translation missing: vi.docs.shared.sample_code.comments.app_trans_id
+        app_user: "user123",
+        app_time: Date.now(), // miliseconds
+        item: JSON.stringify(items),
+        embed_data: JSON.stringify(embed_data),
+        amount: req.body.price,
+        description: `Lazada - Payment for the order #${transID}`,
+        bank_code: "",
+        callback_url: "https://30cb-125-235-236-126.ngrok-free.app/callback"
+    };
+
+    // appid|app_trans_id|appuser|amount|apptime|embeddata|item
+    const data = config.app_id + "|" + order.app_trans_id + "|" + order.app_user + "|" + order.amount + "|" + order.app_time + "|" + order.embed_data + "|" + order.item;
+    order.mac = CryptoJS.HmacSHA256(data, config.key1).toString();
+
+    try {
+        const result = await axios.post(config.endpoint, null, { params: order });
+        console.log(result.data);
+
+        // ORDER_URL //
+        res.send(result.data.order_url);
+    } catch (error) {
+        console.log(error.message);
+    }
+})
+
+app.post('/callback', (req, res) => {
+    let result = {};
+  
+    try {
+      let dataStr = req.body.data;
+      let reqMac = req.body.mac;
+  
+      let mac = CryptoJS.HmacSHA256(dataStr, config.key2).toString();
+      console.log("mac =", mac);
+  
+  
+      // kiểm tra callback hợp lệ (đến từ ZaloPay server)
+      if (reqMac !== mac) {
+        // callback không hợp lệ
+        result.return_code = -1;
+        result.return_message = "mac not equal";
+      }
+      else {
+        // thanh toán thành công
+        // merchant cập nhật trạng thái cho đơn hàng
+        let dataJson = JSON.parse(dataStr, config.key2);
+        console.log("update order's status = success where app_trans_id =", dataJson["app_trans_id"]);
+  
+        result.return_code = 1;
+        result.return_message = "success";
+      }
+    } catch (ex) {
+      result.return_code = 0; // ZaloPay server sẽ callback lại (tối đa 3 lần)
+      result.return_message = ex.message;
+    }
+  
+    // thông báo kết quả cho ZaloPay server
+    res.json(result);
+});
+
+app.post("/order-status/:app_trans_id", async(req, res)=>{
+    const app_trans_id = req.params.app_trans_id;
+
+    let postData = {
+        app_id: config.app_id,
+        // app_trans_id: "<app_trans_id>", // Input your app_trans_id
+        app_trans_id: app_trans_id, // Input your app_trans_id
+    }
+    
+    let data = postData.app_id + "|" + postData.app_trans_id + "|" + config.key1; // appid|app_trans_id|key1
+    postData.mac = CryptoJS.HmacSHA256(data, config.key1).toString();
+    
+    
+    let postConfig = {
+        method: 'post',
+        url: "https://sb-openapi.zalopay.vn/v2/query",
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        data: qs.stringify(postData)
+    };
+    
+    try {
+        const result = await axios(postConfig);
+        return res.status(200).json(result.data);
+    } catch (error) {
+        console.log(error.message);
+    }
+
+})
+
+// END ZALOPAY //
 
 
-app.get('/hehe', async function(req, res){
-    res.send('hehe');
-}
-)
+app.get('/api', async (req, res, next) =>{
+    try {
+        //get ip
+        const getIpUser = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
+        
+        var NA = await checkNumberAccess.getTtl(getIpUser);
+        // console.log(req.headers['x-forwarded-for'], req.socket.remoteAddress);
+        // const numRequest = await incr(getIpUser);
+
+        // let _ttl;
+        // if(NA.numRequest === 1){
+        //     await expire(getIpUser, 60);
+        //     _ttl = 60;
+        // }
+        // else if((await ttl(getIpUser)) === -1){    
+        //     await expire(getIpUser, 60);
+        //     _ttl = 60;
+        // }
+        // else{
+        //     _ttl = await ttl(getIpUser);
+        // }
+
+        if(NA.numRequest > 20){
+            res.status(503).json({
+                status: 'error',
+                numRequest: NA.numRequest,
+                _ttl: NA._ttl,
+                messsage: 'Server is busy'
+            });
+        }else{
+            res.json({
+                status: 'success',
+                numRequest: NA.numRequest,
+                _ttl: NA._ttl,
+                elements: [
+                    {id: 1, name: '5tan'},
+                    {id: 2, name: '9thoa'}
+                ]
+            })
+        }
+    } catch (error) {
+        throw new Error(error);     
+    }
+});
 
 
 app.get("/tables", (req, res)=>
@@ -776,7 +962,8 @@ app.get('/indonrut', async (req, res)=>{
 
 
 
-app.use(rout)
+// app.use(rout)
+initWebRoutes(app);
 
 server.listen(5555, ()=>
     {

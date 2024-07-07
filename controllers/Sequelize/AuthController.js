@@ -4,23 +4,18 @@ const jwt = require('jsonwebtoken');
 const dotenv = require('dotenv');
 dotenv.config();
 const sendMail = require('./sendMail');
+const htmlContent = require('../../views/sendMail/template');
 
 class AuthController {
     static async register(req, res){
         try {
             var { firstName, lastName, address, email, password, phone} = req.body;
 
-            if(!(firstName && lastName && address && email && password && phone)){
-                res.status(400).send('All field are compulsory');
-            }            
-
             var c = await db.customer.findOne({where: { phone: phone}});
             if(c){
                 res.status(401).json({
                     message: 'Customer already exists with this phone'
                 })
-
-                return;
             }
 
             const pwd = await bcrypt.hash(password, 10);
@@ -59,7 +54,7 @@ class AuthController {
                 to: [email], // list of receivers
                 subject: "Hello ✔", // Subject line
                 text: "Hello world?", // plain text body
-                html: "<b>Hello world?</b>", // html body
+                html: htmlContent(firstName), // html body
             }
 
             sendMail.sendMail(mailOptions);

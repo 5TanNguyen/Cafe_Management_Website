@@ -6,7 +6,7 @@ const {validationResult}=require("express-validator");
 const ChamCongModel = require("../models/ChamCong");
 const DonDatModel = require("../models/DonDat");
 const DonNhapModel = require("../models/DonNhap");
-const { off } = require("../config/db");
+const { off } = require("../config/mydb");
 const PhiPhatSinhModel = require("../models/PhiPhatSinh");
 const TruyCapTraiPhepModel = require("../models/TruyCapTraiPhep");
 
