@@ -1,4 +1,4 @@
-const db = require('../config/db');
+const db = require('../config/mydb');
 
 class ChamCongModel {
     static  async ChamCong(tk_u_id, tk_s_id, tk_date, tk_note, t_s_id, tk_br_id, cd_id, hours)

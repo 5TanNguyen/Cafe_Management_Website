@@ -1,4 +1,4 @@
-const db = require('../config/db');
+const db = require('../config/mydb');
 
 class ViModel {
     static async getViByUserId(u_id)

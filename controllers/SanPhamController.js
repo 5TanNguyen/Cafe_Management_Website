@@ -352,3 +352,4 @@ class SanPhamController{
 }
 
 module.exports=SanPhamController
+// export default SanPhamController;
