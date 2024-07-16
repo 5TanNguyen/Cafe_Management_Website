@@ -12,7 +12,7 @@ const dondatController = require('../controllers/DonDatController');
 const dangnhapController = require('../controllers/DangNhapController');
 const nhanvienController = require('../controllers/NhanVienController');
 const donnhapController = require('../controllers/DonNhapController');
-const {check}=require("express-validator");
+const { check } = require("express-validator");
 const NguyenLieuController = require('../controllers/NguyenLieuController');
 const PhaCheController = require('../controllers/PhaCheController');
 const NguyenLieuModel = require('../models/NguyenLieu');
@@ -34,10 +34,9 @@ const cartController = require('../controllers/Sequelize/CartController');
 const orderController = require('../controllers/Sequelize/OrderController');
 
 let initWebRoutes = (app) => {
-    router.get("/5tan", (req, res, next)=>
-        {
-            res.send("5tan");
-        }
+    router.get("/5tan", (req, res, next) => {
+        res.send("5tan");
+    }
     )
 
     //router.get("/dangnhap", dangnhapController.GetDangNhapForm)
@@ -49,7 +48,7 @@ let initWebRoutes = (app) => {
     router.post("/xoasanpham", [check("pro_id").exists().withMessage("ID is required !").isNumeric().withMessage("ID should be  only number")], sanphamController.deleteSanPham)
     router.get("/suasanpham", sanphamController.editSanPhamForm)
     router.post("/suasanpham", sanphamController.editSanPham)
-    router.post("/chinhgiasanpham",sanphamController.chinhgiaSanPham);
+    router.post("/chinhgiasanpham", sanphamController.chinhgiaSanPham);
     router.post("/themgiasanpham", sanphamController.themgiaSanPham);
     router.get("/ban", banController.getAllBan)
     router.get("/songuoi", dondatController.getSoNguoi)
@@ -123,12 +122,12 @@ let initWebRoutes = (app) => {
     router.get('/api/Pets/GetById/:id', middlewareController.verifyToken, productnController.getProductDetail);
     router.post('/api/Pets/Add', middlewareController.verifyToken, productnController.addProdcut);
     router.put('/api/Pets/Update/:id', middlewareController.verifyToken, productnController.updateProdcut);
-    router.put('/api/Pets/Delete/:id', middlewareController.verifyToken,productnController.deleteProdcut);
+    router.put('/api/Pets/Delete/:id', middlewareController.verifyToken, productnController.deleteProdcut);
     router.put('/api/Pets/Hide/:id', middlewareController.verifyToken, productnController.hideProduct);
     router.post('/api/Pets/GetByName', middlewareController.verifyToken, productnController.getProductsByName);
     router.get('/api/Pets/GetPrice/:id', middlewareController.verifyToken, productnController.getProductPrice);
 
-    router.post('/cart-add', middlewareController.verifyToken ,cartController.createCart);
+    router.post('/cart-add', middlewareController.verifyToken, cartController.createCart);
     router.get('/cart-list/:id', middlewareController.verifyToken, cartController.getCarts);
 
     router.post('/order-add', orderController.createOrder);
@@ -136,12 +135,18 @@ let initWebRoutes = (app) => {
 
     router.get('/', homeController.getHomePage);
     router.get('/about', homeController.getAboutPage);
-  
+    router.get('/crud', homeController.getCRUD);
+    router.post('/post-crud', homeController.postCRUD);
+    router.get('/get-crud', homeController.displayGetCRUD);
+    router.get('/edit-crud', homeController.geteditCRUD);
+    router.post('/put-crud', homeController.putCRUD);
+    router.get('/delete-crud', homeController.deleteCRUD);
+
     //Cart
-    router.post('/cart-add', middlewareController.verifyToken ,cartController.createCart);
+    router.post('/cart-add', middlewareController.verifyToken, cartController.createCart);
     router.get('/cart-list/:id', middlewareController.verifyToken, cartController.getCarts);
 
     return app.use("/", router);
 }
 
-module.exports=initWebRoutes;
+module.exports = initWebRoutes;
