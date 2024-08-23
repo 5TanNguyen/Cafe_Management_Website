@@ -1,7 +1,7 @@
 {
   "development": {
     "username": "root",
-    "password": "Redtoso5",
+    "password": "",
     "database": "node_cafe",
     "host": "127.0.0.1",
     "dialect": "mysql",
