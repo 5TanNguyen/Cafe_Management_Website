@@ -1,200 +1,103 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Đăng nhập</title>
+    <!-- Design by foolishdeveloper.com -->
+    <title>Login Page</title>
+    
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
+    <link rel="icon" href="/assets/images/cheems.png" type="image/x-icon">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="/css/dangnhap.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
 </head>
+
 <body>
-    
-    <style>
-        .popup{
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-
-            display: none;
-        }
-
-        .contentBox{
-            position: relative;
-            width: 600px;
-            height: 250px;
-            background: #8B0000;
-            border-radius: 20px;
-            display: flex;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .contentBox h4{
-            position: absolute;
-            top: 20px;
-            font-size: 30px;
-            font-weight: bold;
-            color: #ffff;
-        }
-        .contentBox .content{
-            margin-top: 50px;
-            width: 560px;
-            height: 160px;
-            background-color: #F0F8FF;
-            justify-content: center;
-            align-items: center;
-            border-radius: 20px;
-        }
-
-        .contentBox .content h5{
-            font-size: 30px;
-            color: #ff4d54;
-            line-height: 40px;
-            padding-top: 10px;
-        }
-
-        .contentBox .content h6{
-            font-size: 20px;
-            line-height: 40px;
-            padding-top: 10px;
-        }
-
-        .close{
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            width: 40px;
-            height: 40px;
-            background: #f3f3f3;
-            background-repeat: no-repeat;
-            background-size: 10px;
-            background-position: center;
-            cursor: pointer;
-            border-radius: 50%;
-            z-index: 10;
-        }
-        
-        .close h3{
-            margin-top: 5px;
-            top: 50%;
-            left: 50%;
-        }
-
-        /*  make popup responsive */
-        @media (max-width: 767px)
-        {
-            .contentBox
-            {
-                width: 300px;
-                height: auto;
-                flex-direction: column;
-            }
-
-            .contentBox .content
-            {
-                width: 260px;
-                height: 30%;
-                text-align: center;
-                padding: 20px;
-                padding-top: 10px;
-            }
-
-            .close{
-                top: -20px;
-                right: -10px;
-                background: #A9A9A9;
-                background-repeat: no-repeat;
-                background-size: 10px;
-                background-position: center;
-            }
-        }
-    </style>
-
-    <script>
-        function validate(){
-            var username = document.getElementById("u_username");
-            var lblu_username = document.getElementById("lblu_username");
-            
-            var password = document.getElementById("u_password");
-            var lblpassword = document.getElementById("lblu_password");
-
-            if(username.value.trim() == "")
-            {
-                username.style.border = "solid 3px red";
-                lblu_username.style.visibility = "visible";
-
-                if(password.value.trim() == "")
-                {
-                    password.style.border = "solid 3px red";
-                    lblpassword.style.visibility = "visible";
-                }
-                return false;
-            }
-
-            if(password.value.trim() == "")
-            {
-                password.style.border = "solid 3px red";
-                lblpassword.style.visibility = "visible";
-                return false;
-            }
-            
-            return true;
-        }
-    </script>
-    
-    <div class="container" style="margin-top: 5%;">
-        <h1 class="text-center">Đăng nhập hệ thống</h1>  
-        
-        <% if(message.length > 0){ %>
-            <!-- <script>
-                alert('Bạn không có quyền truy cập \nMời đăng nhập lại');
-            </script> -->
-
-            <div class="popup">
-                <div class="contentBox">
-                    <h4 class="text-center">THÔNG BÁO</h4>
-                    <div class="close"><h3 class="text-center">X</h3></div>
-                    <div class="content">
-                        <h5 class="text-center"><%- message %></h5>
-                        <h6 class="text-center">Mời đăng nhập lại !</h6>
-                    </div>
-                </div>
-            </div>
-        <% } %>
-
-        <form action="/dangnhap" method="post" class="form-control" onsubmit="return validate();">
-            <label for="username">Username:</label>
-            <input id="u_username" type="text" name="u_username" class="form-control" value="admin">
-            <label id="lblu_username" style="color: red; visibility: hidden; font-style: italic">Username is required !</label>
-            <br>
-
-            <label for="password">Password:</label>
-            <input id="u_password" type="password" name="u_password" class="form-control"  value="12345">
-            <label id="lblu_password" style="color: red; visibility: hidden; font-style: italic">Password is required !</label>
-
-
-            <input type="submit" value="Đăng nhập" class="btn btn-outline-primary" style="width: 100%;">
-        </form>
-    </div>
 
     <script>
         const popup = document.querySelector('.popup');
         const close = document.querySelector('.close')
-
+    
         window.onload = function(){
             setTimeout(function(){
                 popup.style.display = "block";
-
-                // Add some time delay to show popup
+    
             }, 500)
         }
-
+    
         close.addEventListener('click', ()=>{
             popup.style.display = "none";
         })
     </script>
+
+<script>
+    function validate(){
+        var username = document.getElementById("u_username");
+        
+        var password = document.getElementById("u_password");
+
+        if(username.value.trim() == "")
+        {
+            username.style.border = "solid 3px red";
+            username.placeholder = "Không bỏ trống";
+
+            if(password.value.trim() == "")
+            {
+                password.style.border = "solid 3px red";
+                password.placeholder = "Không bỏ trống";
+            }
+            return false;
+        }
+
+        if(password.value.trim() == "")
+        {
+            password.style.border = "solid 3px red";
+            password.placeholder = "Không bỏ trống";
+            return false;
+        }
+        
+        return true;
+    }
+</script>
+
+    <div class="background">
+        <div class="shape"></div>
+        <div class="shape"></div>
+    </div>
+
+    <% if(message.length > 0){ %>
+        <div class="popup">
+            <div class="contentBox">
+                <h4 class="text-center">THÔNG BÁO</h4>
+                <div class="close"><h3 class="text-center">X</h3></div>
+                <div class="content">
+                    <h5 class="text-center"><%- message %></h5>
+                    <h6 class="text-center">Mời đăng nhập lại !</h6>
+                </div>
+            </div>
+        </div>
+    <% } %>
+
+    <form action="/dangnhap" method="post" onsubmit="return validate();">
+    <h3>Login Here</h3>
+
+    <label for="username">Email</label>
+    <input type="text" placeholder="Email or Phone" name="u_username" id="u_username">
+
+    <label for="password">Password</label>
+    <input type="password" placeholder="Password" id="u_password" name="u_password">
+
+    <button type="submit">Log In</button>
+    <div class="social">
+        <div class="go"><i class="fab fa-google"></i> Google</div>
+        <div class="fb"><i class="fab fa-facebook"></i> Facebook</div>
+    </div>
+    </form>
 </body>
+
+
+
 </html>

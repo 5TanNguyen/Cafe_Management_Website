@@ -12,6 +12,7 @@
   "author": "B1910293",
   "license": "ISC",
   "dependencies": {
+    "@babel/helper-plugin-utils": "^7.24.8",
     "@single-spa/import-map-injector": "^1.0.0",
     "@socket.io/cluster-adapter": "^0.2.2",
     "alpinejs": "^3.11.1",

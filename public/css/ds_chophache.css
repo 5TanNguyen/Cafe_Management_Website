@@ -1,0 +1,17 @@
+.col3{
+    background-color:bisque;
+    border: 10px;
+    border-radius: 20px;
+    border-style: solid;
+    border-color: red; 
+}
+
+.sodon{
+    display: flex;
+    align-items: center;
+    justify-content: center;                  
+}
+
+.sodon p{
+    font-size: 150px;
+}

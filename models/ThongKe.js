@@ -4,7 +4,7 @@ class ThongKeModel {
     static async GetThongKe()
     {
         return new Promise(resolve =>{
-            db.query("SELECT * FROM statistical ORDER BY s_id DESC", [], (err, result)=>{
+            db.query("SELECT * FROM node_cafe.statistical ORDER BY s_id DESC", [], (err, result)=>{
                 if(!err) resolve(result);
             })
         })

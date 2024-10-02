@@ -16,6 +16,8 @@ class DangNhapController {
         var u_username = req.body.u_username;
         var u_password = req.body.u_password;
 
+        console.log(u_username);
+
         await checkPermission.checkPermission();
 
         var x = await NhanVienModel.getNhanVienByUsername(u_username, u_password);

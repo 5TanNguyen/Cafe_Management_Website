@@ -52,10 +52,10 @@ db.productPrice = require('./productPrice')(sequelize, Sequelize.DataTypes);
 db.usern = require('./usern')(sequelize, Sequelize.DataTypes);
 db.customerType = require('./customerType')(sequelize, Sequelize.DataTypes);
 
-db.sequelize.sync({ force: false, alter: true })
-.then(()=>{
-  console.log('yes re-sync done!');
-})
+db.sequelize.sync({ force: false, alter: false })
+  .then(() => {
+    console.log('yes re-sync done!');
+  })
 
 // Relation
 db.customerType.hasMany(db.customer, {
@@ -76,14 +76,14 @@ db.productn.belongsTo(db.category, {
   as: 'category'
 })
 
-db.customer.hasOne(db.cart, {
-  foreignKey: 'customer_id',
-  as: 'cart'
-})
-db.cart.belongsTo(db.customer, {
-  foreignKey: 'customer_id',
-  as: 'customer'
-})
+// db.customer.hasOne(db.cart, {
+//   foreignKey: 'customer_id',
+//   as: 'cart'
+// })
+// db.cart.belongsTo(db.customer, {
+//   foreignKey: 'customer_id',
+//   as: 'customer'
+// })
 
 db.role.hasMany(db.usern, {
   foreignKey: 'role_id',
@@ -104,14 +104,14 @@ db.cart.belongsTo(db.productn, {
   as: 'productn'
 })
 
-db.customer.hasMany(db.ordern, {
-  foreignKey: 'customer_id',
-  as: 'ordern'
-})
-db.ordern.belongsTo(db.customer, {
-  foreignKey: 'customer_id',
-  as: 'customer'
-})
+// db.customer.hasMany(db.ordern, {
+//   foreignKey: 'customer_id',
+//   as: 'ordern'
+// })
+// db.ordern.belongsTo(db.customer, {
+//   foreignKey: 'customer_id',
+//   as: 'customer'
+// })
 
 db.ordern.hasMany(db.orderDetail, {
   foreignKey: 'ordern_id',
@@ -126,7 +126,7 @@ db.productn.hasMany(db.orderDetail, {
   foreignKey: 'productn_id',
   as: 'orderDetail'
 })
-db.orderDetail.belongsTo(db.productn,{
+db.orderDetail.belongsTo(db.productn, {
   foreignKey: 'productn_id',
   as: 'productn'
 })

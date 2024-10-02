@@ -432,12 +432,14 @@ function authenToken(req, res, next){
 // END JWT
 
 app.post('/dangnhap',async function(req, res){
-
     var u_username = req.body.u_username;
     var u_password = req.body.u_password;
 
     var x = await NhanVienModel.getNhanVienByUsername(u_username, u_password);
     
+    console.log(x);
+
+    // return;
     if(x == false){
         req.session.u_name = null;
         req.session.u_id = null;
@@ -458,9 +460,9 @@ app.post('/dangnhap',async function(req, res){
         req.session.u_d_id = x[0].u_d_id;
 
         req.session.u_username = req.body.u_username;
-        
 
         var stt = await ThongKeModel.GetThongKe();
+        
         req.session.s_id = stt[0].s_id;
         req.session.s_name = stt[0].s_name;
 
@@ -471,29 +473,29 @@ app.post('/dangnhap',async function(req, res){
         req.session.br_name = []
         req.session.br_name = branch.br_name;
         
-        var cd = await LichModel.GetChiTietLichByCURDATE_u_id(x[0].u_id);
+        // var cd = await LichModel.GetChiTietLichByCURDATE_u_id(x[0].u_id);
 
-        if(cd == false){
-            req.session.cd_id = 'KHÔNG CÓ LỊCH LÀM';
-            req.session.cd_shift_id = 'KHÔNG';
-            req.session.hours = 'KHÔNG';
+        // if(cd == false){
+        //     req.session.cd_id = 'KHÔNG CÓ LỊCH LÀM';
+        //     req.session.cd_shift_id = 'KHÔNG';
+        //     req.session.hours = 'KHÔNG';
             
-        }
-        else if(cd[0].cd_check == 1)
-        {
-            req.session.cd_id = 'ĐÃ CHẤM CÔNG';
-            req.session.cd_shift_id = 'KHÔNG';
-            req.session.hours = 'KHÔNG';
-            req.session.cd_check = cd[0].cd_check;
-        }
-        else {
-            req.session.cd_id = cd[0].cd_id;
-            req.session.cd_shift_id = cd[0].cd_shift_id;
-            req.session.hours = cd[0].hours;
-            req.session.cd_check = cd[0].cd_check;
-        }
+        // }
+        // else if(cd[0].cd_check == 1)
+        // {
+        //     req.session.cd_id = 'ĐÃ CHẤM CÔNG';
+        //     req.session.cd_shift_id = 'KHÔNG';
+        //     req.session.hours = 'KHÔNG';
+        //     req.session.cd_check = cd[0].cd_check;
+        // }
+        // else {
+        //     req.session.cd_id = cd[0].cd_id;
+        //     req.session.cd_shift_id = cd[0].cd_shift_id;
+        //     req.session.hours = cd[0].hours;
+        //     req.session.cd_check = cd[0].cd_check;
+        // }
 
-        res.locals.session = req.session;
+        // res.locals.session = req.session;
         
         if( x[0] != null) 
         {
@@ -959,7 +961,9 @@ app.get('/indonrut', async (req, res)=>{
         })
 })
 
-
+app.get('/nav', (req, res) => {
+    res.render('dangnhap/nav');
+})
 
 
 // app.use(rout)

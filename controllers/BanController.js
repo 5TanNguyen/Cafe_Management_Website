@@ -14,24 +14,27 @@ class BanController {
     {
         res.locals.session = req.session;
 
-        if(!req.session.u_id){
-            req.flash('message', 'Bạn phải đăng nhập trước !');
-            res.render("dangnhap/dangnhap", { message : req.flash('message')});
-        }
-        if ((req.session.u_d_id != 3) && (req.session.u_d_id != 1))
-        {
-            var currentdate = new Date();
-            var datetime = currentdate.getFullYear() + "-" + (currentdate.getMonth()+1) + "-" + currentdate.getDate()  + "  "  + currentdate.getHours() + ":"   + currentdate.getMinutes() + ":"  + currentdate.getSeconds();
-            var tctp = await TruyCapTraiPhepModel.addTCTP(req.session.u_id, 'Danh sách bàn', datetime);
+        // if(!req.session.u_id){
+        //     req.flash('message', 'Bạn phải đăng nhập trước !');
+        //     res.render("dangnhap/dangnhap", { message : req.flash('message')});
+        // }
+        // if ((req.session.u_d_id != 3) && (req.session.u_d_id != 1))
+        // {
+        //     var currentdate = new Date();
+        //     var datetime = currentdate.getFullYear() + "-" + (currentdate.getMonth()+1) + "-" + currentdate.getDate()  + "  "  + currentdate.getHours() + ":"   + currentdate.getMinutes() + ":"  + currentdate.getSeconds();
+        //     var tctp = await TruyCapTraiPhepModel.addTCTP(req.session.u_id, 'Danh sách bàn', datetime);
 
-            req.flash('message', 'Bạn không có quyền truy cập !');
-            res.render("dangnhap/dangnhap", { message : req.flash('message')});
-        }
-        else
+        //     req.flash('message', 'Bạn không có quyền truy cập !');
+        //     res.render("dangnhap/dangnhap", { message : req.flash('message')});
+        // }
+        // else
         {
-            console.log(req.session.u_d_id);
+            // console.log(req.session.u_d_id);
 
             var results  = await BanModel.getbans();
+
+            console.log('Bàn');
+            console.log(results);
 
             var stt = await ThongKeModel.GetThongKe();
 

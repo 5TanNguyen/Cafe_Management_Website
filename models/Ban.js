@@ -5,7 +5,7 @@ class BanModel{
     static async getbans()
     {
         return new Promise(resolve =>{
-            db.query("SELECT * FROM tn408.tables;", [], (error, result)=>{
+            db.query("SELECT * FROM node_cafe.tables;", [], (error, result)=>{
                 if(!error) resolve(result);
             })
         })
