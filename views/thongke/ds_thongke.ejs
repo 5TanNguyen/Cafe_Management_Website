@@ -1,16 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Danh sách thống kê</title>
-    <link rel="icon" href="/assets/images/cheems.png" type="image/x-icon">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-    <script src="/js/input_validate.js"></script>
-    <link rel="stylesheet" href="/css/style.css" type="text/css">
-</head>
 <body>
 
     <% if(session.u_d_id == 1){ %>
@@ -84,22 +71,30 @@
             </div>
         </div>
         <br>
-        <table class="tableThongKe">
+        <h3>Chọn các cột để ẩn/hiện:</h3>
+        <label id="tk_ten"><input type="checkbox" class="toggle-column" data-column="0" checked> Tên</label>
+        <label><input type="checkbox" class="toggle-column" data-column="1" checked> Nhập</label>
+        <label><input type="checkbox" class="toggle-column" data-column="2" checked> Xuất</label>
+        <label><input type="checkbox" class="toggle-column" data-column="3" checked> Lợi nhuận</label>
+        <label id="tk_ngay"><input type="checkbox" class="toggle-column" data-column="4" checked> Ngày</label>
+        <label><input type="checkbox" class="toggle-column" data-column="5" checked> Chi tiết</label>
+        
+        <table id="myTable" class="tableThongKe">
             <thead class="table-light">
-                <!-- <td>Tên TK</td> -->
+                <td>Tên TK</td>
                 <td>Nhập</td>
                 <td>Xuất</td>
                 <td>Lợi nhuận</td>
                 <td>Ngày</td>
-                <!-- <td>Chi Tiết</td> -->
+                <td>Chi Tiết</td>
             </thead>
 
             <% if(test.length > 0){ %>
                 <% for(var i = 0; i < test.length; i++){ %>
                     <tr>
-                        <!-- <td>
+                        <td>
                             <%- test[i].s_name %>
-                        </td> -->
+                        </td>
 
                         <td>
                             <%- Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(test[i].s_import) %>
@@ -130,28 +125,62 @@
 
     <script>
         // Hàm kiểm tra và thêm class
-function checkResponsive() {
-    // Lấy thẻ div có class="divt"
-    var divElement = document.querySelector('.tableThongKe');
-    
-    // Kiểm tra nếu thẻ tồn tại
-    if (divElement) {
-        // Kiểm tra chiều rộng cửa sổ
-        if (window.innerWidth <= 867) {
-            // Thêm class 'responsive' nếu màn hình <= 867px
-            divElement.classList.remove('table');
-        } else {
-            // Xóa class 'responsive' nếu màn hình > 867px
-            divElement.classList.add('table');
+        function checkResponsive() {
+            // Lấy thẻ div có class="divt"
+            var divElement = document.querySelector('.tableThongKe');
+            var tk_ten = document.getElementById('tk_ten');
+            var tk_ngay = document.getElementById('tk_ngay');
+            const table = document.getElementById("myTable");
+
+            // Kiểm tra nếu thẻ tồn tại
+            if (divElement) {
+                // Kiểm tra chiều rộng cửa sổ
+                if (window.innerWidth <= 867) {
+                    // Thêm class 'responsive' nếu màn hình <= 867px
+                    divElement.classList.remove('table');
+
+                    tk_ten.style.display = 'none'; 
+                    tk_ten.checked = false;
+                    toggleColumn(0, false);
+
+                    tk_ngay.style.display = 'none';
+                    tk_ngay.checked = false;
+                    toggleColumn(4, false);
+                } else {
+                    // Xóa class 'responsive' nếu màn hình > 867px
+                    divElement.classList.add('table');
+                }
+            }
         }
-    }
-}
 
-// Gọi hàm ngay khi trang được tải
-window.addEventListener('load', checkResponsive);
+        // Gọi hàm ngay khi trang được tải
+        window.addEventListener('load', checkResponsive);
 
-// Gọi hàm mỗi khi kích thước cửa sổ thay đổi
-window.addEventListener('resize', checkResponsive);
+        // Gọi hàm mỗi khi kích thước cửa sổ thay đổi
+        window.addEventListener('resize', checkResponsive);
+    </script>
+
+    <script>
+        // Hàm ẩn/hiện cột dựa vào trạng thái của checkbox
+        function toggleColumn(columnIndex, show) {
+            const table = document.getElementById("myTable");
+            const rows = table.rows;
+
+            for (let i = 0; i < rows.length; i++) {
+                rows[i].cells[columnIndex].style.display = show ? 'table-cell' : 'none';
+            }
+        }
+
+        // Lắng nghe sự kiện thay đổi của checkbox
+        const checkboxes = document.querySelectorAll('.toggle-column');
+        checkboxes.forEach(function(checkbox) {
+            checkbox.addEventListener('change', function() {
+                const columnIndex = this.getAttribute('data-column');
+                const isChecked = this.checked;
+
+                // Ẩn/hiện cột dựa vào trạng thái checkbox
+                toggleColumn(columnIndex, isChecked);
+            });
+        });
     </script>
 </body>
-</html>

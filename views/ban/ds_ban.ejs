@@ -10,14 +10,181 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="/css/style.css" type="text/css">
     <script src="/js/input_validate.js"></script>
+    <!-- Thêm link đến Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            position: relative;
+        }
 
-    <!-- Jquery Mobile -->
-    <!-- <link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
-    <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
-    <script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script> -->
+        /* Container toàn trang */
+        .container {
+            display: flex;
+            height: 100vh;
+        }
 
+        /* Sidebar chứa danh sách đơn đặt */
+        .sidebar {
+            width: 300px; /* Chiều rộng cố định cho sidebar */
+            background-color: #fff;
+            border-right: 1px solid #ddd;
+            padding: 20px;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+            overflow: hidden; /* Ẩn phần cuộn của sidebar */
+            z-index: 1;
+            position: relative; /* Đặt vị trí tương đối */
+        }
 
+        /* Phần chứa biểu đồ */
+        .chart-container {
+            position: sticky; /* Biểu đồ sẽ dính ở vị trí cố định khi cuộn */
+            top: 20px; /* Khoảng cách từ đỉnh sidebar */
+            z-index: 2; /* Đặt trên các phần tử khác */
+            margin-bottom: 20px; /* Khoảng cách giữa biểu đồ và danh sách đơn đặt */
+        }
+
+        /* Phần danh sách bàn */
+        .table-container {
+            flex: 1; /* Chiếm toàn bộ chiều rộng còn lại */
+            padding: 20px;
+            overflow-y: auto; /* Nếu danh sách dài, sẽ cuộn */
+        }
+
+        /* Nút toggle để mở/đóng sidebar */
+        .toggle-btn {
+            position: fixed; /* Đặt nút toggle cố định */
+            top: 50%; /* Đặt giữa màn hình theo chiều dọc */
+            left: 10px; /* Khoảng cách từ bên trái */
+            transform: translateY(-50%); /* Căn giữa theo chiều dọc */
+            padding: 10px; /* Padding cho nút */
+            background-color: #333;
+            color: #fff;
+            border: none;
+            border-radius: 20px; /* Bo góc mềm mại cho nút */
+            cursor: pointer;
+            z-index: 20; /* Đảm bảo nút toggle nằm trên các phần tử khác */
+            font-size: 14px; /* Kích thước chữ cho nút */
+            transition: background-color 0.3s ease, transform 0.3s ease; /* Hiệu ứng chuyển màu và di chuyển */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Thêm bóng cho nút */
+        }
+
+        .toggle-btn:hover {
+            background-color: #555; /* Màu nền khi hover */
+            transform: translateY(-50%) scale(1.05); /* Tăng kích thước khi hover */
+        }
+
+        /* Header của trang */
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        /* Grid layout cho danh sách bàn */
+        .table-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 15px; /* Khoảng cách giữa các bàn */
+        }
+
+        /* Các phần tử đại diện cho bàn */
+        .table-item {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            padding: 15px;
+            text-align: center;
+            border: 1px solid #ddd;
+            height: 150px; /* Chiều cao cố định cho từng bàn */
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between; /* Căn đều các phần tử bên trong */
+        }
+
+        .table-item h2 {
+            font-size: 20px;
+            margin: 0;
+        }
+
+        .table-item hr {
+            width: 100%;
+            border: none;
+            border-top: 1px solid #ddd;
+            margin: 10px 0;
+        }
+
+        .table-item p {
+            margin: 5px 0;
+            color: #555;
+        }
+
+        /* Danh sách đơn đặt */
+        .reservation-list {
+            margin-top: 20px;
+            max-height: calc(100vh - 250px); /* Giới hạn chiều cao để có thể cuộn */
+            overflow-y: auto; /* Cho phép cuộn nếu danh sách quá dài */
+            padding-bottom: 20px; /* Thêm padding cho phần dưới cùng */
+        }
+
+        .reservation-item {
+            border: 1px solid #ddd;
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            background-color: #fafafa;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Biểu đồ tròn */
+        .chart-container {
+            width: 100%;
+            height: 200px; /* Chiều cao cho biểu đồ */
+            margin-top: 20px;
+        }
+
+        /* Responsive cho màn hình di động */
+        @media screen and (max-width: 600px) {
+            .container {
+                flex-direction: column; /* Xếp chồng các phần theo chiều dọc */
+                height: auto; /* Không cố định chiều cao cho container */
+            }
+
+            .sidebar {
+                position: fixed; /* Đặt sidebar cố định khi di động */
+                top: 0;
+                left: 0;
+                height: 100%; /* Chiếm toàn bộ chiều cao */
+                width: 80%; /* Sidebar chiếm 80% chiều rộng trên mobile */
+                z-index: 10;
+                transform: translateX(-100%); /* Sidebar mặc định ẩn đi */
+                transition: transform 0.3s ease; /* Hiệu ứng cho việc ẩn/hiện */
+            }
+
+            .sidebar.visible {
+                transform: translateX(0); /* Hiển thị sidebar */
+            }
+
+            .table-container {
+                padding: 20px; /* Đảm bảo padding cho bàn */
+            }
+
+            /* Hiển thị nút toggle khi ở di động */
+            .toggle-btn {
+                display: block;
+            }
+        }
+
+        /* Ẩn nút toggle khi ở màn hình PC */
+        @media screen and (min-width: 601px) {
+            .toggle-btn {
+                display: none; /* Ẩn nút toggle trên màn hình PC */
+            }
+        }
+    </style>
 </head>
 <body>
     <% if(session.u_d_id == 1){ %>
@@ -28,103 +195,134 @@
         <%- include('../z_layout/nav_3') %>
     <% } %>
     
-    <br>
-    <h1 class="text-center"> Danh sách bàn</h1>
-    <!-- <div class="containerr">
-        <ul>
-            <li> <div class="title">Header</div> </li>
-            <li> <div class="title">Header</div> </li>
-            <li> <div class="title">Header</div> </li>
-            <li> <div class="title">Header</div> </li>
-            <li> <div class="title">Header</div> </li>
-            <li> <div class="title">Header</div> </li>
-            <li> <div class="title">Header</div> </li>
-            <li> <div class="title">Header</div> </li>
-        </ul>
-    </div> -->
-
     <div class="container">
-        <div class="row">      
+        <!-- Sidebar chứa danh sách đơn đặt -->
+        <div class="sidebar" id="sidebar">
+            <h2>Danh sách đơn đặt</h2>
+            <!-- Biểu đồ tròn cho bàn trống -->
+            <div class="chart-container">
+                <canvas id="myPieChart"></canvas>
+            </div>
+            
+            <ul class="reservation-list">
+                <li class="reservation-item">
+                    <strong>Bàn 1</strong>
+                    <p>Khách hàng: Nguyễn Văn A</p>
+                    <p>Thời gian: 14:00 - 16:00</p>
+                </li>
+
+                <li class="reservation-item">
+                    <strong>Bàn 3</strong>
+                    <p>Khách hàng: Trần Thị B</p>
+                    <p>Thời gian: 12:00 - 14:00</p>
+                </li>
+
+                <li class="reservation-item">
+                    <strong>Bàn 5</strong>
+                    <p>Khách hàng: Lê Văn C</p>
+                    <p>Thời gian: 09:00 - 11:00</p>
+                </li>
+                <li class="reservation-item">
+                    <strong>Bàn 2</strong>
+                    <p>Khách hàng: Phạm Minh D</p>
+                    <p>Thời gian: 15:00 - 17:00</p>
+                </li>
+                <li class="reservation-item">
+                    <strong>Bàn 4</strong>
+                    <p>Khách hàng: Hoàng Thị E</p>
+                    <p>Thời gian: 16:00 - 18:00</p>
+                </li>
+				<li class="reservation-item">
+                    <strong>Bàn 4</strong>
+                    <p>Khách hàng: Hoàng Thị E</p>
+                    <p>Thời gian: 16:00 - 18:00</p>
+                </li>
+				<li class="reservation-item">
+                    <strong>Bàn 4</strong>
+                    <p>Khách hàng: Hoàng Thị E</p>
+                    <p>Thời gian: 16:00 - 18:00</p>
+                </li>
+				<li class="reservation-item">
+                    <strong>Bàn 4</strong>
+                    <p>Khách hàng: Hoàng Thị E</p>
+                    <p>Thời gian: 16:00 - 18:00</p>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Phần chứa bàn -->
+        <div class="table-container">
+            <h1>Danh sách bàn</h1>
+            <div class="table-grid">
                 <% if(test.length > 0){  %>
                     <% for(var i=0; i <test.length; i++){  %>
                         <%  if(test[i].t_empty == 1){ %>
-                            <div class="col-xl-3 col-lg-4 col-md-12 col-sm-12"> <!-- col-xl-3 col-lg-4 col-md-12 col-sm-12 -->
-                                <!-- <a href="/songuoi?t_id=<%- test[i].t_id %>"> -->
-                                    <a href="#divOne<%- test[i].t_id %>">
-                                    <div class="image card">                                      
-                                        <div style="background-color: blue; height: 100%; width: 100%; border-radius: 15px 15px 15px 15px;">
-                                            <p class="soban" style="font-size: 50px; width: 100%;">
-                                                <%= test[i].t_id %>
-                                            </p>
-                                        </div>
-                                    </div>
-                                </a>
+                            <a href="#divOne<%- test[i].t_id %>">
+                                <div class="table-item">
+                                    <h2>Bàn <%- test[i].t_id %></h2>
+                                    <p>Trạng thái: Trống</p>
+                                    <hr>
+                                    <p><button>Đặt bàn</button></p>
+                                </div>
+                            </a>
 
-                                <div class="overplay" id="divOne<%- test[i].t_id %>">
-                                    <div class="wrapper">
-                                        <h2 class="text-center">Nhập số người</h2>
-                                        <a href="#" class="close">&times;</a>
-                                        <div class="content">
-                                            <div class="container">
-                                                <form action="/songuoi" method="POST" onsubmit="return validate_ban();">
-                                                    <label for="">Bàn</label>
-                                                    <input type="text" value="<%- test[i].t_id %>" name="t_id">
-                                                    
-                                                    <label for="">Số Người</label>
-                                                    <input type="text" placeholder="Nhập số người" name="num" id="num">
-                                                    <label id="lblnum" style="color: red; visibility: hidden;">KHÔNG ĐƯỢC BỎ TRỐNG !</label>
+                            <div class="overplay" id="divOne<%- test[i].t_id %>">
+                                <div class="wrapper">
+                                    <h2 class="text-center">Nhập số người</h2>
+                                    <a href="#" class="close">&times;</a>
+                                    <div class="content">
+                                        <div class="container">
+                                            <form action="/songuoi" method="POST" onsubmit="return validate_ban();">
+                                                <label for="">Bàn</label>
+                                                <input type="text" value="<%- test[i].t_id %>" name="t_id">
+                                                
+                                                <label for="">Số Người</label>
+                                                <input type="text" placeholder="Nhập số người" name="num" id="num">
+                                                <label id="lblnum" style="color: red; visibility: hidden;">KHÔNG ĐƯỢC BỎ TRỐNG !</label>
 
-                                                    <br>
-                                                    <label for="">Chi Nhánh</label>
-                                                    <select class="form-control" name="br_id" id="">
-                                                        <% for(var t = 0; t < br.length; t++){ %> 
-                                                            <option value="<%- br[t].br_id %>"><%- br[t].br_name %></option>
-                                                        <% } %>
-                                                    </select>
-                            
-                                                    <% var currentdate = new Date(); %>
-                                                    <% var datetime = currentdate.getFullYear() + "-" + (currentdate.getMonth()+1) + "-" + currentdate.getDate()  + "  "  + currentdate.getHours() + ":"   + currentdate.getMinutes() + ":"  + currentdate.getSeconds(); %>
-                                    
-                                                    <input hidden name="o_time" type="text" value="<%- datetime %>">
+                                                <br>
+                                                <label for="">Chi Nhánh</label>
+                                                <select class="form-control" name="br_id" id="">
+                                                    <% for(var t = 0; t < br.length; t++){ %> 
+                                                        <option value="<%- br[t].br_id %>"><%- br[t].br_name %></option>
+                                                    <% } %>
+                                                </select>
+                        
+                                                <% var currentdate = new Date(); %>
+                                                <% var datetime = currentdate.getFullYear() + "-" + (currentdate.getMonth()+1) + "-" + currentdate.getDate()  + "  "  + currentdate.getHours() + ":"   + currentdate.getMinutes() + ":"  + currentdate.getSeconds(); %>
+                                
+                                                <input hidden name="o_time" type="text" value="<%- datetime %>">
 
-                                                    <br>
-                                                    <label for="">Thống Kế</label>
-                                                    <select class="form-control" name="s_id" id="">
-                                                        <% for(var t = 0; t < stt.length; t++){ %> 
-                                                            <option value="<%- stt[t].s_id %>"><%- stt[t].s_name %></option>
-                                                        <% } %>
-                                                    </select>
+                                                <br>
+                                                <label for="">Thống Kế</label>
+                                                <select class="form-control" name="s_id" id="">
+                                                    <% for(var t = 0; t < stt.length; t++){ %> 
+                                                        <option value="<%- stt[t].s_id %>"><%- stt[t].s_name %></option>
+                                                    <% } %>
+                                                </select>
 
-                                                    <br>
-                                                    <input type="submit" class="btn btn-outline-danger" value="Tạo" style="width: 100%;">
-                                                </form>
-                                            </div>
+                                                <br>
+                                                <input type="submit" class="btn btn-outline-danger" value="Tạo" style="width: 100%;">
+                                            </form>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         <% }else { %>
-                            <div class="col-xl-3 col-lg-4 col-md-12 col-sm-12">
                                 <a href="/chitietban?t_id=<%- test[i].t_id %>">
-                                    <div class="image card">                                       
-                                            <div style="background-color: red; height: 80%; width: 100%; border-radius: 15px 15px 0 0;">
-                                                <p class="soban" style="font-size: 50px; width: 100%;">
-                                                    <%= test[i].t_id %>
-                                                </p>
-                                            </div>
-
+                                    <div class="table-item">
+                                        <h2>Bàn <%- test[i].t_id %></h2>
+                                        <p><%- test[i].t_pay == 1 ? 'Đã thanh toán' : 'Chưa' %></p>
+                                        <hr>
+                                        <p>
                                             <% if(test[i].t_pay == 1) { %>
-                                                <div style="background-color: green; height: 20%; width: 100%; border-radius: 0px 0px 15px 15px;">
-                                                    <i class="fa-solid fa-check" style="margin:10px 45%;"></i>
-                                                </div>
+                                                <button style="background-color: #4CAF50;"><i class="fa-solid fa-check" style="width: 50px;"></i></button>
                                             <% }else { %>
-                                                <div style="background-color: gray; height: 20%; width: 100%; border-radius: 0px 0px 15px 15px;">
-                                                    <i class="fa-solid fa-x" style="margin:10px 45%;"></i>
-                                                </div>
+                                                <button style="background-color: gray;"><i class="fa-solid fa-x" style="width: 50px;"></i></button>
                                             <% } %>
+                                        </p>
                                     </div>
                                 </a>
-                            </div>
                         <% } %>
                         
                     <% } %>
@@ -132,8 +330,68 @@
                 <% }else { %>
                     <h1>Data Not Found !</h1>
                 <% } %>
+
+
+                <!-- <div class="table-item">
+                    <h2>Bàn 2</h2>
+                    <p>Trạng thái: Đã đặt</p>
+                    <hr>
+                    <p><button>Hủy đặt bàn</button></p>
+                </div>
+                <div class="table-item">
+                    <h2>Bàn 3</h2>
+                    <p>Trạng thái: Trống</p>
+                    <hr>
+                    <p><button>Đặt bàn</button></p>
+                </div>
+                <div class="table-item">
+                    <h2>Bàn 4</h2>
+                    <p>Trạng thái: Đã đặt</p>
+                    <hr>
+                    <p><button>Hủy đặt bàn</button></p>
+                </div>
+                <div class="table-item">
+                    <h2>Bàn 5</h2>
+                    <p>Trạng thái: Trống</p>
+                    <hr>
+                    <p><button>Đặt bàn</button></p>
+                </div> -->
+            </div>
         </div>
     </div>
+
+    <button class="toggle-btn" onclick="toggleSidebar()">☰</button>
+
+    <script>
+        // Hàm để vẽ biểu đồ tròn
+        function drawChart() {
+            var ctx = document.getElementById('myPieChart').getContext('2d');
+            var myPieChart = new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: ['Bàn trống', 'Bàn đã đặt'],
+                    datasets: [{
+                        data: [3, 2], // Dữ liệu biểu đồ
+                        backgroundColor: ['#4CAF50', '#FF5733']
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false // Để biểu đồ có thể co giãn
+                }
+            });
+        }
+
+        // Hàm để toggle sidebar
+        function toggleSidebar() {
+            var sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('visible');
+        }
+
+        // Vẽ biểu đồ khi trang được tải
+        window.onload = drawChart;
+    </script>
+
 
 
     
