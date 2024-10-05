@@ -33,29 +33,14 @@ class DonDatController{
         }
         else
         {
-
             var dd_maban = req.query.t_id;
-
             var o_t_id = dd_maban;
             var result = await DonDatModel.getdondat(dd_maban);
-
-            //var stt = await ThongKeModel.GetThongKe();
 
             if(result)
                 res.render("dondat/ds_dondat", {test : result, o_t_id});
         }
     }
-
-    // static async getChiTietDonDat(req, res)
-    // {
-    //     res.locals.session = req.session;
-    //     var dd_id = req.query.o_id;
-
-    //     var result = await DonDatModel.chitietdondat(dd_id);
-
-    //     if(result)
-    //         res.render("dondat/chitietdondat", {test : result});
-    // }
 
     static async getChiTietDonDat(req, res)
     {
@@ -276,28 +261,6 @@ class DonDatController{
             res.render("dondat/xacnhandondat", { t_id});
         }
     }
-
-    // static async confirmDonDat(req, res)
-    // {
-    //     res.locals.session = req.session;
-    //     var t_id = req.body.t_id;
-    //     var num = req.body.num;
-
-    //     //BanModel.set_b_num(t_id, num);
-    //     DonDatModel.setStatusDonDat(t_id);
-
-    //     DonDatModel.createdondat(1, 1, t_id, num, 0, 0, null);
-        
-    //     var result = await SanPhamModel.getsanphams();
-
-    //     var o_id = await DonDatModel.selectdd_id(t_id, num);
-
-    //     if(result)
-    //         res.render("dondat/them_dondat", {test : result, o_id, t_id, num});
-
-    //     //res.redirect("/chitietban?t_id=" + t_id);
-    
-    // }
 
     static async confirmDonDat(req, res)
     {

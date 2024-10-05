@@ -39,8 +39,10 @@ class BanController {
             var stt = await ThongKeModel.GetThongKe();
 
             var br = await ChiNhanhModel.GetChiNhanh();
+
+            var dd = await DonDatModel.getAllDonDat();
             if(results)
-                res.render('ban/ds_ban', {test : results, stt, br}); 
+                res.render('ban/ds_ban', {test : results, stt, br, dd}); 
         }
     }
 

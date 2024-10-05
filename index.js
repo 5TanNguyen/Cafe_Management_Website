@@ -539,11 +539,13 @@ app.post('/dangnhap',async function(req, res){
                 var results  = await BanModel.getbans();
                 var stt = await ThongKeModel.GetThongKe();
                 var br = await ChiNhanhModel.GetChiNhanh();
+                var dd = await DonDatModel.getAllDonDat();
                 if(results)
                     res.render('ban/ds_ban', {test : results,
                                             usrn : req.session.u_username,
                                             stt,
-                                            br }); 
+                                            br, 
+                                            dd }); 
             }
             
         }      

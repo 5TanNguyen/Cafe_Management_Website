@@ -1,6 +1,20 @@
 const db = require('../config/mydb')
 
 class DonDatModel{
+    static async getAllDonDat()
+    {
+        return new Promise(resolve =>{
+            db.query("Select o.o_id, o.o_status, o.o_post, o.o_cost, o.o_tick, s.s_id, s.s_name, o.o_t_id, o.o_time"
+            + " FROM orders o, statistical s"
+            + " where o.o_s_id = s.s_id" 
+            + " ORDER BY o.o_id DESC"
+            + " LIMIT 5"
+            , [], (error, result)=>{
+                if(!error)    resolve(result);
+            })
+        })
+    }
+    
     static async getdondat(dd_maban)
     {
         return new Promise(resolve =>{
@@ -9,42 +23,15 @@ class DonDatModel{
             + " where o.o_s_id = s.s_id" 
             + " AND o_t_id = ?"
             + " ORDER BY o.o_id DESC"
+            + " LIMIT 5"
             , [dd_maban], (error, result)=>{
                 if(!error)    resolve(result);
             })
-
-            // db.query("Select * From dondat" +
-            // " where dd_maban = ?" +
-            // " and dd_id = (Select MAX(dd_id) from dondat where dd_maban = ?)", [b_id, b_id], (error, result)=>{
-            //     if(!error)    resolve(result);
-            // })
-
-            // db.query("Select distinct dondat.dd_id, dondat.dd_maban, chitietdondat.ctdd_soluong, chitietdondat.ctdd_giatien, sanpham.sp_ten"
-            // + " From dondat, chitietdondat, sanpham"
-            // + " where dondat.dd_id = chitietdondat.ctdd_madd"
-            // + " and chitietdondat.ctdd_masp = sanpham.sp_id"
-            // + " and dondat.dd_maban = ?" 
-            // + " ORDER BY chitietdondat.ctdd_id DESC", [b_id], (error, result)=>{
-            //     if(!error)    resolve(result);
-            // })
         })
     }
 
     static async GetDSChoPhaChe()
     {
-        // return new Promise(resolve =>{
-        //     db.query("SELECT o.o_id, o.o_t_id, o.o_tick, o.o_time, od.od_id, pro.pro_name "
-        //     + " FROM orders o, order_detail od, products pro"
-        //     + " WHERE o.o_id = od.od_o_id"
-        //     + " AND od.od_pro_id = pro.pro_id"
-        //     + " AND o.o_post = 1"
-        //     + " AND o.o_tick = 0"
-        //     + " ORDER BY o.o_id DESC", [], (err, result)=>{
-        //         if(!err)
-        //             resolve(result);
-        //     })
-        // })
-
         return new Promise(resolve =>{
             db.query("SELECT *"
             + " FROM orders"
