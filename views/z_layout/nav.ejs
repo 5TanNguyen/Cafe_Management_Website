@@ -32,7 +32,7 @@
   --title-color: hsl(var(--hue), 12%, 15%);
   --text-color: hsl(var(--hue), 8%, 35%);
   --body-color: hsl(var(--hue), 100%, 99%);
-  --container-color: #FFF;
+  --nav_container-color: #FFF;
 
   /*========== Font and typography ==========*/
   --body-font: 'Open Sans', sans-serif;
@@ -101,7 +101,7 @@ img {
 }
 
 /*=============== LAYOUT ===============*/
-.container {
+.nav_container {
   max-width: 968px;
   /* margin-left: 1rem; */
   margin-right: 1rem;
@@ -113,7 +113,7 @@ img {
   top: 0;
   left: 0;
   width: 100%;
-  background-color: var(--container-color);
+  background-color: var(--nav_container-color);
   z-index: var(--z-fixed);
   transition: .4s;
 }
@@ -141,7 +141,7 @@ img {
     position: fixed;
     bottom: 0;
     left: 0;
-    background-color: var(--container-color);
+    background-color: var(--nav_container-color);
     box-shadow: 0 -1px 12px hsla(var(--hue), var(--sat), 15%, 0.15);
     width: 100%;
     height: 4rem;
@@ -150,6 +150,10 @@ img {
     align-content: center;
     border-radius: 1.25rem 1.25rem 0 0;
     transition: .4s;
+  }
+
+  .nav_container{
+    padding: 10px;
   }
 }
 
@@ -265,54 +269,141 @@ ol, ul {
 
 /* For large devices */
 @media screen and (min-width: 1024px) {
-  .container {
+  .nav_container {
     margin-left: auto;
     margin-right: auto;
   }
 }
 
+/* Camera */
+.camera-popup {
+    position: fixed;
+    top: 100%; /* Bắt đầu từ bên ngoài màn hình */
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999; /* Đặt nó lên trên cùng */
+    transition: top 0.5s ease; /* Thêm hiệu ứng trượt */
+}
+
+.camera-popup.active {
+    top: 0; /* Di chuyển vào vị trí hiển thị */
+}
+
+.popup-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+}
+
+#video {
+    width: 100%;
+    height: auto;
+    transform: scale(-1, 1); /* Phản chiếu theo chiều ngang */
+}
+
+#capture-btn {
+    margin-top: 10px;
+}
+
+.arrow-icon {
+    position: absolute; 
+    top: -25px; 
+    /* left: 10px;  */
+    color: var(--first-color); 
+    /* font-size: 1.5rem; */
+}
+
+.btn-download {
+    display: inline-block; /* Để nút nằm trong dòng */
+    padding: 10px 15px; /* Khoảng cách bên trong nút */
+    background-color: var(--first-color); /* Màu nền của nút */
+    color: white; /* Màu chữ */
+    border: none; /* Không có đường viền */
+    border-radius: 5px; /* Bo tròn góc */
+    font-size: 1rem; /* Kích thước chữ */
+    text-align: center; /* Căn giữa chữ */
+    text-decoration: none; /* Không gạch chân */
+    transition: background-color 0.3s, transform 0.2s; /* Hiệu ứng chuyển màu và biến đổi */
+}
+
+.btn-download:hover {
+    background-color: var(--first-color-alt); /* Màu nền khi hover */
+    transform: scale(1.05); /* Tăng kích thước khi hover */
+}
+
+
     </style>
     <body>
         <!--=============== HEADER ===============-->
         <header class="header" id="header">
-            <nav class="nav container">
-                <a href="#" class="nav__logo">Marlon</a>
+            <nav class="nav nav_container">
+                <a href="#" class="nav__logo">5tan</a>
 
                 <div class="nav__menu" id="nav-menu">
                     <ul class="nav__list">
                         <li class="nav__item">
                             <a href="/ban" class="nav__link active-link">
-                                <i class='bx bx-home-alt nav__icon'></i>
-                                <span class="nav__name">Bài viết</span>
+                                <!-- <i class='bx bx-home-alt nav__icon'></i> -->
+                                <i class='bx bx-table nav__icon'></i>
+                                <span class="nav__name">Bàn</span>
                             </a>
                         </li>
                         
                         <li class="nav__item">
                             <a href="#about" class="nav__link">
-                                <i class='bx bx-group nav__icon' ></i>
-                                <span class="nav__name">Bạn bè</span>
+                                <!-- <i class='bx bx-group nav__icon' ></i> -->
+                                <i class='bx bxs-hourglass-bottom nav__icon'></i>
+                                <span class="nav__name">Pha chế</span>
                             </a>
                         </li>
 
-                        <li class="nav__item">
-                            <a href="#skills" class="nav__link">
+                        <!-- <li class="nav__item">
+                            <a href="/toi" class="nav__link">
                                 <i class='bx bx-user nav__icon'></i>
-                                <!-- <i class='bx bx-joystick' ></i> -->
                                 <span class="nav__name">Tôi</span>
                             </a>
-                        </li>
+                        </li> -->
+                        
+                        <li class="nav__item" style="position: relative;"> <!-- Thêm style position relative -->
+                          <a href="/toi" class="nav__link">
+                              <i class='bx bx-user nav__icon'></i>
+                              <span class="nav__name">Tôi</span>
+                          </a>
+                          <i class='bx bxs-up-arrow nav__icon arrow-icon' style="cursor: pointer;"></i> <!-- Mũi tên hướng lên -->
+                      </li>
+                      
+                        <!-- Popup Camera -->
+                        <div id="camera-popup" class="camera-popup" style="display: none;">
+                            <div class="popup-content">
+                                <video id="video" autoplay></video>
+                                <button id="capture-btn">Chụp</button>
+                                <canvas id="canvas" style="display: none;"></canvas>
+                                <a id="download-link" class="btn-download" style="display: none;">Download</a>
+                                <button id="close-popup">Đóng</button>
+                            </div>
+                        </div>
+                      
+                      
+                      
 
                         <li class="nav__item">
                             <a href="#portfolio" class="nav__link">
                                 <i class='bx bx-notification nav__icon'></i>
-                                <span class="nav__name">Thông báo</span>
+                                <span class="nav__name">Tin</span>
                             </a>
                         </li>
 
                         <li class="nav__item">
                             <a href="#contactme" class="nav__link">
-                                <i class='bx bx-cog nav__icon' ></i>
-                                <span class="nav__name">Cài đặt</span>
+                                <!-- <i class='bx bx-cog nav__icon' ></i> -->
+                                <i class='bx bx-money-withdraw nav__icon' ></i>
+                                <span class="nav__name">Phí</span>
                             </a>
                         </li>
                     </ul>
@@ -323,23 +414,23 @@ ol, ul {
         </header>
 
         <!-- <main>
-            <section class="container section section__height" id="home">
+            <section class="nav_container section section__height" id="home">
                 <h2 class="section__title">Home</h2>
             </section>
 
-            <section class="container section section__height" id="about">
+            <section class="nav_container section section__height" id="about">
                 <h2 class="section__title">About</h2>
             </section>
 
-            <section class="container section section__height" id="skills">
+            <section class="nav_container section section__height" id="skills">
                 <h2 class="section__title">Skills</h2>
             </section>
 
-            <section class="container section section__height" id="portfolio">
+            <section class="nav_container section section__height" id="portfolio">
                 <h2 class="section__title">Portfolio</h2>
             </section>
 
-            <section class="container section section__height" id="contactme">
+            <section class="nav_container section section__height" id="contactme">
                 <h2 class="section__title">Contactme</h2>
             </section>
         </main> -->
@@ -376,6 +467,68 @@ ol, ul {
             }
             window.addEventListener('scroll', scrollHeader)
 
+        </script>
+
+        <script>
+          // Nhấn vào mũi tên để mở popup camera
+          document.querySelector('.arrow-icon').addEventListener('click', function () {
+              document.getElementById('camera-popup').style.display = 'flex';
+              startCamera();
+          });
+
+          // Nhấn vào mũi tên để mở popup camera
+          document.querySelector('.arrow-icon').addEventListener('click', function () {
+              document.getElementById('camera-popup').classList.add('active'); // Thêm lớp active
+              startCamera();
+          });
+
+          // Đóng popup camera
+          document.getElementById('close-popup').addEventListener('click', function () {
+              stopCamera();
+              document.getElementById('camera-popup').classList.remove('active'); // Xóa lớp active
+          });
+
+
+          // Khởi tạo camera
+          async function startCamera() {
+              const video = document.getElementById('video');
+              const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+              video.srcObject = stream;
+          }
+
+          // Dừng camera
+          function stopCamera() {
+              const video = document.getElementById('video');
+              const stream = video.srcObject;
+              if (stream) {
+                  const tracks = stream.getTracks();
+                  tracks.forEach(track => track.stop());
+              }
+              video.srcObject = null;
+          }
+
+          // Chụp ảnh
+          document.getElementById('capture-btn').addEventListener('click', function () {
+              const canvas = document.createElement('canvas');
+              const video = document.getElementById('video');
+              canvas.width = video.videoWidth;
+              canvas.height = video.videoHeight;
+              const context = canvas.getContext('2d');
+              context.drawImage(video, 0, 0);
+              
+              // Tạo liên kết download
+              const downloadLink = document.getElementById('download-link');
+              downloadLink.href = canvas.toDataURL('image/png');
+              downloadLink.download = 'photo.png';
+              downloadLink.style.display = 'inline-block'; // Hiện nút download
+          });
+
+          // Đóng popup camera
+          document.getElementById('close-popup').addEventListener('click', function () {
+              stopCamera();
+              document.getElementById('camera-popup').classList.remove('active'); // Xóa lớp active
+              document.getElementById('download-link').style.display = 'none'; // Ẩn nút download
+          });
         </script>
     </body>
 </html>

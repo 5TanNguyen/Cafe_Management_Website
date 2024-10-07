@@ -81,7 +81,7 @@ class ThongKeModel {
     static async CreateThongKe(s_name, s_import, s_export, s_profit, s_date)
     {
         return new Promise( resolve=>{
-            db.query("INSERT INTO statistical(s_id, s_name, s_import, s_export, s_profit, s_date, s_br_id)"
+            db.query("INSERT INTO statistical(s_id, s_name, s_import, s_export, s_profit, s_date, br_id)"
             + " VALUES(NULL, ?, ?, ?, ?, ?, 1)", [s_name, s_import, s_export, s_profit, s_date], (err, result)=>{
                 if(!err) resolve(true);
             })

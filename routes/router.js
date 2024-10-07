@@ -32,6 +32,7 @@ const authController = require('../controllers/Sequelize/AuthController');
 const productnController = require('../controllers/Sequelize/ProductnController');
 const cartController = require('../controllers/Sequelize/CartController');
 const orderController = require('../controllers/Sequelize/OrderController');
+const toiController = require('../controllers/Sequelize/ToiController');
 
 let initWebRoutes = (app) => {
     router.get("/5tan", (req, res, next) => {
@@ -41,6 +42,8 @@ let initWebRoutes = (app) => {
 
     //router.get("/dangnhap", dangnhapController.GetDangNhapForm)
     //router.post("/dangnhap", dangnhapController.DangNhap)
+
+    // Sản phẩm
     router.get("/sanpham", sanphamController.getAllSanPham)
     router.get("/themsanpham", sanphamController.showAddSanPham)
     router.post("/themsanpham", SanPhamController.addSanPham)
@@ -50,6 +53,8 @@ let initWebRoutes = (app) => {
     router.post("/suasanpham", sanphamController.editSanPham)
     router.post("/chinhgiasanpham", sanphamController.chinhgiaSanPham);
     router.post("/themgiasanpham", sanphamController.themgiaSanPham);
+
+    // Bàn
     router.get("/ban", banController.getAllBan)
     router.get("/songuoi", dondatController.getSoNguoi)
     router.post("/songuoi", dondatController.confirmDonDat)
@@ -60,37 +65,55 @@ let initWebRoutes = (app) => {
     router.get("/chitietdondat", dondatController.getChiTietDonDat)
     // router.post("/thanhtoan", dondatController.setStatusOrder)
     router.get("/bantrong", banController.setEmptyTable)
+
+    // Nhânv viên
     router.get("/nhanvien", nhanvienController.getAllNhanVien);
     router.post("/themnhanvien", nhanvienController.addNhanVien);
     router.post("/suanhanvien", nhanvienController.editNhanVien);
     router.post("/xoanhanvien", nhanvienController.deleteNhanVien);
+
+    // Chấm công
     router.post("/chamcong", nhanvienController.postChamCong);
+
+    // Đơn nhập
     router.get("/donnhap", donnhapController.getDonNhap);
     router.post("/taodonnhap", donnhapController.createDonNhap);
     router.get("/chitietdonnhap", donnhapController.getChiTietDonNhap);
     router.post("/themchitietdonnhap", donnhapController.createChiTietDonNhap);
     router.post("/xachnhannhanhang", NguyenLieuController.updateNguyenLieu);
+
+    // Pha chế
     router.get("/cachphache", PhaCheController.getCachPhaCheById);
     router.get("/chichsuacachphache", PhaCheController.getEditPhaCheForm)
     router.post("/suacachphache", PhaCheController.PostEditPhaChe)
     router.post("/themcachphache", PhaCheController.addCachPhaChe);
     router.post("/themchitietphache", PhaCheController.addChiTietPhaChe);
     router.get("/xoachitietphache", PhaCheController.deleteChiTietPhaChe);
+
+    // Nguyên liệu
     router.get("/nguyenlieu", NguyenLieuController.getNguyenLieu);
     router.post("/themnguyenlieu", NguyenLieuController.addNguyenLieu);
     router.post("/suanguyenlieu", NguyenLieuController.editNguyenLieu);
     router.post("/trunguyenlieu", NguyenLieuController.MinusNguyenLieu);
     router.post("/themgianguyenlieu", NguyenLieuController.themgiaNguyenLieu);
     router.post("/chinhgianguyenlieu", NguyenLieuController.chinhgiaNguyenLieu);
+
+    // Thống kê
     router.get("/thongke", ThongKeController.getThongKe);
     // router.get("/chitietthongke", ThongKeController.getChiTietThongKe);
     router.post("/taothongke", ThongKeController.createThongKe);
     router.post("/thongketheongay", ThongKeController.getThongKeTheoNgay);
+
+    // Phí phát sinh
     router.get("/phiphatsinh", PhiPhatSinhController.getPhiPhatSinh);
     router.post("/themphiphatsinh", PhiPhatSinhController.addPhiPhatSinh);
+
+    // DS pha chế
     router.get("/danh-sach-cho-pha-che", PhaCheController.getDSChoPhaChe);
     router.get("/chitietdondatpc", DonDatController.getChiTietDonDatPC);
     router.get("/phachexong", PhaCheController.getPhaCheXong);
+
+    // Lịch
     router.get("/lich", LichController.getLich);
     router.post("/taolich", LichController.createLich);
     router.get("/chitietlich", LichController.getChiTietLich);
@@ -98,6 +121,8 @@ let initWebRoutes = (app) => {
     router.post("/taochitietlichtudong", LichController.createChiTietLichTuDong);
     router.post('/xoachitietlich', LichController.deleteChiTietLich);
     router.get('/dangkilichh', LichController.dangkiLich);
+
+    // Ví
     router.get('/vi', ViController.getViByUserId);
     router.post('/themvi', ViController.addVi);
     router.post('/taodonrut', PhienGiaoDichController.createDonRut);
@@ -108,6 +133,8 @@ let initWebRoutes = (app) => {
     router.post('/hinhthucphat', TruyCapTraiPhepController.postHinhThucPhat);
     router.get('/socket', banController.testSocket);
 
+    // Tôi
+    router.get('/toi', toiController.getTrangCaNhan);
 
     // Sequelize
     router.get('/customer-list', customerController.getAllCustomer);

@@ -677,6 +677,7 @@ app.get('/chitietthongke', async function(req, res)
         var ib = await DonNhapModel.GetDonNhapByS_Id(s_id);
 
         var stt = await ThongKeModel.GetThongKeById(s_id);
+
         var pps = await PhiPhatSinhModel.GetPhiPhatSinhById(s_id);
 
         var br = await ChiNhanhModel.GetChiNhanh();
@@ -704,6 +705,7 @@ app.post('/thongketheongay_chinhanh', async function(req, res)
         var ib = await DonNhapModel.GetDonNhapByS_Id_and_br_id(s_id, br_id);
 
         var stt = await ThongKeModel.GetThongKeById(s_id);
+
         var pps = await PhiPhatSinhModel.GetPhiPhatSinhById_and_br_id(s_id, br_id);
 
         var br = await ChiNhanhModel.GetChiNhanh();

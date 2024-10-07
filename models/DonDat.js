@@ -8,7 +8,7 @@ class DonDatModel{
             + " FROM orders o, statistical s"
             + " where o.o_s_id = s.s_id" 
             + " ORDER BY o.o_id DESC"
-            + " LIMIT 5"
+            + " LIMIT 8"
             , [], (error, result)=>{
                 if(!error)    resolve(result);
             })

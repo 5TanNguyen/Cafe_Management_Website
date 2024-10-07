@@ -72,6 +72,8 @@ class ThongKeController {
 
             var s_id = req.query.s_id;
 
+            res.send(s_id);
+
             var tk = await ChamCongModel.GetChamCongByS_Id(s_id);
 
             var o = await DonDatModel.GetDonDatByS_ID(s_id);
@@ -81,7 +83,7 @@ class ThongKeController {
             var stt = await ThongKeModel.GetThongKeById(s_id);
             var pps = await PhiPhatSinhModel.GetPhiPhatSinhById(s_id);
 
-            res.send(pps);
+           
             // res.render("thongke/chitietthongke", { tk, o, ib, stt, pps});
         }
     }
