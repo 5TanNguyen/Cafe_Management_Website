@@ -29,12 +29,7 @@ class BanController {
         // }
         // else
         {
-            // console.log(req.session.u_d_id);
-
             var results  = await BanModel.getbans();
-
-            console.log('Bàn');
-            console.log(results);
 
             var stt = await ThongKeModel.GetThongKe();
 

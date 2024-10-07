@@ -288,6 +288,8 @@ class DonDatController{
             var s_id = req.body.s_id;
             var br_id = req.body.br_id;
 
+            console.log(t_id);
+
             BanModel.set_b_num(t_id, num);
             DonDatModel.setStatusDonDat(t_id);
 
