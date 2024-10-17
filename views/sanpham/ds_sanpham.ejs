@@ -10,9 +10,6 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
     <link rel="stylesheet" href="/css/style.css">
-    <script src="/js/input_validate.js"></script>
-
-    <%- include ('../z_layout/header.ejs') %>
 </head>
 <body>
     <%- include('../z_layout/nav') %>
@@ -254,7 +251,7 @@
                         <!-- <td> <%- test[i].sp_mota %> </td> -->
                        
                         <td>                        
-                            <a href="#divUD<%- test[i].pro_id %>">SỬA</a>
+                            <a href="#divUD<%- test[i].pro_id %>"><i class="fa-solid fa-pen-to-square"></i></a>
                             <div class="UD_overplay" id="divUD<%- test[i].pro_id %>">
                                 <!-- <input name="pro_name" type="text" placeholder="" value="<%- test[i].pro_name %>"> -->
 
@@ -290,7 +287,7 @@
                         <td>
                             <!-- <a href="/xoasanpham?pro_id=<%- test[i].pro_id %>">DELETE</a> -->
                         
-                            <a href="#divDel<%- test[i].pro_id %>">XÓA</a>
+                            <a href="#divDel<%- test[i].pro_id %>"><i class="fa-solid fa-trash"></i></a>
                             <div class="overplay" id="divDel<%- test[i].pro_id %>">
                                 <!-- <input name="pro_name" type="text" placeholder="" value="<%- test[i].pro_name %>"> -->
 
@@ -321,7 +318,7 @@
         </table>
     </div>
 
-   
+    <script src="/js/input_validate.js"></script>
     <%- include ('../z_layout/footer.ejs') %>
 </body>
 </html> 

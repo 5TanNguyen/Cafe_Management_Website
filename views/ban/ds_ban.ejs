@@ -206,14 +206,6 @@ h1 {
     </style>
 </head>
 <body>
-    <!-- <% if(session.u_d_id == 1){ %> -->
-        <%- include('../z_layout/nav') %>
-    <!-- <% }else if(session.u_d_id == 2 ){ %>
-        <%- include('../z_layout/nav_2') %>
-    <% }else if(session.u_d_id == 3 ){ %>
-        <%- include('../z_layout/nav_3') %>
-    <% } %> -->
-    
     <div class="ds_ban_container">
         <!-- Sidebar chứa danh sách đơn đặt -->
         <div class="sidebar" id="sidebar">
@@ -314,7 +306,7 @@ h1 {
                         <% } %>
                     <% } %>
 
-                <li class="reservation-item">
+                <!-- <li class="reservation-item">
                     <strong>Bàn 5</strong>
                     <p>Khách hàng: Lê Văn C</p>
                     <p>Thời gian: 09:00 - 11:00</p>
@@ -343,7 +335,7 @@ h1 {
                     <strong>Bàn 4</strong>
                     <p>Khách hàng: Hoàng Thị E</p>
                     <p>Thời gian: 16:00 - 18:00</p>
-                </li>
+                </li> -->
         
                 <% }else { %>
                     <h1>Data Not Found !</h1>
@@ -352,7 +344,7 @@ h1 {
         </div>
     </div>
 
-    <button class="toggle-btn" onclick="toggleSidebar()">☰</button>
+    <button class="toggle-btn" onclick="toggleSidebar()"><i id="toggleIcon" class="fa-solid fa-chevron-right"></i></button>
 
     <script>
         // Hàm để vẽ biểu đồ tròn
@@ -378,6 +370,17 @@ h1 {
         function toggleSidebar() {
             var sidebar = document.getElementById('sidebar');
             sidebar.classList.toggle('visible');
+
+            var toggleIcon = document.getElementById('toggleIcon');
+            if(toggleIcon.classList.contains('fa-chevron-right')){
+                toggleIcon.classList.remove('fa-chevron-right');
+                toggleIcon.classList.add('fa-chevron-left');
+            }else{
+                toggleIcon.classList.remove('fa-chevron-left');
+                toggleIcon.classList.add('fa-chevron-right');
+            }
+
+            // alert('Toggle');
         }
 
         // Vẽ biểu đồ khi trang được tải

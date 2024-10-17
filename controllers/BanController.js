@@ -36,8 +36,21 @@ class BanController {
             var br = await ChiNhanhModel.GetChiNhanh();
 
             var dd = await DonDatModel.getAllDonDat();
-            if(results)
-                res.render('ban/ds_ban', {test : results, stt, br, dd}); 
+            if(results){
+                res.render('z_layout/layout', {
+                    test: results, 
+                    stt: stt, 
+                    br: br, 
+                    dd: dd,
+                    body: '../ban/ds_ban' // truyền đường dẫn của partial vào layout
+                });
+            }
+            else
+            {
+                res.status(404).send('No results found');
+            }
+                    
+            
         }
     }
 
