@@ -4,7 +4,7 @@ class NhanVienModel{
     static async getNhanVienByUsername(usrn, pwd)
     {
         return new Promise(resolve => {
-            db.query("SELECT * FROM `users`"
+            db.query("SELECT * FROM users"
             + " WHERE u_username = ?"
             + " AND u_password = ?", [usrn, pwd], (error, result)=>{
                 if(!error)

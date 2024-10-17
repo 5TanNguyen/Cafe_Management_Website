@@ -437,6 +437,9 @@ app.post('/dangnhap',async function(req, res){
 
     var x = await NhanVienModel.getNhanVienByUsername(u_username, u_password);
     
+    console.log(u_username);
+    console.log(u_password);
+    console.log('Đăng nhập');
     console.log(x);
 
     // return;

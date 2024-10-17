@@ -1,0 +1,15 @@
+ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'Redtoso5';
+-- or
+CREATE USER 'foo'@'%' IDENTIFIED WITH mysql_native_password BY 'bar';
+-- then
+FLUSH PRIVILEGES;
+
+
+---- INSTALL PROJECT IN NEW PLACE ----
+
+yarn add injects (chạy trong cmd administratior)
+delete node_modules
+delete package-lock.json
+npm install
+
+---- INSTALL PROJECT IN NEW PLACE ----
