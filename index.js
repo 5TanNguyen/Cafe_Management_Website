@@ -437,12 +437,6 @@ app.post('/dangnhap',async function(req, res){
 
     var x = await NhanVienModel.getNhanVienByUsername(u_username, u_password);
     
-    console.log(u_username);
-    console.log(u_password);
-    console.log('Đăng nhập');
-    console.log(x);
-
-    // return;
     if(x == false){
         req.session.u_name = null;
         req.session.u_id = null;
@@ -504,9 +498,12 @@ app.post('/dangnhap',async function(req, res){
         {
             const data = req.body;
             console.log({data});
-            const accessToken = jwt.sign(data, process.env.ACCESS_TOKEN_SECRET, { 
-                expiresIn: '30s',
-            });
+            const accessToken = jwt.sign(data, process.env.ACCESS_TOKEN_SECRET
+                // , 
+                // { 
+                // expiresIn: '30s',
+                // }
+            );
 
             console.log('accessToken: ' + accessToken);        
 

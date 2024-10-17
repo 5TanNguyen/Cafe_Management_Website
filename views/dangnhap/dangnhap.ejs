@@ -1,36 +1,68 @@
 <!DOCTYPE html>
 <html lang="en">
+    <head>
+        <!-- Design by foolishdeveloper.com -->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Login Page</title>
+        
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
+        <link rel="icon" href="/assets/images/cheems.png" type="image/x-icon">
 
-<head>
-    <!-- Design by foolishdeveloper.com -->
-    <title>Login Page</title>
-    
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
-    <link rel="icon" href="/assets/images/cheems.png" type="image/x-icon">
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+        <link rel="stylesheet" href="/css/dangnhap.css">
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
+    </head>
 
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <link rel="stylesheet" href="/css/dangnhap.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
-</head>
+    <body>
+        <div class="background">
+            <div class="shape"></div>
+            <div class="shape"></div>
+        </div>
 
-<body>
+        <% if(message.length > 0){ %>
+            <div class="popup">
+                <div class="contentBox">
+                    <h4 class="text-center">THÔNG BÁO</h4>
+                    <div class="close"><button onclick="closeModal()" class="text-center">X</button></div>
+                    <div class="content">
+                        <h5 class="text-center"><%- message %></h5>
+                        <h6 class="text-center">Mời đăng nhập lại !</h6>
+                    </div>
+                </div>
+            </div>
+        <% } %>
+
+        <form action="/dangnhap" method="post" onsubmit="return validate();" class="form-login">
+            <h3>Login Here</h3>
+
+            <label for="username">Email</label>
+            <input type="text" placeholder="Email or Phone" name="u_username" id="u_username" value="admin">
+
+            <label for="password">Password</label>
+            <input type="password" placeholder="Password" id="u_password" name="u_password" value="12345">
+
+            <button type="submit">Log In</button>
+            <div class="social">
+                <div class="go"><i class="fab fa-google"></i> Google</div>
+                <div class="fb"><i class="fab fa-facebook"></i> Facebook</div>
+            </div>
+        </form>
+    </body>
 
     <script>
-        const popup = document.querySelector('.popup');
-        const close = document.querySelector('.close')
-    
-        window.onload = function(){
-            setTimeout(function(){
+        const popup = document.getElementById('popup');
+
+        setTimeout(function() {
+            if (popup) {
                 popup.style.display = "block";
+            }
+        }, 500);
     
-            }, 500)
-        }
-    
-        close.addEventListener('click', ()=>{
+        function closeModal(){
             popup.style.display = "none";
-        })
+        }
     </script>
 
 <script>
@@ -62,42 +94,4 @@
         return true;
     }
 </script>
-
-    <div class="background">
-        <div class="shape"></div>
-        <div class="shape"></div>
-    </div>
-
-    <% if(message.length > 0){ %>
-        <div class="popup">
-            <div class="contentBox">
-                <h4 class="text-center">THÔNG BÁO</h4>
-                <div class="close"><h3 class="text-center">X</h3></div>
-                <div class="content">
-                    <h5 class="text-center"><%- message %></h5>
-                    <h6 class="text-center">Mời đăng nhập lại !</h6>
-                </div>
-            </div>
-        </div>
-    <% } %>
-
-    <form action="/dangnhap" method="post" onsubmit="return validate();">
-    <h3>Login Here</h3>
-
-    <label for="username">Email</label>
-    <input type="text" placeholder="Email or Phone" name="u_username" id="u_username" value="admin">
-
-    <label for="password">Password</label>
-    <input type="password" placeholder="Password" id="u_password" name="u_password" value="12345">
-
-    <button type="submit">Log In</button>
-    <div class="social">
-        <div class="go"><i class="fab fa-google"></i> Google</div>
-        <div class="fb"><i class="fab fa-facebook"></i> Facebook</div>
-    </div>
-    </form>
-</body>
-
-
-
 </html>
