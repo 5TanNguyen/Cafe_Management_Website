@@ -498,9 +498,12 @@ app.post('/dangnhap',async function(req, res){
         {
             const data = req.body;
             console.log({data});
-            const accessToken = jwt.sign(data, process.env.ACCESS_TOKEN_SECRET, { 
-                expiresIn: '30s',
-            });
+            const accessToken = jwt.sign(data, process.env.ACCESS_TOKEN_SECRET
+                // , 
+                // { 
+                // expiresIn: '30s',
+                // }
+            );
 
             console.log('accessToken: ' + accessToken);        
 
