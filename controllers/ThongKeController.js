@@ -40,7 +40,7 @@ class ThongKeController {
             if(stt)
             {
                 req.flash('message', 'Đăng nhập thành công !!');
-                res.render("thongke/ds_thongke", { test : stt, message : req.flash('messsage')})
+                res.render("z_layout/layout", { test : stt, message : req.flash('messsage'), body: '../thongke/ds_thongke'})
                 //res.send(stt);
             }
             else
