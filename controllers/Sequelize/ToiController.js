@@ -9,7 +9,11 @@ const htmlContent = require('../../views/sendMail/template');
 class AuthController {
     static async getTrangCaNhan(req, res){
         try {
-            res.render('toi/toi');
+            let test = '';
+            res.render('z_layout/layout', {
+                test,
+                body: '../toi/toi' // truyền đường dẫn của partial vào layout
+            });
 
         } catch (error) {
             console.log(error);            

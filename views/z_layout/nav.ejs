@@ -405,12 +405,22 @@ ol, ul {
 
 /* Sign Out */
 
+.nav-popup-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 5;
+}
     </style>
     <body>
         <!--=============== HEADER ===============-->
         <header class="header" id="header">
             <nav class="nav nav_container">
-                <a href="#" class="nav__logo">5tan</a>
+                <a href="#about" class="nav__link">5tan</a>
 
                 <div class="nav__menu" id="nav-menu">
                     <ul class="nav__list">
@@ -423,7 +433,7 @@ ol, ul {
                         </li>
                         
                         <li class="nav__item">
-                            <a href="#about" class="nav__link">
+                            <a href="/phache" class="nav__link">
                                 <!-- <i class='bx bx-group nav__icon' ></i> -->
                                 <i class='bx bxs-hourglass-bottom nav__icon'></i>
                                 <span class="nav__name">Pha chế</span>
@@ -476,6 +486,8 @@ ol, ul {
                     </ul>
                 </div>
 
+                <div class="nav-popup-overlay" id="nav-popup-overlay" onclick="closePopup()"></div>
+
                 <div class="nav__img">
                   <img id="dropdownButton"  alt="Ảnh tròn" src="https://cdn.dribbble.com/users/398490/screenshots/2189858/media/1a414d61e882be6e9a169885e1ee2b0d.gif" class="circle-image">
                   <div class="dropdown-content" id="dropdownContent">
@@ -499,63 +511,12 @@ ol, ul {
           </div>
         </div>
 
-        <!-- <main>
-            <section class="nav_container section section__height" id="home">
-                <h2 class="section__title">Home</h2>
-            </section>
-
-            <section class="nav_container section section__height" id="about">
-                <h2 class="section__title">About</h2>
-            </section>
-
-            <section class="nav_container section section__height" id="skills">
-                <h2 class="section__title">Skills</h2>
-            </section>
-
-            <section class="nav_container section section__height" id="portfolio">
-                <h2 class="section__title">Portfolio</h2>
-            </section>
-
-            <section class="nav_container section section__height" id="contactme">
-                <h2 class="section__title">Contactme</h2>
-            </section>
-        </main> -->
-        
-
         <!--=============== MAIN JS ===============-->
         <script>
-                        /*=============== SCROLL SECTIONS ACTIVE LINK ===============*/
-            const sections = document.querySelectorAll('section[id]')
+          document.addEventListener("DOMContentLoaded", function() {
+              // Your script here
+          });
 
-            function scrollActive(){
-                const scrollY = window.pageYOffset
-
-                sections.forEach(current =>{
-                    const sectionHeight = current.offsetHeight,
-                        sectionTop = current.offsetTop - 50,
-                        sectionId = current.getAttribute('id')
-
-                    if(scrollY > sectionTop && scrollY <= sectionTop + sectionHeight){
-                        document.querySelector('.nav__menu a[href*=' + sectionId + ']').classList.add('active-link')
-                    }else{
-                        document.querySelector('.nav__menu a[href*=' + sectionId + ']').classList.remove('active-link')
-                    }
-                })
-            }
-            window.addEventListener('scroll', scrollActive)
-
-
-            /*=============== CHANGE BACKGROUND HEADER ===============*/
-            function scrollHeader(){
-                const header = document.getElementById('header')
-                // When the scroll is greater than 80 viewport height, add the scroll-header class to the header tag
-                if(this.scrollY >= 80) header.classList.add('scroll-header'); else header.classList.remove('scroll-header')
-            }
-            window.addEventListener('scroll', scrollHeader)
-
-        </script>
-
-        <script>
           // Nhấn vào mũi tên để mở popup camera
           document.querySelector('.arrow-icon').addEventListener('click', function () {
               document.getElementById('camera-popup').style.display = 'flex';
@@ -641,18 +602,10 @@ ol, ul {
             let sign_out_modal = document.querySelector('.sign-out-modal');
 
             if(document.querySelector('.sign-out-modal').style.display == 'block'){
-              // sign_out_background.style.width = '100%';
-              // sign_out_background.style.height = '100%';
-              // sign_out_background.style.backgroundColor = '#FFFFF';
-              // sign_out_background.style.zIndex = 101;
-              // sign_out_background.style.backgroundColor = 'rgba(211, 211, 211, 0.5)';
-
-              // sign_out_background.style.backgroundColor = 'rgba(0, 0, 0, 0.8)';
-            }else{
-              sign_out_background.style.width = 0;
-              sign_out_background.style.height = 0;
-              sign_out_background.style.backgroundColor = '';
-              sign_out_background.style.zIndex = 0;
+              document.getElementById('nav-popup-overlay').style.display = 'block';
+            }else
+            {
+              document.getElementById('nav-popup-overlay').style.display = 'none';
             }
           }
         </script>
