@@ -32,7 +32,11 @@ class PhaCheController{
         {
             var dsc = await DonDatModel.GetDSChoPhaChe();
 
-            res.render("phache/ds_chophache", { dsc });
+            res.render("z_layout/layout", 
+                {   dsc,
+                    body: '../phache/ds_chophache'
+                }
+            );
         }
     }
 

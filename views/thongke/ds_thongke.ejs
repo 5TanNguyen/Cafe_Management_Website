@@ -1,177 +1,240 @@
 <body>
-    <br>
-    <h4 class="text-center">Danh Sách Thống Kê</h4>
+  <br />
+  <h4 class="text-center">Danh Sách Thống Kê</h4>
 
-    <script>
-        const nav = document.querySelector('.nav');
-        const toggle_menu = document.querySelector('.toggle_menu');
-        const content = document.querySelector('.content');
-    
-        toggle_menu.onclick = function () {
-            nav.classList.toggle('hide');
-            // nav.classList.toggle('expand');
-            //content.classList.toggle('expand');
-        }
+  <script>
+    const nav = document.querySelector(".nav");
+    const toggle_menu = document.querySelector(".toggle_menu");
+    const content = document.querySelector(".content");
 
-        function handledatechange(){
-                var date_picker = document.getElementById("db").value;
+    toggle_menu.onclick = function () {
+      nav.classList.toggle("hide");
+      // nav.classList.toggle('expand');
+      //content.classList.toggle('expand');
+    };
 
-                // alert("Date" + date_picker);
-        }
-    </script>
-    
+    function handledatechange() {
+      var date_picker = document.getElementById("db").value;
 
-    <div class="container" id="container">
+      // alert("Date" + date_picker);
+    }
+  </script>
 
-        <form action="/thongketheongay" method="POST" class="form-control">
-            
-            <h3 class="text-center">Liệt kê theo ngày</h3>
-            
-            <input name="date_begin" id="db" onchange="handledatechange()" type="date" class="form-control">
+  <div class="container" id="container">
+    <form action="/thongketheongay" method="POST" class="form-control">
+      <h3 class="text-center">Liệt kê theo ngày</h3>
 
-            <input name="date_end" id="de" onchange="handledatechange()" type="date" class="form-control">
+      <input
+        name="date_begin"
+        id="db"
+        onchange="handledatechange()"
+        type="date"
+        class="form-control"
+      />
 
-            <input type="submit" style="width: 100%" class="btn btn-danger">
-        </form>
+      <input
+        name="date_end"
+        id="de"
+        onchange="handledatechange()"
+        type="date"
+        class="form-control"
+      />
 
-        <hr>
-        <a href="#divCreateThongKe" style="width: 100%" class="btn btn-danger">Tạo thống kê mới</a>
+      <input type="submit" style="width: 100%" class="btn btn-danger" />
+    </form>
 
-        <div class="overplay" id="divCreateThongKe">
-            <div class="wrapper">
-                <h2 class="text-center">Tạo Thống Kê</h2>
-                <a href="#" class="close">&times;</a>
-                <div class="content">
-                    <div class="container">
-                        <form action="/taothongke" method="POST" onsubmit="return validate_ds_thongke();">
-                            <label for="">Tên Thống Kê</label>
-                            <input hidden type="text" value="<%- session.u_id %>" name="tk_u_id">
-                            <input type="text" value="" name="s_name" id="s_name" placeholder="Nhập tên thống kê">
-                            <label id="lblsname" style="color: red; visibility: hidden;">KHÔNG ĐƯỢC BỎ TRỐNG !</label>
-                            
-                            <% var currentdate = new Date(); %>
-                            <% var datetime = currentdate.getFullYear() + "-" + (currentdate.getMonth()+1) + "-" + currentdate.getDate()  + "  "  + currentdate.getHours() + ":"   + currentdate.getMinutes() + ":"  + currentdate.getSeconds(); %>
-                            <br>
-                            <label for="">Ngày thống kê</label>
-                            <input type="text" name="s_date" value="<%= datetime %>" readonly>
-        
-                            <input type="submit" class="btn btn-outline-danger" value="Tạo" style="width: 100%;">
-                        </form>
-                    </div>
-                </div>
-            </div>
+    <hr />
+    <a href="#divCreateThongKe" style="width: 100%" class="btn btn-danger"
+      >Tạo thống kê mới</a
+    >
+
+    <div class="overplay" id="divCreateThongKe">
+      <div class="wrapper">
+        <h2 class="text-center">Tạo Thống Kê</h2>
+        <a href="#" class="close">&times;</a>
+        <div class="content">
+          <div class="container">
+            <form
+              action="/taothongke"
+              method="POST"
+              onsubmit="return validate_ds_thongke();"
+            >
+              <label for="">Tên Thống Kê</label>
+              <input
+                hidden
+                type="text"
+                value="<%- session.u_id %>"
+                name="tk_u_id"
+              />
+              <input
+                type="text"
+                value=""
+                name="s_name"
+                id="s_name"
+                placeholder="Nhập tên thống kê"
+              />
+              <label id="lblsname" style="color: red; visibility: hidden"
+                >KHÔNG ĐƯỢC BỎ TRỐNG !</label
+              >
+
+              <% var currentdate = new Date(); %> <% var datetime =
+              currentdate.getFullYear() + "-" + (currentdate.getMonth()+1) + "-"
+              + currentdate.getDate() + " " + currentdate.getHours() + ":" +
+              currentdate.getMinutes() + ":" + currentdate.getSeconds(); %>
+              <br />
+              <label for="">Ngày thống kê</label>
+              <input
+                type="text"
+                name="s_date"
+                value="<%= datetime %>"
+                readonly
+              />
+
+              <input
+                type="submit"
+                class="btn btn-outline-danger"
+                value="Tạo"
+                style="width: 100%"
+              />
+            </form>
+          </div>
         </div>
-        <br>
-        <h3>Chọn các cột để ẩn/hiện:</h3>
-        <label id="tk_ten"><input type="checkbox" class="toggle-column" data-column="0" checked> Tên</label>
-        <label><input type="checkbox" class="toggle-column" data-column="1" checked> Nhập</label>
-        <label><input type="checkbox" class="toggle-column" data-column="2" checked> Xuất</label>
-        <label><input type="checkbox" class="toggle-column" data-column="3" checked> Lợi nhuận</label>
-        <label id="tk_ngay"><input type="checkbox" class="toggle-column" data-column="4" checked> Ngày</label>
-        <label><input type="checkbox" class="toggle-column" data-column="5" checked> Chi tiết</label>
-        
-        <table id="myTable" class="tableThongKe">
-            <thead class="table-light">
-                <td>Tên TK</td>
-                <td>Nhập</td>
-                <td>Xuất</td>
-                <td>Lợi nhuận</td>
-                <td>Ngày</td>
-                <td>Chi Tiết</td>
-            </thead>
-
-            <% if(test.length > 0){ %>
-                <% for(var i = 0; i < test.length; i++){ %>
-                    <tr>
-                        <td>
-                            <%- test[i].s_name %>
-                        </td>
-
-                        <td>
-                            <%- Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(test[i].s_import) %>
-                        </td>
-
-                        <td>
-                            <%- Intl.NumberFormat('vi-VN', {style: 'currency', currency: 'VND'}).format(test[i].s_export) %>
-                        </td>
-
-                        <td>
-                            <%- Intl.NumberFormat('vi-VN', {style: 'currency', currency: 'VND'}).format(test[i].s_profit) %>
-                        </td>
-
-                        <td>
-                            <%- Intl.DateTimeFormat("vi-VN", {dateStyle: "short"}).format( test[i].s_date ) %>
-                        </td>
-
-                        <td>
-                            <a name="buttonDetail" class="btn btn-primary" href="/chitietthongke?s_id=<%- test[i].s_id %>"><i class="fa-solid fa-circle-info"></i></a>
-                        </td>
-                    </tr>
-                <% } %>
-            <% } else { %>
-                <p>Không có dữ liệu</p>
-            <% } %>
-        </table>
+      </div>
     </div>
+    <br />
+    <h3>Chọn các cột để ẩn/hiện:</h3>
+    <label id="tk_ten"
+      ><input type="checkbox" class="toggle-column" data-column="0" checked />
+      Tên</label
+    >
+    <label
+      ><input type="checkbox" class="toggle-column" data-column="1" checked />
+      Nhập</label
+    >
+    <label
+      ><input type="checkbox" class="toggle-column" data-column="2" checked />
+      Xuất</label
+    >
+    <label
+      ><input type="checkbox" class="toggle-column" data-column="3" checked />
+      Lợi nhuận</label
+    >
+    <label id="tk_ngay"
+      ><input type="checkbox" class="toggle-column" data-column="4" checked />
+      Ngày</label
+    >
+    <label
+      ><input type="checkbox" class="toggle-column" data-column="5" checked />
+      Chi tiết</label
+    >
 
-    <script>
-        // Hàm kiểm tra và thêm class
-        function checkResponsive() {
-            // Lấy thẻ div có class="divt"
-            var divElement = document.querySelector('.tableThongKe');
-            var tk_ten = document.getElementById('tk_ten');
-            var tk_ngay = document.getElementById('tk_ngay');
-            const table = document.getElementById("myTable");
+    <table id="myTable" class="tableThongKe table">
+      <thead class="table-light">
+        <td>Tên TK</td>
+        <td>Nhập</td>
+        <td>Xuất</td>
+        <td>Lợi nhuận</td>
+        <td>Ngày</td>
+        <td>Chi Tiết</td>
+      </thead>
 
-            // Kiểm tra nếu thẻ tồn tại
-            if (divElement) {
-                // Kiểm tra chiều rộng cửa sổ
-                if (window.innerWidth <= 867) {
-                    // Thêm class 'responsive' nếu màn hình <= 867px
-                    divElement.classList.remove('table');
+      <% if(test.length > 0){ %> <% for(var i = 0; i < test.length; i++){ %>
+      <tr>
+        <td><%- test[i].s_name %></td>
 
-                    tk_ten.style.display = 'none'; 
-                    tk_ten.checked = false;
-                    toggleColumn(0, false);
+        <td>
+          <%- Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND'
+          }).format(test[i].s_import) %>
+        </td>
 
-                    tk_ngay.style.display = 'none';
-                    tk_ngay.checked = false;
-                    toggleColumn(4, false);
-                } else {
-                    // Xóa class 'responsive' nếu màn hình > 867px
-                    divElement.classList.add('table');
-                }
-            }
+        <td>
+          <%- Intl.NumberFormat('vi-VN', {style: 'currency', currency:
+          'VND'}).format(test[i].s_export) %>
+        </td>
+
+        <td>
+          <%- Intl.NumberFormat('vi-VN', {style: 'currency', currency:
+          'VND'}).format(test[i].s_profit) %>
+        </td>
+
+        <td>
+          <%- Intl.DateTimeFormat("vi-VN", {dateStyle: "short"}).format(
+          test[i].s_date ) %>
+        </td>
+
+        <td>
+          <a
+            name="buttonDetail"
+            class="btn btn-primary"
+            href="/chitietthongke?s_id=<%- test[i].s_id %>"
+            ><i class="fa-solid fa-circle-info"></i
+          ></a>
+        </td>
+      </tr>
+      <% } %> <% } else { %>
+      <p>Không có dữ liệu</p>
+      <% } %>
+    </table>
+  </div>
+
+  <script>
+    // Hàm kiểm tra và thêm class
+    function checkResponsive() {
+      // Lấy thẻ div có class="divt"
+      var divElement = document.querySelector(".tableThongKe");
+      var tk_ten = document.getElementById("tk_ten");
+      var tk_ngay = document.getElementById("tk_ngay");
+      const table = document.getElementById("myTable");
+
+      // Kiểm tra nếu thẻ tồn tại
+      if (divElement) {
+        // Kiểm tra chiều rộng cửa sổ
+        if (window.innerWidth <= 867) {
+          // Thêm class 'responsive' nếu màn hình <= 867px
+          //   divElement.classList.remove("table");
+
+          tk_ten.style.display = "none";
+          tk_ten.checked = false;
+          toggleColumn(0, false);
+
+          tk_ngay.style.display = "none";
+          tk_ngay.checked = false;
+          toggleColumn(4, false);
+        } else {
+          // Xóa class 'responsive' nếu màn hình > 867px
+          divElement.classList.add("table");
         }
+      }
+    }
 
-        // Gọi hàm ngay khi trang được tải
-        window.addEventListener('load', checkResponsive);
+    // Gọi hàm ngay khi trang được tải
+    window.addEventListener("load", checkResponsive);
 
-        // Gọi hàm mỗi khi kích thước cửa sổ thay đổi
-        window.addEventListener('resize', checkResponsive);
-    </script>
+    // Gọi hàm mỗi khi kích thước cửa sổ thay đổi
+    window.addEventListener("resize", checkResponsive);
+  </script>
 
-    <script>
-        // Hàm ẩn/hiện cột dựa vào trạng thái của checkbox
-        function toggleColumn(columnIndex, show) {
-            const table = document.getElementById("myTable");
-            const rows = table.rows;
+  <script>
+    // Hàm ẩn/hiện cột dựa vào trạng thái của checkbox
+    function toggleColumn(columnIndex, show) {
+      const table = document.getElementById("myTable");
+      const rows = table.rows;
 
-            for (let i = 0; i < rows.length; i++) {
-                rows[i].cells[columnIndex].style.display = show ? 'table-cell' : 'none';
-            }
-        }
+      for (let i = 0; i < rows.length; i++) {
+        rows[i].cells[columnIndex].style.display = show ? "table-cell" : "none";
+      }
+    }
 
-        // Lắng nghe sự kiện thay đổi của checkbox
-        const checkboxes = document.querySelectorAll('.toggle-column');
-        checkboxes.forEach(function(checkbox) {
-            checkbox.addEventListener('change', function() {
-                const columnIndex = this.getAttribute('data-column');
-                const isChecked = this.checked;
+    // Lắng nghe sự kiện thay đổi của checkbox
+    const checkboxes = document.querySelectorAll(".toggle-column");
+    checkboxes.forEach(function (checkbox) {
+      checkbox.addEventListener("change", function () {
+        const columnIndex = this.getAttribute("data-column");
+        const isChecked = this.checked;
 
-                // Ẩn/hiện cột dựa vào trạng thái checkbox
-                toggleColumn(columnIndex, isChecked);
-            });
-        });
-    </script>
+        // Ẩn/hiện cột dựa vào trạng thái checkbox
+        toggleColumn(columnIndex, isChecked);
+      });
+    });
+  </script>
 </body>

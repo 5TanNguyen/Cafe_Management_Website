@@ -109,7 +109,7 @@ let initWebRoutes = (app) => {
     router.post("/themphiphatsinh", PhiPhatSinhController.addPhiPhatSinh);
 
     // DS pha chế
-    router.get("/danh-sach-cho-pha-che", PhaCheController.getDSChoPhaChe);
+    router.get("/danhsachchophache", PhaCheController.getDSChoPhaChe);
     router.get("/chitietdondatpc", DonDatController.getChiTietDonDatPC);
     router.get("/phachexong", PhaCheController.getPhaCheXong);
 
