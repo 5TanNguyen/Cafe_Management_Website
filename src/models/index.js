@@ -47,6 +47,8 @@ Object.keys(db).forEach((modelName) => {
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
+db.role = require("./role")(sequelize, Sequelize.DataTypes);
+db.permission = require("./permission")(sequelize, Sequelize.DataTypes);
 db.post = require("./post")(sequelize, Sequelize.DataTypes);
 db.category = require("./category")(sequelize, Sequelize.DataTypes);
 db.productn = require("./productn")(sequelize, Sequelize.DataTypes);
@@ -55,6 +57,7 @@ db.ordern = require("./ordern")(sequelize, Sequelize.DataTypes);
 db.orderDetail = require("./orderDetail")(sequelize, Sequelize.DataTypes);
 db.productPrice = require("./productPrice")(sequelize, Sequelize.DataTypes);
 db.user = require("./user")(sequelize, Sequelize.DataTypes);
+db.customer = require("./customer")(sequelize, Sequelize.DataTypes);
 db.customerType = require("./customerType")(sequelize, Sequelize.DataTypes);
 
 db.sequelize.sync({ force: false, alter: false }).then(() => {
