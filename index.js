@@ -444,8 +444,8 @@ app.post("/dangnhap", async function (req, res) {
       res.render("dangnhap/dangnhap", { message: req.flash("message") });
     }
 
-    req.session.u_name = x[0].u_name;
-    req.session.u_id = x[0].u_id;
+    req.session.u_name = x[0].firstName;
+    req.session.u_id = x[0].id;
     req.session.role_id = x[0].role_id;
 
     req.session.u_email = req.body.u_email;
