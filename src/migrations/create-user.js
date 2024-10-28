@@ -38,15 +38,10 @@ module.exports = {
         type: Sequelize.BOOLEAN,
         defaultValue: true,
       },
-      role_id: {
-        // Thêm cột type_id
-        type: Sequelize.INTEGER,
-        references: {
-          model: "roles", // Tên bảng mà khóa ngoại tham chiếu
-          key: "id", // Tên cột khóa chính trong bảng CustomerTypes
-        },
-        onUpdate: "CASCADE", // Hành động khi cập nhật
-        onDelete: "SET NULL", // Hành động khi xóa
+      createdAt: {
+        allowNull: false,
+        type: "TIMESTAMP",
+        defaultValue: Sequelize.literal("CURRENT_TIMESTAMP"),
       },
       updatedAt: {
         allowNull: false,
