@@ -4,6 +4,44 @@ const db = require("../../src/models");
 const { Op } = require("sequelize");
 
 class QuyenController {
+  static async getUserPermissions(req, res) {
+    //userId) {
+    try {
+      const userWithPermissions = await db.user.findOne({
+        where: { id: 1 },
+        include: [
+          {
+            model: db.user_role,
+            as: "user_role",
+            include: [
+              {
+                model: db.role,
+                as: "role",
+                include: [
+                  {
+                    model: db.role_permission,
+                    as: "role_permission",
+                    include: [
+                      {
+                        model: db.permission,
+                        as: "permission",
+                      },
+                    ],
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+      });
+
+      res.status(200).json({ userWithPermissions });
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  }
+
   static async getPermissions(req, res) {
     res.locals.session = req.session;
 

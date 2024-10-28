@@ -27,6 +27,11 @@ module.exports = {
         onUpdate: "CASCADE", // Hành động khi cập nhật
         onDelete: "SET NULL", // Hành động khi xóa
       },
+      createdAt: {
+        allowNull: false,
+        type: "TIMESTAMP",
+        defaultValue: Sequelize.literal("CURRENT_TIMESTAMP"),
+      },
       updatedAt: {
         allowNull: false,
         type: "TIMESTAMP",

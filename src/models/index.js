@@ -48,6 +48,10 @@ db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
 db.role = require("./role")(sequelize, Sequelize.DataTypes);
+db.role_permission = require("./role_permission")(
+  sequelize,
+  Sequelize.DataTypes
+);
 db.permission = require("./permission")(sequelize, Sequelize.DataTypes);
 db.post = require("./post")(sequelize, Sequelize.DataTypes);
 db.category = require("./category")(sequelize, Sequelize.DataTypes);
@@ -57,14 +61,15 @@ db.ordern = require("./ordern")(sequelize, Sequelize.DataTypes);
 db.orderDetail = require("./orderDetail")(sequelize, Sequelize.DataTypes);
 db.productPrice = require("./productPrice")(sequelize, Sequelize.DataTypes);
 db.user = require("./user")(sequelize, Sequelize.DataTypes);
+db.user_role = require("./user_role")(sequelize, Sequelize.DataTypes);
 db.customer = require("./customer")(sequelize, Sequelize.DataTypes);
 db.customerType = require("./customerType")(sequelize, Sequelize.DataTypes);
 
-db.sequelize.sync({ force: false, alter: false }).then(() => {
-  console.log("yes re-sync done!");
-});
+// db.sequelize.sync({ force: false, alter: false }).then(() => {
+//   console.log("yes re-sync done!");
+// });
 
-// Relation
+// Relation dùng cho các hàm hỗ trợ của Sequelize
 db.category.hasMany(db.productn, {
   foreignKey: "category_id",
   as: "productn",
@@ -74,14 +79,14 @@ db.productn.belongsTo(db.category, {
   as: "category",
 });
 
-// db.customer.hasOne(db.cart, {
-//   foreignKey: 'customer_id',
-//   as: 'cart'
-// })
-// db.cart.belongsTo(db.customer, {
-//   foreignKey: 'customer_id',
-//   as: 'customer'
-// })
+db.customer.hasOne(db.cart, {
+  foreignKey: "customer_id",
+  as: "cart",
+});
+db.cart.belongsTo(db.customer, {
+  foreignKey: "customer_id",
+  as: "customer",
+});
 
 db.productn.hasMany(db.cart, {
   foreignKey: "productn_id",
@@ -92,14 +97,14 @@ db.cart.belongsTo(db.productn, {
   as: "productn",
 });
 
-// db.customer.hasMany(db.ordern, {
-//   foreignKey: 'customer_id',
-//   as: 'ordern'
-// })
-// db.ordern.belongsTo(db.customer, {
-//   foreignKey: 'customer_id',
-//   as: 'customer'
-// })
+db.customer.hasMany(db.ordern, {
+  foreignKey: "customer_id",
+  as: "ordern",
+});
+db.ordern.belongsTo(db.customer, {
+  foreignKey: "customer_id",
+  as: "customer",
+});
 
 db.ordern.hasMany(db.orderDetail, {
   foreignKey: "ordern_id",
@@ -126,6 +131,48 @@ db.productn.hasMany(db.productPrice, {
 db.productPrice.belongsTo(db.productn, {
   foreignKey: "productn_id",
   as: "productn",
+});
+
+// Khúc này bắt đầu sử dụng, khúc trên cần coi lại
+
+db.user.hasMany(db.user_role, {
+  foreignKey: "user_id",
+  as: "user_role",
+});
+
+db.user_role.belongsTo(db.user, {
+  foreignKey: "user_id",
+  as: "user",
+});
+
+db.user_role.belongsTo(db.role, {
+  foreignKey: "role_id",
+  as: "role",
+});
+
+db.role.hasMany(db.user_role, {
+  foreignKey: "role_id",
+  as: "user_role",
+});
+
+db.role.hasMany(db.role_permission, {
+  foreignKey: "role_id",
+  as: "role_permission",
+});
+
+db.role_permission.belongsTo(db.role, {
+  foreignKey: "role_id",
+  as: "role",
+});
+
+db.role_permission.belongsTo(db.permission, {
+  foreignKey: "permission_id",
+  as: "permission",
+});
+
+db.permission.hasMany(db.role_permission, {
+  foreignKey: "permission_id",
+  as: "role_permission",
 });
 
 module.exports = db;

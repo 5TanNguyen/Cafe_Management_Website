@@ -150,6 +150,7 @@ let initWebRoutes = (app) => {
   router.get("/toi", toiController.getTrangCaNhan);
 
   // Sequelize
+  router.get("/user-permission-list", quyenController.getUserPermissions);
   router.get("/permission-list", quyenController.getPermissions);
   router.get("/customer-list", customerController.getAllCustomer);
   router.get("/customer/:id", customerController.getCustomerById);
