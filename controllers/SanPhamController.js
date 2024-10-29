@@ -3,6 +3,7 @@ const sanphamModel = require("../models/SanPham");
 const { validationResult } = require("express-validator");
 const TruyCapTraiPhepModel = require("../models/TruyCapTraiPhep");
 const PhaCheModel = require("../models/PhaChe");
+import canAccessPermission from "../middlewares/canAccessPermission";
 
 class SanPhamController {
   static async getAllSanPham(req, res) {
@@ -12,30 +13,7 @@ class SanPhamController {
       req.flash("message", "Bạn phải đăng nhập trước !");
       res.render("dangnhap/dangnhap", { message: req.flash("message") });
     }
-
-    if (req.session.u_d_id != 1) {
-      var currentdate = new Date();
-      var datetime =
-        currentdate.getFullYear() +
-        "-" +
-        (currentdate.getMonth() + 1) +
-        "-" +
-        currentdate.getDate() +
-        "  " +
-        currentdate.getHours() +
-        ":" +
-        currentdate.getMinutes() +
-        ":" +
-        currentdate.getSeconds();
-      var tctp = await TruyCapTraiPhepModel.addTCTP(
-        req.session.u_id,
-        "Danh sách sản phẩm",
-        datetime
-      );
-
-      req.flash("message", "Bạn không có quyền truy cập !");
-      res.render("dangnhap/dangnhap", { message: req.flash("message") });
-    } else {
+    {
       var results = await sanphamModel.getsanphams();
 
       var pp = await sanphamModel.GetPro_Price();
@@ -45,7 +23,6 @@ class SanPhamController {
       var b = await PhaCheModel.GetPhaChe();
 
       if (results)
-        //res.send(results)
         res.render("z_layout/layout", {
           test: results,
           pp,

@@ -34,6 +34,7 @@ const cartController = require("../controllers/Sequelize/CartController");
 const orderController = require("../controllers/Sequelize/OrderController");
 const toiController = require("../controllers/Sequelize/ToiController");
 const quyenController = require("../controllers/Sequelize/QuyenController");
+const { canAccessPermission } = require("../middlewares/canAccessPermission");
 
 let initWebRoutes = (app) => {
   router.get("/5tan", (req, res, next) => {
@@ -45,7 +46,11 @@ let initWebRoutes = (app) => {
   router.get("/dangxuat", dangnhapController.dangXuat);
 
   // Sản phẩm
-  router.get("/sanpham", sanphamController.getAllSanPham);
+  router.get(
+    "/sanpham",
+    canAccessPermission("getAllSanPham"),
+    sanphamController.getAllSanPham
+  );
   router.get("/themsanpham", sanphamController.showAddSanPham);
   router.post("/themsanpham", SanPhamController.addSanPham);
   router.get("/xoasanpham", sanphamController.deleteSanPhamForm);

@@ -4,10 +4,30 @@ class NhanVienModel {
   static async getNhanVienByUsername(email, pwd) {
     return new Promise((resolve) => {
       db.query(
-        "SELECT users.*, roles.value as rolename " +
+        "SELECT users.*, roles.value as rolename" +
           "FROM users " +
           "LEFT JOIN user_roles ON users.id = user_roles.user_id " + // Di chuyển LEFT JOIN lên trước WHERE
           "LEFT JOIN roles ON user_roles.role_id = roles.id " + // Di chuyển LEFT JOIN lên trước WHERE
+          "WHERE users.email = ? " +
+          "AND users.password = ?",
+        [email, pwd],
+        (error, result) => {
+          if (!error) resolve(result);
+          else resolve(false);
+        }
+      );
+    });
+  }
+
+  static async getQuyen(email, pwd) {
+    return new Promise((resolve) => {
+      db.query(
+        "SELECT permissions.name as permissionname " +
+          "FROM users " +
+          "LEFT JOIN user_roles ON users.id = user_roles.user_id " +
+          "LEFT JOIN roles ON user_roles.role_id = roles.id " +
+          "LEFT JOIN role_permissions ON roles.id = role_permissions.role_id " +
+          "LEFT JOIN permissions ON role_permissions.permission_id = permissions.id " +
           "WHERE users.email = ? " +
           "AND users.password = ?",
         [email, pwd],

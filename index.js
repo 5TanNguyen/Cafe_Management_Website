@@ -20,12 +20,6 @@ require("./src/config/connect-db");
 const db = require("./src/models");
 // END Sequelize
 
-// server.listen(5555, ()=>
-//     {
-//         console.log('Server is running by 5tan');
-//     }
-// )
-
 const mydb = require("./config/mydb");
 const cors = require("cors");
 const { incr, expire, ttl } = require("./helpers/limiter");
@@ -627,7 +621,6 @@ app.get("/dsban", async (req, res) => {
   var dsban = await BanModel.getbanMobile();
   var stt = await ThongKeModel.GetLastThongKe();
   res.send(dsban);
-  //res.send({ dsban, stt});
 });
 
 app.get("/dssban", async (req, res) => {

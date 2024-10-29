@@ -7,47 +7,19 @@ const ThongKeModel = require("../models/ThongKe");
 const jwt = require("jsonwebtoken");
 
 const { checkPermission } = require("../middlewares/checkPermission");
+const { redirect } = require("express/lib/response");
 
 class DangNhapController {
   static async GetDangNhapForm(req, res) {
     req.flash("message", "");
 
-    if (req.session.role_id == 1) {
-      res.locals.session = req.session;
-
-      var stt = await ThongKeModel.GetThongKe();
-
-      if (stt) {
-        req.flash("message", "Đăng nhập thành công !");
-        res.render("thongke/ds_thongke", {
-          test: stt,
-          message: req.flash("message"),
-        });
-      } else res.send("Data Not Found");
-    } else if (req.session.role_id == 2) {
-      res.locals.session = req.session;
-      if (!req.session.u_id) {
-        res.redirect("/dangnhap");
-      } else {
-        var dsc = await DonDatModel.GetDSChoPhaChe();
-
-        res.render("phache/ds_chophache", { dsc });
-      }
-    } else if (req.session.role_id == 3) {
-      var results = await BanModel.getbans();
-      var stt = await ThongKeModel.GetThongKe();
-      var br = await ChiNhanhModel.GetChiNhanh();
-      if (results)
-        res.render("ban/ds_ban", {
-          test: results,
-          usrn: req.session.u_email,
-          stt,
-          br,
-        });
-    } else
-      res.render("../views/dangnhap/dangnhap", {
+    if (req.session.firstName == null) {
+      res.render("dangnhap/dangnhap", {
         message: req.flash("message"),
       });
+    } else {
+      res.redirect("toi");
+    }
   }
 
   static async DangNhap(req, res) {
@@ -55,12 +27,14 @@ class DangNhapController {
     var u_password = req.body.u_password;
 
     var x = await NhanVienModel.getNhanVienByUsername(u_email, u_password);
+    var permission = await NhanVienModel.getQuyen(u_email, u_password);
 
     if (x == false) {
       req.session.firstName = null;
       req.session.u_id = null;
       req.session.u_email = null;
       req.session.rolename = null;
+      req.session.permission = null;
 
       res.render("dangnhap/error.ejs");
       console.log("Sai tt đăng nhập");
@@ -75,8 +49,11 @@ class DangNhapController {
       req.session.u_id = x[0].id;
       req.session.u_email = x[0].email;
       req.session.rolename = x[0].rolename;
-
+      req.session.permission = permission.map((item) => item.permissionname);
+      // .join(", ");
       req.session.u_email = req.body.u_email;
+
+      console.log(req.session.permission);
 
       var stt = await ThongKeModel.GetThongKe();
 
