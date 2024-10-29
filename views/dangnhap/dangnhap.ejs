@@ -30,13 +30,7 @@
   </head>
 
   <body>
-    <div class="background">
-      <div class="shape"></div>
-      <div class="shape"></div>
-    </div>
-
-    <% if(message.length > 0){ %>
-    <div class="popup">
+    <div id="popup" class="popup">
       <div class="contentBox">
         <h4 class="text-center">THÔNG BÁO</h4>
         <div class="close">
@@ -48,16 +42,14 @@
         </div>
       </div>
     </div>
-    <% } %>
 
-    <form
-      action="/dangnhap"
-      method="post"
-      onsubmit="return validate();"
-      class="form-login"
-    >
+    <div class="background">
+      <div class="shape"></div>
+      <div class="shape"></div>
+    </div>
+
+    <form onsubmit="return validate();" class="form-login">
       <h3>Login Here</h3>
-
       <label for="username">Email</label>
       <input
         type="text"
@@ -66,16 +58,14 @@
         id="u_email"
         value="5tannguyenhuu@gmail.com"
       />
-
       <label for="password">Password</label>
       <input
         type="password"
         placeholder="Password"
-        id="u_password"
         name="u_password"
+        id="u_password"
         value="12345"
       />
-
       <button type="submit">Log In</button>
       <div class="social">
         <div class="go"><i class="fab fa-google"></i> Google</div>
@@ -83,15 +73,10 @@
       </div>
     </form>
   </body>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
   <script>
     const popup = document.getElementById("popup");
-
-    setTimeout(function () {
-      if (popup) {
-        popup.style.display = "block";
-      }
-    }, 500);
 
     function closeModal() {
       popup.style.display = "none";
@@ -101,27 +86,43 @@
   <script>
     function validate() {
       var username = document.getElementById("u_email");
-
       var password = document.getElementById("u_password");
 
-      if (username.value.trim() == "") {
+      // Kiểm tra nếu username hoặc password để trống
+      if (username.value.trim() === "") {
         username.style.border = "solid 3px red";
         username.placeholder = "Không bỏ trống";
-
-        if (password.value.trim() == "") {
-          password.style.border = "solid 3px red";
-          password.placeholder = "Không bỏ trống";
-        }
-        return false;
+        return false; // Dừng submit form nếu có lỗi
       }
 
-      if (password.value.trim() == "") {
+      if (password.value.trim() === "") {
         password.style.border = "solid 3px red";
         password.placeholder = "Không bỏ trống";
-        return false;
+        return false; // Dừng submit form nếu có lỗi
       }
 
-      return true;
+      // Gọi Ajax để xử lý đăng nhập
+      $.ajax({
+        url: "/dangnhap", // Đường dẫn tới router bạn đã định nghĩa
+        type: "POST",
+        data: {
+          u_email: username.value,
+          u_password: password.value,
+        },
+        success: function (response) {
+          if (response.success) {
+            window.location.href = "/toi"; // Chuyển hướng tới dashboard nếu đăng nhập thành công
+          } else {
+            alert(response.message); // Hiển thị thông báo lỗi nếu có
+          }
+        },
+        error: function (xhr) {
+          const response = xhr.responseJSON;
+          alert(response.message); // Hiển thị thông báo lỗi nếu đăng nhập thất bại
+        },
+      });
+
+      return false; // Dừng submit form để chờ Ajax hoàn tất
     }
   </script>
 </html>

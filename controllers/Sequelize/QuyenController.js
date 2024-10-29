@@ -6,6 +6,8 @@ const { Op } = require("sequelize");
 class QuyenController {
   static async getUserPermissions(req, res) {
     //userId) {
+    res.locals.session = req.session;
+
     try {
       const userWithPermissions = await db.user.findOne({
         where: { id: 1 },
@@ -36,6 +38,10 @@ class QuyenController {
       });
 
       res.status(200).json({ userWithPermissions });
+      // res.render("z_layout/layout", {
+      //   test: userWithPermissions,
+      //   body: "../_sequelize/ds_quyen",
+      // });
     } catch (error) {
       console.error(error);
       throw error;

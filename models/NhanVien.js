@@ -4,7 +4,12 @@ class NhanVienModel {
   static async getNhanVienByUsername(email, pwd) {
     return new Promise((resolve) => {
       db.query(
-        "SELECT * FROM users" + " WHERE email = ?" + " AND password = ?",
+        "SELECT users.*, roles.value as rolename " +
+          "FROM users " +
+          "LEFT JOIN user_roles ON users.id = user_roles.user_id " + // Di chuyển LEFT JOIN lên trước WHERE
+          "LEFT JOIN roles ON user_roles.role_id = roles.id " + // Di chuyển LEFT JOIN lên trước WHERE
+          "WHERE users.email = ? " +
+          "AND users.password = ?",
         [email, pwd],
         (error, result) => {
           if (!error) resolve(result);

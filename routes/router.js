@@ -40,8 +40,9 @@ let initWebRoutes = (app) => {
     res.send("5tan");
   });
 
-  //router.get("/dangnhap", dangnhapController.GetDangNhapForm)
-  //router.post("/dangnhap", dangnhapController.DangNhap)
+  router.get("/dangnhap", dangnhapController.GetDangNhapForm);
+  router.post("/dangnhap", dangnhapController.DangNhap);
+  router.get("/dangxuat", dangnhapController.dangXuat);
 
   // Sản phẩm
   router.get("/sanpham", sanphamController.getAllSanPham);

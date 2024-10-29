@@ -1,383 +1,404 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Personal Dashboard</title>
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
     <!-- Boxicons CDN -->
-    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
-    <link rel="icon" href="/assets/images/cheems.png" type="image/x-icon">
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+    <link rel="icon" href="/assets/images/cheems.png" type="image/x-icon" />
 
     <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
 
-        body {
-            font-family: 'Roboto', sans-serif;
-            transition: background-color 0.3s, color 0.3s;
-            background-color: #f0f2f5;
-        }
+      body {
+        font-family: "Roboto", sans-serif;
+        transition: background-color 0.3s, color 0.3s;
+        background-color: #f0f2f5;
+      }
 
+      .toi_container {
+        max-width: 1000px;
+        margin: 40px auto;
+        padding: 50px 0 0;
+        background-color: white;
+        border-radius: 8px;
+        box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+      }
+
+      h1 {
+        text-align: center;
+        margin-bottom: 20px;
+        color: #333;
+      }
+
+      .profile-section {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 30px;
+      }
+
+      .avatar-preview {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        border: 4px solid #ddd;
+        overflow: hidden;
+        cursor: pointer;
+        transition: transform 0.3s ease;
+      }
+
+      .avatar-preview:hover {
+        transform: scale(1.1);
+      }
+
+      .avatar-preview img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .profile-info {
+        flex: 1;
+        margin-left: 30px;
+      }
+
+      .profile-info h2 {
+        font-size: 1.8rem;
+        margin-bottom: 10px;
+        color: #333;
+      }
+
+      .profile-info p {
+        font-size: 1.2rem;
+        color: #666;
+      }
+
+      .functions-grid {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 20px;
+      }
+
+      .function-box {
+        flex: 1;
+        min-width: 220px;
+        background-color: #007bff;
+        padding: 20px;
+        border-radius: 8px;
+        color: white;
+        text-align: center;
+        cursor: pointer;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+
+      .function-box:hover {
+        transform: translateY(-5px);
+        box-shadow: 0px 6px 12px rgba(0, 123, 255, 0.3);
+      }
+
+      .function-box i {
+        font-size: 40px;
+        margin-bottom: 10px;
+      }
+
+      .function-box span {
+        display: block;
+        margin-top: 10px;
+        font-size: 1.2rem;
+        font-weight: 500;
+      }
+
+      .toggle-switch {
+        position: relative;
+        display: inline-block;
+        width: 60px;
+        height: 34px;
+      }
+
+      .toggle-switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+      }
+
+      .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #ccc;
+        transition: 0.4s;
+        border-radius: 34px;
+      }
+
+      .slider:before {
+        position: absolute;
+        content: "";
+        height: 26px;
+        width: 26px;
+        left: 4px;
+        bottom: 4px;
+        background-color: white;
+        transition: 0.4s;
+        border-radius: 50%;
+      }
+
+      input:checked + .slider {
+        background-color: #007bff;
+      }
+
+      input:checked + .slider:before {
+        transform: translateX(26px);
+      }
+
+      button {
+        padding: 12px 20px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 1rem;
+        font-weight: 500;
+        margin-top: 20px;
+        transition: background-color 0.3s ease, box-shadow 0.3s ease;
+      }
+
+      button:hover {
+        background-color: #0056b3;
+        box-shadow: 0px 6px 12px rgba(0, 123, 255, 0.3);
+      }
+
+      /* Dark mode styles */
+      body.dark-mode {
+        background-color: #121212;
+        color: white;
+      }
+
+      body.dark-mode .toi_container {
+        background-color: #1e1e1e;
+        box-shadow: 0px 4px 12px rgba(255, 255, 255, 0.1);
+      }
+
+      body.dark-mode .function-box {
+        background-color: #333;
+      }
+
+      body.dark-mode .function-box:hover {
+        box-shadow: 0px 6px 12px rgba(0, 123, 255, 0.6);
+      }
+
+      /* Popup styles */
+      .avatar-popup {
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 300px;
+        background-color: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
+        z-index: 10;
+        text-align: center;
+      }
+
+      .avatar-popup input {
+        display: block;
+        margin: 20px auto;
+      }
+
+      .avatar-popup button {
+        padding: 8px 16px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+      }
+
+      .popup-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 5;
+      }
+
+      /* Responsive Design */
+      @media (max-width: 768px) {
         .toi_container {
-            max-width: 1000px;
-            margin: 40px auto;
-            padding: 50px 0 0;
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
-        }
-
-        h1 {
-            text-align: center;
-            margin-bottom: 20px;
-            color: #333;
+          padding-top: 20px;
+          padding-bottom: 70px;
         }
 
         .profile-section {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 30px;
-        }
-
-        .avatar-preview {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            border: 4px solid #ddd;
-            overflow: hidden;
-            cursor: pointer;
-            transition: transform 0.3s ease;
-        }
-
-        .avatar-preview:hover {
-            transform: scale(1.1);
-        }
-
-        .avatar-preview img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
+          flex-direction: column;
+          align-items: center;
+          text-align: center;
         }
 
         .profile-info {
-            flex: 1;
-            margin-left: 30px;
-        }
-
-        .profile-info h2 {
-            font-size: 1.8rem;
-            margin-bottom: 10px;
-            color: #333;
-        }
-
-        .profile-info p {
-            font-size: 1.2rem;
-            color: #666;
+          margin-left: 0;
+          margin-top: 20px;
         }
 
         .functions-grid {
-            display: flex;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 20px;
+          flex-direction: column;
+          align-items: center;
+          padding: 10px;
         }
 
         .function-box {
-            flex: 1;
-            min-width: 220px;
-            background-color: #007bff;
-            padding: 20px;
-            border-radius: 8px;
-            color: white;
-            text-align: center;
-            cursor: pointer;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+          width: 100%;
         }
+      }
 
-        .function-box:hover {
-            transform: translateY(-5px);
-            box-shadow: 0px 6px 12px rgba(0, 123, 255, 0.3);
-        }
-
-        .function-box i {
-            font-size: 40px;
-            margin-bottom: 10px;
-        }
-
-        .function-box span {
-            display: block;
-            margin-top: 10px;
-            font-size: 1.2rem;
-            font-weight: 500;
-        }
-
-        .toggle-switch {
-            position: relative;
-            display: inline-block;
-            width: 60px;
-            height: 34px;
-        }
-
-        .toggle-switch input {
-            opacity: 0;
-            width: 0;
-            height: 0;
-        }
-
-        .slider {
-            position: absolute;
-            cursor: pointer;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: #ccc;
-            transition: .4s;
-            border-radius: 34px;
-        }
-
-        .slider:before {
-            position: absolute;
-            content: "";
-            height: 26px;
-            width: 26px;
-            left: 4px;
-            bottom: 4px;
-            background-color: white;
-            transition: .4s;
-            border-radius: 50%;
-        }
-
-        input:checked + .slider {
-            background-color: #007bff;
-        }
-
-        input:checked + .slider:before {
-            transform: translateX(26px);
-        }
-
-        button {
-            padding: 12px 20px;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 1rem;
-            font-weight: 500;
-            margin-top: 20px;
-            transition: background-color 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        button:hover {
-            background-color: #0056b3;
-            box-shadow: 0px 6px 12px rgba(0, 123, 255, 0.3);
-        }
-
-        /* Dark mode styles */
-        body.dark-mode {
-            background-color: #121212;
-            color: white;
-        }
-
-        body.dark-mode .toi_container {
-            background-color: #1e1e1e;
-            box-shadow: 0px 4px 12px rgba(255, 255, 255, 0.1);
-        }
-
-        body.dark-mode .function-box {
-            background-color: #333;
-        }
-
-        body.dark-mode .function-box:hover {
-            box-shadow: 0px 6px 12px rgba(0, 123, 255, 0.6);
-        }
-
-        /* Popup styles */
-        .avatar-popup {
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 300px;
-            background-color: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
-            z-index: 10;
-            text-align: center;
-        }
-
-        .avatar-popup input {
-            display: block;
-            margin: 20px auto;
-        }
-
-        .avatar-popup button {
-            padding: 8px 16px;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-        }
-
-        .popup-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 5;
-        }
-
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .toi_container{
-                padding-top: 20px;
-                padding-bottom: 70px;
-            }
-
-            .profile-section {
-                flex-direction: column;
-                align-items: center;
-                text-align: center;
-            }
-
-            .profile-info {
-                margin-left: 0;
-                margin-top: 20px;
-            }
-
-            .functions-grid {
-                flex-direction: column;
-                align-items: center;
-                padding: 10px;
-            }
-
-            .function-box {
-                width: 100%;
-            }
-        }
-
-        .functions-grid a {
+      .functions-grid a {
         flex: 1; /* Để thẻ a chiếm toàn bộ không gian như thẻ div ban đầu */
         min-width: 220px; /* Để đảm bảo thẻ a không nhỏ hơn kích thước tối thiểu */
         text-decoration: none; /* Bỏ gạch chân trên thẻ a */
-    }
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <!-- Popup Overlay -->
     <div class="popup-overlay" id="popupOverlay" onclick="closePopup()"></div>
 
     <!-- Popup for avatar change -->
     <div class="avatar-popup" id="avatarPopup">
-        <h3>Change Avatar</h3>
-        <input type="file" id="avatarInput" accept="image/*" onchange="previewPopupAvatar()">
-        <button onclick="saveAvatar()">Save</button>
+      <h3>Change Avatar</h3>
+      <input
+        type="file"
+        id="avatarInput"
+        accept="image/*"
+        onchange="previewPopupAvatar()"
+      />
+      <button onclick="saveAvatar()">Save</button>
     </div>
 
     <div class="toi_container">
-        <h1>Personal Dashboard</h1>
+      <h1>Trang cá nhân</h1>
 
-        <!-- Profile section with avatar, name and balance -->
-        <div class="profile-section">
-            <div class="avatar-preview" onclick="openPopup()">
-                <img id="avatar-preview-img" src="default-avatar.png" alt="Avatar Preview">
-            </div>
-
-            <div class="profile-info">
-                <h2>John Doe</h2>
-                <p>Accumulated Points: $1000</p>
-            </div>
+      <!-- Profile section with avatar, name and balance -->
+      <div class="profile-section">
+        <div class="avatar-preview" onclick="openPopup()">
+          <img
+            id="avatar-preview-img"
+            src="/assets/images/toi/5tan.jpg"
+            alt="Avatar Preview"
+          />
         </div>
 
-        <!-- Functional boxes with icons -->
-        <div class="functions-grid">
-                <div class="function-box">
-                    <span style="font-size: 1.2rem; font-weight: 500;">Toggle Dark Mode</span>
-                    <label class="toggle-switch">
-                        <input type="checkbox" id="darkModeToggle" onchange="toggleDarkMode()">
-                        <span class="slider"></span>
-                    </label>
-                </div>
-            
-                <a href="/sanpham" class="function-box">
-                    <i class='bx bx-list-ul'></i>
-                    <span>Product List</span>
-                </a>
-            
-                <a href="/thongke" class="function-box">
-                    <i class='bx bx-bar-chart-alt-2'></i>
-                    <span>Statistics</span>
-                </a>
-            
-                <a href="/phache" class="function-box">
-                    <i class='bx bx-shopping-bag'></i>
-                    <span>Manage Orders</span>
-                </a>
-            
-                <a href="/truycaptraiphep" class="function-box">
-                    <i class='bx bx-user'></i>
-                    <span>Unauthorized access</span>
-                </a>
-            
-                <a href="#settings" class="function-box">
-                    <i class='bx bx-cog'></i>
-                    <span>Settings</span>
-                </a>
+        <div class="profile-info">
+          <h2><%- session.firstName %></h2>
+          <h2><%- session.rolename %></h2>
         </div>
+      </div>
+
+      <!-- Functional boxes with icons -->
+      <div class="functions-grid">
+        <div class="function-box">
+          <span style="font-size: 1.2rem; font-weight: 500"
+            >Toggle Dark Mode</span
+          >
+          <label class="toggle-switch">
+            <input
+              type="checkbox"
+              id="darkModeToggle"
+              onchange="toggleDarkMode()"
+            />
+            <span class="slider"></span>
+          </label>
+        </div>
+
+        <a href="/sanpham" class="function-box">
+          <i class="bx bx-list-ul"></i>
+          <span>Product List</span>
+        </a>
+
+        <a href="/thongke" class="function-box">
+          <i class="bx bx-bar-chart-alt-2"></i>
+          <span>Statistics</span>
+        </a>
+
+        <a href="/phache" class="function-box">
+          <i class="bx bx-shopping-bag"></i>
+          <span>Manage Orders</span>
+        </a>
+
+        <a href="/truycaptraiphep" class="function-box">
+          <i class="bx bx-user"></i>
+          <span>Unauthorized access</span>
+        </a>
+
+        <a href="#settings" class="function-box">
+          <i class="bx bx-cog"></i>
+          <span>Settings</span>
+        </a>
+      </div>
     </div>
 
     <script>
-        // Function to open avatar change popup
-        function openPopup() {
-            document.getElementById('avatarPopup').style.display = 'block';
-            document.getElementById('popupOverlay').style.display = 'block';
+      // Function to open avatar change popup
+      function openPopup() {
+        document.getElementById("avatarPopup").style.display = "block";
+        document.getElementById("popupOverlay").style.display = "block";
+      }
+
+      // Function to close popup
+      function closePopup() {
+        document.getElementById("avatarPopup").style.display = "none";
+        document.getElementById("popupOverlay").style.display = "none";
+      }
+
+      // Function to preview avatar in popup
+      function previewPopupAvatar() {
+        const fileInput = document.getElementById("avatarInput");
+        const previewImg = document.getElementById("avatar-preview-img");
+
+        const file = fileInput.files[0];
+        const reader = new FileReader();
+
+        reader.onloadend = function () {
+          previewImg.src = reader.result;
+        };
+
+        if (file) {
+          reader.readAsDataURL(file);
         }
+      }
 
-        // Function to close popup
-        function closePopup() {
-            document.getElementById('avatarPopup').style.display = 'none';
-            document.getElementById('popupOverlay').style.display = 'none';
-        }
+      // Function to save avatar and close popup
+      function saveAvatar() {
+        closePopup();
+      }
 
-        // Function to preview avatar in popup
-        function previewPopupAvatar() {
-            const fileInput = document.getElementById('avatarInput');
-            const previewImg = document.getElementById('avatar-preview-img');
-
-            const file = fileInput.files[0];
-            const reader = new FileReader();
-
-            reader.onloadend = function() {
-                previewImg.src = reader.result;
-            };
-
-            if (file) {
-                reader.readAsDataURL(file);
-            }
-        }
-
-        // Function to save avatar and close popup
-        function saveAvatar() {
-            closePopup();
-        }
-
-        // Toggle Dark Mode
-        function toggleDarkMode() {
-            document.body.classList.toggle('dark-mode');
-        }
+      // Toggle Dark Mode
+      function toggleDarkMode() {
+        document.body.classList.toggle("dark-mode");
+      }
     </script>
-</body>
+  </body>
 </html>
