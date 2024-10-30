@@ -22,7 +22,7 @@ const db = require("./src/models");
 
 const mydb = require("./config/mydb");
 const cors = require("cors");
-const { incr, expire, ttl } = require("./helpers/limiter");
+const { incr, expire, ttl } = require("./utils/limiter");
 
 const session = require("express-session");
 var flush = require("connect-flash");

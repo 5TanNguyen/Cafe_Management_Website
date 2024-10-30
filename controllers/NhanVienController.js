@@ -63,18 +63,13 @@ class NhanVienController {
 
   static async getAllNhanVien(req, res) {
     res.locals.session = req.session;
-
-    if (!req.session.u_id) {
-      req.flash("message", "Bạn phải đăng nhập trước !");
-      res.render("dangnhap/dangnhap", { message: req.flash("message") });
-    }
-
     {
       var users = await NhanVienModel.GetAllNhanVien();
 
-      var duties = await NhanVienModel.GetAllChucVu();
-
-      res.render("nhanvien/ds_nhanvien", { u: users, d: duties });
+      res.render("z_layout/layout", {
+        u: users,
+        body: "../nhanvien/ds_nhanvien",
+      });
     }
   }
 

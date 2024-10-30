@@ -49,7 +49,7 @@ class NhanVienModel {
   static async getNhanVienById(u_id) {
     return new Promise((resolve) => {
       db.query(
-        "SELECT * FROM `users`" + " WHERE u_id = ?",
+        "SELECT * FROM `users`" + " WHERE id = ?",
         [u_id],
         (error, result) => {
           if (!error) resolve(result);
@@ -59,45 +59,27 @@ class NhanVienModel {
     });
   }
 
-  // static async GetAllNhanVien()
-  // {
-  //     return new Promise(resolve=>{
-  //         db.query("SELECT *"
-  //         +        " FROM users u, duties d"
-  //         +        " WHERE u.u_d_id = d.d_id"
-  //         +        " AND u.u_state = 1", [], (error, result)=>{
-  //             if(!error)
-  //                 resolve(result);
-  //             else
-  //                 resolve(false);
-  //         })
-  //     })
-  // }
-
   static async GetAllNhanVien() {
     return new Promise((resolve) => {
       db.query(
-        "SELECT * FROM duties d, " +
-          "(SELECT * FROM users u " +
-          "LEFT JOIN wallet w " +
-          "ON u.u_id = w.w_u_id) usr " +
-          "WHERE usr.u_d_id = d.d_id " +
-          "AND usr.u_state = 1",
+        "SELECT users.*, roles.value as rolename " +
+          "FROM users " +
+          "LEFT JOIN user_roles ON users.id = user_roles.user_id " +
+          "LEFT JOIN roles ON user_roles.role_id = roles.id " +
+          "WHERE users.status = 1 ",
         [],
         (error, result) => {
-          if (!error) resolve(result);
-          else resolve(false);
+          if (error) {
+            console.error("Error in query:", error);
+            resolve(false);
+          } else if (result.length === 0) {
+            console.log("No matching records found.");
+            resolve(false);
+          } else {
+            resolve(result);
+          }
         }
       );
-    });
-  }
-
-  static async GetAllChucVu() {
-    return new Promise((resolve) => {
-      db.query("SELECT *" + " FROM duties", [], (error, result) => {
-        if (!error) resolve(result);
-        else resolve(false);
-      });
     });
   }
 

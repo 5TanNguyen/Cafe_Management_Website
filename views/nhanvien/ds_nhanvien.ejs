@@ -1,231 +1,231 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Danh Sách Phí Phát Sinh</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-    <script src="/js/input_validate.js"></script>
-    <link rel="stylesheet" type="text/css" href="/css/style.css">
-</head>
-<body>
-    <% if(session.u_d_id == 1){ %>
-        <%- include('../z_layout/navigation') %>
-    <% }else if(session.u_d_id == 2 ){ %>
-        <%- include('../z_layout/nav_2') %>
-    <% }else if(session.u_d_id == 3 ){ %>
-        <%- include('../z_layout/nav_3') %>
-    <% } %>
-    
     <div class="container">
+      <!-- <form
+        action="/themnhanvien"
+        method="post"
+        style="padding-top: 10px"
+        onsubmit="return validate_ds_nhanvien();"
+      >
+        <div class="row g-3">
+          <div class="col-sm">
+            <input
+              id="u_name"
+              name="u_name"
+              type="text"
+              class="form-control"
+              value=""
+              placeholder="Tên nhân viên..."
+            />
+            <label id="lbl_u_name" class="lbl_validate" name="lbl_u_name"
+              >KHÔNG ĐƯỢC BỎ TRỐNG !</label
+            >
+          </div>
+          <div class="col-sm">
+            <input
+              id="u_username"
+              name="u_username"
+              type="text"
+              class="form-control"
+              placeholder="Username..."
+            />
+            <label
+              id="lbl_u_username"
+              class="lbl_validate"
+              name="lbl_u_username"
+              >KHÔNG ĐƯỢC BỎ TRỐNG !</label
+            >
+          </div>
+          <div class="col-sm">
+            <input
+              id="u_password"
+              name="u_password"
+              type="text"
+              class="form-control"
+              placeholder="Password..."
+            />
+            <label
+              id="lbl_u_password"
+              class="lbl_validate"
+              name="lbl_u_password"
+              >KHÔNG ĐƯỢC BỎ TRỐNG !</label
+            >
+          </div>
 
-        <h3 name="title" class="text-center">Thêm Nhân Viên</h3>
-        <form action="/themnhanvien" method="post" style="padding-top: 10px;" onsubmit="return validate_ds_nhanvien();">
+          <div class="col-sm">
+            <input
+              id="u_phone"
+              name="u_phone"
+              type="text"
+              class="form-control"
+              placeholder="Số điện thoại..."
+            />
+            <label id="lbl_u_phone" class="lbl_validate" name="lbl_u_phone"
+              >KHÔNG ĐƯỢC BỎ TRỐNG !</label
+            >
+          </div>
 
-            <div class="row g-3">
-                <div class="col-sm">
-                    <input id="u_name" name="u_name" type="text" class="form-control" value="" placeholder="Tên nhân viên...">
-                    <label id="lbl_u_name" class="lbl_validate" name="lbl_u_name" >KHÔNG ĐƯỢC BỎ TRỐNG !</label>
-                </div>
-                <div class="col-sm">
-                    <input id="u_username" name="u_username" type="text" class="form-control" placeholder="Username...">
-                    <label id="lbl_u_username" class="lbl_validate" name="lbl_u_username" >KHÔNG ĐƯỢC BỎ TRỐNG !</label>
-                </div>
-                <div class="col-sm">
-                    <input id="u_password" name="u_password" type="text" class="form-control" placeholder="Password...">
-                    <label id="lbl_u_password" class="lbl_validate" name="lbl_u_password" >KHÔNG ĐƯỢC BỎ TRỐNG !</label>
-                </div>
-
-                <div class="col-sm">
-                    <input id="u_phone" name="u_phone" type="text" class="form-control" placeholder="Số điện thoại...">
-                    <label id="lbl_u_phone" class="lbl_validate" name="lbl_u_phone" >KHÔNG ĐƯỢC BỎ TRỐNG !</label>
-                </div>
-
-                <div class="row">
-                    <div class="col-sm">
-                        <input id="u_address" name="u_address" type="text" class="form-control" placeholder="Địa chỉ...">
-                        <label id="lbl_u_address" class="lbl_validate" name="lbl_u_address" >KHÔNG ĐƯỢC BỎ TRỐNG !</label>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-sm">
-                        <label for="">Chức vụ</label>
-                        <select class="form-control" name="u_d_id" id="u_d_id" style="width: 100%;">
-                            <% for( var i = 0; i < d.length; i++){ %>
-                                <option value="<%- d[i].d_id %>" style="width: 100%;"> <%- d[i].d_name %></option>
-                            <% } %>
-                        </select>
-                    </div>
-                </div>
+          <div class="row">
+            <div class="col-sm">
+              <input
+                id="u_address"
+                name="u_address"
+                type="text"
+                class="form-control"
+                placeholder="Địa chỉ..."
+              />
+              <label
+                id="lbl_u_address"
+                class="lbl_validate"
+                name="lbl_u_address"
+                >KHÔNG ĐƯỢC BỎ TRỐNG !</label
+              >
             </div>
-            
-            <br>
+          </div>
 
-            <div class="d-grid gap-2">
-            <button class="btn btn btn-danger" type="submit">THÊM</button>
+          <div class="row">
+            <div class="col-sm">
+              <label for="">Chức vụ</label>
+              <select
+                class="form-control"
+                name="u_d_id"
+                id="u_d_id"
+                style="width: 100%"
+              ></select>
             </div>
-        </form>
+          </div>
+        </div>
 
-        <hr><br>
-        <h3 class="text-center">Danh Sách Nhân Viên</h3>
-        <table class="table table-hover">
-            <thead class="table-light">
-                <td>ID</td>
-                <td>Tên Nhân Viên</td>
-                <td>Username</td>
-                <!-- <td>Password</td> -->
-                <td>Số điện thoại</td>
-                <td>Chức vụ</td>
-                <td colspan="3">Thao tác</td>
-            </thead>
+        <br />
 
-            <% if(u.length > 0){ %>
-                <% for(var i = 0; i < u.length; i++){ %>
-                    <tr>
-                        <td>
-                            <%- u[i].u_id %>
-                        </td>
+        <div class="d-grid gap-2">
+          <button class="btn btn btn-danger" type="submit">THÊM</button>
+        </div>
+      </form> -->
 
-                        <td>
-                            <%- u[i].u_name %>
-                        </td>
+      <hr />
+      <br />
+      <h3 class="text-center">Danh Sách Nhân Viên</h3>
+      <table class="table table-hover">
+        <thead class="table-light">
+          <td>ID</td>
+          <td>Tên Nhân Viên</td>
+          <td>Chức vụ</td>
+          <td colspan="3">Thao tác</td>
+        </thead>
 
-                        <td>
-                            <%- u[i].u_username  %> 
-                        </td>
+        <% if(u.length > 0){ %> <% for(var i = 0; i < u.length; i++){ %>
+        <tr>
+            <td><%- u[i].id %></td>
 
-                        <!-- <td>
-                            <%- u[i].u_password %>
-                        </td> -->
+            <td><%- u[i].firstName %></td>
 
-                        <td>
-                            <%- u[i].u_phone %>
-                        </td>
+            <td><%- u[i].rolename %></td>
 
-                        <td>
-                            <%- u[i].d_name %>
-                        </td>
+            <td>
+                <div class="UD_overplay" id="divW<%- u[i].u_id %>">
+                    <div class="UD_wrapper">
+                        <h2 class="text-center">Cấp ví nhân viên</h2>
+                        <a href="#" class="close">&times;</a>
+                        <div class="content">
+                            <div class="container">
+                                <form action="/themvi" method="POST">
+                                    <input name="u_id" type="text" hidden placeholder="" value="<%- u[i].u_id %>">
+                                    <div class="row">
+                                        <div class="col">
+                                            <label for="">Tên nhân viên</label>
+                                            <input name="u_name" type="text" placeholder="" value="<%- u[i].u_name %>">
+                                        </div>
 
-                        <td>
-                            <% if(u[i].w_u_id == null){ %>
-                                <a href="#divW<%- u[i].u_id %>">
-                                    <button class="btn btn-success">CẤP VÍ</button>
-                                </a>
-                            <% } %>
-                            <div class="UD_overplay" id="divW<%- u[i].u_id %>">
-                                <div class="UD_wrapper">
-                                    <h2 class="text-center">Cấp ví nhân viên</h2>
-                                    <a href="#" class="close">&times;</a>
-                                    <div class="content">
-                                        <div class="container">
-                                            <form action="/themvi" method="POST">
-                                                <input name="u_id" type="text" hidden placeholder="" value="<%- u[i].u_id %>">
-
-                                                <div class="row">
-                                                    <div class="col">
-                                                        <label for="">Tên nhân viên</label>
-                                                        <input name="u_name" type="text" placeholder="" value="<%- u[i].u_name %>">
-                                                    </div>
-
-                                                    <div class="col">
-                                                        <label for="">Số điện thoại</label>
-                                                        <input name="u_phone" type="text" placeholder="" value="<%- u[i].u_phone %>">
-                                                    </div>
-                                                </div>
-                                                
-                                                <br>      
-                                                <input type="submit" value="XÁC NHẬN" style="width:100%; background-color: red;">
-                                            </form>
+                                        <div class="col">
+                                            <label for="">Số điện thoại</label>
+                                            <input name="u_phone" type="text" placeholder="" value="<%- u[i].u_phone %>">
                                         </div>
                                     </div>
-                                </div>
+                                    
+                                    <br>      
+                                    <input type="submit" value="XÁC NHẬN" style="width:100%; background-color: red;">
+                                </form>
                             </div>
-                        </td>
+                        </div>
+                    </div>
+                </div>
+            </td>
                         
-                        <td>
-                            <% if(u[i].u_d_id != 1){ %>
-                                <a href="#divUD<%- u[i].u_id %>">
-                                    <button class="btn btn-warning">SỬA</button>
-                                </a>
-                            <% } %>
-                            <div class="UD_overplay" id="divUD<%- u[i].u_id %>">
-                                <div class="UD_wrapper">
-                                    <h2 class="text-center">Chỉnh sửa thông tin nhân viên</h2>
-                                    <a href="#" class="close">&times;</a>
-                                    <div class="content">
-                                        <div class="container">
-                                            <form action="/suanhanvien" method="POST">
-                                                <input name="u_id" type="text" hidden placeholder="" value="<%- u[i].u_id %>">
-
-                                                <div class="row">
-                                                    <div class="col">
-                                                        <label for="">Tên nhân viên</label>
-                                                        <input name="u_name" type="text" placeholder="" value="<%- u[i].u_name %>">
-                                                    </div>
-
-                                                    <div class="col">
-                                                        <label for="">Số điện thoại</label>
-                                                        <input name="u_phone" type="text" placeholder="" value="<%- u[i].u_phone %>">
-                                                    </div>
-                                                </div>
-
-                                                <div class="row">
-                                                    <label for="">Địa chỉ</label>
-                                                    <input name="u_address" type="text" placeholder="" value="<%- u[i].u_address %>">
-                                                </div>
-
-                                                <div class="row">
-                                                    <label for="">Chức vụ</label>
-                                                    <select class="form-control" name="u_d_id" id="u_d_id" style="width: 100%;">
-                                                        <option value="<%- u[i].d_id %>"><%- u[i].d_name %></option>
-                                                        <% for( var t = 0; t < d.length; t++){ %>
-                                                            <option value="<%- d[t].d_id %>" style="width: 100%;"> <%- d[t].d_name %></option>
-                                                        <% } %>
-                                                    </select>
-                                                </div>
-                                                
-                                                <br>      
-                                                <input type="submit" value="XÁC NHẬN" style="width:100%; background-color: red;">
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </td>
-
-                        <td>
-                            <% if(u[i].u_d_id != 1){ %>
-                                <a class="btn btn-danger" href="#divDel<%- u[i].u_id %>">XÓA</a>
-                            <% } %>
-                            <div class="overplay" id="divDel<%- u[i].u_id %>">
-                                <div class="wrapper">
-                                    <h2 class="text-center">Xác Nhận Xóa</h2>
-                                    <a href="#" class="close">&times;</a>
-                                    <div class="content">
-                                        <div class="container">
-                                            <form action="/xoanhanvien" method="POST">
-                                                <input name="u_id" type="text" hidden placeholder="" value="<%- u[i].u_id %>">
-
-                                                <label name="title">Tên Nhân Viên</label>
-                                                <input name="u_name" type="text" placeholder="" value="<%- u[i].u_name %>">
-                                                
-                                                <button class="btn btn-danger" style="width: 100%;" type="submit">Xóa</button>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </td>
-                        </td>
-                    </tr>
+            <td>
+                <% if(u[i].email){ %>
+                    <a href="#divUD<%- u[i].u_id %>">
+                        <button class="btn btn-warning">SỬA</button>
+                    </a>
                 <% } %>
-            <% } else { %>
-                <p>Không có nhân viên</p>
-            <% } %>
-        </table>
+                <div class="UD_overplay" id="divUD<%- u[i].u_id %>">
+                    <div class="UD_wrapper">
+                        <h2 class="text-center">Chỉnh sửa thông tin nhân viên</h2>
+                        <a href="#" class="close">&times;</a>
+                        <div class="content">
+                            <div class="container">
+                                <form action="/suanhanvien" method="POST">
+                                    <input name="u_id" type="text" hidden placeholder="" value="<%- u[i].u_id %>">
+
+                                    <div class="row">
+                                        <div class="col">
+                                            <label for="">Tên nhân viên</label>
+                                            <input name="u_name" type="text" placeholder="" value="<%- u[i].u_name %>">
+                                        </div>
+
+                                        <div class="col">
+                                            <label for="">Số điện thoại</label>
+                                            <input name="u_phone" type="text" placeholder="" value="<%- u[i].u_phone %>">
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <label for="">Địa chỉ</label>
+                                        <input name="u_address" type="text" placeholder="" value="<%- u[i].u_address %>">
+                                    </div>
+
+                                    <div class="row">
+                                        <label for="">Chức vụ</label>
+                                        <select class="form-control" name="u_d_id" id="u_d_id" style="width: 100%;">
+                                            <option value="<%- u[i].d_id %>"><%- u[i].d_name %></option>
+                                            
+                                        </select>
+                                    </div>
+                                    
+                                    <br>      
+                                    <input type="submit" value="XÁC NHẬN" style="width:100%; background-color: red;">
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </td>
+
+            <td>
+                <% if(u[i].u_d_id != 1){ %>
+                    <a class="btn btn-danger" href="#divDel<%- u[i].u_id %>">XÓA</a>
+                <% } %>
+                <div class="overplay" id="divDel<%- u[i].u_id %>">
+                    <div class="wrapper">
+                        <h2 class="text-center">Xác Nhận Xóa</h2>
+                        <a href="#" class="close">&times;</a>
+                        <div class="content">
+                            <div class="container">
+                                <form action="/xoanhanvien" method="POST">
+                                    <input name="u_id" type="text" hidden placeholder="" value="<%- u[i].u_id %>">
+
+                                    <label name="title">Tên Nhân Viên</label>
+                                    <input name="u_name" type="text" placeholder="" value="<%- u[i].u_name %>">
+                                    
+                                    <button class="btn btn-danger" style="width: 100%;" type="submit">Xóa</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </td>
+            </td> 
+        </tr>
+        <% } %> <% } else { %>
+        <p>Không có nhân viên</p>
+        <% } %>
+      </table>
     </div>
-</body>
-</html>

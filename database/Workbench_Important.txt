@@ -13,3 +13,48 @@ delete package-lock.json
 npm install
 
 ---- INSTALL PROJECT IN NEW PLACE ----
+
++++++ nút tạo đơn nhập bên Nguyên liệu
++++++ Thêm cách pha chế
++++++ Sửa giá sản phẩm, 
++++++ cách pha chế
++++++ thêm ảnh sp
++++++ Thêm dữ liệu nguyên liệu cho sản phẩm
++++++ Quản lí giá sản phẩm
++++++ Quản lí giá nguyên liệu
++++++ Thêm sản phẩm
++++++ thêm js, css từ file .ejs vào style.css input_validate
+        bq: bỏ qua
+        kc: không cần
+            + ban
+            + dangnhap (bq)
+            + dondat
+            + donnhap
+            + donrut (kc)
+            + lich
+            + nguyenlieu
+            + pha che
+            + phiphatsinh
+            + sanpham
+            + thongke
+            + truycaptraiphep
+            + vi
+
++++++ Bấm nút x thanh toán trở về divPay
++++++ thêm số lượng cho ingredient
++++++ khóa ngoại _price : ingredient
++++++ kiểm tra giá khi  thêm nlieu mới
++++++ khóa ngoại cd_id : timekeeping
++++++ Chỉnh sửa thuộc tinh created và updated cho transaction
++++++ confirm delete hiện tên product khi xóa nglieu
++++++ thêm nguyên liệu : selected đv khối lượng
++++++ lỗi xảy ra khi tìm kiếm người truy cập tp trên 3 lần
++++++ xác định giá thật của nguyên liệu
+css tin nhắn
+css lịch
+validate input date : - lịch 
+                      - chi tiết lịch
+                      - liệt kê theo ngày
+                      - số lần truy cập trái phép
+
+                    
