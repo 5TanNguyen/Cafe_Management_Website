@@ -83,7 +83,11 @@ let initWebRoutes = (app) => {
   router.get("/bantrong", banController.setEmptyTable);
 
   // Nhânv viên
-  router.get("/nhanvien", nhanvienController.getAllNhanVien);
+  router.get(
+    "/nhanvien",
+    canAccessPermission("getAllNhanVien"),
+    nhanvienController.getAllNhanVien
+  );
   router.post("/themnhanvien", nhanvienController.addNhanVien);
   router.post("/suanhanvien", nhanvienController.editNhanVien);
   router.post("/xoanhanvien", nhanvienController.deleteNhanVien);
@@ -92,7 +96,11 @@ let initWebRoutes = (app) => {
   router.post("/chamcong", nhanvienController.postChamCong);
 
   // Đơn nhập
-  router.get("/donnhap", donnhapController.getDonNhap);
+  router.get(
+    "/donnhap",
+    canAccessPermission("getDonNhap"),
+    donnhapController.getDonNhap
+  );
   router.post("/taodonnhap", donnhapController.createDonNhap);
   router.get("/chitietdonnhap", donnhapController.getChiTietDonNhap);
   router.post("/themchitietdonnhap", donnhapController.createChiTietDonNhap);
@@ -115,7 +123,11 @@ let initWebRoutes = (app) => {
   router.post("/chinhgianguyenlieu", NguyenLieuController.chinhgiaNguyenLieu);
 
   // Thống kê
-  router.get("/thongke", ThongKeController.getThongKe);
+  router.get(
+    "/thongke",
+    canAccessPermission("getThongKe"),
+    ThongKeController.getThongKe
+  );
   // router.get("/chitietthongke", ThongKeController.getChiTietThongKe);
   router.post("/taothongke", ThongKeController.createThongKe);
   router.post("/thongketheongay", ThongKeController.getThongKeTheoNgay);

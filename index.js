@@ -401,29 +401,7 @@ app.post("/thanhtoan", async function (req, res) {
 app.post("/them-san-pham", upload.single("image"), async (req, res, next) => {
   res.locals.session = req.session;
 
-  if (!req.session.u_id || req.session.role_id != 1) {
-    var currentdate = new Date();
-    var datetime =
-      currentdate.getFullYear() +
-      "-" +
-      (currentdate.getMonth() + 1) +
-      "-" +
-      currentdate.getDate() +
-      "  " +
-      currentdate.getHours() +
-      ":" +
-      currentdate.getMinutes() +
-      ":" +
-      currentdate.getSeconds();
-    var tctp = await TruyCapTraiPhepModel.addTCTP(
-      req.session.u_id,
-      "Thêm sản phẩm",
-      datetime
-    );
-
-    req.flash("message", "Bạn không có quyền truy cập !");
-    res.render("dangnhap/dangnhap", { message: req.flash("message") });
-  } else {
+  {
     var sp_ten = req.body.pro_name;
     var sp_gia = req.body.pro_pp_id;
     var sp_loai = req.body.pro_pt_id;

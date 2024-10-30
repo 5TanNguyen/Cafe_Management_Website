@@ -1,106 +1,70 @@
 const { response } = require("express");
 //const sanphamModel=require("../models/SanPham")
-const {validationResult}=require("express-validator");
+const { validationResult } = require("express-validator");
 const BanModel = require("../models/Ban");
 const ChiNhanhModel = require("../models/ChiNhanh");
 const DonDatModel = require("../models/DonDat");
 const ThongKeModel = require("../models/ThongKe");
-const TruyCapTraiPhepModel = require("../models/TruyCapTraiPhep");
 const DonDatController = require("./DonDatController");
 const NhanVienController = require("./NhanVienController");
 
 class BanController {
-    static async getAllBan(req, res)
+  static async getAllBan(req, res) {
+    res.locals.session = req.session;
+
     {
-        res.locals.session = req.session;
+      var results = await BanModel.getbans();
 
-        // if(!req.session.u_id){
-        //     req.flash('message', 'Bạn phải đăng nhập trước !');
-        //     res.render("dangnhap/dangnhap", { message : req.flash('message')});
-        // }
-        // if ((req.session.u_d_id != 3) && (req.session.u_d_id != 1))
-        // {
-        //     var currentdate = new Date();
-        //     var datetime = currentdate.getFullYear() + "-" + (currentdate.getMonth()+1) + "-" + currentdate.getDate()  + "  "  + currentdate.getHours() + ":"   + currentdate.getMinutes() + ":"  + currentdate.getSeconds();
-        //     var tctp = await TruyCapTraiPhepModel.addTCTP(req.session.u_id, 'Danh sách bàn', datetime);
+      var stt = await ThongKeModel.GetThongKe();
 
-        //     req.flash('message', 'Bạn không có quyền truy cập !');
-        //     res.render("dangnhap/dangnhap", { message : req.flash('message')});
-        // }
-        // else
-        {
-            var results  = await BanModel.getbans();
+      var br = await ChiNhanhModel.GetChiNhanh();
 
-            var stt = await ThongKeModel.GetThongKe();
+      var dd = await DonDatModel.getAllDonDat();
+      if (results) {
+        res.render("z_layout/layout", {
+          test: results,
+          stt: stt,
+          br: br,
+          dd: dd,
+          body: "../ban/ds_ban", // truyền đường dẫn của partial vào layout
+        });
+      } else {
+        res.status(404).send("No results found");
+      }
+    }
+  }
 
-            var br = await ChiNhanhModel.GetChiNhanh();
+  static async setEmptyTable(req, res) {
+    res.locals.session = req.session;
 
-            var dd = await DonDatModel.getAllDonDat();
-            if(results){
-                res.render('z_layout/layout', {
-                    test: results, 
-                    stt: stt, 
-                    br: br, 
-                    dd: dd,
-                    body: '../ban/ds_ban' // truyền đường dẫn của partial vào layout
-                });
-            }
-            else
-            {
-                res.status(404).send('No results found');
-            }
-                    
-            
-        }
+    if (!req.session.u_id) {
+      req.flash("message", "Bạn phải đăng nhập trước !");
+      res.render("dangnhap/dangnhap", { message: req.flash("message") });
     }
 
-    static async setEmptyTable(req, res)
     {
-        res.locals.session = req.session;
+      var t_id = req.query.t_id;
 
-        if(!req.session.u_id)
-        {
-            req.flash('message', 'Bạn phải đăng nhập trước !');
-            res.render("dangnhap/dangnhap", { message : req.flash('message')});
-        }
-            
-        if((req.session.u_d_id != 3) && (req.session.u_d_id != 1))
-        {
-            var currentdate = new Date();
-            var datetime = currentdate.getFullYear() + "-" + (currentdate.getMonth()+1) + "-" + currentdate.getDate()  + "  "  + currentdate.getHours() + ":"   + currentdate.getMinutes() + ":"  + currentdate.getSeconds();
-            var tctp = await TruyCapTraiPhepModel.addTCTP(req.session.u_id, 'Cài bàn trống', datetime);
+      var o_t_id = t_id;
 
-            req.flash('message', 'Bạn không có quyền truy cập !');
-            res.render("dangnhap/dangnhap", { message : req.flash('message')});
-        }
-        else
-        {
-            var t_id = req.query.t_id;
+      BanModel.set_StatusTable(t_id);
 
-            var o_t_id = t_id;
+      BanModel.set_T_Pay_O(t_id);
 
-            BanModel.set_StatusTable(t_id);
+      var result = await DonDatModel.getdondat(t_id);
 
-            BanModel.set_T_Pay_O(t_id);
-
-            var result = await DonDatModel.getdondat(t_id);
-
-            if(result)
-                // res.render("dondat/ds_dondat", {test : result, o_t_id});
-                res.redirect("/chitietban?t_id=" + o_t_id);
-            else
-                res.send("Error !")
-        }
+      if (result)
+        // res.render("dondat/ds_dondat", {test : result, o_t_id});
+        res.redirect("/chitietban?t_id=" + o_t_id);
+      else res.send("Error !");
     }
+  }
 
+  // Test Socket.io
 
-
-    // Test Socket.io
-
-    static async testSocket(req, res)
-    {
-        res.render('socket/socket');
-    }
+  static async testSocket(req, res) {
+    res.render("socket/socket");
+  }
 }
 
-module.exports = BanController
+module.exports = BanController;
