@@ -333,7 +333,15 @@
           </label>
         </div>
 
-        <a href="/sanpham" class="function-box">
+        <% if (session && session.permission && session.permission.length > 0) {
+        %> <% session.permission.forEach((item) => { %>
+        <a href="/<%= item.permissionurl %>" class="function-box">
+          <i class="<%- item.permissionicon %>"></i>
+          <span><%- item.permissiondescription %></span>
+        </a>
+        <% }) %> <% } %>
+
+        <!-- <a href="/sanpham" class="function-box">
           <i class="bx bx-list-ul"></i>
           <span>Product List</span>
         </a>
@@ -356,7 +364,7 @@
         <a href="#settings" class="function-box">
           <i class="bx bx-cog"></i>
           <span>Settings</span>
-        </a>
+        </a> -->
       </div>
     </div>
 

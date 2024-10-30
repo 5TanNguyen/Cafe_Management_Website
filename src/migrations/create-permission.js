@@ -9,8 +9,14 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
+      icon: {
+        type: Sequelize.STRING(100),
+      },
+      url: {
+        type: Sequelize.STRING(50),
+      },
       name: {
-        type: Sequelize.STRING(20),
+        type: Sequelize.STRING(40),
       },
       description: {
         type: Sequelize.STRING(40),

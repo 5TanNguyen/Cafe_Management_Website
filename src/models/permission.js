@@ -15,7 +15,9 @@ module.exports = (sequelize, DataTypes) => {
   }
   Permission.init(
     {
-      name: DataTypes.STRING(20),
+      icon: DataTypes.STRING(100),
+      url: DataTypes.STRING(50),
+      name: DataTypes.STRING(40),
       description: DataTypes.STRING(40),
     },
     {

@@ -49,7 +49,12 @@ class DangNhapController {
       req.session.u_id = x[0].id;
       req.session.u_email = x[0].email;
       req.session.rolename = x[0].rolename;
-      req.session.permission = permission.map((item) => item.permissionname);
+      req.session.permission = permission.map((item) => ({
+        permissionname: item.permissionname,
+        permissiondescription: item.permissiondescription,
+        permissionicon: item.permissionicon,
+        permissionurl: item.permissionurl,
+      }));
       // .join(", ");
       req.session.u_email = req.body.u_email;
 
