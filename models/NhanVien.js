@@ -62,7 +62,7 @@ class NhanVienModel {
   static async GetAllNhanVien() {
     return new Promise((resolve) => {
       db.query(
-        "SELECT users.*, roles.value as rolename " +
+        "SELECT users.*, roles.value as rolename, roles.code as rolecode " +
           "FROM users " +
           "LEFT JOIN user_roles ON users.id = user_roles.user_id " +
           "LEFT JOIN roles ON user_roles.role_id = roles.id " +

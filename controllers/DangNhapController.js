@@ -48,16 +48,21 @@ class DangNhapController {
       req.session.firstName = x[0].firstName;
       req.session.u_id = x[0].id;
       req.session.u_email = x[0].email;
+      req.session.image = x[0].image;
       req.session.rolename = x[0].rolename;
-      req.session.permission = permission.map((item) => ({
-        permissionname: item.permissionname,
-        permissiondescription: item.permissiondescription,
-        permissionicon: item.permissionicon,
-        permissionurl: item.permissionurl,
-      }));
-      // .join(", ");
-      req.session.u_email = req.body.u_email;
 
+      if (permission[0].permissionname != null) {
+        req.session.permission = permission.map((item) => ({
+          permissionname: item.permissionname,
+          permissiondescription: item.permissiondescription,
+          permissionicon: item.permissionicon,
+          permissionurl: item.permissionurl,
+        }));
+      } else {
+        req.session.permission = null;
+      }
+      // .join(", ");
+      console.log("DangNhapController 65");
       console.log(req.session.permission);
 
       var stt = await ThongKeModel.GetThongKe();

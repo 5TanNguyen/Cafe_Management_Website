@@ -306,7 +306,7 @@
         <div class="avatar-preview" onclick="openPopup()">
           <img
             id="avatar-preview-img"
-            src="/assets/images/toi/5tan.jpg"
+            src="/assets/images/toi/<%= session.image %>"
             alt="Avatar Preview"
           />
         </div>
@@ -333,38 +333,15 @@
           </label>
         </div>
 
-        <% if (session && session.permission && session.permission.length > 0) {
-        %> <% session.permission.forEach((item) => { %>
+        <% if (session && session.permission && session.permission.length > 0)
+        {%> <% session.permission.forEach((item) => { %>
         <a href="/<%= item.permissionurl %>" class="function-box">
           <i class="<%- item.permissionicon %>"></i>
           <span><%- item.permissiondescription %></span>
         </a>
-        <% }) %> <% } %>
-
-        <!-- <a href="/sanpham" class="function-box">
-          <i class="bx bx-list-ul"></i>
-          <span>Product List</span>
-        </a>
-
-        <a href="/thongke" class="function-box">
-          <i class="bx bx-bar-chart-alt-2"></i>
-          <span>Statistics</span>
-        </a>
-
-        <a href="/phache" class="function-box">
-          <i class="bx bx-shopping-bag"></i>
-          <span>Manage Orders</span>
-        </a>
-
-        <a href="/truycaptraiphep" class="function-box">
-          <i class="bx bx-user"></i>
-          <span>Unauthorized access</span>
-        </a>
-
-        <a href="#settings" class="function-box">
-          <i class="bx bx-cog"></i>
-          <span>Settings</span>
-        </a> -->
+        <% }) %> <% } else{ %>
+        <div></div>
+        <% }%>
       </div>
     </div>
 
