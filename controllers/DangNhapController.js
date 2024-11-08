@@ -5,6 +5,7 @@ const NhanVienModel = require("../models/NhanVien");
 const ChiNhanhModel = require("../models/ChiNhanh");
 const ThongKeModel = require("../models/ThongKe");
 const jwt = require("jsonwebtoken");
+const crypto = require("crypto");
 
 const { checkPermission } = require("../middlewares/checkPermission");
 const { redirect } = require("express/lib/response");
