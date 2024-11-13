@@ -86,22 +86,12 @@
   </script>
 
   <script>
-    // Tạo khóa AES
-    const aesKey = CryptoJS.lib.WordArray.random(16).toString();
-
-    // Mã hóa mật khẩu bằng AES
-    const password = document.getElementById("u_password").value;
-    const encryptedPassword = CryptoJS.AES.encrypt(password, aesKey).toString();
-
-    const publicKey = "5tan";
-    const encrypt = new JSEncrypt();
-    encrypt.setPublicKey(publicKey);
-    const encryptedAesKey = encrypt.encrypt(aesKey);
-
     function validate() {
       var username = document.getElementById("u_email");
       var password = document.getElementById("u_password");
-      const encryptedPassword = encrypt.encrypt(password.value);
+      const hashedPassword = CryptoJS.SHA256(password.value).toString(
+        CryptoJS.enc.Hex
+      );
 
       // Kiểm tra nếu username hoặc password để trống
       if (username.value.trim() === "") {
@@ -118,11 +108,11 @@
 
       // Gọi Ajax để xử lý đăng nhập
       $.ajax({
-        // url: "/dangnhap", // Đường dẫn tới router bạn đã định nghĩa
+        url: "/dangnhap", // Đường dẫn tới router bạn đã định nghĩa
         type: "POST",
         data: {
           u_email: username.value,
-          u_password: encryptedAesKey,
+          u_password: hashedPassword,
         },
         success: function (response) {
           if (response.success) {

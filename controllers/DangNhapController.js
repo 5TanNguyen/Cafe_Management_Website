@@ -30,6 +30,9 @@ class DangNhapController {
     var x = await NhanVienModel.getNhanVienByUsername(u_email, u_password);
     var permission = await NhanVienModel.getQuyen(u_email, u_password);
 
+    console.log("Mật khẩu được gửi từ client");
+    console.log(u_password);
+
     if (x == false) {
       req.session.firstName = null;
       req.session.u_id = null;
