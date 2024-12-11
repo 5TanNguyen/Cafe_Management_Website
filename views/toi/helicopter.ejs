@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Game Lái Trực Thăng Bắn Mục Tiêu</title>
+    <style>
+      body {
+        margin: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-color: #f0f0f0;
+        overflow: hidden;
+        position: relative;
+      }
+      canvas {
+        display: block;
+        width: 100%;
+        height: 100%;
+      }
+      #joystick {
+        position: absolute;
+        width: 20vw;
+        height: 20vw;
+        max-width: 150px;
+        max-height: 150px;
+        background-color: rgba(0, 0, 0, 0.3);
+        border-radius: 50%;
+        left: 5%;
+        bottom: 5%;
+        pointer-events: auto;
+      }
+      #stick {
+        position: absolute;
+        width: 6vw;
+        height: 6vw;
+        max-width: 50px;
+        max-height: 50px;
+        background-color: rgba(255, 0, 0, 0.6);
+        border-radius: 50%;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        pointer-events: none;
+      }
+      #shootButton {
+        position: absolute;
+        width: 15vw;
+        height: 15vw;
+        max-width: 80px;
+        max-height: 80px;
+        background-color: red;
+        color: white;
+        font-size: 18px;
+        border-radius: 50%;
+        bottom: 5%;
+        right: 5%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+      }
+
+      @media (max-width: 768px) {
+        #joystick {
+          width: 25vw;
+          height: 25vw;
+        }
+        #stick {
+          width: 8vw;
+          height: 8vw;
+        }
+        #shootButton {
+          width: 18vw;
+          height: 18vw;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="gameCanvas"></canvas>
+    <div id="joystick">
+      <div id="stick"></div>
+    </div>
+    <div id="shootButton">Bắn</div>
+    <script>
+      const canvas = document.getElementById("gameCanvas");
+      const ctx = canvas.getContext("2d");
+
+      // Cập nhật kích thước canvas khi thay đổi kích thước cửa sổ
+      function resizeCanvas() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+      }
+      window.addEventListener("resize", resizeCanvas);
+      resizeCanvas();
+
+      const helicopterWidth = 80;
+      const helicopterHeight = 40;
+      let helicopterX = canvas.width / 2 - helicopterWidth / 2;
+      let helicopterY = canvas.height - helicopterHeight - 10;
+      let helicopterSpeed = 5;
+      let helicopterAngle = 0;
+
+      const bulletWidth = 5;
+      const bulletHeight = 10;
+      let bullets = [];
+      let bulletSpeed = 7;
+
+      const targetWidth = 50;
+      const targetHeight = 50;
+      let targets = [];
+      let targetSpawnRate = 0.01;
+
+      const monsterWidth = 60;
+      const monsterHeight = 60;
+      let monsters = [];
+      let monsterSpeed = 3;
+
+      const joystick = document.getElementById("joystick");
+      const stick = document.getElementById("stick");
+      let joystickX = 0;
+      let joystickY = 0;
+
+      let shotsFired = 0;
+
+      const keys = {
+        up: false,
+        down: false,
+        left: false,
+        right: false,
+        space: false,
+        w: false,
+        a: false,
+        s: false,
+        d: false,
+      };
+
+      joystick.addEventListener("touchstart", (e) => {
+        const rect = joystick.getBoundingClientRect();
+        let deltaX =
+          e.touches[0].clientX - rect.left - joystick.offsetWidth / 2;
+        let deltaY =
+          e.touches[0].clientY - rect.top - joystick.offsetHeight / 2;
+        const distance = Math.min(
+          Math.sqrt(deltaX * deltaX + deltaY * deltaY),
+          joystick.offsetWidth / 2
+        );
+        joystickX = distance * Math.cos(Math.atan2(deltaY, deltaX));
+        joystickY = distance * Math.sin(Math.atan2(deltaY, deltaX));
+        stick.style.transform = `translate(-50%, -50%) translate(${joystickX}px, ${joystickY}px)`;
+      });
+
+      joystick.addEventListener("touchmove", (e) => {
+        const rect = joystick.getBoundingClientRect();
+        let deltaX =
+          e.touches[0].clientX - rect.left - joystick.offsetWidth / 2;
+        let deltaY =
+          e.touches[0].clientY - rect.top - joystick.offsetHeight / 2;
+        const distance = Math.min(
+          Math.sqrt(deltaX * deltaX + deltaY * deltaY),
+          joystick.offsetWidth / 2
+        );
+        joystickX = distance * Math.cos(Math.atan2(deltaY, deltaX));
+        joystickY = distance * Math.sin(Math.atan2(deltaY, deltaX));
+        stick.style.transform = `translate(-50%, -50%) translate(${joystickX}px, ${joystickY}px)`;
+      });
+
+      joystick.addEventListener("touchend", () => {
+        joystickX = 0;
+        joystickY = 0;
+        stick.style.transform = `translate(-50%, -50%)`;
+      });
+
+      // Xử lý cử chỉ bàn phím
+      window.addEventListener("keydown", (e) => {
+        if (e.key === " " || e.key === "Enter") {
+          keys.space = true;
+          shootBullet(); // Bắn khi nhấn phím Space
+        }
+
+        if (e.key === "ArrowUp" || e.key === "w") keys.up = true;
+        if (e.key === "ArrowDown" || e.key === "s") keys.down = true;
+        if (e.key === "ArrowLeft" || e.key === "a") keys.left = true;
+        if (e.key === "ArrowRight" || e.key === "d") keys.right = true;
+        if (e.key === " " || e.key === "Enter") keys.space = true;
+      });
+
+      window.addEventListener("keyup", (e) => {
+        if (e.key === " " || e.key === "Enter") keys.space = false;
+
+        if (e.key === "ArrowUp" || e.key === "w") keys.up = false;
+        if (e.key === "ArrowDown" || e.key === "s") keys.down = false;
+        if (e.key === "ArrowLeft" || e.key === "a") keys.left = false;
+        if (e.key === "ArrowRight" || e.key === "d") keys.right = false;
+        if (e.key === " " || e.key === "Enter") keys.space = false;
+      });
+
+      document.getElementById("shootButton").addEventListener("click", () => {
+        shootBullet();
+      });
+
+      const helicopterImage = new Image();
+      helicopterImage.src = "assets/images/toi/f_16.png";
+
+      function drawHelicopter() {
+        ctx.save();
+        ctx.translate(
+          helicopterX + helicopterWidth / 2,
+          helicopterY + helicopterHeight / 2
+        );
+        ctx.rotate(helicopterAngle);
+        ctx.drawImage(
+          helicopterImage,
+          -helicopterWidth / 2,
+          -helicopterHeight / 2,
+          helicopterWidth,
+          helicopterHeight
+        );
+        ctx.restore();
+      }
+
+      function drawBullets() {
+        ctx.fillStyle = "red";
+        bullets.forEach((bullet, index) => {
+          ctx.fillRect(bullet.x, bullet.y, bulletWidth, bulletHeight);
+          bullet.y -= bulletSpeed;
+
+          if (bullet.y < 0) {
+            bullets.splice(index, 1);
+          }
+        });
+      }
+
+      function drawMonsters() {
+        ctx.fillStyle = "green";
+        monsters.forEach((monster, index) => {
+          ctx.fillRect(monster.x, monster.y, monsterWidth, monsterHeight);
+          monster.y += monsterSpeed;
+
+          // Kiểm tra va chạm với đạn
+          bullets.forEach((bullet, bulletIndex) => {
+            if (
+              bullet.x > monster.x &&
+              bullet.x < monster.x + monsterWidth &&
+              bullet.y > monster.y &&
+              bullet.y < monster.y + monsterHeight
+            ) {
+              monsters.splice(index, 1);
+              bullets.splice(bulletIndex, 1);
+            }
+          });
+
+          // Xóa quái vật khi ra khỏi màn hình
+          if (monster.y > canvas.height) {
+            monsters.splice(index, 1);
+          }
+        });
+      }
+
+      function spawnMonster() {
+        if (Math.random() < 0.01) {
+          monsters.push({
+            x: Math.random() * (canvas.width - monsterWidth),
+            y: -monsterHeight,
+          });
+        }
+      }
+
+      function spawnTarget() {
+        if (Math.random() < targetSpawnRate) {
+          targets.push({
+            x: Math.random() * (canvas.width - targetWidth),
+            y: -targetHeight,
+          });
+        }
+      }
+
+      function shootBullet() {
+        bullets.push({
+          x: helicopterX + helicopterWidth / 2 - bulletWidth / 2,
+          y: helicopterY,
+        });
+        shotsFired++; // Tăng số lượng đạn đã bắn
+      }
+
+      function updateHelicopter() {
+        if (keys.up || joystickY < 0) helicopterY -= helicopterSpeed;
+        if (keys.down || joystickY > 0) helicopterY += helicopterSpeed;
+        if (keys.left || joystickX < 0) helicopterX -= helicopterSpeed;
+        if (keys.right || joystickX > 0) helicopterX += helicopterSpeed;
+
+        helicopterY = Math.max(
+          0,
+          Math.min(canvas.height - helicopterHeight, helicopterY)
+        );
+        helicopterX = Math.max(
+          0,
+          Math.min(canvas.width - helicopterWidth, helicopterX)
+        );
+      }
+
+      function drawShotsFired() {
+        ctx.fillStyle = "black";
+        ctx.font = "20px Arial";
+        ctx.fillText("Đạn đã bắn: " + shotsFired, 20, 30);
+      }
+
+      function gameLoop() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        updateHelicopter();
+        drawHelicopter();
+        drawBullets();
+        drawMonsters();
+        spawnMonster();
+        spawnTarget();
+        drawShotsFired();
+
+        requestAnimationFrame(gameLoop);
+      }
+
+      gameLoop();
+    </script>
+  </body>
+</html>

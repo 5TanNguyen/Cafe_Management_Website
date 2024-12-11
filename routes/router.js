@@ -44,6 +44,7 @@ let initWebRoutes = (app) => {
   router.get("/dangnhap", dangnhapController.GetDangNhapForm);
   router.post("/dangnhap", dangnhapController.DangNhap);
   router.get("/dangxuat", dangnhapController.dangXuat);
+  router.get("/helicopter", dangnhapController.heli);
 
   // Sản phẩm
   router.get(

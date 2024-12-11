@@ -253,15 +253,15 @@ h1 {
                                     <div class="content">
                                         <div class="container">
                                             <form action="/songuoi" method="POST" onsubmit="return validate_ban();">
-                                                <label for="">Bàn</label>
+                                                <label>Bàn</label>
                                                 <input type="text" value="<%- test[i].t_id %>" name="t_id">
                                                 
-                                                <label for="">Số Người</label>
+                                                <label>Số Người</label>
                                                 <input type="text" placeholder="Nhập số người" name="num" id="num">
                                                 <label id="lblnum" style="color: red; visibility: hidden;">KHÔNG ĐƯỢC BỎ TRỐNG !</label>
 
                                                 <br>
-                                                <label for="">Chi Nhánh</label>
+                                                <label>Chi Nhánh</label>
                                                 <select class="form-control" name="br_id" id="">
                                                     <% for(var t = 0; t < br.length; t++){ %> 
                                                         <option value="<%- br[t].br_id %>"><%- br[t].br_name %></option>
@@ -274,7 +274,7 @@ h1 {
                                                 <input hidden name="o_time" type="text" value="<%- datetime %>">
 
                                                 <br>
-                                                <label for="">Thống Kế</label>
+                                                <label>Thống Kế</label>
                                                 <select class="form-control" name="s_id" id="">
                                                     <% for(var t = 0; t < stt.length; t++){ %> 
                                                         <option value="<%- stt[t].s_id %>"><%- stt[t].s_name %></option>

@@ -107,6 +107,13 @@ class DangNhapController {
     var message = "";
     res.render("dangnhap/dangnhap", { message });
   }
+
+  static async heli(req, res) {
+    req.session.destroy();
+
+    var message = "";
+    res.render("toi/helicopter", { message });
+  }
 }
 
 module.exports = DangNhapController;
