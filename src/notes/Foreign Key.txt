@@ -1,5 +1,0 @@
-- Khi thêm FK cho 2 bảng
-    + 2 bảng đã tồn tại, thì thêm 1 migration addColumn FK
-    + Bảng cha đã có, thì tại migratio cho bảng con có FK
-
-- hasMany, beLongsTo ở index.js là để dùng các tính năng inclue
