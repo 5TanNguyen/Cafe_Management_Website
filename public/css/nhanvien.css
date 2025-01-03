@@ -153,6 +153,7 @@ body{
 .wrapper .content{
     max-height: 30%;
     overflow: auto;
+    padding: 20px;
 }
 
 .wrapperrr{
@@ -276,7 +277,7 @@ body{
 .nv_container{
     border-radius: 5px;
     background-color: #e7e7e7e7;
-    /* padding: 20px 0; */
+    padding: 20px 0;
 }
 
 form label{
@@ -347,6 +348,11 @@ input[type="submit"]{
     line-height: 50px;
     background: white;
     text-align: center;
+}
+
+.tab-edit {
+    flex-direction: row;
+    justify-content: space-between;
 }
 
 @media screen and (max-width: 1250px){

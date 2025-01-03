@@ -180,7 +180,27 @@
           <div class="nv_wrapper">
             <h2 class="text-center">Chỉnh sửa thông tin nhân viên</h2>
             <a href="#" class="close">&times;</a>
-            <div class="content">
+            <div class="row p-3 tab-edit">
+              <div class="col-5 p-1">
+                <button
+                  id="btn-tab-1"
+                  type="button"
+                  class="btn btn-primary w-100 h-100"
+                >
+                  1
+                </button>
+              </div>
+              <div class="col-5 p-1">
+                <button
+                  id="btn-tab-2"
+                  type="button"
+                  class="btn btn-success w-100 h-100"
+                >
+                  1
+                </button>
+              </div>
+            </div>
+            <div id="tab-1" class="content">
               <div class="nv_container">
                 <form class="" action="/suanhanvien" method="POST">
                   <input
@@ -250,6 +270,36 @@
                 </form>
               </div>
             </div>
+            <div id="tab-2" class="content">
+              <div class="nv_container">
+                <form class="" action="/suanhanvien" method="POST">
+                  <input
+                    name="u_id"
+                    type="text"
+                    hidden
+                    placeholder=""
+                    value="<%- u[i].u_id %>"
+                  />
+
+                  <div class="row">
+                    <div class="col-12">
+                      <label for="">Địa chỉ</label>
+                      <textarea
+                        name="address"
+                        value="<%- u[i].address %>"
+                      ></textarea>
+                    </div>
+                  </div>
+
+                  <br />
+                  <input
+                    type="submit"
+                    value="XÁC NHẬN"
+                    style="width: 100%; background-color: red"
+                  />
+                </form>
+              </div>
+            </div>
           </div>
         </div>
       </td>
@@ -300,3 +350,10 @@
     <% } %>
   </table>
 </div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    document.getElementById("tab-1").style.zIndex = 2;
+    document.getElementById("tab-2").style.display = "none";
+  });
+</script>
