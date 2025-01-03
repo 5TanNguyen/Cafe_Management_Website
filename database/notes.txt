@@ -14,6 +14,11 @@ npm install
 
 ---- INSTALL PROJECT IN NEW PLACE ----
 
+---- Lịch cập nhật db -----
+
+
+---- Lịch cập nhật db -----
+
 +++++ nút tạo đơn nhập bên Nguyên liệu
 +++++ Thêm cách pha chế
 +++++ Sửa giá sản phẩm, 

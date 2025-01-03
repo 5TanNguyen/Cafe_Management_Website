@@ -82,6 +82,9 @@ body{
     transition: opacity 500ms;
     visibility: hidden;
     opacity: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .UD_overplay:target{
@@ -203,6 +206,16 @@ body{
     overflow: auto;
 }
 
+.nv_wrapper{
+    margin: 70px auto;
+    padding: 20px;
+    background: #e7e7e7e7;
+    border-radius: 5px;
+    max-width: 550px;
+    position: relative;
+    transition: all 5s ease-in-out;
+}
+
 .UD_Add_Product{
     height: 500px;
     margin: 70px auto;
@@ -214,12 +227,12 @@ body{
     transition: all 5s ease-in-out;
 }
 
-.UD_wrapper h2{
+.nv_wrapper h2{
     margin-top: 0;
     color: #333;
 }
 
-.UD_wrapper .close{
+.nv_wrapper .close{
     position: absolute;
     top: 20px;
     right: 30px;
@@ -229,9 +242,8 @@ body{
     color: #333;
 }
 
-.UD_wrapper .content{
+.nv_wrapper .content{
     max-height: 30%;
-    overflow: auto;
 }
 
 .UD_Add_Product h2{
@@ -261,10 +273,10 @@ body{
 }
 
 
-.container{
+.nv_container{
     border-radius: 5px;
     background-color: #e7e7e7e7;
-    padding: 20px 0;
+    /* padding: 20px 0; */
 }
 
 form label{

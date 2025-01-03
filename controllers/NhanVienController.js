@@ -65,10 +65,11 @@ class NhanVienController {
     res.locals.session = req.session;
     {
       var users = await NhanVienModel.GetAllNhanVien();
-
+      console.log(users);
       res.render("z_layout/layout", {
-        u: users,
         body: "../nhanvien/ds_nhanvien",
+        cssFile: "nhanvien.css",
+        u: users,
       });
     }
   }

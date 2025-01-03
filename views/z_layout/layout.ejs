@@ -1,18 +1,20 @@
 <!-- layout.ejs -->
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Your Title</title>
-    <link rel="stylesheet" href="/css/style.css"> <!-- Link đến file CSS -->
-    <link rel="icon" href="/assets/images/cheems.png" type="image/x-icon">
-</head>
-<body>
-    <%- include('partials/nav') %> 
-    
-    <%- include(body) %>
-
-    <%- include('partials/footer') %> 
-</body>
+    <link rel="stylesheet" href="/css/style.css" />
+    <!-- Link đến file CSS -->
+    <link rel="icon" href="/assets/images/cheems.png" type="image/x-icon" />
+    <% if (typeof cssFile !== 'undefined') { %>
+    <link rel="stylesheet" href="/css/<%= cssFile %>" />
+    <!-- CSS riêng -->
+    <% } %>
+  </head>
+  <body>
+    <%- include('partials/nav') %> <%- include(body) %> <%-
+    include('partials/footer') %>
+  </body>
 </html>

@@ -122,7 +122,7 @@
 
       <td>
         <div class="UD_overplay" id="divW<%- u[i].u_id %>">
-          <div class="UD_wrapper">
+          <div class="nv_wrapper">
             <h2 class="text-center">Cấp ví nhân viên</h2>
             <a href="#" class="close">&times;</a>
             <div class="content">
@@ -177,12 +177,12 @@
         </a>
         <% } %>
         <div class="UD_overplay" id="divUD<%- u[i].u_id %>">
-          <div class="UD_wrapper">
+          <div class="nv_wrapper">
             <h2 class="text-center">Chỉnh sửa thông tin nhân viên</h2>
             <a href="#" class="close">&times;</a>
             <div class="content">
-              <div class="container">
-                <form action="/suanhanvien" method="POST">
+              <div class="nv_container">
+                <form class="" action="/suanhanvien" method="POST">
                   <input
                     name="u_id"
                     type="text"
@@ -205,36 +205,40 @@
                     <div class="col">
                       <label for="">Số điện thoại</label>
                       <input
-                        name="u_phone"
+                        name="phonenumber"
                         type="text"
                         placeholder=""
-                        value="<%- u[i].u_phone %>"
+                        value="<%- u[i].phonenumber %>"
                       />
                     </div>
                   </div>
 
                   <div class="row">
-                    <label for="">Địa chỉ</label>
-                    <input
-                      name="u_address"
-                      type="text"
-                      placeholder=""
-                      value="<%- u[i].u_address %>"
-                    />
+                    <div class="col-12">
+                      <label for="">Địa chỉ</label>
+                      <input
+                        name="address"
+                        type="text"
+                        placeholder=""
+                        value="<%- u[i].address %>"
+                      />
+                    </div>
                   </div>
 
                   <div class="row">
-                    <label for="">Chức vụ</label>
-                    <select
-                      class="form-control"
-                      name="u_d_id"
-                      id="u_d_id"
-                      style="width: 100%"
-                    >
-                      <option value="<%- u[i].d_id %>">
-                        <%- u[i].d_name %>
-                      </option>
-                    </select>
+                    <div class="col-12">
+                      <label for="">Chức vụ</label>
+                      <select
+                        class="form-control"
+                        name="u_d_id"
+                        id="u_d_id"
+                        style="width: 100%"
+                      >
+                        <option value="<%- u[i].d_id %>">
+                          <%- u[i].rolename %>
+                        </option>
+                      </select>
+                    </div>
                   </div>
 
                   <br />
