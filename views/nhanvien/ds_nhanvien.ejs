@@ -354,6 +354,25 @@
 <script>
   document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("tab-1").style.zIndex = 2;
+    document.getElementById("tab-1").style.display = "block";
+
+    document.getElementById("tab-2").style.zIndex = 1;
     document.getElementById("tab-2").style.display = "none";
+  });
+
+  document.getElementById("btn-tab-1").addEventListener("click", () => {
+    document.getElementById("tab-1").style.zIndex = 2;
+    document.getElementById("tab-1").style.display = "block";
+
+    document.getElementById("tab-2").style.zIndex = 1;
+    document.getElementById("tab-2").style.display = "none";
+  });
+
+  document.getElementById("btn-tab-2").addEventListener("click", () => {
+    document.getElementById("tab-1").style.zIndex = 1;
+    document.getElementById("tab-1").style.display = "none";
+
+    document.getElementById("tab-2").style.zIndex = 2;
+    document.getElementById("tab-2").style.display = "block";
   });
 </script>
