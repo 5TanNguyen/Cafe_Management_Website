@@ -212,7 +212,8 @@ body{
     padding: 20px;
     background: #e7e7e7e7;
     border-radius: 5px;
-    max-width: 550px;
+    width: 550px;
+    height: 600px;
     position: relative;
     transition: all 5s ease-in-out;
 }

@@ -117,23 +117,23 @@ class NhanVienController {
 
     {
       var u_id = req.body.u_id;
-      var u_name = req.body.u_name;
-      var u_address = req.body.u_address;
-      var u_phone = req.body.u_phone;
-      var u_d_id = req.body.u_d_id;
+      var firstName = req.body.firstName;
+      var address = req.body.address;
+      var phonenumber = req.body.phonenumber;
 
       var rs = await NhanVienModel.EditNhanVien(
         u_id,
-        u_name,
-        u_address,
-        u_phone,
-        u_d_id
+        firstName,
+        address,
+        phonenumber
       );
 
       if (rs == true) {
         res.redirect("/nhanvien");
+        console.log("Thành công");
       } else {
         res.redirect("/dangnhap");
+        console.log("Thất bại");
       }
     }
   }
