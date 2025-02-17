@@ -87,21 +87,13 @@
               <a href="#" class="close">&times;</a>
               <div class="row p-3 tab-edit">
                 <div class="col-5 p-1">
-                  <button
-                    id="btn-tab-1"
-                    type="button"
-                    class="btn btn-primary w-100 h-100"
-                  >
-                    Thông tin chính
+                  <button id="btn-tab-1" type="button" class="btn w-100 h-100">
+                    Chính
                   </button>
                 </div>
                 <div class="col-5 p-1">
-                  <button
-                    id="btn-tab-2"
-                    type="button"
-                    class="btn btn-success w-100 h-100"
-                  >
-                    Thông tin phụ
+                  <button id="btn-tab-2" type="button" class="btn w-100 h-100">
+                    Phụ
                   </button>
                 </div>
               </div>
@@ -272,23 +264,29 @@
       if (tab1 && tab2) {
         tab1.style.zIndex = 2;
         tab1.style.display = "block";
+        btnTab1.style.backgroundColor = "#dcdde1";
         tab2.style.zIndex = 1;
         tab2.style.display = "none";
+        btnTab2.style.backgroundColor = "#f5f6fa";
       }
 
       if (btnTab1 && btnTab2) {
         btnTab1.addEventListener("click", () => {
           tab1.style.zIndex = 2;
           tab1.style.display = "block";
+          btnTab1.style.backgroundColor = "#dcdde1";
           tab2.style.zIndex = 1;
           tab2.style.display = "none";
+          btnTab2.style.backgroundColor = "#f5f6fa";
         });
 
         btnTab2.addEventListener("click", () => {
           tab1.style.zIndex = 1;
           tab1.style.display = "none";
+          btnTab1.style.backgroundColor = "#f5f6fa";
           tab2.style.zIndex = 2;
           tab2.style.display = "block";
+          btnTab2.style.backgroundColor = "#dcdde1";
         });
       }
     });
