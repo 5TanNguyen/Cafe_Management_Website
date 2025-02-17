@@ -117,15 +117,21 @@ class NhanVienController {
 
     {
       var u_id = req.body.u_id;
+      var email = req.body.email;
       var firstName = req.body.firstName;
+      var lastName = req.body.lastName;
       var address = req.body.address;
       var phonenumber = req.body.phonenumber;
+      var gender = req.body.gender;
 
       var rs = await NhanVienModel.EditNhanVien(
         u_id,
+        email,
         firstName,
+        lastName,
         address,
-        phonenumber
+        phonenumber,
+        gender
       );
 
       if (rs == true) {

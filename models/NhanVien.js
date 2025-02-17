@@ -103,15 +103,26 @@ class NhanVienModel {
     });
   }
 
-  static async EditNhanVien(u_id, firstName, address, phonenumber) {
+  static async EditNhanVien(
+    u_id,
+    email,
+    firstName,
+    lastName,
+    address,
+    phonenumber,
+    gender
+  ) {
     return new Promise((resolve) => {
       db.query(
         "UPDATE users" +
-          " SET firstName = ?," +
+          " SET email = ?," +
+          " firstName = ?," +
+          " lastName = ?," +
           " address = ?," +
-          " phonenumber = ?" +
+          " phonenumber = ?," +
+          " gender = ?" +
           " WHERE id = ?",
-        [firstName, address, phonenumber, u_id],
+        [email, firstName, lastName, address, phonenumber, gender, u_id],
         (error, result) => {
           if (!error) resolve(true);
           else resolve(false);

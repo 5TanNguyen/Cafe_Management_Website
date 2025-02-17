@@ -1,106 +1,4 @@
 <div class="container">
-  <!-- <form
-        action="/themnhanvien"
-        method="post"
-        style="padding-top: 10px"
-        onsubmit="return validate_ds_nhanvien();"
-      >
-        <div class="row g-3">
-          <div class="col-sm">
-            <input
-              id="u_name"
-              name="u_name"
-              type="text"
-              class="form-control"
-              value=""
-              placeholder="Tên nhân viên..."
-            />
-            <label id="lbl_u_name" class="lbl_validate" name="lbl_u_name"
-              >KHÔNG ĐƯỢC BỎ TRỐNG !</label
-            >
-          </div>
-          <div class="col-sm">
-            <input
-              id="u_username"
-              name="u_username"
-              type="text"
-              class="form-control"
-              placeholder="Username..."
-            />
-            <label
-              id="lbl_u_username"
-              class="lbl_validate"
-              name="lbl_u_username"
-              >KHÔNG ĐƯỢC BỎ TRỐNG !</label
-            >
-          </div>
-          <div class="col-sm">
-            <input
-              id="u_password"
-              name="u_password"
-              type="text"
-              class="form-control"
-              placeholder="Password..."
-            />
-            <label
-              id="lbl_u_password"
-              class="lbl_validate"
-              name="lbl_u_password"
-              >KHÔNG ĐƯỢC BỎ TRỐNG !</label
-            >
-          </div>
-
-          <div class="col-sm">
-            <input
-              id="u_phone"
-              name="u_phone"
-              type="text"
-              class="form-control"
-              placeholder="Số điện thoại..."
-            />
-            <label id="lbl_u_phone" class="lbl_validate" name="lbl_u_phone"
-              >KHÔNG ĐƯỢC BỎ TRỐNG !</label
-            >
-          </div>
-
-          <div class="row">
-            <div class="col-sm">
-              <input
-                id="u_address"
-                name="u_address"
-                type="text"
-                class="form-control"
-                placeholder="Địa chỉ..."
-              />
-              <label
-                id="lbl_u_address"
-                class="lbl_validate"
-                name="lbl_u_address"
-                >KHÔNG ĐƯỢC BỎ TRỐNG !</label
-              >
-            </div>
-          </div>
-
-          <div class="row">
-            <div class="col-sm">
-              <label for="">Chức vụ</label>
-              <select
-                class="form-control"
-                name="u_d_id"
-                id="u_d_id"
-                style="width: 100%"
-              ></select>
-            </div>
-          </div>
-        </div>
-
-        <br />
-
-        <div class="d-grid gap-2">
-          <button class="btn btn btn-danger" type="submit">THÊM</button>
-        </div>
-      </form> -->
-
   <hr />
   <br />
   <h3 class="text-center">Danh Sách Nhân Viên</h3>
@@ -183,7 +81,7 @@
               class="form-control d-flex flex-column form-edit-nhan-vien"
               action="/suanhanvien"
               method="POST"
-              style="height: 500px"
+              style="height: 500px; width: 100%"
               id="form-edit-nhan-vien"
             >
               <a href="#" class="close">&times;</a>
@@ -219,7 +117,7 @@
 
                   <div class="row">
                     <div class="col">
-                      <label for="">Tên nhân viên</label>
+                      <label for="">Tên</label>
                       <input
                         name="firstName"
                         type="text"
@@ -229,36 +127,48 @@
                     </div>
 
                     <div class="col">
-                      <label for="">Số điện thoại</label>
+                      <label for="">Họ</label>
+                      <input
+                        name="lastName"
+                        type="text"
+                        placeholder=""
+                        value="<%- u[i].lastName %>"
+                      />
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-12">
+                      <label for="">Email</label>
+                      <input
+                        name="email"
+                        type="text"
+                        placeholder=""
+                        value="<%- u[i].email %>"
+                      />
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col">
+                      <label for="">SĐT</label>
                       <input
                         name="phonenumber"
+                        class="form-control"
                         type="text"
                         placeholder=""
                         value="<%- u[i].phonenumber %>"
+                        style="height: 50px"
                       />
                     </div>
-                  </div>
 
-                  <div class="row">
-                    <div class="col-12">
-                      <label for="">Địa chỉ</label>
-                      <input
-                        name="address"
-                        type="text"
-                        placeholder=""
-                        value="<%- u[i].address %>"
-                      />
-                    </div>
-                  </div>
-
-                  <div class="row">
-                    <div class="col-12">
+                    <div class="col">
                       <label for="">Chức vụ</label>
                       <select
                         class="form-control"
                         name="u_d_id"
                         id="u_d_id"
-                        style="width: 100%"
+                        style="height: 50px; margin-top: 6px"
                       >
                         <option value="<%- u[i].d_id %>">
                           <%- u[i].rolename %>
@@ -267,7 +177,22 @@
                     </div>
                   </div>
 
-                  <br />
+                  <div class="row">
+                    <div class="col">
+                      <label for="">Giới tính</label>
+                      <select
+                        name="gender"
+                        class="form-control"
+                        style="height: 50px; margin-top: 6px"
+                      >
+                        <option value="<%= u[i].gender %>">
+                          <%- u[i].gender == 1 ? "Nam" : "Nữ" %>
+                        </option>
+                        <option value="1">Nam</option>
+                        <option value="0">Nữ</option>
+                      </select>
+                    </div>
+                  </div>
                 </div>
               </div>
               <div id="tab-2" class="content">
@@ -275,16 +200,15 @@
                   <div class="row">
                     <div class="col">
                       <label for="">Địa chỉ</label>
-                      <textarea name=""><%- u[i].address %></textarea>
+                      <textarea name="address"><%- u[i].address %></textarea>
                     </div>
                   </div>
                 </div>
               </div>
               <input
-                class="mt-auto"
+                class="mt-auto btn-submit"
                 type="submit"
                 value="XÁC NHẬN"
-                style="width: 100%; background-color: red"
               />
             </form>
           </div>
