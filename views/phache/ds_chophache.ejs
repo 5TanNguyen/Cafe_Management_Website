@@ -1,62 +1,310 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>DS Chờ Pha Chế</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
-    <link rel="stylesheet" href="/css/ds_chophache.css">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-</head>
-<body>
-    <div class="container">
-        <h2 class="text-center">Danh Sách Chờ Pha Chế</h2>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+    />
+    <link rel="stylesheet" href="/css/ds_chophache.css" />
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+      crossorigin="anonymous"
+    ></script>
 
-        <div class="row">
-            <style>
-               
-            </style>
-            <div class="col-3 col3">
-                <a href="" onclick="window.location.reload()">
-                    <h2 class="text-center">Số Đơn</h2>
-                    <div class="sodon">
-                        <p>
-                            <%- dsc.length %>
-                        </p>
-                    </div>
-                </a>
-            </div>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f4f4f4;
+        position: relative;
+      }
 
-            <div class="col">
-                <table class="table table-hover">
-                    <thead class="table table-light">
-                        <th>ID</th>
-                        <th>Bàn</th>
-                        <th>Giá</th>
-                        <th>Thao tác</th>
-                    </thead>
+      /* Container toàn trang */
+      .ds_ban_container {
+        display: flex;
+        height: calc(
+          100vh - 100px
+        ); /* Giảm chiều cao của container thay vì dùng margin */
+        padding-top: 80px; /* Sử dụng padding để tạo khoảng cách từ top */
+        overflow: hidden; /* Ngăn cuộn cả trang */
+      }
 
-                    <% if(dsc.length > 0){ %>
-                        <% for(var i = 0; i < dsc.length;  i++){ %>
-                            <tr>
-                                <th><%- dsc[i].o_id %></th>
-                                <th><%- dsc[i].o_t_id %></th>
-                                <th><%- dsc[i].o_cost %> VNĐ</th>
-                                <th>
-                                    <a href="/chitietdondatpc?o_id=<%- dsc[i].o_id %>" class="btn btn-success">
-                                        Chi tiết
-                                    </a>
-                                </th>
-                            </tr>
-                        <% } %>
-                    <% } else { %>
-                        <p>Không có đơn nào</p>
-                    <% } %>
-                </table>
-            </div>
+      /* Phần danh sách bàn */
+      .table-container {
+        flex: 1; /* Chiếm toàn bộ chiều rộng còn lại */
+        padding: 20px;
+        height: calc(
+          100vh - 150px
+        ); /* Giới hạn chiều cao cho phần danh sách bàn */
+        overflow-y: auto; /* Cho phép cuộn nếu danh sách quá dài */
+      }
+
+      .sidebar {
+        width: 300px;
+        background-color: #fff;
+        border-right: 1px solid #ddd;
+        padding: 20px;
+        box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        z-index: 1;
+        position: relative;
+      }
+
+      /* Phần chứa biểu đồ */
+      .chart-container {
+        position: sticky; /* Biểu đồ sẽ dính ở vị trí cố định khi cuộn */
+        top: 20px;
+        z-index: 2; /* Đặt trên các phần tử khác */
+        margin-bottom: 20px; /* Khoảng cách giữa biểu đồ và danh sách đơn đặt */
+      }
+
+      .toggle-btn {
+        position: fixed; /* Đặt nút toggle cố định */
+        top: 50%; /* Đặt giữa màn hình theo chiều dọc */
+        left: 10px; /* Khoảng cách từ bên trái */
+        transform: translateY(-50%); /* Căn giữa theo chiều dọc */
+        padding: 10px; /* Padding cho nút */
+        background-color: #333;
+        color: #fff;
+        border: none;
+        border-radius: 20px; /* Bo góc mềm mại cho nút */
+        cursor: pointer;
+        z-index: 20; /* Đảm bảo nút toggle nằm trên các phần tử khác */
+        font-size: 14px; /* Kích thước chữ cho nút */
+        transition: background-color 0.3s ease, transform 0.3s ease; /* Hiệu ứng chuyển màu và di chuyển */
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Thêm bóng cho nút */
+      }
+
+      .toggle-btn:hover {
+        background-color: #555; /* Màu nền khi hover */
+        transform: translateY(-50%) scale(1.05); /* Tăng kích thước khi hover */
+      }
+
+      /* Header của trang */
+      h1 {
+        text-align: center;
+        color: #333;
+      }
+
+      /* Grid layout cho danh sách bàn */
+      .table-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        gap: 15px; /* Khoảng cách giữa các bàn */
+      }
+
+      /* Các phần tử đại diện cho bàn */
+      .table-item {
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        padding: 15px;
+        text-align: center;
+        border: 1px solid #ddd;
+        height: 150px; /* Chiều cao cố định cho từng bàn */
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between; /* Căn đều các phần tử bên trong */
+      }
+
+      .table-item h2 {
+        font-size: 20px;
+        margin: 0;
+      }
+
+      .table-item hr {
+        width: 100%;
+        border: none;
+        border-top: 1px solid #ddd;
+        margin: 10px 0;
+      }
+
+      .table-item p {
+        margin: 5px 0;
+        color: #555;
+      }
+
+      /* Danh sách đơn đặt */
+      .reservation-list {
+        margin-top: 20px;
+        max-height: calc(100vh - 250px); /* Giới hạn chiều cao để có thể cuộn */
+        overflow-y: auto; /* Cho phép cuộn nếu danh sách quá dài */
+        padding-bottom: 20px; /* Thêm padding cho phần dưới cùng */
+      }
+
+      .reservation-item {
+        border: 1px solid #ddd;
+        padding: 10px;
+        border-radius: 8px;
+        margin-bottom: 10px;
+        background-color: #fafafa;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      }
+
+      /* Biểu đồ tròn */
+      .chart-container {
+        width: 100%;
+        height: 200px; /* Chiều cao cho biểu đồ */
+        margin-top: 20px;
+      }
+
+      /* Responsive cho màn hình di động */
+      @media screen and (max-width: 600px) {
+        .ds_ban_container {
+          flex-direction: column; /* Xếp chồng các phần theo chiều dọc */
+          height: auto; /* Không cố định chiều cao cho container */
+          padding-top: 0; /* Trên mobile cách top 0px */
+          padding-bottom: 50px; /* Thêm padding cho phần dưới cùng khi ở mobile */
+        }
+
+        .table-container {
+          height: calc(100vh - 50px); /* Điều chỉnh chiều cao khi trên mobile */
+        }
+
+        .sidebar {
+          position: fixed;
+          top: 0;
+          left: 0;
+          height: 100%; /* Chiếm toàn bộ chiều cao */
+          width: 80%;
+          z-index: 10;
+          transform: translateX(-100%);
+          transition: transform 0.3s ease; /* Hiệu ứng cho việc ẩn/hiện */
+        }
+
+        .sidebar.visible {
+          transform: translateX(0);
+        }
+
+        .table-container {
+          padding: 20px; /* Đảm bảo padding cho bàn */
+        }
+
+        /* Hiển thị nút toggle khi ở di động */
+        .toggle-btn {
+          display: block;
+        }
+
+        /* Phần chứa danh sách bàn */
+        /* .table-container {
+        flex: 1; 
+        padding: 20px;
+        height: calc(100vh - 150px); 
+        overflow-y: auto; 
+    } */
+      }
+
+      /* Ẩn nút toggle khi ở màn hình PC */
+      @media screen and (min-width: 601px) {
+        .toggle-btn {
+          display: none; /* Ẩn nút toggle trên màn hình PC */
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="ds_ban_container">
+      <div class="sidebar" id="sidebar">
+        <div class="chart-container">
+          <canvas id="myPieChart"></canvas>
         </div>
+        <div class="reservation-list">
+          <a href="" onclick="window.location.reload()">
+            <h2 class="text-center">Số Đơn</h2>
+            <div class="sodon">
+              <p><%- dsc.length %></p>
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <div class="table-container">
+        <h2 class="text-center fw-bold mb-3">Danh Sách Chờ Pha Chế</h2>
+        <table class="table table-hover">
+          <thead class="table table-light">
+            <th>ID</th>
+            <th>Bàn</th>
+            <th>Giá</th>
+            <th>Thao tác</th>
+          </thead>
+
+          <% if(dsc.length > 0){ %> <% for(var i = 0; i < dsc.length; i++){ %>
+          <tr>
+            <th><%- dsc[i].o_id %></th>
+            <th><%- dsc[i].o_t_id %></th>
+            <th><%- dsc[i].o_cost %> VNĐ</th>
+            <th>
+              <a
+                href="/chitietdondatpc?o_id=<%- dsc[i].o_id %>"
+                class="btn btn-success"
+              >
+                Chi tiết
+              </a>
+            </th>
+          </tr>
+          <% } %> <% } else { %>
+          <p>Không có đơn nào</p>
+          <% } %>
+        </table>
+      </div>
+
+      <button class="toggle-btn" onclick="toggleSidebar()">
+        <i id="toggleIcon" class="fa-solid fa-chevron-right"></i>
+      </button>
     </div>
-</body>
+
+    <script>
+      // Hàm để vẽ biểu đồ tròn
+      function drawChart() {
+        var ctx = document.getElementById("myPieChart").getContext("2d");
+        var myPieChart = new Chart(ctx, {
+          type: "pie",
+          data: {
+            labels: ["Bàn trống", "Bàn đã đặt"],
+            datasets: [
+              {
+                data: [3, 2], // Dữ liệu biểu đồ
+                backgroundColor: ["#4CAF50", "#FF5733"],
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false, // Để biểu đồ có thể co giãn
+          },
+        });
+      }
+
+      function toggleSidebar() {
+        var sidebar = document.getElementById("sidebar");
+        sidebar.classList.toggle("visible");
+
+        var toggleIcon = document.getElementById("toggleIcon");
+        if (toggleIcon.classList.contains("fa-chevron-right")) {
+          toggleIcon.classList.remove("fa-chevron-right");
+          toggleIcon.classList.add("fa-chevron-left");
+        } else {
+          toggleIcon.classList.remove("fa-chevron-left");
+          toggleIcon.classList.add("fa-chevron-right");
+        }
+
+        // alert('Toggle');
+      }
+
+      // Vẽ biểu đồ khi trang được tải
+      window.onload = drawChart;
+    </script>
+  </body>
 </html>

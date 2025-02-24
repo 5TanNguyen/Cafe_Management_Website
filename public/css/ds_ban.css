@@ -34,11 +34,11 @@ body {
 }
 
 /* Phần danh sách bàn */
-.table-container {
-    flex: 1; /* Chiếm toàn bộ chiều rộng còn lại */
+/* .table-container {
+    flex: 1; 
     padding: 20px;
-    overflow-y: auto; /* Nếu danh sách dài, sẽ cuộn */
-}
+    overflow-y: auto; 
+} */
 
 /* Nút toggle để mở/đóng sidebar */
 .toggle-btn {
@@ -155,9 +155,9 @@ h1 {
         transform: translateX(0); /* Hiển thị sidebar */
     }
 
-    .table-container {
-        padding: 20px; /* Đảm bảo padding cho bàn */
-    }
+    /* .table-container {
+        padding: 20px; 
+    } */
 
     /* Hiển thị nút toggle khi ở di động */
     .toggle-btn {

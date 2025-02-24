@@ -39,27 +39,25 @@
     overflow-y: auto; /* Cho phép cuộn nếu danh sách quá dài */
 }
 
-/* Sidebar chứa danh sách đơn đặt */
 .sidebar {
-    width: 300px; /* Chiều rộng cố định cho sidebar */
+    width: 300px; 
     background-color: #fff;
     border-right: 1px solid #ddd;
     padding: 20px;
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-    overflow: hidden; /* Ẩn phần cuộn của sidebar */
+    overflow: hidden; 
     z-index: 1;
-    position: relative; /* Đặt vị trí tương đối */
+    position: relative; 
 }
 
 /* Phần chứa biểu đồ */
 .chart-container {
     position: sticky; /* Biểu đồ sẽ dính ở vị trí cố định khi cuộn */
-    top: 20px; /* Khoảng cách từ đỉnh sidebar */
+    top: 20px; 
     z-index: 2; /* Đặt trên các phần tử khác */
     margin-bottom: 20px; /* Khoảng cách giữa biểu đồ và danh sách đơn đặt */
 }
 
-/* Nút toggle để mở/đóng sidebar */
 .toggle-btn {
     position: fixed; /* Đặt nút toggle cố định */
     top: 50%; /* Đặt giữa màn hình theo chiều dọc */
@@ -164,18 +162,18 @@ h1 {
     }
 
     .sidebar {
-        position: fixed; /* Đặt sidebar cố định khi di động */
+        position: fixed; 
         top: 0;
         left: 0;
         height: 100%; /* Chiếm toàn bộ chiều cao */
-        width: 80%; /* Sidebar chiếm 80% chiều rộng trên mobile */
+        width: 80%; 
         z-index: 10;
-        transform: translateX(-100%); /* Sidebar mặc định ẩn đi */
+        transform: translateX(-100%); 
         transition: transform 0.3s ease; /* Hiệu ứng cho việc ẩn/hiện */
     }
 
     .sidebar.visible {
-        transform: translateX(0); /* Hiển thị sidebar */
+        transform: translateX(0); 
     }
 
     .table-container {
@@ -207,7 +205,6 @@ h1 {
 </head>
 <body>
     <div class="ds_ban_container">
-        <!-- Sidebar chứa danh sách đơn đặt -->
         <div class="sidebar" id="sidebar">
             <h2>Danh sách đơn đặt</h2>
             <!-- Biểu đồ tròn cho bàn trống -->
@@ -366,7 +363,6 @@ h1 {
             });
         }
 
-        // Hàm để toggle sidebar
         function toggleSidebar() {
             var sidebar = document.getElementById('sidebar');
             sidebar.classList.toggle('visible');
@@ -386,9 +382,5 @@ h1 {
         // Vẽ biểu đồ khi trang được tải
         window.onload = drawChart;
     </script>
-
-
-
-    
 </body>
 </html>
