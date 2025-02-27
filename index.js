@@ -162,6 +162,8 @@ const config = {
   endpoint: "https://sb-openapi.zalopay.vn/v2/create",
 };
 
+app.locals.moment = moment;
+
 app.post("/payment", async (req, res) => {
   const embed_data = {
     redirecturl: "http://localhost:3000/products/",

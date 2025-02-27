@@ -236,6 +236,7 @@
           <thead class="table table-light">
             <th>ID</th>
             <th>Bàn</th>
+            <th>Thời gian</th>
             <th>Giá</th>
             <th>Thao tác</th>
           </thead>
@@ -244,7 +245,11 @@
           <tr>
             <th><%- dsc[i].o_id %></th>
             <th><%- dsc[i].o_t_id %></th>
-            <th><%- dsc[i].o_cost %> VNĐ</th>
+            <th><%= moment(dsc[i].o_time).format("DD/MM/YYYY HH:mm:ss") %></th>
+            <th>
+              <%- Intl.NumberFormat('vi-VN', {style: 'currency',
+              currency:'VND'}).format(dsc[i].o_cost).replace('₫', '') %> VNĐ
+            </th>
             <th>
               <a
                 href="/chitietdondatpc?o_id=<%- dsc[i].o_id %>"

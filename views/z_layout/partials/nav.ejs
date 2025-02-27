@@ -476,8 +476,7 @@
         <div class="nav__menu" id="nav-menu">
           <ul class="nav__list">
             <li class="nav__item">
-              <a href="/ban" class="nav__link active-link">
-                <!-- <i class='bx bx-home-alt nav__icon'></i> -->
+              <a href="/ban" class="nav__link">
                 <i class="bx bx-table nav__icon"></i>
                 <span class="nav__name">Bàn</span>
               </a>
@@ -485,21 +484,12 @@
 
             <li class="nav__item">
               <a href="/danhsachchophache" class="nav__link">
-                <!-- <i class='bx bx-group nav__icon' ></i> -->
                 <i class="bx bxs-hourglass-bottom nav__icon"></i>
                 <span class="nav__name">Pha chế</span>
               </a>
             </li>
 
-            <!-- <li class="nav__item">
-                            <a href="/toi" class="nav__link">
-                                <i class='bx bx-user nav__icon'></i>
-                                <span class="nav__name">Tôi</span>
-                            </a>
-                        </li> -->
-
             <li class="nav__item" style="position: relative">
-              <!-- Thêm style position relative -->
               <a href="/toi" class="nav__link">
                 <i class="bx bx-user nav__icon"></i>
                 <span class="nav__name">Tôi</span>
@@ -508,7 +498,6 @@
                 class="bx bxs-up-arrow nav__icon arrow-icon"
                 style="cursor: pointer"
               ></i>
-              <!-- Mũi tên hướng lên -->
             </li>
 
             <!-- Popup Camera -->
@@ -533,7 +522,6 @@
 
             <li class="nav__item">
               <a href="#contactme" class="nav__link">
-                <!-- <i class='bx bx-cog nav__icon' ></i> -->
                 <i class="bx bx-money-withdraw nav__icon"></i>
                 <span class="nav__name">Phí</span>
               </a>
@@ -578,7 +566,30 @@
     <!--=============== MAIN JS ===============-->
     <script>
       document.addEventListener("DOMContentLoaded", function () {
-        // Your script here
+        const navItems = document.querySelectorAll(".nav__list .nav__item");
+
+        var navIndexLocalStorage = localStorage.getItem("navIndex");
+        if (!navIndexLocalStorage) {
+          navIndexLocalStorage = 0;
+        }
+
+        navItems.forEach((item, index) => {
+          if (navIndexLocalStorage == index) {
+            item.querySelector(".nav__link").classList.add("active-link");
+          }
+        });
+
+        navItems.forEach((item, index) => {
+          item.addEventListener("click", () => {
+            navItems.forEach((nav) =>
+              nav.querySelector(".nav__link").classList.remove("active-link")
+            );
+
+            item.querySelector(".nav__link").classList.add("active-link");
+
+            localStorage.setItem("navIndex", index);
+          });
+        });
       });
 
       // Nhấn vào mũi tên để mở popup camera
