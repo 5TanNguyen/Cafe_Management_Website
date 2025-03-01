@@ -383,6 +383,19 @@
       transition: background-color 0.3s ease, box-shadow 0.3s;
     }
 
+    .btn-cancel {
+      padding: 12px 20px;
+      background-color: #ff0000;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 1rem;
+      font-weight: 500;
+      margin-top: 20px;
+      transition: background-color 0.3s ease, box-shadow 0.3s;
+    }
+
     .nav-popup-overlay {
       display: none;
       position: fixed;
@@ -482,10 +495,11 @@
       <div class="sign-out-modal" style="display: none">
         <h3 class="text-center">Đăng Xuất</h3>
         <div class="div-grid">
+          <button class="btn-cancel" onclick="signOutModal()">Đóng</button>
+
           <a href="/dangxuat">
             <button class="btn-signout">Đồng ý</button>
           </a>
-          <button class="btn-signout" onclick="signOutModal()">Đóng</button>
         </div>
       </div>
     </div>

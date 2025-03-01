@@ -1,13 +1,13 @@
 <div class="container">
   <h3 class="text-center">Danh Sách Nhân Viên</h3>
-  <div class="table-container">
+  <div class="table-container table-responsive">
     <br />
     <table class="table table-hover stan-custom-table">
       <thead class="table-light">
         <tr>
           <th class="sticky-col first-col">ID</th>
           <th class="sticky-col second-col">Tên</th>
-          <th class="sticky-col third-col">Địa chỉ</th>
+          <th>Địa chỉ</th>
           <th>Số điện thoại</th>
           <th>Chức vụ</th>
           <th colspan="3">Thao tác</th>
@@ -20,7 +20,7 @@
 
         <td class="sticky-col second-col"><%- u[i].firstName %></td>
 
-        <td class="sticky-col third-col"><%- u[i].address %></td>
+        <td><%- u[i].address %></td>
 
         <td><%- u[i].phonenumber %></td>
 
