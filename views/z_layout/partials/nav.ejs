@@ -29,10 +29,8 @@
   </head>
 
   <style>
-    /*=============== GOOGLE FONTS ===============*/
     @import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap");
 
-    /*=============== VARIABLES CSS ===============*/
     :root {
       --header-height: 3rem;
 
@@ -64,7 +62,6 @@
       }
     }
 
-    /*=============== BASE ===============*/
     * {
       box-sizing: border-box;
       padding: 0;
@@ -96,30 +93,6 @@
       height: auto;
     }
 
-    /*=============== REUSABLE CSS CLASSES ===============*/
-    .section {
-      padding: 4.5rem 0 2rem;
-    }
-
-    .section__title {
-      font-size: var(--h1-font-size);
-      color: var(--title-color);
-      text-align: center;
-      margin-bottom: 1.5rem;
-    }
-
-    .section__height {
-      height: 100vh;
-    }
-
-    /*=============== LAYOUT ===============*/
-    .nav_container {
-      max-width: 968px;
-      /* margin-left: 1rem; */
-      margin-right: 1rem;
-    }
-
-    /*=============== HEADER ===============*/
     .header {
       position: fixed;
       top: 0;
@@ -130,7 +103,11 @@
       transition: 0.4s;
     }
 
-    /*=============== NAV ===============*/
+    .nav_container {
+      max-width: 968px;
+      margin-right: 1rem;
+    }
+
     .nav {
       height: var(--header-height);
       display: flex;
@@ -141,11 +118,6 @@
     .nav__img {
       width: 32px;
       border-radius: 50%;
-    }
-
-    .nav__logo {
-      color: var(--title-color);
-      font-weight: 600;
     }
 
     @media screen and (max-width: 767px) {
@@ -188,43 +160,23 @@
 
     .nav__name {
       font-size: var(--tiny-font-size);
-      /* display: none;*/ /* Minimalist design, hidden labels */
     }
 
     .nav__icon {
       font-size: 1.5rem;
     }
 
-    /*Active link*/
     .active-link {
       position: relative;
       color: var(--first-color);
       transition: 0.3s;
     }
 
-    /* Minimalist design, active link */
-    /* .active-link::before{
-  content: '';
-  position: absolute;
-  bottom: -.5rem;
-  width: 4px;
-  height: 4px;
-  background-color: var(--first-color);
-  border-radius: 50%;
-} */
-
-    /* Change background header */
-    .scroll-header {
-      box-shadow: 0 1px 12px hsla(var(--hue), var(--sat), 15%, 0.15);
-    }
-
     ol,
     ul {
       padding-left: 0 !important;
     }
-    /*=============== MEDIA QUERIES ===============*/
-    /* For small devices */
-    /* Remove if you choose, the minimalist design */
+
     @media screen and (max-width: 320px) {
       .nav__name {
         display: none;
@@ -243,27 +195,21 @@
       body {
         margin: 0;
       }
-      .section {
-        padding: 7rem 0 2rem;
-      }
+
       .nav {
         height: calc(var(--header-height) + 1.5rem); /* 4.5rem */
       }
-      .nav__img {
+
+      /* .nav__icon {
         display: none;
-      }
-      .nav__icon {
-        display: none;
-      }
+      } */
       .nav__name {
         font-size: var(--normal-font-size);
-        /* display: block; */ /* Minimalist design, visible labels */
       }
       .nav__link:hover {
         color: var(--first-color);
       }
 
-      /* First design, remove if you choose the minimalist design */
       .active-link::before {
         content: "";
         position: absolute;
@@ -273,14 +219,8 @@
         background-color: var(--first-color);
         border-radius: 50%;
       }
-
-      /* Minimalist design */
-      /* .active-link::before{
-      bottom: -.75rem;
-  } */
     }
 
-    /* For large devices */
     @media screen and (min-width: 1024px) {
       .nav_container {
         margin-left: auto;
@@ -288,10 +228,9 @@
       }
     }
 
-    /* Camera */
     .camera-popup {
       position: fixed;
-      top: 100%; /* Bắt đầu từ bên ngoài màn hình */
+      top: 100%;
       left: 0;
       width: 100%;
       height: 100%;
@@ -299,12 +238,12 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      z-index: 9999; /* Đặt nó lên trên cùng */
-      transition: top 0.5s ease; /* Thêm hiệu ứng trượt */
+      z-index: 9999;
+      transition: top 0.5s ease;
     }
 
     .camera-popup.active {
-      top: 0; /* Di chuyển vào vị trí hiển thị */
+      top: 0;
     }
 
     .popup-content {
@@ -317,7 +256,7 @@
     #video {
       width: 100%;
       height: auto;
-      transform: scale(-1, 1); /* Phản chiếu theo chiều ngang */
+      transform: scale(-1, 1);
     }
 
     #capture-btn {
@@ -350,39 +289,36 @@
     .arrow-icon {
       position: absolute;
       top: -25px;
-      /* left: 10px;  */
       color: var(--first-color);
-      /* font-size: 1.5rem; */
     }
 
     .btn-download {
-      display: inline-block; /* Để nút nằm trong dòng */
-      padding: 10px 15px; /* Khoảng cách bên trong nút */
-      background-color: var(--first-color); /* Màu nền của nút */
-      color: white; /* Màu chữ */
-      border: none; /* Không có đường viền */
-      border-radius: 5px; /* Bo tròn góc */
-      font-size: 1rem; /* Kích thước chữ */
-      text-align: center; /* Căn giữa chữ */
-      text-decoration: none; /* Không gạch chân */
-      transition: background-color 0.3s, transform 0.2s; /* Hiệu ứng chuyển màu và biến đổi */
+      display: inline-block;
+      padding: 10px 15px;
+      background-color: var(--first-color);
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 1rem;
+      text-align: center;
+      text-decoration: none;
+      transition: background-color 0.3s, transform 0.2s;
     }
 
     .btn-download:hover {
-      background-color: var(--first-color-alt); /* Màu nền khi hover */
-      transform: scale(1.05); /* Tăng kích thước khi hover */
+      background-color: var(--first-color-alt);
+      transform: scale(1.05);
     }
 
-    /* Dropdown */
     .circle-image {
-      width: 30px; /* Kích thước hình ảnh */
+      width: 30px;
       height: 30px;
-      border-radius: 50%; /* Tạo hình tròn */
-      cursor: pointer; /* Hiển thị con trỏ chuột như một bàn tay */
+      border-radius: 50%;
+      cursor: pointer;
     }
 
     .dropdown-content {
-      display: none; /* Ẩn nội dung dropdown */
+      display: none;
       position: absolute;
       right: 20px;
       background-color: white;
@@ -402,10 +338,6 @@
       background-color: #f1f1f1;
     }
 
-    /* Dropdown */
-
-    /* Sign Out */
-
     .sign-out-background {
       width: 100%;
       height: 0;
@@ -416,29 +348,26 @@
     }
 
     .sign-out-modal {
-      background-color: white; /* Màu nền trắng cho modal */
-      border-radius: 8px; /* Bo tròn góc */
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Đổ bóng cho modal */
-      padding: 20px; /* Khoảng cách bên trong */
-      width: 300px; /* Chiều rộng modal */
-      margin: 0 auto; /* Căn giữa modal */
-      text-align: center; /* Căn giữa văn bản */
-      position: fixed; /* Đặt modal cố định trên trang */
-      top: 50%; /* Đưa modal vào giữa màn hình */
-      left: 50%; /* Đưa modal vào giữa màn hình */
-      transform: translate(-50%, -50%); /* Dịch chuyển để căn chính xác */
-      z-index: 1000; /* Đặt modal lên trên các phần tử khác */
+      background-color: white;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      width: 300px;
+      margin: 0 auto;
+      text-align: center;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 1000;
     }
 
     .div-grid {
-      display: grid; /* Bật chế độ grid */
-      grid-template-columns: repeat(
-        auto-fill,
-        minmax(100px, 1fr)
-      ); /* Thiết lập các cột */
-      gap: 10px; /* Khoảng cách giữa các phần tử */
-      justify-items: center; /* Căn giữa các phần tử con theo chiều ngang */
-      align-items: center; /* Căn giữa các phần tử con theo chiều dọc */
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+      gap: 10px;
+      justify-items: center;
+      align-items: center;
     }
 
     .btn-signout {
@@ -453,8 +382,6 @@
       margin-top: 20px;
       transition: background-color 0.3s ease, box-shadow 0.3s;
     }
-
-    /* Sign Out */
 
     .nav-popup-overlay {
       display: none;
@@ -529,11 +456,11 @@
           </ul>
         </div>
 
-        <div
+        <!-- <div
           class="nav-popup-overlay"
           id="nav-popup-overlay"
           onclick="closePopup()"
-        ></div>
+        ></div> -->
 
         <div class="nav__img">
           <img
