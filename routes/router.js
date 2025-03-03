@@ -34,6 +34,7 @@ const cartController = require("../controllers/Sequelize/CartController");
 const orderController = require("../controllers/Sequelize/OrderController");
 const toiController = require("../controllers/Sequelize/ToiController");
 const quyenController = require("../controllers/Sequelize/QuyenController");
+const noficicationController = require("../controllers/Sequelize/NotificationController");
 const { canAccessPermission } = require("../middlewares/canAccessPermission");
 
 let initWebRoutes = (app) => {
@@ -233,6 +234,9 @@ let initWebRoutes = (app) => {
 
   router.post("/order-add", orderController.createOrder);
   router.get("/order-list", orderController.getOrders);
+
+  // Notifications
+  router.get("/thong-bao", noficicationController.getNotification);
 
   router.get("/", homeController.getHomePage);
   router.get("/about", homeController.getAboutPage);

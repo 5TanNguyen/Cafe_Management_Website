@@ -63,4 +63,5 @@ validate input date : - lịch
                       - liệt kê theo ngày
                       - số lần truy cập trái phép
 
-                    
+---- Dòng lệnh cập nhật migration sequelize-cli -----               
+npx sequelize-cli db:migrate

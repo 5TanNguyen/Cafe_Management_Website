@@ -64,6 +64,7 @@ db.user = require("./user")(sequelize, Sequelize.DataTypes);
 db.user_role = require("./user_role")(sequelize, Sequelize.DataTypes);
 db.customer = require("./customer")(sequelize, Sequelize.DataTypes);
 db.customerType = require("./customerType")(sequelize, Sequelize.DataTypes);
+db.notification = require("./notification")(sequelize, Sequelize.DataTypes);
 
 // db.sequelize.sync({ force: false, alter: false }).then(() => {
 //   console.log("yes re-sync done!");
