@@ -176,4 +176,14 @@ db.permission.hasMany(db.role_permission, {
   as: "role_permission",
 });
 
+db.user.hasMany(db.notification, {
+  foreignKey: "id",
+  as: "notification",
+});
+
+db.notification.belongsTo(db.user, {
+  foreignKey: "created_user_id",
+  as: "user",
+});
+
 module.exports = db;

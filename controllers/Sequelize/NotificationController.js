@@ -18,12 +18,12 @@ class NotificationController {
     });
   }
 
-  static async getProductDetail(req, res) {
-    var product = await db.productn.findOne({
+  static async getNotificationDetail(req, res) {
+    var notification = await db.notification.findOne({
       include: [
         {
-          model: db.productPrice,
-          as: "productPrice",
+          model: db.user,
+          as: "user",
         },
       ],
       where: {
@@ -31,17 +31,17 @@ class NotificationController {
       },
     });
 
-    if (!product) {
+    if (!notification) {
       res.status(404).json({
-        message: "Không tìm thấy sản phẩm",
+        message: "Không tìm thấy thông báo",
         isSuccess: false,
       });
     }
 
     res.status(200).json({
-      message: "Lấy chi tiết sản phẩm thành công",
+      message: "Lấy chi tiết thông báo thành công",
       isSuccess: true,
-      product,
+      notification,
     });
   }
 

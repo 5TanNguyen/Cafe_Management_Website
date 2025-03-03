@@ -237,6 +237,10 @@ let initWebRoutes = (app) => {
 
   // Notifications
   router.get("/thong-bao", noficicationController.getNotification);
+  router.get(
+    "/thong-bao-chi-tiet/:id",
+    noficicationController.getNotificationDetail
+  );
 
   router.get("/", homeController.getHomePage);
   router.get("/about", homeController.getAboutPage);
