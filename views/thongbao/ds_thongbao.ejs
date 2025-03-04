@@ -1,0 +1,165 @@
+<div class="container">
+  <h3 class="text-center">Danh Sách Thông Báo</h3>
+  <div class="table-container table-responsive">
+    <br />
+
+    <% if(noti.length > 0){ %> <% for(var i = 0; i < noti.length; i++){ %>
+    <h2><%- noti[i].title %></h2>
+    <% } %> <% } %>
+  </div>
+</div>
+
+<style>
+  /* .table-container {
+    width: 100%;
+    overflow-x: auto;
+    max-width: 100%;
+  } */
+
+  .stan-custom-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  .stan-custom-table th,
+  .stan-custom-table td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    white-space: nowrap;
+    background-color: white; /* Để tránh bị trong suốt khi cuộn */
+  }
+
+  /* Cố định 3 cột đầu tiên */
+  .sticky-col {
+    position: sticky;
+    z-index: 2;
+    background-color: #f8f9fa;
+  }
+
+  .first-col {
+    left: 0;
+    min-width: 50px;
+    background-color: #e9ecef;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    border-right: 1px solid #ccc;
+  }
+
+  .second-col {
+    left: 50px;
+    min-width: 100px;
+    background-color: #e9ecef;
+    border-right: 1px solid #ccc;
+  }
+
+  .third-col {
+    left: 150px;
+    min-width: 150px;
+    background-color: #e9ecef;
+    border-right: 1px solid #ccc;
+  }
+
+  thead .sticky-col {
+    top: 0;
+    z-index: 3;
+    background-color: #343a40;
+    color: white;
+  }
+</style>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    document.querySelectorAll(".UD_overplay").forEach((modal) => {
+      const tab1 = modal.querySelector("#tab-1");
+      const tab2 = modal.querySelector("#tab-2");
+      const btnTab1 = modal.querySelector("#btn-tab-1");
+      const btnTab2 = modal.querySelector("#btn-tab-2");
+
+      if (tab1 && tab2) {
+        tab1.style.zIndex = 2;
+        tab1.style.display = "block";
+        btnTab1.style.backgroundColor = "#dcdde1";
+        tab2.style.zIndex = 1;
+        tab2.style.display = "none";
+        btnTab2.style.backgroundColor = "#f5f6fa";
+      }
+
+      if (btnTab1 && btnTab2) {
+        btnTab1.addEventListener("click", () => {
+          tab1.style.zIndex = 2;
+          tab1.style.display = "block";
+          btnTab1.style.backgroundColor = "#dcdde1";
+          tab2.style.zIndex = 1;
+          tab2.style.display = "none";
+          btnTab2.style.backgroundColor = "#f5f6fa";
+        });
+
+        btnTab2.addEventListener("click", () => {
+          tab1.style.zIndex = 1;
+          tab1.style.display = "none";
+          btnTab1.style.backgroundColor = "#f5f6fa";
+          tab2.style.zIndex = 2;
+          tab2.style.display = "block";
+          btnTab2.style.backgroundColor = "#dcdde1";
+        });
+      }
+    });
+
+    document
+      .querySelector(".btn-edit-click")
+      .addEventListener("click", function () {
+        const tab1 = document.querySelector("#tab-1");
+        const tab2 = document.querySelector("#tab-2");
+
+        tab1.style.zIndex = 2;
+        tab1.style.display = "block";
+        tab2.style.zIndex = 1;
+        tab2.style.display = "none";
+      });
+
+    document.addEventListener("DOMContentLoaded", function () {
+      document.querySelectorAll(".active-popup").forEach((item) => {
+        item.addEventListener("click", function (event) {
+          event.preventDefault(); // Ngăn chặn load lại trang nếu href là #
+          console.log("Nhấn vào thẻ a:", this.getAttribute("href"));
+        });
+      });
+    });
+  });
+
+  $(document).ready(function () {
+    $(".form-edit-nhan-vien").submit(function (event) {
+      event.preventDefault(); // Ngăn chặn reload trang
+
+      var checkError = false;
+      var formDataCheck = $(this).serializeArray();
+      formDataCheck.forEach(function (item) {
+        if (item.name == "firstName" && item.value == "") {
+          checkError = true;
+          alert("Không được bỏ trống tên!");
+          return false; // Dừng vòng lặp
+        }
+      });
+
+      if (checkError) {
+        return;
+      }
+
+      // Lấy dữ liệu từ form
+      var formData = $(this).serialize();
+
+      // Gửi dữ liệu bằng AJAX
+      $.ajax({
+        url: $(this).attr("action"), // Lấy action từ form
+        type: $(this).attr("method"), // Lấy method từ form
+        data: formData,
+        success: function (response) {
+          location.replace("/nhanvien");
+        },
+        error: function (xhr) {
+          alert("Có lỗi xảy ra!");
+          console.log(xhr.responseText); // Log lỗi từ server
+        },
+      });
+    });
+  });
+</script>

@@ -13,8 +13,9 @@ class NotificationController {
       },
     });
 
-    res.status(200).json({
-      notifications,
+    res.render("z_layout/layout", {
+      body: "../thongbao/ds_thongbao",
+      noti: notifications,
     });
   }
 
