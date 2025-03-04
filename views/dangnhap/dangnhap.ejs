@@ -116,6 +116,7 @@
         },
         success: function (response) {
           if (response.success) {
+            localStorage.setItem("navIndex", 2);
             window.location.href = "/toi"; // Chuyển hướng tới dashboard nếu đăng nhập thành công
           } else {
             alert("Sai thông tin đăng nhập"); // Hiển thị thông báo lỗi nếu có
