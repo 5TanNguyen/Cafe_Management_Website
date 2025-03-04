@@ -1,15 +1,15 @@
 <style>
   .footer-class {
-    /* position: absolute;
+    position: absolute;
     bottom: 0;
-    width: 100%; */
-
+    width: 100%;
+    z-index: 100;
     background-color: #111;
   }
 
   .footerContainer {
     width: 100%;
-    padding: 70px 30px 20px;
+    padding: 10px;
   }
 
   .socialIcons {
@@ -27,7 +27,7 @@
   }
 
   .socialIcons a i {
-    font-size: 2em;
+    font-size: 1em;
     color: black;
     opacity: 0.9;
   }
@@ -44,19 +44,20 @@
   }
 
   .footerNav {
-    margin: 30px 0;
+    margin: 5px 0;
   }
 
   .footerNav ul {
     display: flex;
     justify-content: center;
+    margin-bottom: 0px !important;
   }
 
   .footerNav ul li a {
     color: white;
     margin: 20px;
     text-decoration: none;
-    font-size: 1.3em;
+    font-size: 0.8em;
     opacity: 0.7;
     transition: 0.5s;
   }
@@ -67,12 +68,13 @@
 
   .footerBottom {
     background-color: #000;
-    padding: 20px;
+    padding: 10px;
     text-align: center;
   }
 
   .footerBottom p {
     color: white;
+    margin-bottom: 0px !important;
   }
 
   @media screen and (max-width: 761px) {
@@ -103,7 +105,7 @@
       </ul>
     </div>
   </div>
-  <div class="footerBottom">
+  <!-- <div class="footerBottom">
     <p>Copyright &copy; 2025; Designed by <span>5tan</span></p>
-  </div>
+  </div> -->
 </footer>
