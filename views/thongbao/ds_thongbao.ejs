@@ -23,25 +23,34 @@
 
   .noti_title {
     display: flex;
-    justify-content: space-between;
-    padding: 5px;
+    align-items: center;
+    /* justify-content: space-between;
+    padding: 5px; */
+    gap: 8px;
+    white-space: nowrap;
+    overflow: hidden;
   }
 
   .noti_title p {
-    font-style: italic;
-    margin-bottom: 0px !important;
+    /* font-style: italic;
+    margin-bottom: 0px !important; */
+
+    flex-grow: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
   .noti_time {
     font-style: italic;
-    max-width: 40px !important;
+    width: 80px !important;
     /* background-color: aqua; */
     padding: 5px;
     border-right: 2px solid rgb(202, 194, 194);
   }
 
   .noti_type {
-    height: 30px;
+    height: 35px;
     padding: 5px 10px 6px 10px;
     border-radius: 10px;
     font-weight: bold;
@@ -49,7 +58,14 @@
   }
 
   .noti_content {
-    padding: 5px;
+    /* padding: 5px; */
+    display: -webkit-box;
+    -webkit-line-clamp: 3; /* Giới hạn tối đa 3 dòng */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-height: 35px; /* Tùy chỉnh theo font-size */
+    white-space: normal;
   }
 </style>
 
@@ -59,7 +75,12 @@
     <br />
 
     <% if(noti.length > 0){ %> <% for(var i = 0; i < noti.length; i++){ %>
-    <div class="notifications">
+    <div
+      class="notifications"
+      data-bs-toggle="modal"
+      data-bs-target="#modalThongBao"
+      data-noti-id="<%- noti[i].id %>"
+    >
       <div class="noti_title">
         <p>
           <span class="noti_time"
@@ -80,6 +101,88 @@
     <% } %> <% } %>
   </div>
 </div>
+
+<!-- Modal -->
+<div
+  class="modal fade"
+  id="modalThongBao"
+  tabindex="-1"
+  aria-labelledby="modalThongBaoLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalThongBaoLabel"></h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <form action="" id="formThongBao">
+          <textarea name="" id="modalThongBaoContent" rows="10"></textarea>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Đóng
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-  document.addEventListener("DOMContentLoaded", () => {});
+  function fillData(idForm, data) {
+    const form = document.getElementById(idForm);
+    if (!form) {
+      console.log("Không tìm thấy form");
+      return;
+    }
+
+    Object.keys(data).forEach((key) => {
+      let input = form.querySelector(`[name="${key}"]`);
+
+      if (input) {
+        if (input.type === "checkbox") {
+          input.checked = data[key] ? true : false;
+        } else if (input.type === "radio") {
+          let radio = form.querySelector(
+            `[name="${key}"][value="${data[key]}"]`
+          );
+          if (radio) radio.checked = true;
+        } else {
+          input.value = data[key];
+        }
+      }
+    });
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    document.querySelectorAll(".notifications").forEach(function (div) {
+      div.addEventListener("click", function () {
+        let notiId = this.getAttribute("data-noti-id");
+        console.log("Id thông báo: ", notiId);
+
+        $.ajax({
+          url: "/thong-bao-chi-tiet/" + notiId,
+          type: "GET",
+          success: function (response) {
+            data = response.notification;
+            console.log(data);
+
+            $("#modalThongBaoLabel").text(data.title);
+            $("#modalThongBaoContent").text(data.content);
+          },
+          error: function () {
+            console.log("Lỗi rồi!");
+          },
+        });
+      });
+    });
+  });
 </script>
