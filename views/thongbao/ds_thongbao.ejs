@@ -67,6 +67,14 @@
     max-height: 35px; /* Tùy chỉnh theo font-size */
     white-space: normal;
   }
+
+  #modalThongBaoTime {
+    margin-bottom: 0 !important;
+  }
+
+  .modal-header {
+    background-color: #e55039;
+  }
 </style>
 
 <div class="container-thong-bao">
@@ -113,7 +121,7 @@
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="modalThongBaoLabel"></h5>
+        <h5 class="modal-title fw-bold" id="modalThongBaoLabel"></h5>
         <button
           type="button"
           class="btn-close"
@@ -122,12 +130,17 @@
         ></button>
       </div>
       <div class="modal-body">
+        <p class="fw-bold fs-6" id="modalThongBaoTime"></p>
         <form action="" id="formThongBao">
           <textarea name="" id="modalThongBaoContent" rows="10"></textarea>
         </form>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+        <button
+          type="button"
+          class="btn btn-secondary w-100"
+          data-bs-dismiss="modal"
+        >
           Đóng
         </button>
       </div>
@@ -177,6 +190,26 @@
 
             $("#modalThongBaoLabel").text(data.title);
             $("#modalThongBaoContent").text(data.content);
+
+            var dateFormat = new Date(data.createdAt)
+              .toLocaleString("vi-VN")
+              .split(" ");
+            var date = dateFormat[1];
+            var time = dateFormat[0];
+            $("#modalThongBaoTime").text(date + " | " + time);
+
+            if (data.type == 1) {
+              $(".modal-header").css({
+                "background-color": "#e55039",
+              });
+            } else if (data.type == 2) {
+              $(".modal-header").css({
+                "background-color": "#6ab04c",
+              });
+            }
+            $("#modalThongBaoLabel").css({
+              color: "white",
+            });
           },
           error: function () {
             console.log("Lỗi rồi!");
