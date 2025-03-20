@@ -1,9 +1,6 @@
 const { response } = require("express");
 //const sanphamModel=require("../models/SanPham")
 const { validationResult } = require("express-validator");
-const BanModel = require("../models/Ban");
-const DonDatModel = require("../models/DonDat");
-const DonDatController = require("./DonDatController");
 const NhanVienModel = require("../models/NhanVien");
 const ChamCongModel = require("../models/ChamCong");
 

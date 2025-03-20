@@ -1,16 +1,21 @@
 <style>
+  body {
+    margin: 0 !important;
+  }
+
   .container-thong-bao {
     width: 100%;
     height: 100%;
     display: flex;
     /* align-items: center; */
     justify-content: center;
-    margin-top: 70px;
+    /* margin-top: 70px; */
   }
 
   .container-notification {
     width: 80%;
     background-color: #f3f3f3;
+    margin-top: 70px;
   }
 
   .notifications {
@@ -72,13 +77,40 @@
     margin-bottom: 0 !important;
   }
 
-  .modal-header {
+  .modal-header-custom {
     background-color: #e55039;
+  }
+
+  .div-create {
+    bottom: 115px;
+    width: 100%;
+    height: 50px;
+    /* background-color: #e55039; */
+  }
+
+  .btn-add-notification {
+    right: 10px;
+    width: 85px;
+    background-color: #ee5253;
+    color: #ffffff;
+    border-radius: 5px;
+    border: 1px solid red;
+    padding: 2px 5px 2px 5px;
+  }
+
+  .btn-add-notification i {
+    font-size: 30px;
+  }
+
+  @media screen and (max-width: 767px) {
+    .div-create {
+      bottom: 65px;
+    }
   }
 </style>
 
 <div class="container-thong-bao">
-  <div class="container-notification">
+  <div class="container-notification position-relative">
     <h3 class="text-center mt-3 fw-bold">Danh Sách Thông Báo</h3>
     <br />
 
@@ -107,10 +139,21 @@
       <div class="noti_content"><%- noti[i].content %></div>
     </div>
     <% } %> <% } %>
+
+    <div class="position-absolute div-create d-flex align-items-center">
+      <button
+        type="button"
+        class="btn-add-notification position-absolute d-flex align-items-center justify-content-center"
+        data-bs-toggle="modal"
+        data-bs-target="#addNotification"
+      >
+        <span>Thêm </span><i class="bx bxs-message-square-add"></i>
+      </button>
+    </div>
   </div>
 </div>
 
-<!-- Modal -->
+<!-- Modal xem chi tiết -->
 <div
   class="modal fade"
   id="modalThongBao"
@@ -120,7 +163,7 @@
 >
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
-      <div class="modal-header">
+      <div class="modal-header modal-header-custom">
         <h5 class="modal-title fw-bold" id="modalThongBaoLabel"></h5>
         <button
           type="button"
@@ -143,6 +186,36 @@
         >
           Đóng
         </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal thêm thông báo -->
+<div
+  class="modal fade"
+  id="addNotification"
+  tabindex="-1"
+  aria-labelledby="addNotificationLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addNotificationLabel">Modal title</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">...</div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Close
+        </button>
+        <button type="button" class="btn btn-primary">Save changes</button>
       </div>
     </div>
   </div>
@@ -199,11 +272,11 @@
             $("#modalThongBaoTime").text(date + " | " + time);
 
             if (data.type == 1) {
-              $(".modal-header").css({
+              $(".modal-header-custom").css({
                 "background-color": "#e55039",
               });
             } else if (data.type == 2) {
-              $(".modal-header").css({
+              $(".modal-header-custom").css({
                 "background-color": "#6ab04c",
               });
             }
