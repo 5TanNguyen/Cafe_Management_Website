@@ -70,28 +70,45 @@ class NotificationController {
   }
 
   static async addNotification(req, res) {
-    const t = await sequelize.transaction();
-    var { title, content, type, created_user_id } = req.body;
+    // const t = await sequelize.transaction();
+    var u_id = req.session.u_id;
 
-    newData = {
+    const { title, content, type } = req.body; // Lấy dữ liệu từ form
+
+    console.log(title);
+    return;
+
+    // Kiểm tra dữ liệu
+    if (!title || !content) {
+      return res.status(400).json({ message: "Vui lòng nhập đủ thông tin" });
+    }
+
+    // Lưu vào database (ví dụ dùng Sequelize)
+    const newThongBao = await ThongBao.create({
       title,
       content,
-      type,
-      created_user_id,
-    };
+      type: type ? 1 : 0, // Checkbox nếu được check sẽ là "1"
+      u_id,
+    });
+
+    res.status(200).json({
+      data: newThongBao,
+      isSuccess: true,
+      message: "Thêm thông báo thành công!",
+    });
 
     try {
       const result = await db.notification.create(newData);
 
-      await t.commit();
+      // await t.commit();
       res.status(200).json({
-        message: "Thêm thông báo thành công!",
-        isSuccess: true,
         data: result,
+        isSuccess: true,
+        message: "Thêm thông báo thành công!",
       });
     } catch (error) {
-      await t.rollback();
-      console.log("Thao tác lỗ, đã rollback");
+      // await t.rollback();
+      console.log("Thao tác lỗi, đã rollback");
     }
   }
 }

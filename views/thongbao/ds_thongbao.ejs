@@ -130,9 +130,9 @@
           <%- noti[i].title %>
         </p>
         <% if(noti[i].type == 1){ %>
-        <div class="noti_type bg-danger">Nhắc nhở</div>
-        <% }else { %>
         <div class="noti_type bg-success">Thông báo</div>
+        <% }else { %>
+        <div class="noti_type bg-danger">Nhắc nhở</div>
         <% } %>
       </div>
 
@@ -202,7 +202,7 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="addNotificationLabel">Modal title</h5>
+        <h5 class="modal-title" id="addNotificationLabel">Thêm thông báo</h5>
         <button
           type="button"
           class="btn-close"
@@ -210,12 +210,52 @@
           aria-label="Close"
         ></button>
       </div>
-      <div class="modal-body">...</div>
+      <div class="modal-body">
+        <form
+          id="formAdd-thongbao"
+          action="<%- process.env.base_url + 'them-thong-bao' %>"
+          method="post"
+          class="form-control"
+        >
+          <div class="row p-2">
+            <label for="title">Tiêu đề</label>
+            <input type="text" id="title" name="title" />
+          </div>
+
+          <div class="row p-2">
+            <label for="title">Nội dung</label>
+            <textarea
+              name="content"
+              id="content"
+              cols="30"
+              rows="10"
+            ></textarea>
+          </div>
+          <div class="form-check">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              value="1"
+              id="type"
+              name="type"
+            />
+            <label class="form-check-label" for="type"
+              >Có phải nhắc nhở ?</label
+            >
+          </div>
+        </form>
+      </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-          Close
+          Đóng
         </button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+        <button
+          type="button"
+          class="btn btn-primary"
+          onclick="handleSubmit('formAdd-thongbao', {trang_thai: 'TAO_MOI'}, event)"
+        >
+          TẠO MỚI
+        </button>
       </div>
     </div>
   </div>
@@ -223,6 +263,59 @@
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
+  function handleSubmit(formId, dataObj, event) {
+    event.preventDefault();
+
+    var data = getFormData(formId, dataObj);
+    var formElement = data.formElement;
+    var formData = data.formData;
+
+    if (!formData.has("type")) {
+      formData.set("type", "2");
+      console.log("type: ", "2");
+    }
+
+    submitFormData(formElement, formData);
+  }
+
+  function getFormData(formId, dataObj) {
+    var formElement = $(`#${formId}`);
+    var formData = new FormData(formElement[0]);
+
+    formElement.serializeArray().forEach((item) => {
+      formData.set(item.name, item.value);
+      console.log(item.name + ": " + item.value);
+    });
+
+    Object.keys(dataObj).forEach((key) => {
+      formData.set(key, dataObj[key]);
+      console.log(key + ": " + dataObj[key]);
+    });
+
+    return {
+      formElement,
+      formData,
+    };
+  }
+
+  function submitFormData(formElement, formData) {
+    return $.ajax({
+      headers: {},
+      url: formElement[0].action,
+      type: formElement[0].method,
+      data: formData,
+      processData: false,
+      contentType: false,
+      success: function (response) {
+        Notiflix.Notify.success(response.message ?? "Thêm thành công");
+        console.log(response);
+      },
+      error: function (xhr) {
+        console.log(xhr);
+      },
+    });
+  }
+
   function fillData(idForm, data) {
     const form = document.getElementById(idForm);
     if (!form) {
@@ -273,11 +366,11 @@
 
             if (data.type == 1) {
               $(".modal-header-custom").css({
-                "background-color": "#e55039",
+                "background-color": "#6ab04c",
               });
             } else if (data.type == 2) {
               $(".modal-header-custom").css({
-                "background-color": "#6ab04c",
+                "background-color": "#e55039",
               });
             }
             $("#modalThongBaoLabel").css({
