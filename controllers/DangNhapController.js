@@ -9,7 +9,7 @@ const crypto = require("crypto");
 
 const { checkPermission } = require("../middlewares/checkPermission");
 const { redirect } = require("express/lib/response");
-
+const config = require("../config/config");
 class DangNhapController {
   static async GetDangNhapForm(req, res) {
     req.flash("message", "");
@@ -17,6 +17,7 @@ class DangNhapController {
     if (req.session.firstName == null) {
       res.render("dangnhap/dangnhap", {
         message: req.flash("message"),
+        config: config,
       });
     } else {
       res.redirect("toi");
@@ -30,13 +31,14 @@ class DangNhapController {
     var x = await NhanVienModel.getNhanVienByUsername(u_email, u_password);
     var permission = await NhanVienModel.getQuyen(u_email, u_password);
 
-    console.log("Mật khẩu được gửi từ client");
-    console.log(u_password);
+    // console.log("Mật khẩu được gửi từ client");
+    // console.log(u_password);
 
     if (x == false) {
-      req.session.firstName = null;
       req.session.u_id = null;
       req.session.u_email = null;
+      req.session.image = null;
+      req.session.firstName = null;
       req.session.rolename = null;
       req.session.permission = null;
 
@@ -45,14 +47,17 @@ class DangNhapController {
     } else {
       if (x[0].status == 0) {
         req.flash("message", "Tài khoản của bạn bị vô hiệu hóa !");
-        res.render("dangnhap/dangnhap", { message: req.flash("message") });
+        res.render("dangnhap/dangnhap", {
+          message: req.flash("message"),
+          config: config,
+        });
         console.log("Tài khoản bị vô hiệu hóa");
       }
 
-      req.session.firstName = x[0].firstName;
       req.session.u_id = x[0].id;
       req.session.u_email = x[0].email;
       req.session.image = x[0].image;
+      req.session.firstName = x[0].firstName;
       req.session.rolename = x[0].rolename;
 
       if (permission[0].permissionname != null) {
@@ -66,7 +71,7 @@ class DangNhapController {
         req.session.permission = null;
       }
       // .join(", ");
-      console.log("DangNhapController 65");
+      // console.log("DangNhapController 65");
       console.log(req.session.permission);
 
       var stt = await ThongKeModel.GetThongKe();
@@ -105,7 +110,10 @@ class DangNhapController {
     req.session.destroy();
 
     var message = "";
-    res.render("dangnhap/dangnhap", { message });
+    res.render("dangnhap/dangnhap", {
+      message,
+      config: config,
+    });
   }
 
   static async heli(req, res) {

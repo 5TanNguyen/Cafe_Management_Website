@@ -50,7 +50,7 @@
       <div class="shape"></div>
     </div>
 
-    <form onsubmit="return validate();" class="form-login">
+    <form onsubmit="return validate(event);" class="form-login">
       <h3>Login Here</h3>
       <label for="username">Email</label>
       <input
@@ -86,7 +86,11 @@
   </script>
 
   <script>
-    function validate() {
+    const base_url = "<%= config.base_url %>";
+
+    function validate(event) {
+      event.preventDefault();
+
       var username = document.getElementById("u_email");
       var password = document.getElementById("u_password");
       const hashedPassword = CryptoJS.SHA256(password.value).toString(
@@ -108,7 +112,7 @@
 
       // Gọi Ajax để xử lý đăng nhập
       $.ajax({
-        url: "/dangnhap", // Đường dẫn tới router bạn đã định nghĩa
+        url: `${base_url}dangnhap`, // Đường dẫn tới router bạn đã định nghĩa
         type: "POST",
         data: {
           u_email: username.value,
