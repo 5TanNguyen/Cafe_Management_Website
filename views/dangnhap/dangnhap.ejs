@@ -23,12 +23,14 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
     />
     <link rel="stylesheet" href="/css/dangnhap.css" />
+    <link rel="stylesheet" href="/css/notiflix.css" />
     <link
       href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap"
       rel="stylesheet"
     />
     <script src="/js/jsencrypt.js"></script>
     <script src="/js/cryptojs.js"></script>
+    <script src="/js/notiflix.js"></script>
   </head>
 
   <body>
@@ -70,7 +72,9 @@
       />
       <button type="submit">Log In</button>
       <div class="social">
-        <div class="go"><i class="fab fa-google"></i> Google</div>
+        <a href="auth/google" style="text-decoration: none"
+          ><div class="go"><i class="fab fa-google"></i> Google</div></a
+        >
         <div class="fb"><i class="fab fa-facebook"></i> Facebook</div>
       </div>
     </form>
@@ -123,12 +127,13 @@
             localStorage.setItem("navIndex", 2);
             window.location.href = "/toi"; // Chuyển hướng tới dashboard nếu đăng nhập thành công
           } else {
-            alert("Sai thông tin đăng nhập"); // Hiển thị thông báo lỗi nếu có
+            // alert("Sai thông tin đăng nhập"); // Hiển thị thông báo lỗi nếu có
+            Notiflix.Notify.failure("ERROR - Sai thông tin đăng nhập");
           }
         },
         error: function (xhr) {
           const response = xhr.responseJSON;
-          alert("Sai thông tin đăng nhập"); // Hiển thị thông báo lỗi nếu đăng nhập thất bại
+          // alert("Sai thông tin đăng nhập"); // Hiển thị thông báo lỗi nếu đăng nhập thất bại
         },
       });
 

@@ -34,6 +34,23 @@ const fs = require("fs");
 const options = { format: "A4" };
 const optionA6 = { format: "A6" };
 
+const passport = require("passport");
+var GoogleStrategy = require("passport-google-oauth20").Strategy;
+passport.use(
+  new GoogleStrategy(
+    {
+      clientID: process.env.CLIENT_ID,
+      clientSecret: process.env.CLIENT_SECRET,
+      callbackURL: "http://localhost:3000/auth/google/callback",
+    },
+    function (accessToken, refreshToken, profile, cb) {
+      User.findOrCreate({ googleId: profile.id }, function (err, user) {
+        return cb(err, user);
+      });
+    }
+  )
+);
+
 // THÊM ẢNH
 const path = require("path");
 
@@ -118,6 +135,46 @@ app.use(
 );
 
 app.use(flush());
+
+// OAuth
+app.get(
+  "/auth/google",
+  passport.authenticate("google", { scope: ["profile"] })
+);
+
+// app.get(
+//   "/auth/google/callback",
+//   passport.authenticate("google", { failureRedirect: "/login" }),
+//   function (req, res) {
+//     // Successful authentication, redirect home.
+//     console.log("Đăng nhập thành công:");
+//     console.log(req.user);
+//     // res.redirect("/");
+//   }
+// );
+
+app.get("/auth/google/callback", (req, res, next) => {
+  passport.authenticate("google", (err, user, info) => {
+    if (err) {
+      console.error(">> Lỗi xác thực:", err);
+      return res.redirect("/login");
+    }
+    if (!user) {
+      console.warn(">> Không có user (user = null)");
+      return res.redirect("/login");
+    }
+
+    // Đăng nhập user vào session
+    req.logIn(user, (err) => {
+      if (err) {
+        console.error(">> Lỗi khi login session:", err);
+        return res.redirect("/login");
+      }
+      console.log(">> Đăng nhập thành công:", user);
+      return res.redirect("/");
+    });
+  })(req, res, next);
+});
 
 app.get("/user/:user", function (req, res) {
   req.session.name = req.params.user;

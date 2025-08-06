@@ -33,6 +33,7 @@ class DangNhapController {
 
     // console.log("Mật khẩu được gửi từ client");
     // console.log(u_password);
+    // return;
 
     if (x == false) {
       req.session.u_id = null;

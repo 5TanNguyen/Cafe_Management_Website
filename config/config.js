@@ -1,5 +1,5 @@
-// config/config.js
+require("dotenv").config();
+
 module.exports = {
-  base_url: "http://localhost:5555/",
-  // các biến khác
+  base_url: process.env.BASE_URL,
 };
