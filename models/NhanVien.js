@@ -26,6 +26,30 @@ class NhanVienModel {
     });
   }
 
+  static async getNhanVienByEmail(email) {
+    return new Promise((resolve) => {
+      db.query(
+        "SELECT users.*, roles.value as rolename " +
+          "FROM users " +
+          "LEFT JOIN user_roles ON users.id = user_roles.user_id " +
+          "LEFT JOIN roles ON user_roles.role_id = roles.id " +
+          "WHERE users.email = ? ",
+        [email],
+        (error, result) => {
+          if (error) {
+            console.error("Error in query:", error);
+            resolve(false);
+          } else if (result.length === 0) {
+            console.log("No matching records found.");
+            resolve(false);
+          } else {
+            resolve(result);
+          }
+        }
+      );
+    });
+  }
+
   static async getQuyen(email, pwd) {
     return new Promise((resolve) => {
       db.query(

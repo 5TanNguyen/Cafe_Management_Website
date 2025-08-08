@@ -41,15 +41,37 @@ passport.use(
     {
       clientID: process.env.CLIENT_ID,
       clientSecret: process.env.CLIENT_SECRET,
-      callbackURL: "http://localhost:3000/auth/google/callback",
+      callbackURL: "http://localhost:5555/auth/google/callback",
     },
-    function (accessToken, refreshToken, profile, cb) {
-      User.findOrCreate({ googleId: profile.id }, function (err, user) {
-        return cb(err, user);
-      });
+    async (accessToken, refreshToken, profile, done) => {
+      try {
+        console.log("Google profile:", profile);
+
+        let email = profile.emails && profile.emails[0].value;
+        let user = await NhanVienModel.getNhanVienByEmail(email);
+        // if (!user) {
+        //   user = await User.create({
+        //     googleId: profile.id,
+        //     name: profile.displayName,
+        //   });
+        // }
+        done(null, user);
+      } catch (err) {
+        done(err, null);
+      }
     }
   )
 );
+
+passport.serializeUser((user, done) => {
+  // Ở đây anh có thể lưu user.id hoặc toàn bộ user
+  done(null, user);
+});
+
+passport.deserializeUser((user, done) => {
+  // Nếu anh chỉ lưu user.id ở serializeUser thì cần truy DB ở đây để lấy lại
+  done(null, user);
+});
 
 // THÊM ẢNH
 const path = require("path");
@@ -139,25 +161,14 @@ app.use(flush());
 // OAuth
 app.get(
   "/auth/google",
-  passport.authenticate("google", { scope: ["profile"] })
+  passport.authenticate("google", { scope: ["profile", "email"] })
 );
-
-// app.get(
-//   "/auth/google/callback",
-//   passport.authenticate("google", { failureRedirect: "/login" }),
-//   function (req, res) {
-//     // Successful authentication, redirect home.
-//     console.log("Đăng nhập thành công:");
-//     console.log(req.user);
-//     // res.redirect("/");
-//   }
-// );
 
 app.get("/auth/google/callback", (req, res, next) => {
   passport.authenticate("google", (err, user, info) => {
     if (err) {
       console.error(">> Lỗi xác thực:", err);
-      return res.redirect("/login");
+      return res.redirect("/dangnhap");
     }
     if (!user) {
       console.warn(">> Không có user (user = null)");
@@ -168,10 +179,10 @@ app.get("/auth/google/callback", (req, res, next) => {
     req.logIn(user, (err) => {
       if (err) {
         console.error(">> Lỗi khi login session:", err);
-        return res.redirect("/login");
+        return res.redirect("/dangnhap");
       }
       console.log(">> Đăng nhập thành công:", user);
-      return res.redirect("/");
+      return res.redirect("/toi");
     });
   })(req, res, next);
 });
