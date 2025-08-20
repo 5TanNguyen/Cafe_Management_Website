@@ -28,12 +28,8 @@ class DangNhapController {
     var u_email = req.body.u_email;
     var u_password = req.body.u_password;
 
-    var x = await NhanVienModel.getNhanVienByUsername(u_email, u_password);
-    var permission = await NhanVienModel.getQuyen(u_email, u_password);
-
-    // console.log("Mật khẩu được gửi từ client");
-    // console.log(u_password);
-    // return;
+    var x = await NhanVienModel.getNhanVienByEmailAndPwd(u_email, u_password);
+    var permission = await NhanVienModel.getQuyen(u_email);
 
     if (x == false) {
       req.session.u_id = null;
@@ -43,16 +39,16 @@ class DangNhapController {
       req.session.rolename = null;
       req.session.permission = null;
 
-      res.render("dangnhap/error.ejs");
-      console.log("Sai tt đăng nhập");
+      return res.status(401).json({
+        success: false,
+        message: `Không  tìm thấy tài khoản`,
+      });
     } else {
       if (x[0].status == 0) {
-        req.flash("message", "Tài khoản của bạn bị vô hiệu hóa !");
-        res.render("dangnhap/dangnhap", {
-          message: req.flash("message"),
-          config: config,
+        return res.status(403).json({
+          success: false,
+          message: `Tài khoản bị khóa`,
         });
-        console.log("Tài khoản bị vô hiệu hóa");
       }
 
       req.session.u_id = x[0].id;

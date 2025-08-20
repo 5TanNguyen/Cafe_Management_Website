@@ -49,12 +49,12 @@ passport.use(
 
         let email = profile.emails && profile.emails[0].value;
         let user = await NhanVienModel.getNhanVienByEmail(email);
-        // if (!user) {
-        //   user = await User.create({
-        //     googleId: profile.id,
-        //     name: profile.displayName,
-        //   });
-        // }
+        if (!user) {
+          return done(null, false, {
+            message: "Không tìm thấy tài khoản trong hệ thống",
+          });
+        }
+
         done(null, user);
       } catch (err) {
         done(err, null);
@@ -171,17 +171,39 @@ app.get("/auth/google/callback", (req, res, next) => {
       return res.redirect("/dangnhap");
     }
     if (!user) {
-      console.warn(">> Không có user (user = null)");
-      return res.redirect("/login");
+      return res.redirect(
+        "/dangxuat?error=" +
+          encodeURIComponent(info?.message || "Đăng nhập thất bại")
+      );
+    } else if (user[0].status == 0) {
+      return res.redirect(
+        "/dangxuat?error=" + encodeURIComponent("Tài khoản bị khóa")
+      );
     }
 
     // Đăng nhập user vào session
-    req.logIn(user, (err) => {
+    req.logIn(user, async (err) => {
       if (err) {
         console.error(">> Lỗi khi login session:", err);
         return res.redirect("/dangnhap");
       }
-      console.log(">> Đăng nhập thành công:", user);
+      // console.log(">> Đăng nhập thành công:", user);
+
+      req.session.u_id = user[0].id;
+      req.session.u_email = user[0].email;
+      req.session.image = user[0].image;
+      req.session.firstName = user[0].firstName;
+      req.session.rolename = user[0].rolename;
+
+      var permission = await NhanVienModel.getQuyen(user[0].email);
+      req.session.permission = permission.map((item) => ({
+        permissionname: item.permissionname,
+        permissiondescription: item.permissiondescription,
+        permissionicon: item.permissionicon,
+        permissionurl: item.permissionurl,
+      }));
+      console.log(req.session.permission);
+
       return res.redirect("/toi");
     });
   })(req, res, next);

@@ -126,18 +126,23 @@
           if (response.success) {
             localStorage.setItem("navIndex", 2);
             window.location.href = "/toi"; // Chuyển hướng tới dashboard nếu đăng nhập thành công
-          } else {
-            // alert("Sai thông tin đăng nhập"); // Hiển thị thông báo lỗi nếu có
-            Notiflix.Notify.failure("ERROR - Sai thông tin đăng nhập");
           }
         },
         error: function (xhr) {
           const response = xhr.responseJSON;
-          // alert("Sai thông tin đăng nhập"); // Hiển thị thông báo lỗi nếu đăng nhập thất bại
+          Notiflix.Notify.failure(`ERROR - ${response?.message}`);
         },
       });
 
       return false; // Dừng submit form để chờ Ajax hoàn tất
+    }
+  </script>
+
+  <script>
+    // Dùng với login Google
+    const params = new URLSearchParams(window.location.search);
+    if (params.get("error")) {
+      Notiflix.Notify.failure(params.get("error"));
     }
   </script>
 </html>

@@ -1,7 +1,7 @@
 const db = require("../config/mydb");
 
 class NhanVienModel {
-  static async getNhanVienByUsername(email, pwd) {
+  static async getNhanVienByEmailAndPwd(email, pwd) {
     return new Promise((resolve) => {
       db.query(
         "SELECT users.*, roles.value as rolename " +
@@ -50,7 +50,7 @@ class NhanVienModel {
     });
   }
 
-  static async getQuyen(email, pwd) {
+  static async getQuyen(email) {
     return new Promise((resolve) => {
       db.query(
         "SELECT permissions.name as permissionname, permissions.description as permissiondescription, permissions.icon as permissionicon, permissions.url as permissionurl " +
@@ -59,9 +59,8 @@ class NhanVienModel {
           "LEFT JOIN roles ON user_roles.role_id = roles.id " +
           "LEFT JOIN role_permissions ON roles.id = role_permissions.role_id " +
           "LEFT JOIN permissions ON role_permissions.permission_id = permissions.id " +
-          "WHERE users.email = ? " +
-          "AND users.password = ?",
-        [email, pwd],
+          "WHERE users.email = ?",
+        [email],
         (error, result) => {
           if (!error) resolve(result);
           else resolve(false);
