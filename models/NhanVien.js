@@ -5,11 +5,11 @@ class NhanVienModel {
     return new Promise((resolve) => {
       db.query(
         "SELECT users.*, roles.value as rolename " +
-          "FROM users " +
-          "LEFT JOIN user_roles ON users.id = user_roles.user_id " +
-          "LEFT JOIN roles ON user_roles.role_id = roles.id " +
-          "WHERE users.email = ? " +
-          "AND users.password = ?",
+        "FROM users " +
+        "LEFT JOIN user_roles ON users.id = user_roles.user_id " +
+        "LEFT JOIN roles ON user_roles.role_id = roles.id " +
+        "WHERE users.email = ? " +
+        "AND users.password = ?",
         [email, pwd],
         (error, result) => {
           if (error) {
@@ -30,10 +30,10 @@ class NhanVienModel {
     return new Promise((resolve) => {
       db.query(
         "SELECT users.*, roles.value as rolename " +
-          "FROM users " +
-          "LEFT JOIN user_roles ON users.id = user_roles.user_id " +
-          "LEFT JOIN roles ON user_roles.role_id = roles.id " +
-          "WHERE users.email = ? ",
+        "FROM users " +
+        "LEFT JOIN user_roles ON users.u_id = user_roles.user_id " +
+        "LEFT JOIN roles ON user_roles.role_id = roles.id " +
+        "WHERE users.email = ? ",
         [email],
         (error, result) => {
           if (error) {
@@ -54,12 +54,12 @@ class NhanVienModel {
     return new Promise((resolve) => {
       db.query(
         "SELECT permissions.name as permissionname, permissions.description as permissiondescription, permissions.icon as permissionicon, permissions.url as permissionurl " +
-          "FROM users " +
-          "LEFT JOIN user_roles ON users.id = user_roles.user_id " +
-          "LEFT JOIN roles ON user_roles.role_id = roles.id " +
-          "LEFT JOIN role_permissions ON roles.id = role_permissions.role_id " +
-          "LEFT JOIN permissions ON role_permissions.permission_id = permissions.id " +
-          "WHERE users.email = ?",
+        "FROM users " +
+        "LEFT JOIN user_roles ON users.u_id = user_roles.user_id " +
+        "LEFT JOIN roles ON user_roles.role_id = roles.id " +
+        "LEFT JOIN role_permissions ON roles.id = role_permissions.role_id " +
+        "LEFT JOIN permissions ON role_permissions.permission_id = permissions.id " +
+        "WHERE users.email = ?",
         [email],
         (error, result) => {
           if (!error) resolve(result);
@@ -86,10 +86,10 @@ class NhanVienModel {
     return new Promise((resolve) => {
       db.query(
         "SELECT users.*, roles.value as rolename, roles.code as rolecode " +
-          "FROM users " +
-          "LEFT JOIN user_roles ON users.id = user_roles.user_id " +
-          "LEFT JOIN roles ON user_roles.role_id = roles.id " +
-          "WHERE users.status = 1 ",
+        "FROM users " +
+        "LEFT JOIN user_roles ON users.id = user_roles.user_id " +
+        "LEFT JOIN roles ON user_roles.role_id = roles.id " +
+        "WHERE users.status = 1 ",
         [],
         (error, result) => {
           if (error) {
@@ -138,13 +138,13 @@ class NhanVienModel {
     return new Promise((resolve) => {
       db.query(
         "UPDATE users" +
-          " SET email = ?," +
-          " firstName = ?," +
-          " lastName = ?," +
-          " address = ?," +
-          " phonenumber = ?," +
-          " gender = ?" +
-          " WHERE id = ?",
+        " SET email = ?," +
+        " firstName = ?," +
+        " lastName = ?," +
+        " address = ?," +
+        " phonenumber = ?," +
+        " gender = ?" +
+        " WHERE id = ?",
         [email, firstName, lastName, address, phonenumber, gender, u_id],
         (error, result) => {
           if (!error) resolve(true);

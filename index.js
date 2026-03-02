@@ -57,7 +57,7 @@ passport.use(
     },
     async (accessToken, refreshToken, profile, done) => {
       try {
-        console.log("Google profile:", profile);
+        // console.log("Google profile:", profile);
 
         let email = profile.emails && profile.emails[0].value;
         let user = await NhanVienModel.getNhanVienByEmail(email);
@@ -185,7 +185,7 @@ app.get("/auth/google/callback", (req, res, next) => {
     if (!user) {
       return res.redirect(
         "/dangxuat?error=" +
-          encodeURIComponent(info?.message || "Đăng nhập thất bại")
+        encodeURIComponent(info?.message || "Đăng nhập thất bại")
       );
     } else if (user[0].status == 0) {
       return res.redirect(
@@ -201,19 +201,25 @@ app.get("/auth/google/callback", (req, res, next) => {
       }
       // console.log(">> Đăng nhập thành công:", user);
 
-      req.session.u_id = user[0].id;
+      req.session.u_id = user[0].u_id;
       req.session.u_email = user[0].email;
       req.session.image = user[0].image;
       req.session.firstName = user[0].firstName;
       req.session.rolename = user[0].rolename;
 
       var permission = await NhanVienModel.getQuyen(user[0].email);
-      req.session.permission = permission.map((item) => ({
-        permissionname: item.permissionname,
-        permissiondescription: item.permissiondescription,
-        permissionicon: item.permissionicon,
-        permissionurl: item.permissionurl,
-      }));
+
+      if (!Array.isArray(permission) || (permission.length == 0)) {
+        req.session.permission = []
+      } else {
+        req.session.permission = permission.map((item) => ({
+          permissionname: item.permissionname,
+          permissiondescription: item.permissiondescription,
+          permissionicon: item.permissionicon,
+          permissionurl: item.permissionurl,
+        }));
+      }
+      console.log('permission');
       console.log(req.session.permission);
 
       return res.redirect("/toi");
