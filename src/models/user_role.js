@@ -15,10 +15,10 @@ module.exports = (sequelize, DataTypes) => {
   User_role.init(
     {
       user_id: {
-        type: DataTypes.STRING(40),
+        type: DataTypes.INTEGER,
       },
       role_id: {
-        type: DataTypes.STRING(100),
+        type: DataTypes.INTEGER,
       },
     },
     {
