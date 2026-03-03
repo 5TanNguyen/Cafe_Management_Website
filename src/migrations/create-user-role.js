@@ -13,7 +13,7 @@ module.exports = {
         type: Sequelize.INTEGER,
         references: {
           model: "users", // Tên bảng mà khóa ngoại tham chiếu
-          key: "u_id",
+          key: "user_id",
         },
         onUpdate: "CASCADE", // Hành động khi cập nhật
         onDelete: "SET NULL", // Hành động khi xóa
@@ -22,7 +22,7 @@ module.exports = {
         type: Sequelize.INTEGER,
         references: {
           model: "roles", // Tên bảng mà khóa ngoại tham chiếu
-          key: "id", // Tên cột khóa chính trong bảng CustomerTypes
+          key: "role_id", // Tên cột khóa chính trong bảng CustomerTypes
         },
         onUpdate: "CASCADE", // Hành động khi cập nhật
         onDelete: "SET NULL", // Hành động khi xóa

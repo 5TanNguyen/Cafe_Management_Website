@@ -321,7 +321,7 @@
         {%> <% session.permission.forEach((item)=> { %>
           <a href="/<%= item.permissionurl %>" class="function-box">
             <i class="<%- item.permissionicon %>"></i>
-            <span><%- item.permissionname %></span>
+            <span><%- item.permissiondescription %></span>
           </a>
           <% }) %>
             <% } else{ %>
