@@ -6,7 +6,7 @@ const ChiNhanhModel = require("../models/ChiNhanh");
 const DonDatModel = require("../models/DonDat");
 const ThongKeModel = require("../models/ThongKe");
 const DonDatController = require("./DonDatController");
-const NhanVienController = require("./NhanVienController");
+const NhanVienController = require("./Nhan");
 
 class BanController {
   static async getAllBan(req, res) {

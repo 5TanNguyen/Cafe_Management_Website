@@ -47,14 +47,14 @@ Object.keys(db).forEach((modelName) => {
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
+db.user = require("./user")(sequelize, Sequelize.DataTypes);
+db.user_role = require("./user_role")(sequelize, Sequelize.DataTypes);
 db.role = require("./role")(sequelize, Sequelize.DataTypes);
 db.role_permission = require("./role_permission")(
   sequelize,
   Sequelize.DataTypes
 );
 db.permission = require("./permission")(sequelize, Sequelize.DataTypes);
-db.user = require("./user")(sequelize, Sequelize.DataTypes);
-db.user_role = require("./user_role")(sequelize, Sequelize.DataTypes);
 
 // db.sequelize.sync({ force: false, alter: false }).then(() => {
 //   console.log("yes re-sync done!");
