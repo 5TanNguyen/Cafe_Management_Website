@@ -44,7 +44,7 @@ class NhanVienModel {
                 + " LEFT JOIN roles ON roles.role_id = user_roles.role_id"
                 + " LEFT JOIN role_permissions ON roles.role_id = role_permissions.role_id"
                 + " LEFT JOIN permissions ON role_permissions.permission_id = permissions.permission_id"
-                + " WHERE users.user_id = ?", [id], (error, result) => {
+                + " WHERE user_roles.user_id = ?", [id], (error, result) => {
                     if (!error)
                         resolve(result);
                     else
