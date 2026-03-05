@@ -26,13 +26,13 @@ const mydb = mysql.createPool({
     port: 3306
 });
 
-mydb.getConnection((err, con)=>{
+mydb.getConnection((err, con) => {
     if (err) {
-        console.log(`Could not connect to the database ${err}`)
-    }else{
-        console.log("Succesfully connected to the database")
+        console.log(`MyDB: Could not connect to the database ${err}`)
+    } else {
+        console.log("MyDB: Succesfully connected to the database")
     }
 });
 
 
-module.exports=mydb;
+module.exports = mydb;
