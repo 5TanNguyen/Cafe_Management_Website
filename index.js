@@ -2,6 +2,7 @@ import express from "express";
 const bodyparser = require("body-parser");
 const viewEngine = require("./config/viewEngine");
 import initWebRoutes from "./routes/router";
+import { abort } from "process";
 require("dotenv").config();
 
 const app = express();
@@ -21,19 +22,10 @@ const { incr, expire, ttl } = require("./utils/limiter");
 const NhanVienModel = require("./models/NhanVien");
 const BanModel = require("./models/Ban");
 const ThongKeModel = require("./models/ThongKe");
-const ChamCongModel = require("./models/ChamCong");
 const DonDatModel = require("./models/DonDat");
-const DonNhapModel = require("./models/DonNhap");
 const e = require("express");
 const req = require("express/lib/request");
-const PhiPhatSinhModel = require("./models/PhiPhatSinh");
 const res = require("express/lib/response");
-const SanPhamModel = require("./models/SanPham");
-const ChiNhanhModel = require("./models/ChiNhanh");
-const LichModel = require("./models/Lich");
-const ViModel = require("./models/Vi");
-const PhienGiaoDichModel = require("./models/PhienGiaoDich");
-const TinNhanModel = require("./models/TinNhan");
 const checkNumberAccess = require("./middlewares/checkNumberAccess");
 
 const session = require("express-session");
@@ -59,8 +51,14 @@ passport.use(
       try {
         // console.log("Google profile:", profile);
 
-        let email = profile.emails && profile.emails[0].value;
-        let user = await NhanVienModel.getNhanVienByEmail(email);
+        let profile_email = profile.emails && profile.emails[0].value;
+        let user = await db.user.findOne({
+          where: { email: profile_email }
+        })
+
+        console.log('user: ', user);
+        return;
+
         if (!user) {
           return done(null, false, {
             message: "Không tìm thấy tài khoản trong hệ thống",
