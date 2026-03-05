@@ -184,7 +184,7 @@ app.get("/auth/google/callback", (req, res, next) => {
         "/dangxuat?error=" +
         encodeURIComponent(info?.message || "Đăng nhập thất bại")
       );
-    } else if (user[0].status == 0) {
+    } else if (user.status == 0) {
       return res.redirect(
         "/dangxuat?error=" + encodeURIComponent("Tài khoản bị khóa")
       );
@@ -198,13 +198,13 @@ app.get("/auth/google/callback", (req, res, next) => {
       }
       // console.log(">> Đăng nhập thành công:", user);
 
-      req.session.u_id = user[0].user_id;
-      req.session.u_email = user[0].email;
-      req.session.image = user[0].image;
-      req.session.firstName = user[0].firstName;
-      req.session.rolename = user[0].rolename;
+      req.session.u_id = user.user_id;
+      req.session.u_email = user.email;
+      req.session.image = user.image;
+      req.session.firstName = user.firstName;
+      req.session.rolename = user.rolename;
 
-      var permission = await NhanVienModel.getQuyen(user[0].user_id);
+      var permission = await NhanVienModel.getQuyen(user.user_id);
 
       if (!Array.isArray(permission) || (permission.length == 0)) {
         req.session.permission = []
