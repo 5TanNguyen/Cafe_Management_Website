@@ -58,10 +58,6 @@ class NhanVienController {
         }
 
         if (req.session.u_d_id != 1) {
-            var currentdate = new Date();
-            var datetime = currentdate.getFullYear() + "-" + (currentdate.getMonth() + 1) + "-" + currentdate.getDate() + "  " + currentdate.getHours() + ":" + currentdate.getMinutes() + ":" + currentdate.getSeconds();
-            var tctp = await TruyCapTraiPhepModel.addTCTP(req.session.u_id, 'Danh sách nhân viên', datetime);
-
             req.flash('message', 'Bạn không có quyền truy cập !');
             res.render("dangnhap/dangnhap", { message: req.flash('message') });
         }
@@ -83,10 +79,6 @@ class NhanVienController {
         }
 
         if (req.session.u_d_id != 1) {
-            var currentdate = new Date();
-            var datetime = currentdate.getFullYear() + "-" + (currentdate.getMonth() + 1) + "-" + currentdate.getDate() + "  " + currentdate.getHours() + ":" + currentdate.getMinutes() + ":" + currentdate.getSeconds();
-            var tctp = await TruyCapTraiPhepModel.addTCTP(req.session.u_id, 'Thêm nhân viên', datetime);
-
             req.flash('message', 'Bạn không có quyền truy cập !');
             res.render("dangnhap/dangnhap", { message: req.flash('message') });
         }
@@ -118,10 +110,6 @@ class NhanVienController {
         }
 
         if (req.session.u_d_id != 1) {
-            var currentdate = new Date();
-            var datetime = currentdate.getFullYear() + "-" + (currentdate.getMonth() + 1) + "-" + currentdate.getDate() + "  " + currentdate.getHours() + ":" + currentdate.getMinutes() + ":" + currentdate.getSeconds();
-            var tctp = await TruyCapTraiPhepModel.addTCTP(req.session.u_id, 'Sửa nhân viên', datetime);
-
             req.flash('message', 'Bạn không có quyền truy cập !');
             res.render("dangnhap/dangnhap", { message: req.flash('message') });
         }
@@ -152,10 +140,6 @@ class NhanVienController {
         }
 
         if (req.session.u_d_id != 1) {
-            var currentdate = new Date();
-            var datetime = currentdate.getFullYear() + "-" + (currentdate.getMonth() + 1) + "-" + currentdate.getDate() + "  " + currentdate.getHours() + ":" + currentdate.getMinutes() + ":" + currentdate.getSeconds();
-            var tctp = await TruyCapTraiPhepModel.addTCTP(req.session.u_id, 'Xóa nhân viên', datetime);
-
             req.flash('message', 'Bạn không có quyền truy cập !');
             res.render("dangnhap/dangnhap", { message: req.flash('message') });
         }

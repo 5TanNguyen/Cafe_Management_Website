@@ -112,6 +112,7 @@ const io = new Server(server, {
   },
 });
 
+
 io.on("connection", (socket) => {
   console.log(`USER CONNECTED: ${socket.id}`);
 
@@ -153,6 +154,7 @@ io.on("connection", (socket) => {
 });
 
 app.use(cors());
+app.locals.base_url = process.env.BASE_URL;
 
 // app.set('views', path.join(__dirname, 'views'));
 
