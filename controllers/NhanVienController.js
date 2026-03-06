@@ -63,9 +63,11 @@ class NhanVienController {
         }
 
         var userList = await models.user.findAll();
-        var duties = await NhanVienModel.GetAllChucVu();
 
-        res.render("nhanvien/ds_nhanvien", { u: userList, d: duties });
+        res.render("z_layout/layout", {
+            u: userList,
+            body: "../nhanvien/ds_nhanvien",
+        });
     }
 
     static async addNhanVien(req, res) { // edit
