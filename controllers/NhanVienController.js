@@ -104,31 +104,21 @@ class NhanVienController {
     static async editNhanVien(req, res) { // edit
         res.locals.session = req.session;
 
-        if (!req.session.u_id) {
-            req.flash('message', 'Bạn phải đăng nhập trước !');
-            res.render("dangnhap/dangnhap", { message: req.flash('message') });
-        }
+        let id = req.query.id;
+        let body = req.body;
 
-        if (req.session.u_d_id != 1) {
-            req.flash('message', 'Bạn không có quyền truy cập !');
-            res.render("dangnhap/dangnhap", { message: req.flash('message') });
-        }
-        else {
-            var u_id = req.body.u_id;
-            var u_name = req.body.u_name;
-            var u_address = req.body.u_address;
-            var u_phone = req.body.u_phone;
-            var u_d_id = req.body.u_d_id;
+        // console.log('id: ', id);
+        // console.log('body: ', body);
+        // return;
 
-            var rs = await NhanVienModel.EditNhanVien(u_id, u_name, u_address, u_phone, u_d_id);
+        await models.user.update(body, {
+            where: { user_id: id }
+        })
 
-            if (rs == true) {
-                res.redirect("/nhanvien");
-            }
-            else {
-                res.redirect("/dangnhap");
-            }
-        }
+        res.status(200).json({
+            data: true,
+            message: "Cập nhật thành công !",
+        })
     }
 
     static async deleteNhanVien(req, res) { // edit
