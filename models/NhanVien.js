@@ -40,7 +40,7 @@ class NhanVienModel {
 
     static async getQuyen(id) {
         return new Promise(resolve => {
-            db.query("SELECT * FROM user_roles"
+            db.query("SELECT permissions.* FROM user_roles"
                 + " LEFT JOIN roles ON roles.role_id = user_roles.role_id"
                 + " LEFT JOIN role_permissions ON roles.role_id = role_permissions.role_id"
                 + " LEFT JOIN permissions ON role_permissions.permission_id = permissions.permission_id"

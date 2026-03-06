@@ -62,7 +62,7 @@ passport.use(
           });
         }
 
-        console.log("user", user);
+        // console.log("user", user);
 
         done(null, user);
       } catch (err) {
@@ -210,10 +210,10 @@ app.get("/auth/google/callback", (req, res, next) => {
         req.session.permission = []
       } else {
         req.session.permission = permission.map((item) => ({
-          permissionname: item.permissionname,
-          permissiondescription: item.permissiondescription,
-          permissionicon: item.permissionicon,
-          permissionurl: item.permissionurl,
+          permissionname: item.name,
+          permissiondescription: item.description,
+          permissionicon: item.icon,
+          permissionurl: item.url,
         }));
       }
       console.log('permission');
