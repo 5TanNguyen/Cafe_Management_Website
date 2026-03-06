@@ -7,6 +7,7 @@ const { redirect } = require("express/lib/response");
 const ViModel = require('../models/Vi');
 const LichModel = require("../models/Lich");
 const res = require("express/lib/response");
+const models = require("../src/models");
 
 class NhanVienController {
     static async postChamCong(req, res) { // edit
@@ -52,22 +53,19 @@ class NhanVienController {
     static async getAllNhanVien(req, res) {
         res.locals.session = req.session;
 
-        if (!req.session.u_id) {
+        // console.log('session: ', req.session);
+        // return;
+
+        if (!req.session.passport.user.user_id) {
             req.flash('message', 'Bạn phải đăng nhập trước !');
             res.render("dangnhap/dangnhap", { message: req.flash('message') });
+            return;
         }
 
-        if (req.session.u_d_id != 1) {
-            req.flash('message', 'Bạn không có quyền truy cập !');
-            res.render("dangnhap/dangnhap", { message: req.flash('message') });
-        }
-        else {
-            var users = await NhanVienModel.GetAllNhanVien();
+        var userList = await models.user.findAll();
+        var duties = await NhanVienModel.GetAllChucVu();
 
-            var duties = await NhanVienModel.GetAllChucVu();
-
-            res.render("nhanvien/ds_nhanvien", { u: users, d: duties });
-        }
+        res.render("nhanvien/ds_nhanvien", { u: userList, d: duties });
     }
 
     static async addNhanVien(req, res) { // edit
