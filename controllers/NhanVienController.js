@@ -9,7 +9,7 @@ const LichModel = require("../models/Lich");
 const res = require("express/lib/response");
 
 class NhanVienController {
-    static async postChamCong(req, res) {
+    static async postChamCong(req, res) { // edit
         res.locals.session = req.session;
 
         if (!req.session.u_id) {
@@ -70,7 +70,7 @@ class NhanVienController {
         }
     }
 
-    static async addNhanVien(req, res) {
+    static async addNhanVien(req, res) { // edit
         res.locals.session = req.session;
 
         if (!req.session.u_id) {
@@ -101,7 +101,7 @@ class NhanVienController {
         }
     }
 
-    static async editNhanVien(req, res) {
+    static async editNhanVien(req, res) { // edit
         res.locals.session = req.session;
 
         if (!req.session.u_id) {
@@ -131,7 +131,7 @@ class NhanVienController {
         }
     }
 
-    static async deleteNhanVien(req, res) {
+    static async deleteNhanVien(req, res) { // edit
         res.locals.session = req.session;
 
         if (!req.session.u_id) {

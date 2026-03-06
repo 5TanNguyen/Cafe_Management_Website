@@ -14,7 +14,7 @@ app.use(bodyparser.urlencoded({ extended: true }));
 viewEngine(app);
 
 require("./src/config/connect-db");
-const db = require("./src/models");
+const models = require("./src/models");
 const mydb = require("./config/mydb");
 const cors = require("cors");
 const { incr, expire, ttl } = require("./utils/limiter");
@@ -52,7 +52,7 @@ passport.use(
         // console.log("Google profile:", profile);
 
         let profile_email = profile.emails && profile.emails[0].value;
-        let user = await db.user.findOne({
+        let user = await models.user.findOne({
           where: { email: profile_email }
         })
 
@@ -218,8 +218,8 @@ app.get("/auth/google/callback", (req, res, next) => {
           permissionurl: item.url,
         }));
       }
-      console.log('permission');
-      console.log(req.session.permission);
+      // console.log('permission');
+      // console.log(req.session.permission);
 
       return res.redirect("/toi");
     });
