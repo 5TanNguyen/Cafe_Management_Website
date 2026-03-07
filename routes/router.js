@@ -92,6 +92,7 @@ let initWebRoutes = (app) => {
   );
   router.post("/themnhanvien", nhanvienController.addNhanVien);
   router.post("/suanhanvien", nhanvienController.editNhanVien);
+  router.get("/get_nhan_vien", nhanvienController.getNhanVienById);
   router.post("/xoanhanvien", nhanvienController.deleteNhanVien);
 
   // Chấm công

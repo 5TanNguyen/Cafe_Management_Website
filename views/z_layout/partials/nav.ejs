@@ -1,649 +1,637 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" href="/assets/images/cheems.png" type="image/x-icon" />
 
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
-      crossorigin="anonymous"
-    />
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-      crossorigin="anonymous"
-    ></script>
-    <link rel="stylesheet" href="/css/style.css" type="text/css" />
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="/assets/images/cheems.png" type="image/x-icon" />
 
-    <!--=============== BOXICONS ===============-->
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css"
-    />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous" />
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+    crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="/css/style.css" type="text/css" />
 
-    <link rel="stylesheet" href="/css/notiflix.css" />
-    <script src="/js/notiflix.js"></script>
+  <!--=============== BOXICONS ===============-->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css" />
 
-    <!--=============== CSS ===============-->
-    <title>Responsive bottom navigation</title>
-  </head>
+  <link rel="stylesheet" href="/css/notiflix.css" />
+  <script src="/js/notiflix.js"></script>
 
-  <style>
-    @import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap");
+  <!--=============== CSS ===============-->
+  <title>Responsive bottom navigation</title>
+</head>
 
+<style>
+  @import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap");
+
+  :root {
+    --header-height: 3rem;
+
+    /*========== Colors ==========*/
+    --hue: 174;
+    --sat: 63%;
+    --first-color: hsl(var(--hue), var(--sat), 40%);
+    --first-color-alt: hsl(var(--hue), var(--sat), 36%);
+    --title-color: hsl(var(--hue), 12%, 15%);
+    --text-color: hsl(var(--hue), 8%, 35%);
+    --body-color: hsl(var(--hue), 100%, 99%);
+    --nav_container-color: #fff;
+
+    /*========== Font and typography ==========*/
+    --body-font: "Open Sans", sans-serif;
+    --h1-font-size: 1.5rem;
+    --normal-font-size: 0.938rem;
+    --tiny-font-size: 0.625rem;
+
+    /*========== z index ==========*/
+    --z-tooltip: 10;
+    --z-fixed: 100;
+  }
+
+  @media screen and (min-width: 968px) {
     :root {
-      --header-height: 3rem;
-
-      /*========== Colors ==========*/
-      --hue: 174;
-      --sat: 63%;
-      --first-color: hsl(var(--hue), var(--sat), 40%);
-      --first-color-alt: hsl(var(--hue), var(--sat), 36%);
-      --title-color: hsl(var(--hue), 12%, 15%);
-      --text-color: hsl(var(--hue), 8%, 35%);
-      --body-color: hsl(var(--hue), 100%, 99%);
-      --nav_container-color: #fff;
-
-      /*========== Font and typography ==========*/
-      --body-font: "Open Sans", sans-serif;
-      --h1-font-size: 1.5rem;
-      --normal-font-size: 0.938rem;
-      --tiny-font-size: 0.625rem;
-
-      /*========== z index ==========*/
-      --z-tooltip: 10;
-      --z-fixed: 100;
+      --h1-font-size: 2.25rem;
+      --normal-font-size: 1rem;
     }
+  }
 
-    @media screen and (min-width: 968px) {
-      :root {
-        --h1-font-size: 2.25rem;
-        --normal-font-size: 1rem;
-      }
-    }
+  * {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+  }
 
-    * {
-      box-sizing: border-box;
-      padding: 0;
-      margin: 0;
-    }
+  html {
+    scroll-behavior: smooth;
+  }
 
-    html {
-      scroll-behavior: smooth;
-    }
+  body {
+    margin: var(--header-height) 0 0 0;
+    font-family: var(--body-font);
+    font-size: var(--normal-font-size);
+    background-color: var(--body-color);
+    color: var(--text-color);
+  }
 
-    body {
-      margin: var(--header-height) 0 0 0;
-      font-family: var(--body-font);
-      font-size: var(--normal-font-size);
-      background-color: var(--body-color);
-      color: var(--text-color);
-    }
+  ul {
+    list-style: none;
+  }
 
-    ul {
-      list-style: none;
-    }
+  a {
+    text-decoration: none !important;
+  }
 
-    a {
-      text-decoration: none !important;
-    }
+  img {
+    max-width: 100%;
+    height: auto;
+  }
 
-    img {
-      max-width: 100%;
-      height: auto;
-    }
+  .header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: var(--nav_container-color);
+    z-index: var(--z-fixed);
+    transition: 0.4s;
+  }
 
-    .header {
+  .nav_container {
+    max-width: 968px;
+    margin-right: 1rem;
+  }
+
+  .nav {
+    height: var(--header-height);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .nav__img {
+    width: 32px;
+    border-radius: 50%;
+  }
+
+  @media screen and (max-width: 767px) {
+    .nav__menu {
       position: fixed;
-      top: 0;
+      bottom: 0;
       left: 0;
-      width: 100%;
       background-color: var(--nav_container-color);
-      z-index: var(--z-fixed);
+      box-shadow: 0 -1px 12px hsla(var(--hue), var(--sat), 15%, 0.15);
+      width: 100%;
+      height: 4rem;
+      padding: 0 1rem;
+      display: grid;
+      align-content: center;
+      border-radius: 1.25rem 1.25rem 0 0;
       transition: 0.4s;
     }
 
     .nav_container {
-      max-width: 968px;
-      margin-right: 1rem;
+      padding: 10px;
+    }
+  }
+
+  .nav__list,
+  .nav__link {
+    display: flex;
+  }
+
+  .nav__link {
+    flex-direction: column;
+    align-items: center;
+    row-gap: 4px;
+    color: var(--title-color);
+    font-weight: 600;
+  }
+
+  .nav__list {
+    justify-content: space-around;
+  }
+
+  .nav__name {
+    font-size: var(--tiny-font-size);
+  }
+
+  .nav__icon {
+    font-size: 1.5rem;
+  }
+
+  .active-link {
+    position: relative;
+    color: var(--first-color);
+    transition: 0.3s;
+  }
+
+  ol,
+  ul {
+    padding-left: 0 !important;
+  }
+
+  @media screen and (max-width: 320px) {
+    .nav__name {
+      display: none;
+    }
+  }
+
+  /* For medium devices */
+  @media screen and (min-width: 576px) {
+    .nav__list {
+      justify-content: center;
+      column-gap: 3rem;
+    }
+  }
+
+  @media screen and (min-width: 767px) {
+    body {
+      margin: 0;
     }
 
     .nav {
-      height: var(--header-height);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+      height: calc(var(--header-height) + 1.5rem);
+      /* 4.5rem */
     }
 
-    .nav__img {
-      width: 32px;
-      border-radius: 50%;
-    }
-
-    @media screen and (max-width: 767px) {
-      .nav__menu {
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        background-color: var(--nav_container-color);
-        box-shadow: 0 -1px 12px hsla(var(--hue), var(--sat), 15%, 0.15);
-        width: 100%;
-        height: 4rem;
-        padding: 0 1rem;
-        display: grid;
-        align-content: center;
-        border-radius: 1.25rem 1.25rem 0 0;
-        transition: 0.4s;
-      }
-
-      .nav_container {
-        padding: 10px;
-      }
-    }
-
-    .nav__list,
-    .nav__link {
-      display: flex;
-    }
-
-    .nav__link {
-      flex-direction: column;
-      align-items: center;
-      row-gap: 4px;
-      color: var(--title-color);
-      font-weight: 600;
-    }
-
-    .nav__list {
-      justify-content: space-around;
-    }
-
-    .nav__name {
-      font-size: var(--tiny-font-size);
-    }
-
-    .nav__icon {
-      font-size: 1.5rem;
-    }
-
-    .active-link {
-      position: relative;
-      color: var(--first-color);
-      transition: 0.3s;
-    }
-
-    ol,
-    ul {
-      padding-left: 0 !important;
-    }
-
-    @media screen and (max-width: 320px) {
-      .nav__name {
-        display: none;
-      }
-    }
-
-    /* For medium devices */
-    @media screen and (min-width: 576px) {
-      .nav__list {
-        justify-content: center;
-        column-gap: 3rem;
-      }
-    }
-
-    @media screen and (min-width: 767px) {
-      body {
-        margin: 0;
-      }
-
-      .nav {
-        height: calc(var(--header-height) + 1.5rem); /* 4.5rem */
-      }
-
-      /* .nav__icon {
+    /* .nav__icon {
         display: none;
       } */
-      .nav__name {
-        font-size: var(--normal-font-size);
-      }
-      .nav__link:hover {
-        color: var(--first-color);
-      }
-
-      .active-link::before {
-        content: "";
-        position: absolute;
-        bottom: -0.75rem;
-        width: 4px;
-        height: 4px;
-        background-color: var(--first-color);
-        border-radius: 50%;
-      }
+    .nav__name {
+      font-size: var(--normal-font-size);
     }
 
-    @media screen and (min-width: 1024px) {
-      .nav_container {
-        margin-left: auto;
-        margin-right: auto;
-      }
-    }
-
-    .camera-popup {
-      position: fixed;
-      top: 100%;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0, 0, 0, 0.8);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      z-index: 9999;
-      transition: top 0.5s ease;
-    }
-
-    .camera-popup.active {
-      top: 0;
-    }
-
-    .popup-content {
-      background-color: white;
-      padding: 20px;
-      border-radius: 8px;
-      text-align: center;
-    }
-
-    #video {
-      width: 100%;
-      height: auto;
-      transform: scale(-1, 1);
-    }
-
-    #capture-btn {
-      margin-top: 10px;
-      padding: 12px 20px;
-      background-color: #007bff;
-      color: white;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      font-size: 1rem;
-      font-weight: 500;
-      margin-top: 20px;
-      transition: background-color 0.3s ease, box-shadow 0.3s ease;
-    }
-
-    #close-popup {
-      padding: 12px 20px;
-      background-color: #007bff;
-      color: white;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      font-size: 1rem;
-      font-weight: 500;
-      margin-top: 20px;
-      transition: background-color 0.3s ease, box-shadow 0.3s;
-    }
-
-    .arrow-icon {
-      position: absolute;
-      top: -25px;
+    .nav__link:hover {
       color: var(--first-color);
     }
 
-    .btn-download {
-      display: inline-block;
-      padding: 10px 15px;
-      background-color: var(--first-color);
-      color: white;
-      border: none;
-      border-radius: 5px;
-      font-size: 1rem;
-      text-align: center;
-      text-decoration: none;
-      transition: background-color 0.3s, transform 0.2s;
-    }
-
-    .btn-download:hover {
-      background-color: var(--first-color-alt);
-      transform: scale(1.05);
-    }
-
-    .circle-image {
-      width: 30px;
-      height: 30px;
-      border-radius: 50%;
-      cursor: pointer;
-    }
-
-    .dropdown-content {
-      display: none;
+    .active-link::before {
+      content: "";
       position: absolute;
-      right: 20px;
-      background-color: white;
-      min-width: 160px;
-      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-      z-index: 1;
+      bottom: -0.75rem;
+      width: 4px;
+      height: 4px;
+      background-color: var(--first-color);
+      border-radius: 50%;
     }
+  }
 
-    .dropdown-content a {
-      color: black;
-      padding: 12px 16px;
-      text-decoration: none;
-      display: block;
+  @media screen and (min-width: 1024px) {
+    .nav_container {
+      margin-left: auto;
+      margin-right: auto;
     }
+  }
 
-    .dropdown-content a:hover {
-      background-color: #f1f1f1;
-    }
+  .camera-popup {
+    position: fixed;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    transition: top 0.5s ease;
+  }
 
-    .sign-out-background {
-      width: 100%;
-      height: 0;
-      background-color: rgba(211, 211, 211, 0.5);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
+  .camera-popup.active {
+    top: 0;
+  }
 
-    .sign-out-modal {
-      background-color: white;
-      border-radius: 8px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-      padding: 20px;
-      width: 300px;
-      margin: 0 auto;
-      text-align: center;
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      z-index: 1000;
-    }
+  .popup-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+  }
 
-    .div-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-      gap: 10px;
-      justify-items: center;
-      align-items: center;
-    }
+  #video {
+    width: 100%;
+    height: auto;
+    transform: scale(-1, 1);
+  }
 
-    .btn-signout {
-      padding: 12px 20px;
-      background-color: #007bff;
-      color: white;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      font-size: 1rem;
-      font-weight: 500;
-      margin-top: 20px;
-      transition: background-color 0.3s ease, box-shadow 0.3s;
-    }
+  #capture-btn {
+    margin-top: 10px;
+    padding: 12px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 500;
+    margin-top: 20px;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  }
 
-    .btn-cancel {
-      padding: 12px 20px;
-      background-color: #ff0000;
-      color: white;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      font-size: 1rem;
-      font-weight: 500;
-      margin-top: 20px;
-      transition: background-color 0.3s ease, box-shadow 0.3s;
-    }
+  #close-popup {
+    padding: 12px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 500;
+    margin-top: 20px;
+    transition: background-color 0.3s ease, box-shadow 0.3s;
+  }
 
-    .nav-popup-overlay {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.5);
-      z-index: 5;
-    }
-  </style>
-  <body>
-    <!--=============== HEADER ===============-->
-    <header class="header" id="header">
-      <nav class="nav nav_container">
-        <a href="#about" class="nav__link">5tan</a>
+  .arrow-icon {
+    position: absolute;
+    top: -25px;
+    color: var(--first-color);
+  }
 
-        <div class="nav__menu" id="nav-menu">
-          <ul class="nav__list">
-            <li class="nav__item">
-              <a href="/ban" class="nav__link">
-                <i class="bx bx-table nav__icon"></i>
-                <span class="nav__name">Bàn</span>
-              </a>
-            </li>
+  .btn-download {
+    display: inline-block;
+    padding: 10px 15px;
+    background-color: var(--first-color);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    text-align: center;
+    text-decoration: none;
+    transition: background-color 0.3s, transform 0.2s;
+  }
 
-            <li class="nav__item">
-              <a href="/danhsachchophache" class="nav__link">
-                <i class="bx bxs-hourglass-bottom nav__icon"></i>
-                <span class="nav__name">Pha chế</span>
-              </a>
-            </li>
+  .btn-download:hover {
+    background-color: var(--first-color-alt);
+    transform: scale(1.05);
+  }
 
-            <li class="nav__item" style="position: relative">
-              <a href="/toi" class="nav__link">
-                <i class="bx bx-user nav__icon"></i>
-                <span class="nav__name">Tôi</span>
-              </a>
-              <i
-                class="bx bxs-up-arrow nav__icon arrow-icon"
-                style="cursor: pointer"
-              ></i>
-            </li>
+  .circle-image {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    cursor: pointer;
+  }
 
-            <!-- Popup Camera -->
-            <div id="camera-popup" class="camera-popup" style="display: none">
-              <div class="popup-content">
-                <video id="video" autoplay></video>
-                <button id="capture-btn">Chụp</button>
-                <canvas id="canvas" style="display: none"></canvas>
-                <a id="download-link" class="btn-download" style="display: none"
-                  >Download</a
-                >
-                <button id="close-popup">Đóng</button>
-              </div>
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    right: 20px;
+    background-color: white;
+    min-width: 160px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+  }
+
+  .dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+  }
+
+  .dropdown-content a:hover {
+    background-color: #f1f1f1;
+  }
+
+  .sign-out-background {
+    width: 100%;
+    height: 0;
+    background-color: rgba(211, 211, 211, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .sign-out-modal {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    width: 300px;
+    margin: 0 auto;
+    text-align: center;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+  }
+
+  .div-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 10px;
+    justify-items: center;
+    align-items: center;
+  }
+
+  .btn-signout {
+    padding: 12px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 500;
+    margin-top: 20px;
+    transition: background-color 0.3s ease, box-shadow 0.3s;
+  }
+
+  .btn-cancel {
+    padding: 12px 20px;
+    background-color: #ff0000;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 500;
+    margin-top: 20px;
+    transition: background-color 0.3s ease, box-shadow 0.3s;
+  }
+
+  .nav-popup-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 5;
+  }
+</style>
+
+<body>
+  <!--=============== HEADER ===============-->
+  <header class="header" id="header">
+    <nav class="nav nav_container">
+      <a href="#about" class="nav__link">5tan</a>
+
+      <div class="nav__menu" id="nav-menu">
+        <ul class="nav__list">
+          <li class="nav__item">
+            <a href="/ban" class="nav__link">
+              <i class="bx bx-table nav__icon"></i>
+              <span class="nav__name">Bàn</span>
+            </a>
+          </li>
+
+          <li class="nav__item">
+            <a href="/danhsachchophache" class="nav__link">
+              <i class="bx bxs-hourglass-bottom nav__icon"></i>
+              <span class="nav__name">Pha chế</span>
+            </a>
+          </li>
+
+          <li class="nav__item" style="position: relative">
+            <a href="/toi" class="nav__link">
+              <i class="bx bx-user nav__icon"></i>
+              <span class="nav__name">Tôi</span>
+            </a>
+            <i class="bx bxs-up-arrow nav__icon arrow-icon" style="cursor: pointer"></i>
+          </li>
+
+          <!-- Popup Camera -->
+          <div id="camera-popup" class="camera-popup" style="display: none">
+            <div class="popup-content">
+              <video id="video" autoplay></video>
+              <button id="capture-btn">Chụp</button>
+              <canvas id="canvas" style="display: none"></canvas>
+              <a id="download-link" class="btn-download" style="display: none">Download</a>
+              <button id="close-popup">Đóng</button>
             </div>
+          </div>
 
-            <li class="nav__item">
-              <a href="/thong-bao" class="nav__link">
-                <i class="bx bx-notification nav__icon"></i>
-                <span class="nav__name">Tin</span>
-              </a>
-            </li>
+          <li class="nav__item">
+            <a href="#" class="nav__link">
+              <i class="bx bx-notification nav__icon"></i>
+              <span class="nav__name">Tin</span>
+            </a>
+          </li>
 
-            <li class="nav__item">
-              <a href="#contactme" class="nav__link">
-                <i class="bx bx-money-withdraw nav__icon"></i>
-                <span class="nav__name">Phí</span>
-              </a>
-            </li>
-          </ul>
-        </div>
+          <li class="nav__item">
+            <a href="#contactme" class="nav__link">
+              <i class="bx bx-money-withdraw nav__icon"></i>
+              <span class="nav__name">Phí</span>
+            </a>
+          </li>
+        </ul>
+      </div>
 
-        <!-- <div
+      <!-- <div
           class="nav-popup-overlay"
           id="nav-popup-overlay"
           onclick="closePopup()"
         ></div> -->
 
-        <div class="nav__img">
-          <img
-            id="dropdownButton"
-            alt="Ảnh tròn"
-            src="https://cdn.dribbble.com/users/398490/screenshots/2189858/media/1a414d61e882be6e9a169885e1ee2b0d.gif"
-            class="circle-image"
-          />
-          <div class="dropdown-content" id="dropdownContent">
-            <a href="#">Tùy chọn 1</a>
-            <a href="#">Tùy chọn 2</a>
-            <a href="#" onclick="signOutModal()">Đăng xuất</a>
-          </div>
-        </div>
-      </nav>
-    </header>
-
-    <div class="sign-out-background">
-      <div class="sign-out-modal" style="display: none">
-        <h3 class="text-center">Đăng Xuất</h3>
-        <div class="div-grid">
-          <button class="btn-cancel" onclick="signOutModal()">Đóng</button>
-
-          <a href="/dangxuat">
-            <button class="btn-signout">Đồng ý</button>
-          </a>
+      <div class="nav__img">
+        <img id="dropdownButton" alt="Ảnh tròn"
+          src="https://cdn.dribbble.com/users/398490/screenshots/2189858/media/1a414d61e882be6e9a169885e1ee2b0d.gif"
+          class="circle-image" />
+        <div class="dropdown-content" id="dropdownContent">
+          <a href="#">Tùy chọn 1</a>
+          <a href="#">Tùy chọn 2</a>
+          <a href="#" onclick="signOutModal()">Đăng xuất</a>
         </div>
       </div>
+    </nav>
+  </header>
+
+  <div class="sign-out-background">
+    <div class="sign-out-modal" style="display: none">
+      <h3 class="text-center">Đăng Xuất</h3>
+      <div class="div-grid">
+        <button class="btn-cancel" onclick="signOutModal()">Đóng</button>
+
+        <a href="/dangxuat">
+          <button class="btn-signout">Đồng ý</button>
+        </a>
+      </div>
     </div>
+  </div>
 
-    <!--=============== MAIN JS ===============-->
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        const navItems = document.querySelectorAll(".nav__list .nav__item");
+  <!--=============== MAIN JS ===============-->
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const navItems = document.querySelectorAll(".nav__list .nav__item");
 
-        var navIndexLocalStorage = localStorage.getItem("navIndex");
-        if (!navIndexLocalStorage) {
-          navIndexLocalStorage = 0;
+      var navIndexLocalStorage = localStorage.getItem("navIndex");
+      if (!navIndexLocalStorage) {
+        navIndexLocalStorage = 2;
+      }
+
+      navItems.forEach((item, index) => {
+        if (navIndexLocalStorage == index) {
+          item.querySelector(".nav__link").classList.add("active-link");
         }
-
-        navItems.forEach((item, index) => {
-          if (navIndexLocalStorage == index) {
-            item.querySelector(".nav__link").classList.add("active-link");
-          }
-        });
-
-        navItems.forEach((item, index) => {
-          item.addEventListener("click", () => {
-            navItems.forEach((nav) =>
-              nav.querySelector(".nav__link").classList.remove("active-link")
-            );
-
-            item.querySelector(".nav__link").classList.add("active-link");
-
-            localStorage.setItem("navIndex", index);
-          });
-        });
       });
 
-      // Nhấn vào mũi tên để mở popup camera
-      document
-        .querySelector(".arrow-icon")
-        .addEventListener("click", function () {
-          document.getElementById("camera-popup").style.display = "flex";
-          startCamera();
-        });
+      navItems.forEach((item, index) => {
+        item.addEventListener("click", () => {
+          navItems.forEach((nav) =>
+            nav.querySelector(".nav__link").classList.remove("active-link")
+          );
 
-      // Nhấn vào mũi tên để mở popup camera
-      document
-        .querySelector(".arrow-icon")
-        .addEventListener("click", function () {
-          document.getElementById("camera-popup").classList.add("active"); // Thêm lớp active
-          startCamera();
-        });
+          item.querySelector(".nav__link").classList.add("active-link");
 
-      // Đóng popup camera
-      document
-        .getElementById("close-popup")
-        .addEventListener("click", function () {
-          stopCamera();
-          document.getElementById("camera-popup").classList.remove("active"); // Xóa lớp active
-        });
-
-      // Khởi tạo camera
-      async function startCamera() {
-        const video = document.getElementById("video");
-        const stream = await navigator.mediaDevices.getUserMedia({
-          video: true,
-        });
-        video.srcObject = stream;
-      }
-
-      // Dừng camera
-      function stopCamera() {
-        const video = document.getElementById("video");
-        const stream = video.srcObject;
-        if (stream) {
-          const tracks = stream.getTracks();
-          tracks.forEach((track) => track.stop());
-        }
-        video.srcObject = null;
-      }
-
-      // Chụp ảnh
-      document
-        .getElementById("capture-btn")
-        .addEventListener("click", function () {
-          const canvas = document.createElement("canvas");
-          const video = document.getElementById("video");
-          canvas.width = video.videoWidth;
-          canvas.height = video.videoHeight;
-          const context = canvas.getContext("2d");
-          context.drawImage(video, 0, 0);
-
-          // Tạo liên kết download
-          const downloadLink = document.getElementById("download-link");
-          downloadLink.href = canvas.toDataURL("image/png");
-          downloadLink.download = "photo.png";
-          downloadLink.style.display = "inline-block"; // Hiện nút download
-        });
-
-      // Đóng popup camera
-      document
-        .getElementById("close-popup")
-        .addEventListener("click", function () {
-          stopCamera();
-          document.getElementById("camera-popup").classList.remove("active"); // Xóa lớp active
-          document.getElementById("download-link").style.display = "none"; // Ẩn nút download
-        });
-
-      // Dropdown
-      document.addEventListener("DOMContentLoaded", function () {
-        const dropdownButton = document.getElementById("dropdownButton");
-        const dropdownContent = document.getElementById("dropdownContent");
-
-        dropdownButton.addEventListener("click", function () {
-          dropdownContent.style.display =
-            dropdownContent.style.display === "block" ? "none" : "block";
-        });
-
-        // Đóng dropdown nếu nhấn ra ngoài
-        window.addEventListener("click", function (event) {
-          if (!event.target.matches(".circle-image")) {
-            dropdownContent.style.display = "none";
-          }
+          localStorage.setItem("navIndex", index);
         });
       });
+    });
 
-      function signOutModal() {
-        let sign_out_background = document.querySelector(
-          ".sign-out-background"
-        );
+    // Nhấn vào mũi tên để mở popup camera
+    document
+      .querySelector(".arrow-icon")
+      .addEventListener("click", function () {
+        document.getElementById("camera-popup").style.display = "flex";
+        startCamera();
+      });
 
-        document.querySelector(".sign-out-modal").style.display =
-          document.querySelector(".sign-out-modal").style.display == "block"
-            ? "none"
-            : "block";
-        let sign_out_modal = document.querySelector(".sign-out-modal");
+    // Nhấn vào mũi tên để mở popup camera
+    document
+      .querySelector(".arrow-icon")
+      .addEventListener("click", function () {
+        document.getElementById("camera-popup").classList.add("active"); // Thêm lớp active
+        startCamera();
+      });
 
-        if (
-          document.querySelector(".sign-out-modal").style.display == "block"
-        ) {
-          document.getElementById("nav-popup-overlay").style.display = "block";
-        } else {
-          document.getElementById("nav-popup-overlay").style.display = "none";
-        }
+    // Đóng popup camera
+    document
+      .getElementById("close-popup")
+      .addEventListener("click", function () {
+        stopCamera();
+        document.getElementById("camera-popup").classList.remove("active"); // Xóa lớp active
+      });
+
+    // Khởi tạo camera
+    async function startCamera() {
+      const video = document.getElementById("video");
+      const stream = await navigator.mediaDevices.getUserMedia({
+        video: true,
+      });
+      video.srcObject = stream;
+    }
+
+    // Dừng camera
+    function stopCamera() {
+      const video = document.getElementById("video");
+      const stream = video.srcObject;
+      if (stream) {
+        const tracks = stream.getTracks();
+        tracks.forEach((track) => track.stop());
       }
-    </script>
-  </body>
+      video.srcObject = null;
+    }
+
+    // Chụp ảnh
+    document
+      .getElementById("capture-btn")
+      .addEventListener("click", function () {
+        const canvas = document.createElement("canvas");
+        const video = document.getElementById("video");
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+        const context = canvas.getContext("2d");
+        context.drawImage(video, 0, 0);
+
+        // Tạo liên kết download
+        const downloadLink = document.getElementById("download-link");
+        downloadLink.href = canvas.toDataURL("image/png");
+        downloadLink.download = "photo.png";
+        downloadLink.style.display = "inline-block"; // Hiện nút download
+      });
+
+    // Đóng popup camera
+    document
+      .getElementById("close-popup")
+      .addEventListener("click", function () {
+        stopCamera();
+        document.getElementById("camera-popup").classList.remove("active"); // Xóa lớp active
+        document.getElementById("download-link").style.display = "none"; // Ẩn nút download
+      });
+
+    // Dropdown
+    document.addEventListener("DOMContentLoaded", function () {
+      const dropdownButton = document.getElementById("dropdownButton");
+      const dropdownContent = document.getElementById("dropdownContent");
+
+      dropdownButton.addEventListener("click", function () {
+        dropdownContent.style.display =
+          dropdownContent.style.display === "block" ? "none" : "block";
+      });
+
+      // Đóng dropdown nếu nhấn ra ngoài
+      window.addEventListener("click", function (event) {
+        if (!event.target.matches(".circle-image")) {
+          dropdownContent.style.display = "none";
+        }
+      });
+    });
+
+    function signOutModal() {
+      let sign_out_background = document.querySelector(
+        ".sign-out-background"
+      );
+
+      document.querySelector(".sign-out-modal").style.display =
+        document.querySelector(".sign-out-modal").style.display == "block"
+          ? "none"
+          : "block";
+      let sign_out_modal = document.querySelector(".sign-out-modal");
+
+      if (
+        document.querySelector(".sign-out-modal").style.display == "block"
+      ) {
+        document.getElementById("nav-popup-overlay").style.display = "block";
+      } else {
+        document.getElementById("nav-popup-overlay").style.display = "none";
+      }
+    }
+  </script>
+</body>
+
 </html>

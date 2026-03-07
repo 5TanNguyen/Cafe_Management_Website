@@ -101,15 +101,24 @@ class NhanVienController {
         }
     }
 
+    static async getNhanVienById(req, res) {
+        let id = req.query.id;
+        var user = await models.user.findOne({
+            where: { user_id: id }
+        })
+
+        res.status(200).json({
+            data: user,
+            message: "Lấy thông tin nhân viên thành công !",
+        })
+
+    }
+
     static async editNhanVien(req, res) { // edit
         res.locals.session = req.session;
 
         let id = req.query.id;
         let body = req.body;
-
-        // console.log('id: ', id);
-        // console.log('body: ', body);
-        // return;
 
         await models.user.update(body, {
             where: { user_id: id }
