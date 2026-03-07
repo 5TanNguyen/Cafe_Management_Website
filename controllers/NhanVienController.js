@@ -119,21 +119,23 @@ class NhanVienController {
         let id = req.query.id;
         let body = req.body;
 
-            if (!id) {
-                res.status(400).json({
-                    data: false,
-                    message: "Thiếu ID nhân viên !",
-                })
-                return;
-            }
+        if (!id) {
+            res.json({
+                data: false,
+                message: "Thiếu ID nhân viên !",
+                status: 400
+            })
+            return;
+        }
 
         await models.user.update(body, {
             where: { user_id: id }
         })
 
-        res.status(200).json({
+        res.json({
             data: true,
             message: "Cập nhật thành công !",
+            status: 200
         })
     }
 

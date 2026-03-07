@@ -70,7 +70,7 @@
                   <div class="UD_overplay" id="divUD<%- u[i].id %>">
                     <div class="nv_wrapper">
                       <h2 class="text-center">Chỉnh sửa thông tin nhân viên</h2>
-                      <form class="form-control d-flex flex-column form-edit-nhan-vien" action="/suanhanvien"
+                      <form class="form-control d-flex flex-column" action="/suanhanvien"
                         method="POST" style="height: 500px; width: 100%" id="form-edit-nhan-vien">
                         <a href="#" class="close">&times;</a>
                         <div class="row p-3 tab-edit">
@@ -250,7 +250,7 @@
 
 <script>
   $(document).ready(function () {
-    $(".form-edit-nhan-vien").submit(function (event) {
+    $("#form-edit-nhan-vien").submit(function (event) {
       event.preventDefault(); // Ngăn chặn reload trang
 
       var checkError = false;
@@ -279,8 +279,13 @@
           location.replace("/nhanvien");
         },
         error: function (xhr) {
-          let res = JSON.parse(xhr.responseText);
-          alert(res.message);
+          try {
+            let res = JSON.parse(xhr.responseText);
+            alert(res.message);
+          } catch (e) {
+            console.error(e);
+            alert(xhr.responseText || "Có lỗi xảy ra!");
+          }
         },
       });
     });
