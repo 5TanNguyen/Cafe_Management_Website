@@ -123,6 +123,7 @@ class NhanVienController {
             res.json({
                 data: false,
                 message: "Thiếu ID nhân viên !",
+                success: false,
                 status: 400
             })
             return;
@@ -135,6 +136,7 @@ class NhanVienController {
         res.json({
             data: true,
             message: "Cập nhật thành công !",
+            success: true,
             status: 200
         })
     }
