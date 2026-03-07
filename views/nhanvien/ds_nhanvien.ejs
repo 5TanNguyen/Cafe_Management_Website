@@ -14,266 +14,178 @@
         </tr>
       </thead>
 
-      <% if(u.length > 0){ %> <% for(var i = 0; i < u.length; i++){ %>
-      <tr>
-        <td class="sticky-col first-col"><%- u[i].id %></td>
+      <% if(u.length> 0){ %> <% for(var i=0; i < u.length; i++){ %>
+          <tr>
+            <td class="sticky-col first-col"><%- u[i].id %></td>
 
-        <td class="sticky-col second-col"><%- u[i].firstName %></td>
+            <td class="sticky-col second-col"><%- u[i].firstName %></td>
 
-        <td><%- u[i].address %></td>
+            <td><%- u[i].address %></td>
 
-        <td><%- u[i].phonenumber %></td>
+            <td><%- u[i].phonenumber %></td>
 
-        <td><%- u[i].rolename %></td>
+            <td><%- u[i].rolename %></td>
 
-        <td>
-          <% if(u[i].email){ %>
-          <a href="#divW<%- u[i].u_id %>" class="active-popup">
-            <i class="bx bxs-wallet"></i>
-          </a>
+            <td>
+              <% if(u[i].email){ %>
+                <a href="#divW<%- u[i].u_id %>" class="active-popup">
+                  <i class="bx bxs-wallet"></i>
+                </a>
+                <% } %>
+                  <div class="UD_overplay" id="divW<%- u[i].u_id %>">
+                    <div class="nv_wrapper">
+                      <h2 class="text-center">Cấp ví nhân viên</h2>
+                      <a href="#" class="close">&times;</a>
+                      <div class="content">
+                        <div class="container">
+                          <form action="/themvi" method="POST">
+                            <input name="u_id" type="text" hidden placeholder="" value="<%- u[i].u_id %>" />
+                            <div class="row">
+                              <div class="col">
+                                <label for="">Tên nhân viên</label>
+                                <input name="u_name" type="text" placeholder="" value="<%- u[i].u_name %>" />
+                              </div>
+
+                              <div class="col">
+                                <label for="">Số điện thoại</label>
+                                <input name="u_phone" type="text" placeholder="" value="<%- u[i].u_phone %>" />
+                              </div>
+                            </div>
+
+                            <br />
+                            <input type="submit" value="XÁC NHẬN" style="width: 100%; background-color: red" />
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+            </td>
+
+            <td>
+              <% if(u[i].email){ %>
+                <a href="#divUD<%- u[i].id %>" class="active-popup">
+                  <i class="bx bxs-edit-alt"></i>
+                </a>
+                <% } %>
+                  <div class="UD_overplay" id="divUD<%- u[i].id %>">
+                    <div class="nv_wrapper">
+                      <h2 class="text-center">Chỉnh sửa thông tin nhân viên</h2>
+                      <form class="form-control d-flex flex-column form-edit-nhan-vien" action="/suanhanvien"
+                        method="POST" style="height: 500px; width: 100%" id="form-edit-nhan-vien">
+                        <a href="#" class="close">&times;</a>
+                        <div class="row p-3 tab-edit">
+                          <div class="col-5 p-1">
+                            <button id="btn-tab-1" type="button" class="btn w-100 h-100">
+                              Chính
+                            </button>
+                          </div>
+                          <div class="col-5 p-1">
+                            <button id="btn-tab-2" type="button" class="btn w-100 h-100">
+                              Phụ
+                            </button>
+                          </div>
+                        </div>
+                        <div id="tab-1" class="content">
+                          <div class="nv_container">
+                            <input name="u_id" type="text" hidden placeholder="" value="<%- u[i].id %>" />
+
+                            <div class="row">
+                              <div class="col">
+                                <label for="">Tên</label>
+                                <input name="firstName" type="text" placeholder="" value="<%- u[i].firstName %>" />
+                              </div>
+
+                              <div class="col">
+                                <label for="">Họ</label>
+                                <input name="lastName" type="text" placeholder="" value="<%- u[i].lastName %>" />
+                              </div>
+                            </div>
+
+                            <div class="row">
+                              <div class="col-12">
+                                <label for="">Email</label>
+                                <input name="email" type="text" placeholder="" value="<%- u[i].email %>" />
+                              </div>
+                            </div>
+
+                            <div class="row">
+                              <div class="col">
+                                <label for="">SĐT</label>
+                                <input name="phonenumber" class="form-control" type="text" placeholder=""
+                                  value="<%- u[i].phonenumber %>" style="height: 50px" />
+                              </div>
+
+                              <div class="col">
+                                <label for="">Chức vụ</label>
+                                <select class="form-control" name="u_d_id" id="u_d_id"
+                                  style="height: 50px; margin-top: 6px">
+                                  <option value="<%- u[i].d_id %>">
+                                    <%- u[i].rolename %>
+                                  </option>
+                                </select>
+                              </div>
+                            </div>
+
+                            <div class="row">
+                              <div class="col">
+                                <label for="">Giới tính</label>
+                                <select name="gender" class="form-control" style="height: 50px; margin-top: 6px">
+                                  <option value="<%= u[i].gender %>">
+                                    <%- u[i].gender==1 ? "Nam" : "Nữ" %>
+                                  </option>
+                                  <option value="1">Nam</option>
+                                  <option value="0">Nữ</option>
+                                </select>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div id="tab-2" class="content">
+                          <div class="nv_container">
+                            <div class="row">
+                              <div class="col">
+                                <label for="">Địa chỉ</label>
+                                <textarea name="address"><%- u[i].address %></textarea>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <input class="mt-auto btn-submit" type="submit" value="XÁC NHẬN" />
+                      </form>
+                    </div>
+                  </div>
+            </td>
+
+            <td>
+              <% if(u[i].rolecode !='super-admin' ){ %>
+                <a href="#divDel<%- u[i].id %>" class="active-popup"><i class="bx bx-user-minus"></i></a>
+                <% } %>
+                  <div class="overplay" id="divDel<%- u[i].id %>">
+                    <div class="wrapper">
+                      <h2 class="text-center">Xác Nhận Xóa</h2>
+                      <a href="#" class="close">&times;</a>
+                      <div class="content">
+                        <div class="container">
+                          <form action="/xoanhanvien" method="POST">
+                            <input name="u_id" type="text" hidden placeholder="" value="<%- u[i].u_id %>" />
+
+                            <label name="title">Tên Nhân Viên</label>
+                            <input name="firstName" type="text" placeholder="" value="<%- u[i].firstName %>" />
+
+                            <button class="btn btn-danger" style="width: 100%" type="submit">
+                              Xóa
+                            </button>
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+            </td>
+          </tr>
           <% } %>
-          <div class="UD_overplay" id="divW<%- u[i].u_id %>">
-            <div class="nv_wrapper">
-              <h2 class="text-center">Cấp ví nhân viên</h2>
-              <a href="#" class="close">&times;</a>
-              <div class="content">
-                <div class="container">
-                  <form action="/themvi" method="POST">
-                    <input
-                      name="u_id"
-                      type="text"
-                      hidden
-                      placeholder=""
-                      value="<%- u[i].u_id %>"
-                    />
-                    <div class="row">
-                      <div class="col">
-                        <label for="">Tên nhân viên</label>
-                        <input
-                          name="u_name"
-                          type="text"
-                          placeholder=""
-                          value="<%- u[i].u_name %>"
-                        />
-                      </div>
-
-                      <div class="col">
-                        <label for="">Số điện thoại</label>
-                        <input
-                          name="u_phone"
-                          type="text"
-                          placeholder=""
-                          value="<%- u[i].u_phone %>"
-                        />
-                      </div>
-                    </div>
-
-                    <br />
-                    <input
-                      type="submit"
-                      value="XÁC NHẬN"
-                      style="width: 100%; background-color: red"
-                    />
-                  </form>
-                </div>
-              </div>
-            </div>
-          </div>
-        </td>
-
-        <td>
-          <% if(u[i].email){ %>
-          <a href="#divUD<%- u[i].id %>" class="active-popup">
-            <i class="bx bxs-edit-alt"></i>
-          </a>
-          <% } %>
-          <div class="UD_overplay" id="divUD<%- u[i].id %>">
-            <div class="nv_wrapper">
-              <h2 class="text-center">Chỉnh sửa thông tin nhân viên</h2>
-              <form
-                class="form-control d-flex flex-column form-edit-nhan-vien"
-                action="/suanhanvien"
-                method="POST"
-                style="height: 500px; width: 100%"
-                id="form-edit-nhan-vien"
-              >
-                <a href="#" class="close">&times;</a>
-                <div class="row p-3 tab-edit">
-                  <div class="col-5 p-1">
-                    <button
-                      id="btn-tab-1"
-                      type="button"
-                      class="btn w-100 h-100"
-                    >
-                      Chính
-                    </button>
-                  </div>
-                  <div class="col-5 p-1">
-                    <button
-                      id="btn-tab-2"
-                      type="button"
-                      class="btn w-100 h-100"
-                    >
-                      Phụ
-                    </button>
-                  </div>
-                </div>
-                <div id="tab-1" class="content">
-                  <div class="nv_container">
-                    <input
-                      name="u_id"
-                      type="text"
-                      hidden
-                      placeholder=""
-                      value="<%- u[i].id %>"
-                    />
-
-                    <div class="row">
-                      <div class="col">
-                        <label for="">Tên</label>
-                        <input
-                          name="firstName"
-                          type="text"
-                          placeholder=""
-                          value="<%- u[i].firstName %>"
-                        />
-                      </div>
-
-                      <div class="col">
-                        <label for="">Họ</label>
-                        <input
-                          name="lastName"
-                          type="text"
-                          placeholder=""
-                          value="<%- u[i].lastName %>"
-                        />
-                      </div>
-                    </div>
-
-                    <div class="row">
-                      <div class="col-12">
-                        <label for="">Email</label>
-                        <input
-                          name="email"
-                          type="text"
-                          placeholder=""
-                          value="<%- u[i].email %>"
-                        />
-                      </div>
-                    </div>
-
-                    <div class="row">
-                      <div class="col">
-                        <label for="">SĐT</label>
-                        <input
-                          name="phonenumber"
-                          class="form-control"
-                          type="text"
-                          placeholder=""
-                          value="<%- u[i].phonenumber %>"
-                          style="height: 50px"
-                        />
-                      </div>
-
-                      <div class="col">
-                        <label for="">Chức vụ</label>
-                        <select
-                          class="form-control"
-                          name="u_d_id"
-                          id="u_d_id"
-                          style="height: 50px; margin-top: 6px"
-                        >
-                          <option value="<%- u[i].d_id %>">
-                            <%- u[i].rolename %>
-                          </option>
-                        </select>
-                      </div>
-                    </div>
-
-                    <div class="row">
-                      <div class="col">
-                        <label for="">Giới tính</label>
-                        <select
-                          name="gender"
-                          class="form-control"
-                          style="height: 50px; margin-top: 6px"
-                        >
-                          <option value="<%= u[i].gender %>">
-                            <%- u[i].gender == 1 ? "Nam" : "Nữ" %>
-                          </option>
-                          <option value="1">Nam</option>
-                          <option value="0">Nữ</option>
-                        </select>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div id="tab-2" class="content">
-                  <div class="nv_container">
-                    <div class="row">
-                      <div class="col">
-                        <label for="">Địa chỉ</label>
-                        <textarea name="address"><%- u[i].address %></textarea>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <input
-                  class="mt-auto btn-submit"
-                  type="submit"
-                  value="XÁC NHẬN"
-                />
-              </form>
-            </div>
-          </div>
-        </td>
-
-        <td>
-          <% if(u[i].rolecode != 'super-admin'){ %>
-          <a href="#divDel<%- u[i].id %>" class="active-popup"
-            ><i class="bx bx-user-minus"></i
-          ></a>
-          <% } %>
-          <div class="overplay" id="divDel<%- u[i].id %>">
-            <div class="wrapper">
-              <h2 class="text-center">Xác Nhận Xóa</h2>
-              <a href="#" class="close">&times;</a>
-              <div class="content">
-                <div class="container">
-                  <form action="/xoanhanvien" method="POST">
-                    <input
-                      name="u_id"
-                      type="text"
-                      hidden
-                      placeholder=""
-                      value="<%- u[i].u_id %>"
-                    />
-
-                    <label name="title">Tên Nhân Viên</label>
-                    <input
-                      name="firstName"
-                      type="text"
-                      placeholder=""
-                      value="<%- u[i].firstName %>"
-                    />
-
-                    <button
-                      class="btn btn-danger"
-                      style="width: 100%"
-                      type="submit"
-                    >
-                      Xóa
-                    </button>
-                  </form>
-                </div>
-              </div>
-            </div>
-          </div>
-        </td>
-      </tr>
-      <% } %> <% } else { %>
-      <p>Không có nhân viên</p>
-      <% } %>
+            <% } else { %>
+              <p>Không có nhân viên</p>
+              <% } %>
     </table>
   </div>
 </div>
@@ -295,7 +207,8 @@
     padding: 10px;
     border: 1px solid #ddd;
     white-space: nowrap;
-    background-color: white; /* Để tránh bị trong suốt khi cuộn */
+    background-color: white;
+    /* Để tránh bị trong suốt khi cuộn */
   }
 
   /* Cố định 3 cột đầu tiên */
@@ -336,65 +249,6 @@
 </style>
 
 <script>
-  document.addEventListener("DOMContentLoaded", () => {
-    document.querySelectorAll(".UD_overplay").forEach((modal) => {
-      const tab1 = modal.querySelector("#tab-1");
-      const tab2 = modal.querySelector("#tab-2");
-      const btnTab1 = modal.querySelector("#btn-tab-1");
-      const btnTab2 = modal.querySelector("#btn-tab-2");
-
-      if (tab1 && tab2) {
-        tab1.style.zIndex = 2;
-        tab1.style.display = "block";
-        btnTab1.style.backgroundColor = "#dcdde1";
-        tab2.style.zIndex = 1;
-        tab2.style.display = "none";
-        btnTab2.style.backgroundColor = "#f5f6fa";
-      }
-
-      if (btnTab1 && btnTab2) {
-        btnTab1.addEventListener("click", () => {
-          tab1.style.zIndex = 2;
-          tab1.style.display = "block";
-          btnTab1.style.backgroundColor = "#dcdde1";
-          tab2.style.zIndex = 1;
-          tab2.style.display = "none";
-          btnTab2.style.backgroundColor = "#f5f6fa";
-        });
-
-        btnTab2.addEventListener("click", () => {
-          tab1.style.zIndex = 1;
-          tab1.style.display = "none";
-          btnTab1.style.backgroundColor = "#f5f6fa";
-          tab2.style.zIndex = 2;
-          tab2.style.display = "block";
-          btnTab2.style.backgroundColor = "#dcdde1";
-        });
-      }
-    });
-
-    document
-      .querySelector(".btn-edit-click")
-      .addEventListener("click", function () {
-        const tab1 = document.querySelector("#tab-1");
-        const tab2 = document.querySelector("#tab-2");
-
-        tab1.style.zIndex = 2;
-        tab1.style.display = "block";
-        tab2.style.zIndex = 1;
-        tab2.style.display = "none";
-      });
-
-    document.addEventListener("DOMContentLoaded", function () {
-      document.querySelectorAll(".active-popup").forEach((item) => {
-        item.addEventListener("click", function (event) {
-          event.preventDefault(); // Ngăn chặn load lại trang nếu href là #
-          console.log("Nhấn vào thẻ a:", this.getAttribute("href"));
-        });
-      });
-    });
-  });
-
   $(document).ready(function () {
     $(".form-edit-nhan-vien").submit(function (event) {
       event.preventDefault(); // Ngăn chặn reload trang
@@ -425,8 +279,8 @@
           location.replace("/nhanvien");
         },
         error: function (xhr) {
-          alert("Có lỗi xảy ra!");
-          console.log(xhr.responseText); // Log lỗi từ server
+          let res = JSON.parse(xhr.responseText);
+          alert(res.message);
         },
       });
     });

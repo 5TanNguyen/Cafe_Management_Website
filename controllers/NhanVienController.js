@@ -111,7 +111,6 @@ class NhanVienController {
             data: user,
             message: "Lấy thông tin nhân viên thành công !",
         })
-
     }
 
     static async editNhanVien(req, res) { // edit
@@ -119,6 +118,14 @@ class NhanVienController {
 
         let id = req.query.id;
         let body = req.body;
+
+            if (!id) {
+                res.status(400).json({
+                    data: false,
+                    message: "Thiếu ID nhân viên !",
+                })
+                return;
+            }
 
         await models.user.update(body, {
             where: { user_id: id }
