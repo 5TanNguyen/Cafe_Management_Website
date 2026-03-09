@@ -68,89 +68,70 @@
                 </a>
                 <% } %>
                   <div class="UD_overplay" id="divUD<%- u[i].id %>">
-                    <div class="nv_wrapper">
-                      <h2 class="text-center">Chỉnh sửa thông tin nhân viên</h2>
-                      <form class="form-control d-flex flex-column" action="/suanhanvien"
-                        method="POST" style="height: 500px; width: 100%" id="form-edit-nhan-vien">
-                        <a href="#" class="close">&times;</a>
-                        <div class="row p-3 tab-edit">
-                          <div class="col-5 p-1">
-                            <button id="btn-tab-1" type="button" class="btn w-100 h-100">
-                              Chính
-                            </button>
+                    <div class="nv_wrapper bg-white"
+                      style="max-width: 600px; padding: 25px 30px; border-radius: 12px; position: relative; height: auto !important; margin: auto;">
+                      <a href="#" class="close text-dark text-decoration-none fs-3 position-absolute"
+                        style="top: 10px; right: 20px;">&times;</a>
+                      <h3 class="text-center mb-4 fw-bold text-uppercase" style="color: #333; font-size: 1.5rem;">Sửa
+                        Thông Tin</h3>
+
+                      <form class="form-edit-nhan-vien d-flex flex-column" action="/suanhanvien" method="POST">
+                        <input name="u_id" type="hidden" value="<%- u[i].id %>" />
+
+                        <div class="row mb-3">
+                          <div class="col-md-6 mb-3 mb-md-0">
+                            <label class="form-label text-muted small fw-bold mb-1">Họ</label>
+                            <input name="lastName" type="text" class="form-control shadow-sm border-0 bg-light"
+                              value="<%- u[i].lastName %>" />
                           </div>
-                          <div class="col-5 p-1">
-                            <button id="btn-tab-2" type="button" class="btn w-100 h-100">
-                              Phụ
-                            </button>
-                          </div>
-                        </div>
-                        <div id="tab-1" class="content">
-                          <div class="nv_container">
-                            <input name="u_id" type="text" hidden placeholder="" value="<%- u[i].id %>" />
-
-                            <div class="row">
-                              <div class="col">
-                                <label for="">Tên</label>
-                                <input name="firstName" type="text" placeholder="" value="<%- u[i].firstName %>" />
-                              </div>
-
-                              <div class="col">
-                                <label for="">Họ</label>
-                                <input name="lastName" type="text" placeholder="" value="<%- u[i].lastName %>" />
-                              </div>
-                            </div>
-
-                            <div class="row">
-                              <div class="col-12">
-                                <label for="">Email</label>
-                                <input name="email" type="text" placeholder="" value="<%- u[i].email %>" />
-                              </div>
-                            </div>
-
-                            <div class="row">
-                              <div class="col">
-                                <label for="">SĐT</label>
-                                <input name="phonenumber" class="form-control" type="text" placeholder=""
-                                  value="<%- u[i].phonenumber %>" style="height: 50px" />
-                              </div>
-
-                              <div class="col">
-                                <label for="">Chức vụ</label>
-                                <select class="form-control" name="u_d_id" id="u_d_id"
-                                  style="height: 50px; margin-top: 6px">
-                                  <option value="<%- u[i].d_id %>">
-                                    <%- u[i].rolename %>
-                                  </option>
-                                </select>
-                              </div>
-                            </div>
-
-                            <div class="row">
-                              <div class="col">
-                                <label for="">Giới tính</label>
-                                <select name="gender" class="form-control" style="height: 50px; margin-top: 6px">
-                                  <option value="<%= u[i].gender %>">
-                                    <%- u[i].gender==1 ? "Nam" : "Nữ" %>
-                                  </option>
-                                  <option value="1">Nam</option>
-                                  <option value="0">Nữ</option>
-                                </select>
-                              </div>
-                            </div>
+                          <div class="col-md-6">
+                            <label class="form-label text-muted small fw-bold mb-1">Tên</label>
+                            <input name="firstName" type="text" class="form-control shadow-sm border-0 bg-light"
+                              value="<%- u[i].firstName %>" required />
                           </div>
                         </div>
-                        <div id="tab-2" class="content">
-                          <div class="nv_container">
-                            <div class="row">
-                              <div class="col">
-                                <label for="">Địa chỉ</label>
-                                <textarea name="address"><%- u[i].address %></textarea>
-                              </div>
-                            </div>
+
+                        <div class="row mb-3">
+                          <div class="col-md-6 mb-3 mb-md-0">
+                            <label class="form-label text-muted small fw-bold mb-1">Email</label>
+                            <input name="email" type="email" class="form-control shadow-sm border-0 bg-light"
+                              value="<%- u[i].email %>" />
+                          </div>
+                          <div class="col-md-6">
+                            <label class="form-label text-muted small fw-bold mb-1">Số điện thoại</label>
+                            <input name="phonenumber" type="text" class="form-control shadow-sm border-0 bg-light"
+                              value="<%- u[i].phonenumber %>" />
                           </div>
                         </div>
-                        <input class="mt-auto btn-submit" type="submit" value="XÁC NHẬN" />
+
+                        <div class="row mb-3">
+                          <div class="col-md-6 mb-3 mb-md-0">
+                            <label class="form-label text-muted small fw-bold mb-1">Chức vụ</label>
+                            <select class="form-select shadow-sm border-0 bg-light" name="u_d_id">
+                              <option value="<%- u[i].d_id %>" selected><%- u[i].rolename %></option>
+                            </select>
+                          </div>
+                          <div class="col-md-6">
+                            <label class="form-label text-muted small fw-bold mb-1">Giới tính</label>
+                            <select name="gender" class="form-select shadow-sm border-0 bg-light">
+                              <option value="1" <%- u[i].gender==1 ? 'selected' : '' %>>Nam</option>
+                              <option value="0" <%- u[i].gender==0 ? 'selected' : '' %>>Nữ</option>
+                            </select>
+                          </div>
+                        </div>
+
+                        <div class="row mb-4">
+                          <div class="col-12">
+                            <label class="form-label text-muted small fw-bold mb-1">Địa chỉ</label>
+                            <textarea name="address" class="form-control shadow-sm border-0 bg-light"
+                              rows="2"><%- u[i].address %></textarea>
+                          </div>
+                        </div>
+
+                        <button class="btn btn-primary w-100 py-2 fw-bold shadow-sm rounded-3 mt-2" type="submit"
+                          style="font-size: 1.1rem; letter-spacing: 0.5px;">
+                          CẬP NHẬT
+                        </button>
                       </form>
                     </div>
                   </div>
@@ -246,11 +227,15 @@
     background-color: #343a40;
     color: white;
   }
+
+  .UD_overplay {
+    z-index: 9999 !important;
+  }
 </style>
 
 <script>
   $(document).ready(function () {
-    $("#form-edit-nhan-vien").submit(function (event) {
+    $(".form-edit-nhan-vien").submit(function (event) {
       event.preventDefault(); // Ngăn chặn reload trang
 
       var checkError = false;
