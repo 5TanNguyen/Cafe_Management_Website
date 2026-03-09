@@ -113,7 +113,7 @@ class NhanVienController {
         })
     }
 
-    static async editNhanVien(req, res) { // edit
+    static async editNhanVien(req, res) {
         res.locals.session = req.session;
 
         let id = req.query.id;
