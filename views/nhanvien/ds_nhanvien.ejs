@@ -236,6 +236,7 @@
         type: $(this).attr("method"), // Lấy method từ form
         data: formData,
         success: function (response) {
+          $(".UD_overplay").hide();
           Notiflix.Notify.success(response.message || 'Thành công')
 
           setTimeout(() => {
