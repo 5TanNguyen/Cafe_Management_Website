@@ -1,27 +1,26 @@
 <!-- layout.ejs -->
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Your Title</title>
-    <link rel="stylesheet" href="/css/style.css" />
-    <!-- Link đến file CSS -->
-    <link rel="icon" href="/assets/images/cheems.png" type="image/x-icon" />
-    <% if (typeof cssFile !== 'undefined') { %>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Your Title</title>
+  <link rel="stylesheet" href="/css/style.css" />
+  <!-- Link đến file CSS -->
+  <link rel="icon" href="/assets/images/cheems.png" type="image/x-icon" />
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <% if (typeof cssFile !=='undefined' ) { %>
     <link rel="stylesheet" href="/css/<%= cssFile %>" />
     <!-- CSS riêng -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <% } %>
 
-    <script src="https://cdn.jsdelivr.net/npm/notiflix@3.2.8/dist/notiflix-aio-3.2.8.min.js"></script>
-    <link
-      href="https://cdn.jsdelivr.net/npm/notiflix@3.2.8/src/notiflix.min.css"
-      rel="stylesheet"
-    />
-  </head>
-  <body>
-    <%- include('partials/nav') %> <%- include(body) %> <%-
-    include('partials/footer') %>
-  </body>
+      <script src="https://cdn.jsdelivr.net/npm/notiflix@3.2.8/dist/notiflix-aio-3.2.8.min.js"></script>
+      <link href="https://cdn.jsdelivr.net/npm/notiflix@3.2.8/src/notiflix.min.css" rel="stylesheet" />
+</head>
+
+<body>
+  <%- include('partials/nav') %> <%- include(body) %> <%- include('partials/footer') %>
+</body>
+
 </html>
