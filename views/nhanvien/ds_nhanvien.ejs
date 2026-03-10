@@ -40,9 +40,8 @@
                       <h3 class="text-center mb-4 fw-bold text-uppercase" style="color: #333; font-size: 1.5rem;">Sửa
                         Thông Tin</h3>
 
-                      <form class="form-edit-nhan-vien d-flex flex-column" action="/suanhanvien" method="POST">
-                        <input name="u_id" type="hidden" value="<%- u[i].id %>" />
-
+                      <form class="form-edit-nhan-vien d-flex flex-column"
+                        action="/suanhanvien?user_id=<%- u[i].user_id %>" method="POST" data-id="<%- u[i].user_id %>">
                         <div class="row mb-3">
                           <div class="col-md-6 mb-3 mb-md-0">
                             <label class="form-label text-muted small fw-bold mb-1">Họ</label>
