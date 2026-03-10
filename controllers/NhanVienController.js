@@ -144,27 +144,20 @@ class NhanVienController {
     static async deleteNhanVien(req, res) { // edit
         res.locals.session = req.session;
 
-        if (!req.session.u_id) {
-            req.flash('message', 'Bạn phải đăng nhập trước !');
-            res.render("dangnhap/dangnhap", { message: req.flash('message') });
-        }
+        var id = req.body.user_id;
+        console.log('id delete: ', id)
+        var rs = await models.user.update({
+            deletedAt: new Date()
+        },
+            {
+                where: { user_id: id }
+            })
 
-        if (req.session.u_d_id != 1) {
-            req.flash('message', 'Bạn không có quyền truy cập !');
-            res.render("dangnhap/dangnhap", { message: req.flash('message') });
+        if (rs == true) {
+            res.redirect("/nhanvien");
         }
         else {
-            var u_id = req.body.u_id;
-            var u_name = req.body.u_name;
-
-            var rs = await NhanVienModel.DeleteNhanVien(u_id);
-
-            if (rs == true) {
-                res.redirect("/nhanvien");
-            }
-            else {
-                res.redirect("/dangnhap");
-            }
+            res.redirect("/dangnhap");
         }
     }
 

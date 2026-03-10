@@ -106,24 +106,35 @@
               <% if(u[i].rolecode !='super-admin' ){ %>
                 <a href="#divDel<%- u[i].id %>" class="active-popup"><i class="bx bx-user-minus"></i></a>
                 <% } %>
-                  <div class="overplay" id="divDel<%- u[i].id %>">
-                    <div class="wrapper">
-                      <h2 class="text-center">Xác Nhận Xóa</h2>
-                      <a href="#" class="close">&times;</a>
-                      <div class="content">
-                        <div class="container">
-                          <form action="/xoanhanvien" method="POST">
-                            <input name="u_id" type="text" hidden placeholder="" value="<%- u[i].u_id %>" />
-
-                            <label name="title">Tên Nhân Viên</label>
-                            <input name="firstName" type="text" placeholder="" value="<%- u[i].firstName %>" />
-
-                            <button class="btn btn-danger" style="width: 100%" type="submit">
-                              Xóa
-                            </button>
-                          </form>
-                        </div>
+                  <div class="UD_overplay" id="divDel<%- u[i].id %>">
+                    <div class="nv_wrapper bg-white"
+                      style="max-width: 450px; padding: 30px; border-radius: 12px; position: relative; height: auto !important; margin: auto; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
+                      <a href="#" class="close text-dark text-decoration-none fs-3 position-absolute"
+                        style="top: 10px; right: 20px;">&times;</a>
+                      <div class="text-center mb-4">
+                        <i class="bx bx-trash text-danger" style="font-size: 3rem;"></i>
+                        <h3 class="fw-bold text-uppercase mt-2" style="color: #333; font-size: 1.4rem;">Xác Nhận Xóa
+                        </h3>
+                        <p class="text-muted small mt-1">Bạn có chắc chắn muốn xóa nhân viên này không?</p>
                       </div>
+
+                      <form class="d-flex flex-column" action="/xoanhanvien" method="POST">
+                        <input name="user_id" type="hidden" value="<%- u[i].user_id %>" />
+
+                        <div class="mb-4">
+                          <label class="form-label text-muted small fw-bold mb-1">Tên Nhân Viên</label>
+                          <input name="firstName" type="text"
+                            class="form-control shadow-sm border-0 bg-light text-center fw-bold text-danger"
+                            value="<%- u[i].firstName %>" readonly
+                            style="font-size: 1.1rem; padding: 10px; pointer-events: none;" />
+                        </div>
+
+                        <div class="d-flex justify-content-between gap-2 mt-2">
+                          <a href="#" class="btn btn-secondary w-50 py-2 fw-bold shadow-sm rounded-3">HỦY BỎ</a>
+                          <button class="btn btn-danger w-50 py-2 fw-bold shadow-sm rounded-3" type="submit"
+                            style="letter-spacing: 0.5px;">XÓA NGAY</button>
+                        </div>
+                      </form>
                     </div>
                   </div>
             </td>
