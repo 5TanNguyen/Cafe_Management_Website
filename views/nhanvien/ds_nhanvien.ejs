@@ -236,12 +236,16 @@
         type: $(this).attr("method"), // Lấy method từ form
         data: formData,
         success: function (response) {
-          location.replace("/nhanvien");
+          Notiflix.Notify.success(response.message || 'Thành công')
+
+          setTimeout(() => {
+            location.replace("/nhanvien");
+          }, 1000);
         },
         error: function (xhr) {
           try {
             let res = JSON.parse(xhr.responseText);
-            alert(res.message);
+            Notiflix.Notify.failure(res.message);
           } catch (e) {
             console.error(e);
             alert(xhr.responseText || "Có lỗi xảy ra!");
